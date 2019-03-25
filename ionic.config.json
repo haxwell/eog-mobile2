@@ -1,5 +1,7 @@
 {
   "name": "just2c",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

@@ -1,22 +1,21 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
-  {
-    path: 'home',
-    loadChildren: './home/home.module#HomePageModule'
-  },
-  {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
-  }
-];
+import { CanActivateRouteGuard } from './_routeguards/can-activate.routeguard'
 
+const routes: Routes = [
+  { path: '',           		loadChildren: './login/login.module#LoginPageModule' }
+  ,{ path: 'home',        		loadChildren: './home/home.module#HomePageModule',    			canActivate: [CanActivateRouteGuard] }
+  ,{ path: 'profile', 			loadChildren: './profile/profile.module#ProfilePageModule', 	canActivate: [CanActivateRouteGuard] }
+  ,{ path: 'search', 			loadChildren: './search/search.module#SearchPageModule', 	canActivate: [CanActivateRouteGuard] }
+  //,{ path: 'requests/incoming', loadChildren: './requests/requests.module#ProfilePageModule', 	canActivate: [CanActivateRouteGuard] }
+  //,{ path: 'requests/incoming', loadChildren: './requests/requests.module#ProfilePageModule', 	canActivate: [CanActivateRouteGuard] }
+  ,{ path: 'offers', 			loadChildren: './offers/offer.module#OfferPageModule', 	canActivate: [CanActivateRouteGuard] }
+  //,{ path: 'keywords', 			loadChildren: './keywords/keywords.module#KeywordsPageModule', 	canActivate: [CanActivateRouteGuard] }
+  //,{ path: 'recommendations', 			loadChildren: './recommendations/recommendations.module#RecommendationPageModule', 	canActivate: [CanActivateRouteGuard] }
+  //,{ path: 'notifications', 			loadChildren: './notifications/notifications.module#NotificationPageModule', 	canActivate: [CanActivateRouteGuard] }
+  //,{ path: 'about-easyah', 			loadChildren: './about-easyah/about-easyah.module#AboutEasyahPageModule', 	canActivate: [CanActivateRouteGuard] }  
+];
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })

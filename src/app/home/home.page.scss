@@ -1,4 +1,31 @@
-.welcome-card ion-img {
-  max-height: 35vh;
-  overflow: hidden;
+
+page-home {
+	
+}
+
+.requestSectionHeader {
+	margin: auto;
+	padding-top: .5em;
+	font-size: 2em;
+}
+
+h2 {
+	margin: auto;
+	border-bottom-style: solid;
+	padding-top: .45em;
+}
+
+#header-logo-image {
+	height: 1.75em;
+}
+
+#login-logo-img {
+	display: block;
+	margin: 0 auto;
+}
+
+.centered {
+	display: block;
+	margin: 0 auto;
+	text-align: center;
 }
