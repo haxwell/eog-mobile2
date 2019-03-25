@@ -1,0 +1,51 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title>
+			Create Account
+		</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+	<ion-grid>
+		<ion-row>
+			<ion-label>Let's create you an account, so you can get in on the goodness!</ion-label>
+			<br/>
+		</ion-row>		
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label color="primary" position="stacked">Real Name (that your mother gave you)</ion-label>
+					<ion-input data-test="name-input" (ionChange)="onRealNameChange($event)" [value]="getModelAttr('realname')" required></ion-input>
+				</ion-item>
+				<ion-item>
+					<ion-label color="primary" position="stacked">Phone Number</ion-label>
+					<ion-input data-test="phone-number-input" type="number" (ionChange)="onPhoneChange($event)" [value]="getModelAttr('phone')" required></ion-input>
+				</ion-item>
+				<ion-item>
+					<ion-label color="primary" position="stacked">Email Address</ion-label>
+					<ion-input data-test="email-input" (ionChange)="onEmailChange($event)" [value]="getModelAttr('email')" required></ion-input>
+				</ion-item>
+				<ion-item>
+					<ion-label color="primary" position="stacked">Choose your Username (no spaces!)</ion-label>	
+					<ion-input data-test="username-input" (ionChange)="onNameChange($event)" [value]="getModelAttr('name')" required></ion-input>
+				</ion-item>
+				<ion-item>
+					<ion-label color="primary" position="stacked">Password (at least six chars long)</ion-label>
+					<ion-input data-test="password-input" type="password" (ionChange)="onPasswordChange($event)" [value]="getModelAttr('password')" required></ion-input>
+				</ion-item>
+				<ion-item>
+					<ion-label color="primary" position="stacked">Did someone refer you? What's their username? (Optional)</ion-label>
+					<ion-input data-test="referring-user-input" (ionChange)="onReferringUsernameChange($event)" [value]="getReferringUsername()" required></ion-input>
+				</ion-item>
+				<br/>
+				<ion-row>
+					<ion-button data-test="create-account-cancel-button" (click)="onCancelBtnTap($event)">Cancel</ion-button>
+					<ion-button data-test="create-account-save-button" [disabled]="!isSaveBtnEnabled()" (click)="onOKBtnTap($event)">OK</ion-button>
+				</ion-row>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+</ion-content>

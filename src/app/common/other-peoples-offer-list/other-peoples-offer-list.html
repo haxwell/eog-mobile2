@@ -1,0 +1,31 @@
+<ion-item-group >
+	<ion-item-sliding #slidingItem>
+		<ion-item>
+			<button>
+				<span>There are no matching offers :/</span><br/>
+			</button>
+		</ion-item>
+	</ion-item-sliding>
+</ion-item-group>
+<ion-item-group *ngFor="let offer of getListOfOffers()">
+
+	<ion-item-sliding #slidingItem (click)="onViewOffer(offer)">
+		<ion-item>
+			<button>
+				<ion-avatar slot="start">
+					<img id="offerAvatarImg" class="getAvatarCSSClassString(offer)" src="getThumbnailImage(offer)" alt="profile_image">
+				</ion-avatar>
+
+				<span class="offerTitle">{{offer.title}}</span><br/>
+				
+				<ion-icon slot="start" [ngStyle]="{'color':getAlreadyRequestedIconColor(offer)}" name="megaphone"> </ion-icon>
+				<ion-icon slot="start" [ngStyle]="{'color':getSufficientPointsIconColor(offer)}" name="pricetag"></ion-icon>
+				<ion-icon slot="start" *ngIf="hasOfferBeenPreviouslyRequested(offer)" [ngStyle]="{'color':getSufficientTimeIconColor(offer)}" name="clock"></ion-icon>
+				<ion-icon slot="start" *ngIf="areRecommendationsRequired(offer)" [ngStyle]="{'color':getNecessaryRecommendationsIconColor(offer)}" name="people"></ion-icon>
+				- <span class="offerQuantity">{{offer.quantity}} {{offer.quantityDescription}}</span><br/>
+				<span class="offerDesc">{{offer.description}}</span>
+			</button>
+		</ion-item>
+
+	</ion-item-sliding>
+</ion-item-group>

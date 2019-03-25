@@ -1,0 +1,116 @@
+<ion-header>
+	<easyah-header></easyah-header>
+</ion-header>
+
+<ion-content padding>
+
+	<ion-grid >
+			<ion-row >
+				<ion-item no-lines>
+					<button ion-button (click)="onGoBackBtnTap($event)">Go Back</button>
+					<button *ngIf="isCurrentUsersProfile()" ion-button item-right (click)="onChangePasswordBtnClick($event)">Change Password</button>
+					<button *ngIf="isCurrentUsersProfile()" round ion-button item-right (click)="onEditProfileBtnClick($event)"><ion-icon slot="start" class="whiteText profileIcon" name="create"></ion-icon></button>
+				</ion-item>
+			</ion-row>
+
+			<ion-row>
+				<div class="card">
+					<img id="profileDisplayHeaderImg" [class]="getAvatarCSSClassString()" [src]="getThumbnailImage()" alt="profile_image">
+				</div>
+			</ion-row>
+
+			<ion-row>
+				<div class="centered">
+					<br/>
+					<span class="cornfieldBlueColor profileName">{{getModelAttr('realname')}}</span>
+					<br/>
+					<span class="cornfieldBlueColor profileDescription">{{getModelAttr('description')}}</span>
+				</div>
+			</ion-row>			
+			<ion-row>
+				<br/>
+			</ion-row>
+			<ion-row>
+				<table class="centered">
+					<tr>
+						<span *ngIf="isCurrentUserAllowedToSeePhoneInfo()">
+							<td>
+								<ion-icon slot="start" class="cornfieldBlueColor profileIcon" name="phone-portrait"></ion-icon>
+							</td>
+							<td [ngStyle]="{'padding':'0 0 0 1.5em'}">
+								<span class="cornfieldBlueColor">{{getModelAttr('phone')}}</span>
+							</td>
+						</span>
+						<td [ngStyle]="{'padding':'0 1.5em 0 1.5em'}">
+						</td>
+						<span *ngIf="isCurrentUserAllowedToSeeEmailInfo()">						
+							<td>
+								<ion-icon slot="start" class="cornfieldBlueColor profileIcon" name="mail"></ion-icon>
+							</td>
+							<td [ngStyle]="{'padding':'0 0 0 1.5em'}">
+								<span class="cornfieldBlueColor">{{getModelAttr('email')}}</span>
+							</td>
+						</span>
+					</tr>
+				</table>
+			</ion-row>		
+	</ion-grid>
+
+	<ion-row *ngIf="!isCurrentUsersProfile()">
+		<div class="centered">
+			<button ion-button [disabled]="!isSendPointBtnAvailable()" (click)="onSendPointBtnTap($event)">Send Point</button>
+			<button ion-button [disabled]="!isSendRecommendBtnAvailable()" (click)="onSendRecommendationBtnTap($event)">Send Recommendation</button>
+		</div>
+	</ion-row>
+
+	<br/>
+	<!-- <ion-row *ngIf="!isCurrentUsersProfile()"> -->
+	<ion-row>
+		<div class="centered">
+			<ion-list>
+				<ion-list-header class="listHeader">
+					Profile Info
+				</ion-list-header>
+				<table>
+					<tr>
+						<td class="ptsTdElement">
+							<span class="displayBlock">{{getAllTimePointCount()}}</span> All Time Points
+						</td>
+						<td class="ptsTdElement">
+							<span class="displayBlock">{{getSuccessfulRequestPercentageAsString()}}</span> Successful Request %
+						</td>
+						<td class="ptsTdElement">
+							<span class="displayBlock">{{getHowLongAgoForMostRecentDisputedRequest()}}</span> Most Recent Dispute
+						</td>
+					</tr>
+				</table>	
+			</ion-list>
+		</div>
+	</ion-row>
+
+	<div [ngStyle]="{'padding-top':'2em'}">
+	</div>
+
+	<ion-row *ngIf="isCurrentUsersProfile()">
+		<div class="centered">
+			<ion-list>
+				<ion-list-header class="listHeader">
+					Communication Settings
+				</ion-list-header>
+				When you accept an offer, the other user can see your [ {{getContactInfoVisibilityDisplayString()}} ].
+			</ion-list>
+		</div>
+	</ion-row>
+
+	<ion-row *ngIf="isCurrentUsersProfile()">
+		<div class="centered">
+			<ion-list>
+				<ion-list-header class="listHeader">
+					Location Settings
+				</ion-list-header>
+				Your location is in, or near, [ {{getLocationDisplayString()}} ].
+			</ion-list>
+		</div>
+	</ion-row>
+
+</ion-content>

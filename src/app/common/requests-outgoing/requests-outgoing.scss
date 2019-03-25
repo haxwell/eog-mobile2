@@ -1,0 +1,68 @@
+ion-card-header {
+   white-space: normal !important;
+   max-width: none !important;
+   width: 100%;
+}
+
+.douName {
+  font-size: .65em;
+  font-style: italic;
+}
+
+.douMessage {
+  font-size: .9em;
+}
+
+.waitingOnDirectionallyOppositeUser {
+  background-color: lightgray;
+}
+
+centered {
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+}
+
+$categories: (
+ ionic: color($colors, primary),
+ pending: yellow,
+ accepted: green,
+ declined: red,
+ declinedAndHidden: red,
+ completedAwaitingApproval: yellow,
+ notCompleteAwaitingResolution: red,
+ cancelled: red
+);
+
+@function auxiliary-categories() {
+  @return map-remove($categories);
+}
+
+$categories2: (
+ ionic: color($colors, primary),
+ pending: lightgrey,
+ accepted: white,
+ declined: white,
+ completedAwaitingApproval: white,
+ notCompleteAwaitingResolution: lightgrey,
+ cancelled: white
+);
+
+@function auxiliary-categories2() {
+  @return map-remove($categories2);
+}
+
+requests-outgoing-view {
+  @each $track, $value in auxiliary-categories() {
+   ion-item-sliding[track=#{$track}] ion-label {
+     border-left: 6px solid $value;
+     padding-left: 10px;
+   }
+  }
+
+  @each $track, $value2 in auxiliary-categories2() {
+   ion-item-sliding[track=#{$track}] ion-label {
+   		background-color: $value2;
+   }
+  }
+}

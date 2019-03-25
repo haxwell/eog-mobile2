@@ -1,0 +1,52 @@
+<ion-header>
+	<easyah-header></easyah-header>
+</ion-header>
+
+<ion-content padding>
+
+		<ion-list #searchOfferResultList>
+				<ion-item-divider sticky>
+					<ion-label>
+						Offer Results
+					</ion-label>
+				</ion-item-divider>
+
+			<other-peoples-offer-list [offers]="getOfferResults()">
+			</other-peoples-offer-list>
+	
+		</ion-list>
+
+		<ion-list #searchUserResultList>
+				<ion-item-divider sticky>
+					<ion-label>
+						User Results
+					</ion-label>
+				</ion-item-divider>
+
+			<ion-item-group *ngIf="isUsersResultsEmpty()">
+				<ion-item-sliding #slidingItem>
+					<button ion-item>
+						<span >There are no matching users :/</span><br/>
+					</button>
+				</ion-item-sliding>
+			</ion-item-group>
+
+			<ion-item-group *ngFor="let user of getUsersResults()">
+
+				<ion-item-sliding #slidingItem (click)="onViewUser(user)">
+					<button ion-item>
+						<ion-avatar *ngIf="isProfileImageAvailable(user)" item-start>
+							<img [src]="getProfileImageFilepath(user)">
+						</ion-avatar>
+						<ion-avatar *ngIf="!isProfileImageAvailable(user)" item-start>
+							<img src="assets/img/mushroom.jpg">
+						</ion-avatar>
+
+						<span class="userRealname">{{user.realname}}</span>
+					</button>
+
+				</ion-item-sliding>
+			</ion-item-group>
+		</ion-list>
+
+</ion-content>

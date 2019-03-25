@@ -1,0 +1,30 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>
+			Cancel a Request
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-label>You are about to CANCEL a request.</ion-label>
+	<div *ngIf="isRequestAccepted()"> 
+		<br/>
+		{{request.directionallyOppositeUser.realname}} has already accepted your request.
+		They may have committed time and resources to doing this for you.<br/><br/>
+		If you cancel, they will get all the points you both agreed upon!<br/>
+	</div>
+	<br/>
+	<ion-label>{{request.title}}</ion-label>
+
+	<ion-row *ngIf="isRequestAccepted()"> 
+		<ion-label>Type the word cancel, and then press the YES! button if you're sure.</ion-label>
+		<ion-input type="text" placeholder="type cancel here..." [(ngModel)]="confirmationString" #ctrl="ngModel" required></ion-input>		
+	</ion-row>
+
+	<ion-row>
+		<button ion-button (click)="onCancelBtnTap($event)">NO, don't do it!</button>
+		<button ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap($event)">YES, cancel it!</button>
+	</ion-row>
+
+</ion-content>

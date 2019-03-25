@@ -1,0 +1,38 @@
+.card {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.fore-div {
+	background-color: white;
+	position: absolute;
+}
+
+#offerDisplayHeaderImg {
+	height: 275px;
+	display: block;
+	margin: 0 auto;
+}
+
+.displayOfferSectionHeader {
+	display: block;
+	padding-bottom: 1em;
+	font-size: 1.2em;
+	font-weight: 300;
+}
+
+#displayOfferTitle {
+	font-size: 1.6em;
+	font-weight: bold;
+}
+
+#displayOfferDescription {
+	font-size: 1.15em;
+	font-weight: bold;
+}
+
+#displayOfferQuantity {
+	font-size: 1.15em;
+	font-weight: bold;
+}

@@ -1,0 +1,23 @@
+
+.displayOfferSectionHeader {
+	display: block;
+	padding-bottom: 1em;
+	font-size: 1.2em;
+	font-weight: 300;
+}
+
+.editOfferImage {
+	height: 5em;
+	width: 5em;
+}
+
+#offerQuantity > input { 
+	margin-top: 0;
+	margin-left: .6em;
+	font-size: 1.25em;
+}
+
+#offerQuantityDesc > input { 
+	margin-top: 0;
+	font-size: 1.25em;
+}

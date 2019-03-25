@@ -1,0 +1,98 @@
+<ion-header>
+	<easyah-header></easyah-header>
+</ion-header>
+
+<ion-content>
+	<ion-grid>
+		<ion-row>
+			<ion-item no-lines>
+				<ion-label color="primary" stacked>Title: </ion-label>
+				<ion-input type="text" placeholder="Teach a skill..." (ionChange)="handleTitleChange($event)" [disabled]="!isModelTitleEditable()" [(ngModel)]="model.title" #ctrl="ngModel" required></ion-input>
+			</ion-item>
+		</ion-row>
+		<ion-row>
+			<ion-item no-lines>
+				<ion-label color="primary" stacked>Quantity: </ion-label>
+			</ion-item>
+			<ion-row>
+				<ion-col col-2>
+					<ion-input id="offerQuantity" type="number" (ionChange)="handleQuantityChange($event)" [disabled]="!isModelQuantityEditable()" [(ngModel)]="model.quantity" #ctrl="ngModel" required></ion-input>
+				</ion-col>
+				<ion-col>
+					<ion-input id="offerQuantityDesc" type="text" maxlength="50" placeholder="Offered units" (ionChange)="handleQuantityDescriptionChange($event)" [disabled]="!isModelQuantityDescEditable()" [(ngModel)]="model.quantityDescription" #ctrl="ngModel" required></ion-input>
+				</ion-col>
+			</ion-row>
+		</ion-row>
+		<ion-row>
+			<ion-item>
+				<ion-label color="primary" stacked>Description: </ion-label>
+				<ion-textarea rows="5" placeholder="I have many moons experience in XYZ and I will teach..." (ionChange)="handleDescriptionChange($event)" [disabled]="!isModelDescriptionEditable()" [(ngModel)]="model.description" #ctrl="ngModel" required></ion-textarea>
+			</ion-item>
+		</ion-row>
+		<ion-row>
+			<span class="displayOfferSectionHeader">
+				Rules
+				<ion-buttons>
+					<button ion-button end (click)="onNewRuleBtnTap($event)">
+						<ion-icon slot="start" name="add"></ion-icon>
+					</button>
+				</ion-buttons>
+			</span>
+
+			<ion-item>
+				<span *ngIf="getRequiredPointsQuantity() === 0">
+					Rules describe who can request this offer from you. Set some points!
+				</span>
+				<span *ngIf="getRequiredPointsQuantity() > 0">
+					<i>This offer requires {{getRequiredPointsQuantityString()}}</i>
+					<span *ngIf="areRecommendationsRequired()">
+						<i> and the following recommendations: </i><br/>
+						<span class="blockItem" *ngFor="let rec of getRequiredUserRecommendations()">
+							{{rec.userObj.realname}}<br/>
+						</span>
+					</span>
+				</span>
+			</ion-item>
+		</ion-row>
+
+		<ion-row>
+			<span class="displayOfferSectionHeader">
+				Keywords
+				<ion-buttons>
+					<button ion-button (click)="onAddKeywordBtnTap($event)">
+						<ion-icon slot="start" name="add"></ion-icon>
+					</button>
+				</ion-buttons>
+			</span>
+			<ion-item *ngIf="offerHasNoKeywords()">
+				<span >
+					Keywords are descriptive words and phrases. Add some that describe this Offer!
+				</span>
+			</ion-item>
+			<ion-item *ngIf="!offerHasNoKeywords()">
+				<span *ngFor="let item of model.keywords">
+					<span class="blockItem" (press)="onIndividualKeywordPress()">{{item.text}}</span>
+				</span>
+			</ion-item>
+		</ion-row>
+
+		<ion-row>
+			<span class="displayOfferSectionHeader">
+				Image
+				<ion-buttons>
+					<button ion-button (click)="onThumbnailClick($event)">
+						<ion-icon slot="start" name="add"></ion-icon>
+					</button>
+				</ion-buttons>
+			</span>
+			<ion-item *ngIf="isThumbnailImageAvailable()">
+					<img [class]="getAvatarCSSClassString()" [src]="getThumbnailImage()" alt="profile_image" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)">
+			</ion-item>
+		</ion-row>	
+
+		<ion-row>
+			<button ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap(true)">Save</button>
+			<button ion-button (click)="onCancelBtnTap()">Cancel</button>
+		</ion-row>
+	</ion-grid>
+</ion-content>

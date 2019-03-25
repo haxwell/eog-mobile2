@@ -1,0 +1,16 @@
+.wideButton {
+	width: 100%;
+}
+
+#login-logo-img {
+	display: block;
+	margin: 0 auto;
+	height: 290px;
+	width: 238px;
+}
+
+#lostPasswordBtn {
+	--ion-color-primary-contrast: grey;
+	--ion-color-primary: white;
+	padding-top: 2em;
+}
