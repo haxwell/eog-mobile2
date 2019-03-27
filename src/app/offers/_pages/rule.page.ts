@@ -9,7 +9,7 @@ import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'page-offer-detail-rule',
-  templateUrl: 'rule.html'
+  templateUrl: 'rule.page.html'
 })
 export class RulePage {
 

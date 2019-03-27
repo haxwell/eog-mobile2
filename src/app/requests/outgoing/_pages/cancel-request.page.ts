@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
-import { NavController, NavParams, ViewController, Events } from 'ionic-angular';
+import { Events } from '@ionic/angular';
 
 import { RequestsService } 	from '../../../../app/_services/requests.service';
+
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'page-requests-outgoing-cancel',
@@ -14,14 +18,26 @@ export class CancelOutgoingRequestPage {
 	REQUEST_STATUS_ACCEPTED = 3;
 
 	confirmationString = '';
-	request = undefined;
+	model = undefined;
 	
-	constructor(public navCtrl: NavController, 
-				public params: NavParams,
-				private viewCtrl: ViewController, 
+	constructor(private _location: Location,
+				private _route: ActivatedRoute,
+				private _router: Router,
 				private _requestsService: RequestsService,
 				private _events : Events) {
-		this.request = params.get('request');
+
+	}
+
+	ngOnInit() {
+		let self = this;
+		self._route.paramMap.pipe(
+			switchMap((params) => {
+				let requestId = params.get('requestId')
+				self.model = self._requestsService.getById(requestId);
+
+				return requestId;
+			})
+		)
 	}
 
 	isSaveBtnEnabled() {
@@ -29,24 +45,24 @@ export class CancelOutgoingRequestPage {
 	}
 
 	isRequestAccepted() {
-		return this.request.deliveringStatusId === this.REQUEST_STATUS_ACCEPTED;
+		return this.model.deliveringStatusId === this.REQUEST_STATUS_ACCEPTED;
 	}
 
 	onSaveBtnTap(evt) {
 		let self = this;
-		self._requestsService.cancelOutgoingRequest(this.request).then((data) => {
+		self._requestsService.cancelOutgoingRequest(this.model).then((data) => {
 			
 			// in the case of an outgoing request being cancelled, if it is not accepted by the delivering side, 
 			//  then no object is returned from the server, so data == undefined
 
-			let rtnObj = self.isRequestAccepted() ? data : self.request;
+			let rtnObj = self.isRequestAccepted() ? data : self.model;
 
 			self._events.publish("request:outgoing:cancelled", {request: rtnObj});
-			self.viewCtrl.dismiss(true);
+			this._location.back();
 		})
 	}
 
 	onCancelBtnTap(evt) {
-		this.viewCtrl.dismiss(false);
+		this._location.back();
 	}
 }

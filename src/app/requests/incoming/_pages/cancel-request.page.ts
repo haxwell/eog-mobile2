@@ -4,29 +4,28 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { RequestsService } 	from '../../../../app/_services/requests.service';
 
-import { Constants } from '../../../../_constants/constants';
-
 import { switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'page-requests-outgoing-complete',
-  templateUrl: 'complete-request.page.html'
+  selector: 'page-requests-incoming-cancel',
+  templateUrl: 'cancel-request.page.html'
 })
 
-export class CompleteOutgoingRequestPage {
+export class CancelRequestPage {
 
+	confirmationString = '';
 	model = undefined;
 	
 	constructor(private _location: Location,
 				private _route: ActivatedRoute,
 				private _router: Router,
-				private _requestsService: RequestsService,
-				private _constants: Constants) {
+				private _requestsService: RequestsService) {
 
 	}
 
 	ngOnInit() {
 		let self = this;
+
 		self._route.paramMap.pipe(
 			switchMap((params) => {
 				let requestId = params.get('requestId')
@@ -37,15 +36,16 @@ export class CompleteOutgoingRequestPage {
 		)
 	}
 
-	isRequestInDispute() {
-		return this.model["deliveringStatusId"] === this._constants.REQUEST_STATUS_COMPLETED && 
-				this.model["requestingStatusId"] === this._constants.REQUEST_STATUS_NOT_COMPLETED;
+	isSaveBtnEnabled() {
+		return this.confirmationString.toLowerCase() === 'cancel';
 	}
 
 	onSaveBtnTap(evt) {
-		this._requestsService.completeOutgoingRequest(this.model).then((obj) => {
-			this._location.back();
-		})
+		if (this.isSaveBtnEnabled()) {
+			this._requestsService.cancelIncomingRequest(this.model).then((obj) => {
+				this._location.back();
+			})
+		}
 	}
 
 	onCancelBtnTap(evt) {

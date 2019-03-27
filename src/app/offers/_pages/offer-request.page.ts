@@ -8,7 +8,7 @@ import { ModalService } 			from '../../../app/_services/modal.service'
 import { UserService } 				from '../../../app/_services/user.service'
 import { UserPreferencesService } 	from '../../../app/_services/user-preferences.service'
 
-import { OutgoingRequestMadeTutorialPage } from './outgoing-request-made-tutorial'
+import { OutgoingRequestMadeTutorialPage } from './outgoing-request-made-tutorial.page'
 
 import { switchMap } from 'rxjs/operators';
 

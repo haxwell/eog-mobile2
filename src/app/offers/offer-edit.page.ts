@@ -6,7 +6,7 @@ import { File } from '@ionic-native/file/ngx'
 
 import { Events } from '@ionic/angular';
 
-import { RulePage } from './_pages/rule'
+import { RulePage } from './_pages/rule.page'
 import { KeywordEntryPage } from '../common/keyword.entry/keyword.entry'
 import { ChoosePhotoSourcePage } from '../common/choose-photo-source/choose-photo-source'
 

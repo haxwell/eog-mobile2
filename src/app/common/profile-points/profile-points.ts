@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 
 import { PointsService } from '../../../app/_services/points.service'
 import { UserService } from '../../../app/_services/user.service'
-import { ProfileService } from '../_services/profile.service'
+import { ProfileService } from '../../../app/_services/profile.service'
 
-import { Events } from 'ionic-angular';
+import { Events } from '@ionic/angular';
 
 @Component({
   selector: 'profile-points',

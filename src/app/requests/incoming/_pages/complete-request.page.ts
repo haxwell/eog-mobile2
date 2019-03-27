@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-
-import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { Location } from '@angular/common';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { RequestsService } 	from '../../../../app/_services/requests.service';
 import { ApiService } 	from '../../../../app/_services/api.service';
@@ -8,32 +8,44 @@ import { environment } from '../../../../_environments/environment';
 
 import { Constants } from '../../../../_constants/constants';
 
+import { switchMap } from 'rxjs/operators';
+
 @Component({
   selector: 'page-requests-incoming-complete',
-  templateUrl: 'complete-request.html'
+  templateUrl: 'complete-request.page.html'
 })
 
 export class CompleteRequestPage {
 
 	confirmationString = '';
-	request = undefined;
+	model = undefined;
 	requestAgainDelayCodes = undefined;
 	selectedRequestAgainDelayId = undefined;
 	
-	constructor(public navCtrl: NavController, 
-				public params: NavParams,
-				private viewCtrl: ViewController, 
+	constructor(private _location: Location,
+				private _route: ActivatedRoute,
+				private _router: Router,
 				private _requestsService: RequestsService,
 				private _apiService: ApiService,
 				private _constants : Constants) {
-		this.request = params.get('request');
+
 	}
 
 	ngOnInit() {
 		let self = this;
+
+		self._route.paramMap.pipe(
+			switchMap((params) => {
+				let requestId = params.get('requestId')
+				self.model = self._requestsService.getById(requestId);
+
+				return requestId;
+			})
+		)
+
 		let url = environment.apiUrl + "/api/requestAgainDelayCodes";
 		this._apiService.get(url).subscribe((data) => {
-			self.requestAgainDelayCodes = JSON.parse(data["_body"]);
+			self.requestAgainDelayCodes = data;
 			self.selectedRequestAgainDelayId = self.requestAgainDelayCodes.find((obj) => { return obj["milliseconds"] === 1;})["id"];
 		}, (err) => {
 			console.log("CompleteRequestPage ERROR");
@@ -46,7 +58,7 @@ export class CompleteRequestPage {
 	}
 
 	isRequestInDispute() {
-		return this.request["deliveringStatusId"] === this._constants.REQUEST_STATUS_COMPLETED;
+		return this.model["deliveringStatusId"] === this._constants.REQUEST_STATUS_COMPLETED;
 	}
 
 	getSelectedRequestAgainDelayId() {
@@ -55,14 +67,14 @@ export class CompleteRequestPage {
 
 	onSaveBtnTap(evt) {
 		if (this.isSaveBtnEnabled()) {
-			this.request["requestAgainDelayCode"] = this.getSelectedRequestAgainDelayId(); 
-			this._requestsService.completeIncomingRequest(this.request).then((obj) => {
-				this.viewCtrl.dismiss(obj);			
+			this.model["requestAgainDelayCode"] = this.getSelectedRequestAgainDelayId(); 
+			this._requestsService.completeIncomingRequest(this.model).then((obj) => {
+				this._location.back();
 			});
 		}
 	}
 
 	onCancelBtnTap(evt) {
-		this.viewCtrl.dismiss();
+		this._location.back();
 	}
 }

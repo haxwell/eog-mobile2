@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { Events } from 'ionic-angular';
+import { Events } from '@ionic/angular';
 
 import { ProfileService } from '../../_services/profile.service'
-import { PictureService } from '../../app/_services/picture.service'
-import { UserService } from '../../app/_services/user.service'
+import { PictureService } from '../../_services/picture.service'
+import { UserService } from '../../_services/user.service'
 
-import EXIF from 'exif-js'
+import * as EXIF from 'exif-js'
 
 @Component({
   selector: 'profile-header',

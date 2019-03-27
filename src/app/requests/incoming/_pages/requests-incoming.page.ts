@@ -2,37 +2,40 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
-import { ModalService } from 'ionic-angular';
-import { LoadingController } from 'ionic-angular';
-import { Events } from 'ionic-angular';
+import { Events } from '@ionic/angular';
 
-import { RequestsService } from '../../../app/_services/requests.service'
-import { PictureService } from '../../../app/_services/picture.service'
+import { ModalService } from '../../../../app/_services/modal.service'
+import { LoadingService } from '../../../../app/_services/loading.service'
+import { RequestsService } from '../../../../app/_services/requests.service'
+import { PictureService } from '../../../../app/_services/picture.service'
 
-import { Constants } from '../../../_constants/constants'
+import { Constants } from '../../../../_constants/constants'
 
 /* TODO: Move Offers to the Common area. Since it is called from this common component. */
-import { OfferDisplayPage } from '../../offers/display.offer'
+import { OfferPage } from '../../../offers/offer.page'
 
-import { AcceptRequestPage } from '../requests/incoming/_pages/accept.request'
-import { DeclineRequestPage } from '../requests/incoming/_pages/decline.request'
-import { CompleteRequestPage } from '../requests/incoming/_pages/complete.request'
-import { CancelRequestPage } from '../requests/incoming/_pages/cancel.request'
-import { ProfilePage } from '../profile/profile.page'
+import { AcceptRequestPage } from './accept-request.page'
+import { DeclineRequestPage } from './decline-request.page'
+import { CompleteRequestPage } from './complete-request.page'
+import { CancelRequestPage } from './cancel-request.page'
+
+import { ProfilePage } from '../../../profile/profile.page'
 
 @Component({
   selector: 'requests-incoming-view',
-  templateUrl: 'requests-incoming.html'
+  templateUrl: 'requests-incoming.page.html'
 })
 export class RequestsIncomingView {
 
 	model = undefined;
-	loading = undefined;
 	dirty = false;
 	theOtherUser = undefined;
 	
-	constructor(private _modalService: ModalService,
-				private loadingCtrl: LoadingController,
+	constructor(private _location: Location,
+				private _route: ActivatedRoute,
+  				private _router: Router,
+				private _modalService: ModalService,
+				private _loadingService: LoadingService,
 				private _requestsService: RequestsService,
 				private _pictureService: PictureService,
 				private _constants: Constants,
@@ -93,16 +96,14 @@ export class RequestsIncomingView {
 	ngOnInit() {
 		var self = this;
 
-		self.loading = self.loadingCtrl.create({
+		self._loadingService.show({
 			content: 'Please wait...'
 		});
-
-		self.loading.present();
 
 		this._requestsService.getIncomingRequestsForCurrentUser().then((data: Array<Object>) => {
 			self.model = data;
 			self.dirty = false;
-			self.loading.dismiss();
+			self._loadingService.dismiss();
 		});
 	};
 
@@ -247,30 +248,30 @@ export class RequestsIncomingView {
 
 	onAcceptBtnTap(request) {
 		let self = this;
-		let modal = this._modalService.show(AcceptRequestPage, {request: request, onDidDismissFunc: (data => { 
+		this._modalService.show(AcceptRequestPage, {request: request, onDidDismissFunc: (data => { 
 			self.replaceModelElement(data)
-		});
+		})});
 	}
 
 	onDeclineBtnTap(request) {
 		let self = this;
-		let modal = this._modalService.show(DeclineRequestPage, {request: request, onDidDismissFunc: (data => { 
+		this._modalService.show(DeclineRequestPage, {request: request, onDidDismissFunc: (data => { 
 			self.replaceModelElement(data)
-		});
+		})});
 	}
 
 	onCancelBtnTap(request) {
 		let self = this;
-		let modal = this._modalService.show(CancelRequestPage, {request: request, onDidDismissFunc: (data => { 
+		this._modalService.show(CancelRequestPage, {request: request, onDidDismissFunc: (data => { 
 			self.replaceModelElement(data)
-		});
+		})});
 	}
 
 	onCompleteBtnTap(request) {
 		let self = this;
-		let modal = this._modalService.show(CompleteRequestPage, {request: request, onDidDismissFunc: (data => { 
+		this._modalService.show(CompleteRequestPage, {request: request, onDidDismissFunc: (data => { 
 			self.replaceModelElement(data)
-		});
+		})});
 	}
 
 	onHideRequestBtnTap(request) {

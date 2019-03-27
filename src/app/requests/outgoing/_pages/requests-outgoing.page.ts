@@ -1,28 +1,27 @@
 import { Component } from '@angular/core';
-import { ModalController } from 'ionic-angular';
-import { NavController } from 'ionic-angular';
-import { LoadingController } from 'ionic-angular';
-import { Events } from 'ionic-angular';
+import { Location } from '@angular/common';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Events } from '@ionic/angular';
 
-import { RequestsService } from '../../../app/_services/requests.service'
-import { PictureService } from '../../../app/_services/picture.service'
+import { ModalService } from '../../../../app/_services/modal.service'
+import { LoadingService } from '../../../../app/_services/loading.service'
+import { RequestsService } from '../../../../app/_services/requests.service'
+import { PictureService } from '../../../../app/_services/picture.service'
 
-import { Constants } from '../../../_constants/constants'
+import { Constants } from '../../../../_constants/constants'
 
 /* TODO: Move Offers to the Common area. Since it is called from this common component. */
-import { OfferDisplayPage } from '../../offers/display.offer'
+import { OfferPage } from '../../../offers/offer.page'
 
-import { PermanentlyDismissUnresolvedRequestPage } from '../../../pages/requests/outgoing/_pages/permanently-dismiss-unresolved-request'
-import { NotCompleteOutgoingRequestPage } from '../../../pages/requests/outgoing/_pages/not.complete.request'
-import { CompleteOutgoingRequestPage } from '../../../pages/requests/outgoing/_pages/complete.request'
-import { CancelOutgoingRequestPage } from '../../../pages/requests/outgoing/_pages/cancel.request'
-import { ProfilePage } from '../../../pages/profile/profile'
-
-//import { CompleteRequestPage } from '../../../pages/requests/incoming/_pages/complete.request'
+import { PermanentlyDismissUnresolvedRequestPage } from './permanently-dismiss-unresolved-request.page'
+import { NotCompleteOutgoingRequestPage } from './not-complete-request.page'
+import { CompleteOutgoingRequestPage } from './complete-request.page'
+import { CancelOutgoingRequestPage } from './cancel-request.page'
+import { ProfilePage } from '../../../profile/profile.page'
 
 @Component({
   selector: 'requests-outgoing-view',
-  templateUrl: 'requests-outgoing.html'
+  templateUrl: 'requests-outgoing.page.html'
 })
 
 export class RequestsOutgoingView {
@@ -30,26 +29,25 @@ export class RequestsOutgoingView {
 	model = undefined;
 	loading = undefined;
 
-	constructor(public navCtrl: NavController,
-				private loadingCtrl: LoadingController,
-				private modalCtrl: ModalController,
+	constructor(private _location: Location,
+				private _route: ActivatedRoute,
+  				private _router: Router,
+				private _loadingService: LoadingService,
+				private _modalService: ModalService,
 				private _requestsService: RequestsService,
 				private _pictureService: PictureService,
 				private _constants: Constants,
 				private _events: Events) { 
 
-		let func = (data) => {
-			this.replaceModelElement(data["request"]);
-		};
-
-		this._events.subscribe('request:saved', func);
-		this._events.subscribe('request:accepted', func);
-		this._events.subscribe('request:completed', func);
-		this._events.subscribe('request:outgoing:cancelled', func);
-		this._events.subscribe('request:declined', func);
-		this._events.subscribe('request:deleted', func);
-		this._events.subscribe('request:inamicablyResolved', func);
+		this._events.subscribe('request:saved', () => { this.ngOnInit() });
+		this._events.subscribe('request:accepted', () => { this.ngOnInit() });
+		this._events.subscribe('request:completed', () => { this.ngOnInit() });
+		this._events.subscribe('request:outgoing:cancelled', () => { this.ngOnInit() });
+		this._events.subscribe('request:declined', () => { this.ngOnInit() });
+		this._events.subscribe('request:deleted', () => { this.ngOnInit() });
+		this._events.subscribe('request:inamicablyResolved', () => { this.ngOnInit() });
 	}
+
 
 	getTrack(request) {
 		if (request["deliveringStatusId"] === this._constants.REQUEST_STATUS_PENDING)
@@ -78,29 +76,16 @@ export class RequestsOutgoingView {
 
 	getDirection() { return "outgoing"; }
 
-	replaceModelElement(request) {
-		let temp = this.model.filter((obj) => { return obj["id"] !== request["id"]; });
-		temp.push(request);
-		this.model = temp;
-	}
-
-	clearModelElement(request) {
-		let temp = this.model.filter((obj) => { return obj["id"] !== request["id"]; });
-		this.model = temp;
-	}
-
 	ngOnInit() {
 		var self = this;
 
-		self.loading = self.loadingCtrl.create({
+		self._loadingService.show({
 			content: 'Please wait...'
 		});
 
-		self.loading.present();
-
 		this._requestsService.getOutgoingRequestsForCurrentUser().then((data: Array<Object>) => {
 				self.model = data;
-				self.loading.dismiss();
+				self._loadingService.dismiss();
 			});
 	}
 
@@ -236,53 +221,41 @@ export class RequestsOutgoingView {
 	}
 
 	onViewContactInfoBtnTap(request) {
-		this.navCtrl.push(ProfilePage, { userId: request["directionallyOppositeUser"]["id"], readOnly: true });
+		this._router.navigate(['/profile/' + request["directionallyOppositeUser"]["id"]])
 	}
 
 	onViewOffer(request) {
-		this.navCtrl.push(OfferDisplayPage, { offer: request.offer });
+		this._router.navigate(['/offer/' + request.offer["id"]]);
 	}
+
 
 	onPermanentlyDismissBtnTap(request) {
 		let self = this;
-		let modal = this.modalCtrl.create(PermanentlyDismissUnresolvedRequestPage, {request: request});
-		modal.onDidDismiss(data => { self.replaceModelElement(data) });
-		modal.present();
+		this._modalService.show(PermanentlyDismissUnresolvedRequestPage);
 	}
 
 	onCompleteOutgoingBtnTap(request) {
 		let self = this;
-		let modal = this.modalCtrl.create(CompleteOutgoingRequestPage, {request: request});
-		modal.onDidDismiss(data => { self.replaceModelElement(data); self._events.publish('request:markedApprovedAfterCompletion'); });
-		modal.present();
+		this._modalService.show(CompleteOutgoingRequestPage, {request: self.model, onDidDismissFunc: data => { self._events.publish('request:markedApprovedAfterCompletion'); }});
 	}
 
 	onNotCompleteBtnTap(request) {
 		let self = this;
-		let modal = this.modalCtrl.create(NotCompleteOutgoingRequestPage, {request: request});
-		modal.onDidDismiss(data => { self.replaceModelElement(data) });
-		modal.present();
+		this._modalService.show(NotCompleteOutgoingRequestPage);
 	}
 
 	onCancelBtnTap(request) {
 		let self = this;
-		let modal = this.modalCtrl.create(CancelOutgoingRequestPage, {request: request});
-		modal.onDidDismiss(data => { if (data === true) self.clearModelElement(request); });
-		modal.present();
+		this._modalService.show(CancelOutgoingRequestPage);
 	}
 
 	onAcknowledgeDeclinedRequestBtnTap(request) {
 		let self = this;
-		self._requestsService.acknowledgeDeclinedRequest(request).then((data) => {
-			self.replaceModelElement(data);
-		});
+		self._requestsService.acknowledgeDeclinedRequest(request);
 	}
 
 	onAcknowledgeCancelledRequestBtnTap(request) {
 		let self = this;
-		self._requestsService.acknowledgeCancelledRequest(request).then((data) => {
-			self.replaceModelElement(data);
-		});
+		self._requestsService.acknowledgeCancelledRequest(request);
 	}
-
 }

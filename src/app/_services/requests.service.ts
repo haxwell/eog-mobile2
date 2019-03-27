@@ -122,6 +122,16 @@ export class RequestsService {
 			})
 		});
 
+		self._functionPromiseService.initFunc(self._constants.FUNCTION_KEY_REQUESTS_BY_ID, (data) => {
+			return new Promise((resolve, reject) => {
+				let url = environment.apiUrl + "/api/request/" + data["requestId"];
+
+				self._apiService.get(url).subscribe((obj: any) => {
+					resolve(obj);
+				})
+			})
+		})
+
 		self.isGetModelFuncInitialized = true;
 	}
 
@@ -133,6 +143,12 @@ export class RequestsService {
 
 		let data = {userId: self._userService.getCurrentUser()['id'], direction: direction};
 		return self._functionPromiseService.get(data['userId']+direction, self._constants.FUNCTION_KEY_REQUESTS_BY_USER_AND_DIRECTION_GET, data);
+	}
+
+	getById(requestId) {
+		let self = this;
+		let data = {userId: self._userService.getCurrentUser()['id'], requestId: requestId};
+		return self._functionPromiseService.get(data['userId']+"REQUESTID", self._constants.FUNCTION_KEY_REQUESTS_BY_ID, data);
 	}
 
 	// hack

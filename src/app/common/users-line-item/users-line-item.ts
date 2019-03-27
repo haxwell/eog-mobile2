@@ -1,9 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { NavController, NavParams, Events } from 'ionic-angular';
+import { Location } from '@angular/common';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
-import { ProfilePage } from '../../profile/profile'
+import { Events } from '@ionic/angular';
 
-import { PictureService } from '../../../app/_services/picture.service'
+import { ProfilePage } from '../../profile/profile.page'
+
+import { PictureService } from '../../_services/picture.service'
 
 import { Constants } from '../../../_constants/constants'
 
@@ -18,8 +21,9 @@ export class UsersLineItem {
 	@Input() clickthru = true;
 	profileImageFilepath = undefined;
 
-	constructor(navParams: NavParams, 
-				private navCtrl: NavController,
+	constructor(private _location: Location,
+				private _route: ActivatedRoute,
+				private _router: Router,
 				private _pictureService: PictureService,
 				private _constants : Constants,
                 _events: Events) {
@@ -32,7 +36,7 @@ export class UsersLineItem {
 
 	onViewProfile() {
       if (this.clickthru) 
-      	this.navCtrl.push(ProfilePage, { userId: this.item["id"], readOnly: true });
+      	this._router.navigate(['/profile/' + this.item["id"]])
 	}
 
 	getProfileImageFilepath() {

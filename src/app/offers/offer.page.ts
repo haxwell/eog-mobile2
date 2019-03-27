@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
-import { ModalService } from '../../app/_services/modal.service';
-import { AlertService } from '../../app/_services/alert.service';
-
 import { OfferEditPage } from './offer-edit.page'
 import { OfferRequestPage } from './_pages/offer-request.page'
-import { DeleteOfferPage } from './_pages/delete.offer'
-import { OutgoingRequestMadeTutorialPage } from './_pages/outgoing-request-made-tutorial'
+import { DeleteOfferPage } from './_pages/delete-offer.page'
+import { OutgoingRequestMadeTutorialPage } from './_pages/outgoing-request-made-tutorial.page'
+
+import { ModalService } from '../../app/_services/modal.service';
+import { AlertService } from '../../app/_services/alert.service';
 import { OfferModelService } from '../../app/_services/offer-model.service';
 import { OfferMetadataService } from '../../app/_services/offer-metadata.service';
 import { OfferDetailService } from '../../app/_services/offer-detail.service';

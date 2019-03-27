@@ -18,4 +18,4 @@ import { SearchRoutingModule } from './search-routing.module';
 
   ]
 })
-export class SearchModule {}
+export class SearchPageModule {}

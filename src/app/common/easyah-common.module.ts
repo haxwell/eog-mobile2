@@ -5,8 +5,8 @@ import { NgModule } from '@angular/core';
 import { EasyahHeader } from './easyah-header/easyah-header';
 import { ProfileHeader } from './profile-header/profile-header';
 import { ProfilePoints } from './profile-points/profile-points';
-import { RequestsIncoming } from './requests-incoming/requests-incoming';
-import { RequestsOutgoing } from './requests-outgoing/requests-outgoing';
+import { RequestsIncomingView } from '../requests/incoming/_pages/requests-incoming.page';
+import { RequestsOutgoingView } from '../requests/outgoing/_pages/requests-outgoing.page';
 import { UsersLineItem } from './users-line-item/users-line-item';
 import { OtherPeoplesOfferList } from './other-peoples-offer-list/other-peoples-offer-list';
 
@@ -29,8 +29,8 @@ import { DeclineReasonCodeService } from '../_services/declined-reason-codes.ser
   	EasyahHeader
     ,ProfileHeader
     ,ProfilePoints
-    ,RequestsIncoming
-    ,RequestsOutgoing
+    ,RequestsIncomingView
+    ,RequestsOutgoingView
     ,UsersLineItem
   	,OtherPeoplesOfferList
   ]

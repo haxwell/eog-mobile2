@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-
-import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { Location } from '@angular/common';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { RequestsService } 	from '../../../../app/_services/requests.service';
+
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'page-requests-outgoing-not-complete',
@@ -12,13 +14,25 @@ import { RequestsService } 	from '../../../../app/_services/requests.service';
 export class NotCompleteOutgoingRequestPage {
 
 	confirmationString = undefined;
-	request = undefined;
+	model = undefined;
 	
-	constructor(public navCtrl: NavController, 
-				public params: NavParams,
-				private viewCtrl: ViewController, 
+	constructor(private _location: Location,
+			    private _router: Router,
+			    private _route: ActivatedRoute,
 				private _requestsService: RequestsService) {
-		this.request = params.get('request');
+
+	}
+
+	ngOnInit() {
+		let self = this;
+		self._route.paramMap.pipe(
+			switchMap((params) => {
+				let requestId = params.get('requestId')
+				self.model = self._requestsService.getById(requestId);
+				
+				return requestId;
+			})
+		)
 	}
 
 	isSaveBtnEnabled() {
@@ -27,13 +41,13 @@ export class NotCompleteOutgoingRequestPage {
 
 	onSaveBtnTap(evt) {
 		if (this.isSaveBtnEnabled()) {
-			this._requestsService.notCompleteOutgoingRequest(this.request).then((obj) => {
-				this.viewCtrl.dismiss(obj);
+			this._requestsService.notCompleteOutgoingRequest(this.model).then((obj) => {
+				this._location.back();
 			});
 		}
 	}
 
 	onCancelBtnTap(evt) {
-		this.viewCtrl.dismiss();
+		this._location.back();
 	}
 }

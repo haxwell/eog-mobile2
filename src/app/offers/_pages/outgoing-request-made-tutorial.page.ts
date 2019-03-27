@@ -7,7 +7,7 @@ import { ModalService } 			from '../../../app/_services/modal.service';
 
 @Component({
   selector: 'page-tutorial-outgoing-request-made',
-  templateUrl: 'outgoing-request-made-tutorial.html'
+  templateUrl: 'outgoing-request-made-tutorial.page.html'
 })
 export class OutgoingRequestMadeTutorialPage extends AbstractTutorialPage {
 

@@ -1,28 +1,29 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
-import { NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
-
+import { ModalService } from '../../../../app/_services/modal.service';
 import { RequestsService } 	from '../../../../app/_services/requests.service';
 import { UserPreferencesService } 	from '../../../../app/_services/user-preferences.service';
 
-import { AcceptRequestTutorialPage } from './accept.request.tutorial';
+import { AcceptRequestTutorialPage } from './accept-request.tutorial';
 
 @Component({
   selector: 'page-requests-incoming-accept',
-  templateUrl: 'accept-request.html'
+  templateUrl: 'accept-request.page.html'
 })
 export class AcceptRequestPage {
 
-	request = undefined;
+	model = undefined;
 	showTutorialAfterRequestAccepted = true;
 	
-	constructor(public navCtrl: NavController, 
-				public params: NavParams,
-				private viewCtrl: ViewController, 
-				private _modalCtrl: ModalController,
+	constructor(private _location: Location,
+				private _route: ActivatedRoute,
+				private _router: Router,
+				private _modalService: ModalService,
 				private _requestsService: RequestsService,
 				private _userPreferencesService: UserPreferencesService) {
-		this.request = params.get('request');
+
 	}
 
 	ngOnInit() {
@@ -34,24 +35,18 @@ export class AcceptRequestPage {
 
 	onSaveBtnTap(evt) {
 		var self = this;
-		self._requestsService.acceptIncomingRequest(self.request).then((obj) => {
+		self._requestsService.acceptIncomingRequest(self.model).then((obj) => {
 
 			if (self.showTutorialAfterRequestAccepted) {
-				let modal = self._modalCtrl.create(AcceptRequestTutorialPage, { });
-                  
-                modal.onDidDismiss((data) => { 
-					self.viewCtrl.dismiss(obj);
-				});
-
-				modal.present();			
+				let modal = self._modalService.show(AcceptRequestTutorialPage);
 			} else {
-				self.viewCtrl.dismiss(obj);
+				self._location.back();
 			}
 		})
 	}
 
 	onCancelBtnTap(evt) {
-		this.viewCtrl.dismiss();
+		this._location.back();
 	}
 
 }

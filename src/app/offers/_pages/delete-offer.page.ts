@@ -15,7 +15,7 @@ import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'page-offer-detail-delete',
-  templateUrl: 'delete.offer.html'
+  templateUrl: 'delete-offer.page.html'
 })
 export class DeleteOfferPage {
 

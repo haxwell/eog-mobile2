@@ -8,8 +8,8 @@ const routes: Routes = [
   ,{ path: 'home',        		loadChildren: './home/home.module#HomePageModule',    			canActivate: [CanActivateRouteGuard] }
   ,{ path: 'profile', 			loadChildren: './profile/profile.module#ProfilePageModule', 	canActivate: [CanActivateRouteGuard] }
   ,{ path: 'search', 			loadChildren: './search/search.module#SearchPageModule', 	canActivate: [CanActivateRouteGuard] }
-  //,{ path: 'requests/incoming', loadChildren: './requests/requests.module#ProfilePageModule', 	canActivate: [CanActivateRouteGuard] }
-  //,{ path: 'requests/incoming', loadChildren: './requests/requests.module#ProfilePageModule', 	canActivate: [CanActivateRouteGuard] }
+  ,{ path: 'requests/incoming', loadChildren: './requests/requests.module#RequestPageModule', 	canActivate: [CanActivateRouteGuard] }
+  ,{ path: 'requests/outgoing', loadChildren: './requests/requests.module#RequestPageModule', 	canActivate: [CanActivateRouteGuard] }
   ,{ path: 'offers', 			loadChildren: './offers/offer.module#OfferPageModule', 	canActivate: [CanActivateRouteGuard] }
   //,{ path: 'keywords', 			loadChildren: './keywords/keywords.module#KeywordsPageModule', 	canActivate: [CanActivateRouteGuard] }
   //,{ path: 'recommendations', 			loadChildren: './recommendations/recommendations.module#RecommendationPageModule', 	canActivate: [CanActivateRouteGuard] }
