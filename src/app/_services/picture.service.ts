@@ -285,7 +285,7 @@ export class PictureService {
 
 		let rtn = "";
 
-		if (this._platform.is('android')) {
+		if (obj && this._platform.is('android')) {
 			if (obj["imageOrientation"] === 8)
 				 rtn = "rotate90Counterclockwise";
 			else if (obj["imageOrientation"] === 3)

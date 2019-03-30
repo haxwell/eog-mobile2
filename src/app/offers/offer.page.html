@@ -1,4 +1,5 @@
 <ion-header>
+
 	<easyah-header></easyah-header>
 </ion-header>
 
@@ -38,7 +39,7 @@
 		<ion-row>
 			<ion-item>
 				<span class="displayOfferSectionHeader">Keywords</span>
-				<span *ngFor="let item of model.keywords">
+				<span *ngFor="let item of getModel()['keywords']">
 					<span class="blockItem" >{{item.text}}</span>
 				</span>
 			</ion-item>

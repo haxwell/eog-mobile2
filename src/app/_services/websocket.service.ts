@@ -36,20 +36,23 @@ export class WebsocketService {
 	init(currentUser) {
 		let user = currentUser;
 		let self = this;
-		if (self.client !== undefined) {
-			self.client.disconnect(() => { self.client = undefined; });
-		}
+//		if (self.client !== undefined) {
+//			self.client.disconnect(() => { self.client = undefined; });
+//		}
 
-		self.client = Stomp.client('ws://' + environment.domainPort + '/notifications');
+		var clientFunc = Stomp.Stomp["client"]
+		var client = clientFunc('ws://' + environment.domainPort + '/notifications');
 		
 		let lowercaseUserName: String = user["name"];
 		lowercaseUserName = lowercaseUserName.toLowerCase();
 
-		self.client.connect(lowercaseUserName, user["password"], () => { 
+		client.connect(lowercaseUserName, user["password"], () => { 
 			console.log("STOMP client connected.");
-			self.client.subscribe("/user/queue/message", (data) => {
+			client.subscribe("/user/queue/message", (data) => {
 				console.log(data);
 				self.handle(JSON.parse(data["body"]));
+
+				self.client = client;
 			});
 		});
 	}

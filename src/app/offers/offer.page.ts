@@ -60,25 +60,28 @@ export class OfferPage {
 
 	ngOnInit() {
 		let self = this;
-		self._route.paramMap.pipe(
-			switchMap((params) => {
-				self.offerId = params.get('offerId')
-				self.model = self._offerModelService.get(self.offerId);
+		//self._route.paramMap.pipe
+		self._route.params.subscribe((params) => {
 
-				self._offerModelService.setOfferMetadata(self.model).then((offer) => {
+			self.offerId = params['offerId']
+			
+			self._offerModelService.get(self.offerId).then((model) => {
+				self.model = model;
+
+				self._offerModelService.setOfferMetadata(model).then((offer) => {
 					this.setModel(Object.assign({}, offer));
 				});
-			
+
 				self._offerMetadataService.init();
-				self._offerMetadataService.getMetadataValue(self.model, self._constants.FUNCTION_KEY_OFFER_IS_REQUESTABLE).then((bool) => { 
+				self._offerMetadataService.getMetadataValue(model, self._constants.FUNCTION_KEY_OFFER_IS_REQUESTABLE).then((bool) => { 
 					self._isRequestBtnVisible = bool;
 				});
 
-				self.requestMsgs = self._offerDetailService.getOfferDetailMessages(self.model);
+				self.requestMsgs = self._offerDetailService.getOfferDetailMessages(model);
 
-				return self.offerId;
+//				return self.offerId;
 			})
-		)
+		})
 	}
 
 	setModel(m) {
@@ -86,7 +89,7 @@ export class OfferPage {
 	}
 
 	getModel() {
-		return this.model;
+		return this.model || {};
 	}
 
 	isRequestMessageAvailable() {
@@ -126,10 +129,14 @@ export class OfferPage {
 	}
 
 	getRequiredPointsQuantityString() {
-		let rtn = this.model["requiredPointsQuantity"] + " point";
+		let rtn = undefined;
 
-		if (this.model["requiredPointsQuantity"] > 1)
-			rtn += "s";
+		if (this.model) {
+			rtn = this.model["requiredPointsQuantity"] + " point";
+
+			if (this.model["requiredPointsQuantity"] > 1)
+				rtn += "s";
+		} 
 
 		return rtn;
 	}
@@ -137,48 +144,52 @@ export class OfferPage {
 	getRequiredRecommendationUserObjects() {
 		let rtn = undefined;
 
-		if (this.requiredUserObjectsLoadedCount === this.model["requiredUserRecommendations"].length) {
-			rtn = [];
+		if (this.model) {
+			if (this.requiredUserObjectsLoadedCount === this.model["requiredUserRecommendations"].length) {
+				rtn = [];
 
-			this.model["requiredUserRecommendations"].forEach((req) => {
-				rtn.push(req["userObj"]);
-			})
+				this.model["requiredUserRecommendations"].forEach((req) => {
+					rtn.push(req["userObj"]);
+				})
+			}
 		}
 
 		return rtn;
 	}
 
 	hasStatistics() {
-		let rtn = (this.model["fulfillment_dates"] !== undefined && this.model["fulfillment_dates"].length > 0) ||
-				(this.model["num_of_complaints"] !== undefined && this.model["num_of_complaints"] > 0) ||
-				(this.model["total_points_earned"] != undefined && this.model["total_points_earned"] > 0);
+		let rtn = this.model && (
+					(this.model["fulfillment_dates"] !== undefined && this.model["fulfillment_dates"].length > 0) ||
+					(this.model["num_of_complaints"] !== undefined && this.model["num_of_complaints"] > 0) ||
+					(this.model["total_points_earned"] != undefined && this.model["total_points_earned"] > 0)
+				);
 
 		return rtn;
 	}
 
 	getFirstFulfilledText() {
-		if (this.model["fulfillment_dates"] !== undefined && this.model["fulfillment_dates"].length > 0) 
+		if (this.model && this.model["fulfillment_dates"] !== undefined && this.model["fulfillment_dates"].length > 0) 
 			return "First fullfilled " + Moment(this.model["fulfillment_dates"][0]).fromNow();
 		else
 			return "Never been fulfilled.";
 	}
 
 	getNumberOfComplaints() {
-		if (this.model["num_of_complaints"] !== undefined) 
+		if (this.model && this.model["num_of_complaints"] !== undefined) 
 			return this.model["num_of_complaints"] + " complaints.";
 		else
 			return "No complaints about this offer.";
 	}
 
 	getTotalPointsEarned() {
-		if (this.model["total_points_earned"] !== undefined) 
+		if (this.model && this.model["total_points_earned"] !== undefined) 
 			return "Earned " + this.model["total_points_earned"] + " points over its lifetime.";
 		else
 			return "No points earned yet.";
 	}
 
 	isDeleteBtnVisible() {
-		return this.model["userId"] === this._userService.getCurrentUser()["id"]
+		return this.model && (this.model["userId"] === this._userService.getCurrentUser()["id"]);
 	}
 
 	isRequestBtnVisible() {
@@ -210,11 +221,11 @@ export class OfferPage {
 	}
 
 	areRecommendationsRequired(offer) {
-		return (this.model["requiredUserRecommendations"] && this.model["requiredUserRecommendations"].length > 0);
+		return (this.model && this.model["requiredUserRecommendations"] && this.model["requiredUserRecommendations"].length > 0);
 	}
 
 	isCurrentUsersOffer() {
-		return this.model["userId"] === this._userService.getCurrentUser()["id"];
+		return this.model && this.model["userId"] === this._userService.getCurrentUser()["id"];
 	}
 
 	onEditOfferBtnClick() {
@@ -225,7 +236,7 @@ export class OfferPage {
 	getThumbnailImage() {
 		let rtn = undefined;
 		
-		if (this.model["imageFileURI"] !== undefined && this.model["imageOrientation"] !== undefined)
+		if (this.model && this.model["imageFileURI"] !== undefined && this.model["imageOrientation"] !== undefined)
 			rtn = this.model["imageFileURI"];
 		else
 			rtn = "assets/img/logo.jpg";

@@ -18,6 +18,8 @@ import { Events, IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { EasyahCommonModule } from './common/easyah-common.module'
+
 import { Constants } from '../_constants/constants'
 
 import { AlertService } from './_services/alert.service'; // Can be pushed down?
@@ -30,6 +32,10 @@ import { PictureService } from './_services/picture.service';
 
 import { CanActivateRouteGuard } from './_routeguards/can-activate.routeguard';
 
+// import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
+
+// import { myRxStompConfig } from './my-rx-stomp.config';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -39,7 +45,10 @@ import { CanActivateRouteGuard } from './_routeguards/can-activate.routeguard';
     IonicModule.forRoot(), // Somehow.. this is used for creating singleton services???
     AppRoutingModule,
     HttpClientModule
+
+    ,EasyahCommonModule
   ],
+
   providers: [
     Camera
     ,Events
@@ -63,6 +72,8 @@ import { CanActivateRouteGuard } from './_routeguards/can-activate.routeguard';
     ,CanActivateRouteGuard
     
     ,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    // ,{ provide: InjectableRxStompConfig, useValue: myRxStompConfig }
+    // ,{ provide: RxStompService, useFactory: rxStompServiceFactory, deps: [InjectableRxStompConfig] }
   ],
   bootstrap: [AppComponent]
 })

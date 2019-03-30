@@ -1,10 +1,8 @@
-<ion-header no-border>
-	<ion-navbar>
-		<ion-buttons end *ngIf="showSkip">
-			<button ion-button (click)="dismissTutorialView()" color="primary">Exit Tutorial</button>
-		</ion-buttons>
-	</ion-navbar>
-</ion-header>
+<ion-toolbar>
+	<ion-buttons end *ngIf="showSkip">
+		<button ion-button (click)="dismissTutorialView()" color="primary">Exit Tutorial</button>
+	</ion-buttons>
+</ion-toolbar>
 
 <ion-content no-bounce>
 	<ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager>

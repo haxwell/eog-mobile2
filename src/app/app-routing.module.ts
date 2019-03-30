@@ -10,7 +10,7 @@ const routes: Routes = [
   ,{ path: 'search', 			loadChildren: './search/search.module#SearchPageModule', 	canActivate: [CanActivateRouteGuard] }
   ,{ path: 'requests/incoming', loadChildren: './requests/requests.module#RequestPageModule', 	canActivate: [CanActivateRouteGuard] }
   ,{ path: 'requests/outgoing', loadChildren: './requests/requests.module#RequestPageModule', 	canActivate: [CanActivateRouteGuard] }
-  ,{ path: 'offers', 			loadChildren: './offers/offer.module#OfferPageModule', 	canActivate: [CanActivateRouteGuard] }
+  ,{ path: 'offer', 			loadChildren: './../app/offers/offer.module#OfferPageModule', 	canActivate: [CanActivateRouteGuard] }
   //,{ path: 'keywords', 			loadChildren: './keywords/keywords.module#KeywordsPageModule', 	canActivate: [CanActivateRouteGuard] }
   //,{ path: 'recommendations', 			loadChildren: './recommendations/recommendations.module#RecommendationPageModule', 	canActivate: [CanActivateRouteGuard] }
   //,{ path: 'notifications', 			loadChildren: './notifications/notifications.module#NotificationPageModule', 	canActivate: [CanActivateRouteGuard] }

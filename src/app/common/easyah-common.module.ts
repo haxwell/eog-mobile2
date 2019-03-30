@@ -46,7 +46,12 @@ import { DeclineReasonCodeService } from '../_services/declined-reason-codes.ser
   ]
   ,exports: [
   	EasyahHeader
-  	,OtherPeoplesOfferList
+    ,ProfileHeader
+    ,ProfilePoints
+    ,RequestsIncomingView
+    ,RequestsOutgoingView
+    ,UsersLineItem
+    ,OtherPeoplesOfferList
   ]
 })
 export class EasyahCommonModule {}

@@ -23,6 +23,8 @@ export class OfferDetailService {
 	getOfferDetailMessages(_offer) {
 		let _msgs = [];
 
+		this._offerMetadataService.init();
+
 		// Only return detail messages if the offer exists, and belongs to another user.
 		
 		if (_offer !== undefined && _offer["userId"] !== this._userService.getCurrentUser()["id"]) {

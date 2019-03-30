@@ -46,7 +46,7 @@ export class UserService {
 				let url = environment.apiUrl + "/api/users/" + userId;			
 				this._apiService.get(url).subscribe(
 					(userObj) => { 
-						self.users[userId] = JSON.parse(userObj["_body"]);
+						self.users[userId] = userObj;
 						resolve(self.users[userId]);
 					}, (err) => {
 						reject(err);

@@ -88,6 +88,8 @@ export class OfferModelService {
 			});
 		});
 
+		self._pictureService.init();
+
 		self.modelCache[offerId] = self._functionPromiseService.get(offerId, offerId+"offerFuncKey", offerId);
 		return self.modelCache[offerId];
 	}
