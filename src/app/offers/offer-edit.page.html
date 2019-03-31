@@ -5,13 +5,13 @@
 <ion-content>
 	<ion-grid>
 		<ion-row>
-			<ion-item no-lines>
+			<ion-item lines="none">
 				<ion-label color="primary" stacked>Title: </ion-label>
 				<ion-input type="text" placeholder="Teach a skill..." (ionChange)="handleTitleChange($event)" [disabled]="!isModelTitleEditable()" [(ngModel)]="model.title" #ctrl="ngModel" required></ion-input>
 			</ion-item>
 		</ion-row>
 		<ion-row>
-			<ion-item no-lines>
+			<ion-item lines="none">
 				<ion-label color="primary" stacked>Quantity: </ion-label>
 			</ion-item>
 			<ion-row>

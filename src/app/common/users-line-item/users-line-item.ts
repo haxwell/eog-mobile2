@@ -12,7 +12,8 @@ import { Constants } from '../../../_constants/constants'
 
 @Component({
   selector: 'users-line-item',
-  templateUrl: 'users-line-item.html'
+  templateUrl: 'users-line-item.html',
+  styleUrls: ['users-line-item.scss']
 })
 
 export class UsersLineItem {

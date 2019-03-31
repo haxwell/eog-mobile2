@@ -8,7 +8,8 @@ import { TutorialService } from '../../../app/_services/tutorial.service';
 
 @Component({
   selector: 'page-tutorial-easyah-intro',
-  templateUrl: 'tutorial-easyah-intro.html'
+  templateUrl: 'tutorial-easyah-intro.html',
+  styleUrls: ['tutorial-easyah-intro.scss']  
 })
 export class TutorialEasyahIntroPage extends AbstractTutorialPage {
 

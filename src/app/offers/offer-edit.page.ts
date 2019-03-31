@@ -26,6 +26,7 @@ import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'page-offer-edit',
   templateUrl: 'offer-edit.page.html'
+  ,styleUrls: ['./offer-edit.page.scss']
 })
 
 export class OfferEditPage {

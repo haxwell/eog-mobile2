@@ -9,7 +9,8 @@ import * as EXIF from 'exif-js'
 
 @Component({
   selector: 'profile-header',
-  templateUrl: 'profile-header.html'
+  templateUrl: 'profile-header.html',
+  styleUrls: ['profile-header.scss'],
 })
 
 export class ProfileHeader {

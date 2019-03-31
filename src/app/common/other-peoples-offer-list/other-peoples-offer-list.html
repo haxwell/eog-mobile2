@@ -11,9 +11,9 @@
 
 	<ion-item-sliding #slidingItem (click)="onViewOffer(offer)">
 		<ion-item>
-			<button>
+			<button class="offerListItemButton">
 				<ion-avatar slot="start">
-					<img id="offerAvatarImg" class="getAvatarCSSClassString(offer)" src="getThumbnailImage(offer)" alt="profile_image">
+					<img id="offerAvatarImg" class="getAvatarCSSClassString(offer)" [src]="getThumbnailImage(offer)" alt="profile_image">
 				</ion-avatar>
 
 				<span class="offerTitle">{{offer.title}}</span><br/>

@@ -4,6 +4,15 @@
     overflow: hidden;
 }
 
+.blockItem {
+	display: inline-block;
+	border-style: solid;
+	padding: 0.5em;
+	margin-left: .25em;
+	margin-right: .25em;
+	margin-bottom: .5em;
+}
+
 .fore-div {
 	background-color: white;
 	position: absolute;

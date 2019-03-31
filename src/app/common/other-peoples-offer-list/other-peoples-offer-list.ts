@@ -12,9 +12,9 @@ import { RecommendationService } from '../../../app/_services/recommendation.ser
 
 @Component({
   selector: 'other-peoples-offer-list',
-  templateUrl: 'other-peoples-offer-list.html'
+  templateUrl: 'other-peoples-offer-list.html',
+  styleUrls: ['other-peoples-offer-list.scss'],
 })
-
 export class OtherPeoplesOfferList {
 
 	@Input() offers = undefined;

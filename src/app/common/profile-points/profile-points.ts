@@ -8,7 +8,8 @@ import { Events } from '@ionic/angular';
 
 @Component({
   selector: 'profile-points',
-  templateUrl: 'profile-points.html'
+  templateUrl: 'profile-points.html',
+  styleUrls: ['profile-points.scss'],
 })
 
 export class ProfilePoints {

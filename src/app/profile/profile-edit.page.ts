@@ -23,7 +23,8 @@ import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'page-profile-edit',
-  templateUrl: 'profile-edit.page.html'
+  templateUrl: 'profile-edit.page.html',
+  styleUrls: ['./profile-edit.page.scss']
 })
 
 export class ProfileEditPage {

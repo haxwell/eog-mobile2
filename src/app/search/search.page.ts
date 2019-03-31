@@ -17,6 +17,7 @@ import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'page-search',
   templateUrl: 'search.page.html'
+  ,styleUrls: ['./search.page.scss']
 })
 export class SearchPage {
 	searchString = '';

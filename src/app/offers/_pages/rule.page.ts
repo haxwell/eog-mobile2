@@ -10,6 +10,7 @@ import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'page-offer-detail-rule',
   templateUrl: 'rule.page.html'
+  ,styleUrls: ['./rule.page.scss']
 })
 export class RulePage {
 

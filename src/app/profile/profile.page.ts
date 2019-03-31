@@ -25,6 +25,7 @@ import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.page.html'
+  ,styleUrls: ['./profile.page.scss']
 })
 
 export class ProfilePage {

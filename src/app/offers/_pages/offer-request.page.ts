@@ -14,7 +14,8 @@ import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'page-search-request',
-  templateUrl: 'offer-request.page.html'
+  templateUrl: 'offer-request.page.html',
+  styleUrls: ['./offer-request.page.scss']
 })
 export class OfferRequestPage {
 
