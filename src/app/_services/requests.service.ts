@@ -189,7 +189,7 @@ export class RequestsService {
 			this._apiService.post(url, data).subscribe((obj) => {
 				let model = undefined;
 				
-				if (obj["_body"] && obj["_body"].length > 0)
+				if (obj && obj.length > 0)
 					model = obj;
 
 				if (model)

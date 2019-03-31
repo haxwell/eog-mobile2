@@ -27,7 +27,7 @@ export class SearchService {
 			let url = environment.apiUrl + "/api/offers?q=" + qStr + "&d=" + distance + "&uid=" + userId;
 			self._apiService.get(url)
 			.subscribe((searchObj) => {
-				let rtn = JSON.parse(searchObj["_body"]);
+				let rtn = searchObj;
 
 				rtn = rtn.filter((obj) => { return obj["userId"] !== user["id"]; });
 
@@ -47,8 +47,7 @@ export class SearchService {
 			let url = environment.apiUrl + "/api/users?q=" + qStr;
 			this._apiService.get(url)
 			.subscribe((searchObj) => {
-				let rtn = JSON.parse(searchObj["_body"]);
-				resolve(rtn);
+				resolve(searchObj);
 			}, (err) => {
 				reject(err);
 			});

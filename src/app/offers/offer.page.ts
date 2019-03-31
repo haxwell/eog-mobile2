@@ -60,12 +60,9 @@ export class OfferPage {
 
 	ngOnInit() {
 		let self = this;
-		//self._route.paramMap.pipe
 		self._route.params.subscribe((params) => {
 
-			self.offerId = params['offerId']
-			
-			self._offerModelService.get(self.offerId).then((model) => {
+			self._offerModelService.get(params['offerId']).then((model) => {
 				self.model = model;
 
 				self._offerModelService.setOfferMetadata(model).then((offer) => {
@@ -78,8 +75,6 @@ export class OfferPage {
 				});
 
 				self.requestMsgs = self._offerDetailService.getOfferDetailMessages(model);
-
-//				return self.offerId;
 			})
 		})
 	}

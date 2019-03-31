@@ -150,7 +150,7 @@ export class ProfileService {
 			let url = environment.apiUrl + "/api/profiles";
 			self._apiService.post(url, data)
 			.subscribe((resp) => {
-				let newModel = JSON.parse(resp["_body"]);
+				let newModel = resp;
 
 				let userUpdateFunc = () => {
 					this._events.publish('profile:changedContactInfoWasSaved', newModel);

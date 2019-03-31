@@ -19,8 +19,7 @@ import { switchMap } from 'rxjs/operators';
 })
 export class OfferRequestPage {
 
-	offer = undefined;
-	offerId = undefined;
+	model = undefined;
 	message = undefined;
 
 	showTutorialAfterOutgoingRequestMade = undefined;
@@ -38,13 +37,12 @@ export class OfferRequestPage {
 
 	ngOnInit() {
 		let self = this;
-		self._route.paramMap.pipe(
-			switchMap((params) => {
-				self.offerId = params.get('offerId')
-				self.offer = self._offerModelService.get(self.offerId);
-				return self.offerId;
+		self._route.params.subscribe((params) => {
+			self._offerModelService.get(params['offerId']).then((model) => {
+				self.model = model;
+				self.initRequiredUserRecommendationsAsUserObjects();
 			})
-		)
+		})
 
 		self._userPreferencesService.getPreference("showTutorialAfterOutgoingRequestMade", true).then((data) => {
 			self.showTutorialAfterOutgoingRequestMade = data["pref"];
@@ -55,7 +53,7 @@ export class OfferRequestPage {
 	getRequiredUserRecommendations() {
 		if (this.requiredUserRecommendationsAsUserObjects === undefined) {
 			this.requiredUserRecommendationsAsUserObjects = null;
-			this.initRequiredUserRecommendationsAsUserObjects();
+			// this.initRequiredUserRecommendationsAsUserObjects();
 		}
 
 		return this.requiredUserRecommendationsAsUserObjects;
@@ -63,7 +61,7 @@ export class OfferRequestPage {
 
 	initRequiredUserRecommendationsAsUserObjects() {
 		let self = this;
-		self.offer["requiredUserRecommendations"].map((obj) => {
+		self.model["requiredUserRecommendations"].map((obj) => {
 			self._userService.getUser(obj["requiredRecommendUserId"]).then((user) => {
 				if (self.requiredUserRecommendationsAsUserObjects === null) 
 					self.requiredUserRecommendationsAsUserObjects = [];
@@ -73,13 +71,38 @@ export class OfferRequestPage {
 		})
 	}
 
+	getTitle() {
+		let rtn = undefined;
+
+		if (this.model) {
+			rtn = this.model["title"];
+		}
+
+		return rtn;
+	}
+
+	getRequiredPointsQuantityString() {
+		let rtn = undefined;
+
+		if (this.model) {
+			rtn = this.model["requiredPointsQuantity"];
+		}
+
+		if (rtn*1 > 1)
+			rtn = rtn + " points";
+		else
+			rtn = rtn + " point";
+
+		return rtn;
+	}
+
 	isSaveBtnEnabled() {
 		return true;
 	}
 
 	onSaveBtnTap(evt) {
 		let self = this;
-		this._requestsService.saveNew(this.offer, this.message).then((data) => {
+		this._requestsService.saveNew(this.model, this.message).then((data) => {
 			if (data !== undefined) {
 				if (self.showTutorialAfterOutgoingRequestMade) {
 					self._modalService.show(OutgoingRequestMadeTutorialPage, { 

@@ -5,10 +5,10 @@
 </ion-toolbar>
 
 <ion-content padding>
-	<ion-label>You are about to request that someone do their offer for you.</ion-label>
-	<ion-label><b>{{offer.title}}</b></ion-label>
-	<ion-label *ngIf="!getRequiredUserRecommendations()">This will require {{offer.requiredPointsQuantity}} points from you.</ion-label>
-	<ion-label *ngIf="getRequiredUserRecommendations()">This will require {{offer.requiredPointsQuantity}} points, and the following recommendations from you.</ion-label>
+	<ion-label>You are about to request that someone do their offer for you.</ion-label><br/><br/>
+	<ion-label><b>{{getTitle()}}</b></ion-label><br/><br/>
+	<ion-label *ngIf="!getRequiredUserRecommendations()">This will require {{getRequiredPointsQuantityString()}} from you.</ion-label>
+	<ion-label *ngIf="getRequiredUserRecommendations()">This will require {{getRequiredPointsQuantityString()}}, and the following recommendations from you.</ion-label>
 	<users-line-item *ngFor="let user of getRequiredUserRecommendations()" [item]="user" [clickthru]="false"></users-line-item>
 	<hr/>
 

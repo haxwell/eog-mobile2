@@ -73,19 +73,20 @@
 		<ion-row *ngIf="isRequestMessageAvailable()">
 			<ion-item >
 				<span class="displayOfferSectionHeader">Messages</span>
-				<span *ngFor="let item of getStillMoreTimeLeftMessages()" ngStyle="{'color':'red'}">
+				<br/>
+				<span *ngFor="let item of getStillMoreTimeLeftMessages()" class="redColorMsg" >
 					{{item.msg}}<br/>
 				</span>
-				<span *ngFor="let item of getAlreadyRequestedRequestMessages()" ngStyle="{'color':'red'}">
+				<span *ngFor="let item of getAlreadyRequestedRequestMessages()" class="redColorMsg" >
 					{{item.msg}}<br/>
 				</span>
-				<span *ngFor="let item of getPointsRequestMessages()" ngStyle="{'color':'red'}">
+				<span *ngFor="let item of getPointsRequestMessages()" class="redColorMsg" >
 					You need {{item.msg}}.<br/>
 				</span>
 				<span *ngIf="isRecommendationsRequestMessageAvailable()">
 					You need recommendations from:
 						<ul>
-							<li *ngFor="let item of getRecommendationsRequestMessages()" ngStyle="{'color':'red'}">
+							<li *ngFor="let item of getRecommendationsRequestMessages()" class="redColorMsg" >
 								{{item.msg}}<br/>
 							</li>
 						</ul>

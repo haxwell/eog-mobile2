@@ -47,6 +47,8 @@ export class UserPreferencesService {
 	}
 
 	getPreferenceByUserId(userId, key, dfault?: any) {
+		// console.log("userId: " + userId + " / key " + key + " / dfault: " + dfault);
+
 		let url = environment.apiUrl + "/api/user/" + userId + "/preferences/" + key;
 
 		return new Promise((resolve, reject) => {
@@ -54,8 +56,8 @@ export class UserPreferencesService {
 				(val) => {
 					let rtn = undefined;
 
-					if (val["_body"])
-						rtn = val["_body"] * 1;
+					if (val)
+						rtn = val * 1;
 					else
 						rtn = dfault;
 
