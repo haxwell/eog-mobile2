@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { MenuController } from '@ionic/angular';
 import { SearchPage } from '../../search/search.page';
 
 import { environment } from '../../../_environments/environment';
@@ -10,14 +10,18 @@ import { environment } from '../../../_environments/environment';
   templateUrl: 'easyah-header.html',
   styleUrls: ['./easyah-header.scss']
 })
-
 export class EasyahHeader {
 
 	searchTextFieldValue = undefined;
 
-	constructor(private _router: Router) {
+	constructor(private _router: Router, private _menuCtrl: MenuController) {
 		if ( !environment.production )
 			this.searchTextFieldValue = 'denver'
+	}
+
+	onMenuBtnClick(evt) {
+		this._menuCtrl.enable(true, "main");
+		this._menuCtrl.open("main");
 	}
 
 	onSearchBtnTap(evt) {
@@ -25,7 +29,8 @@ export class EasyahHeader {
 	}
 
 	onSearchTextFieldChanged(evt) {
-		this.searchTextFieldValue = evt._value;
+		this.searchTextFieldValue = evt.srcElement.value;
+		console.log(this.searchTextFieldValue);
 	}
 
 	getSearchTextFieldValue() {

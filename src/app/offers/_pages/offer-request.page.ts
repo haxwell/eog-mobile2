@@ -105,6 +105,6 @@ export class OfferRequestPage {
 	}
 
 	onMessageChange(evt) {
-		this.message = evt._value;
+		this.message = evt.srcElement.value;
 	}
 }

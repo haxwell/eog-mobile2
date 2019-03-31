@@ -1,9 +1,11 @@
-<ion-app>
-  <ion-router-outlet></ion-router-outlet>
-</ion-app>
 
-<ion-menu side="start" menuId="main" *ngIf="isMenuCoolToShow()">
-  <ion-content>
+<ion-menu side="start" contentId="menuContent" menuId="main" *ngIf="isMenuCoolToShow()">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Start Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content id="menuContent">
     <profile-header id="profile-header" (click)="onShowProfile()"></profile-header>
     <ion-list>
           <ion-item [ngStyle]="{'background-color':getSelectedColor('HomePage')}" (click)="onHomeClicked()">Home</ion-item>
@@ -24,3 +26,7 @@
       </ion-list>
     </ion-content>
 </ion-menu>
+
+<ion-app>
+  <ion-router-outlet main></ion-router-outlet>
+</ion-app>

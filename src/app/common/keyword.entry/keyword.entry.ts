@@ -42,7 +42,7 @@ export class KeywordEntryPage {
 	}
 
 	onAddKeywordFieldChange(evt) {
-		this.newKeywordsString = evt._value;
+		this.newKeywordsString = evt.srcElement.value;
 	}
 
 	getAddKeywordFieldValue() {
