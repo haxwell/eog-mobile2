@@ -26,7 +26,7 @@ export class SearchService {
 			let user = self._userService.getCurrentUser();
 			let url = environment.apiUrl + "/api/offers?q=" + qStr + "&d=" + distance + "&uid=" + userId;
 			self._apiService.get(url)
-			.subscribe((searchObj) => {
+			.subscribe((searchObj: any[]) => {
 				let rtn = searchObj;
 
 				rtn = rtn.filter((obj) => { return obj["userId"] !== user["id"]; });

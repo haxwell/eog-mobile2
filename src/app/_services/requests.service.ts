@@ -186,7 +186,7 @@ export class RequestsService {
 
 			let data =	"requestId=" + request["id"] + "&newStatus=" + status + "&requestAgainDelayCode=" + request["requestAgainDelayCode"] + "&declinedReasonCode=" + request["declinedReasonCode"];
 			
-			this._apiService.post(url, data).subscribe((obj) => {
+			this._apiService.post(url, data).subscribe((obj: any[]) => {
 				let model = undefined;
 				
 				if (obj && obj.length > 0)

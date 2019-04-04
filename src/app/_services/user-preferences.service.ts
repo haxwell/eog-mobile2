@@ -53,11 +53,11 @@ export class UserPreferencesService {
 
 		return new Promise((resolve, reject) => {
 			this._apiService.get(url).subscribe(
-				(val) => {
+				(val: number) => {
 					let rtn = undefined;
 
 					if (val)
-						rtn = val * 1;
+						rtn = val; // * 1;
 					else
 						rtn = dfault;
 
