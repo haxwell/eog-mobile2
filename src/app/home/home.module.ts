@@ -5,15 +5,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { ModalService } from '../_services/modal.service'
-import { ApiService } from '../_services/api.service'
-import { TutorialService } from '../_services/tutorial.service'
-
-import { HomeService } from './_services/home.service'
+import { HomeRoutingModule } from './home-routing.module';
 
 import { EasyahCommonModule } from '../common/easyah-common.module'
 
-import { HomeRoutingModule } from './home-routing.module';
+import { ModalService } from '../_services/modal.service'
+import { TutorialService } from '../_services/tutorial.service'
+
+import { HomeService } from './_services/home.service'
 
 import { HomePage } from './home.page';
 
@@ -27,7 +26,9 @@ import { HomePage } from './home.page';
     HomeRoutingModule,
     RouterModule.forChild([{ path: '', component: HomePage }])
   ]
-  ,declarations: [HomePage]
+  ,declarations: [
+    HomePage
+  ]
   ,providers: [
     ModalService
     ,TutorialService

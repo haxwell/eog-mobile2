@@ -32,19 +32,19 @@ export class SearchPage {
 				private _loadingService: LoadingService,
 				private _constants: Constants,
 				_events: Events) {
-
+				console.log("DSAHJKDASHJKDASGJDKSAGHDASGHJDASGHJDASHJDASJHDVGHJADS")
 	}
 
 	ngOnInit() {
 		let self = this;
-		this._route.paramMap.pipe(
-			switchMap((params) => self.searchString = params.get('searchString'))
-		)
+		self._route.params.subscribe((params) => {
+			self.searchString = params['searchString'];
+		});
 	}
 
-	ionViewWillEnter() {
-		this.onSearchBtnTap();
-	}
+	//ionViewWillEnter() {
+	//	this.onSearchBtnTap();
+	//}
 
 	onSearchBtnTap(evt?) {
 		let self = this;

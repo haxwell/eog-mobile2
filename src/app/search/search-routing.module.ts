@@ -6,8 +6,8 @@ import { CanActivateRouteGuard } from '../../app/_routeguards/can-activate.route
 import { SearchPage } from './search.page';
 
 const routes: Routes = [
-  { path: 'search', 				component: SearchPage,		canActivate: [CanActivateRouteGuard] }
-  ,{ path: 'search/:searchString',	component: SearchPage,		canActivate: [CanActivateRouteGuard] }
+  //{ path: 'search', 				component: SearchPage,		canActivate: [CanActivateRouteGuard] }
+  //{ path: 'search/:searchString',	component: SearchPage,		canActivate: [CanActivateRouteGuard] }
 ];
 @NgModule({
   imports: [

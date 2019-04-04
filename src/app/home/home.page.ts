@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { TutorialEasyahIntroPage } from '../tutorials/tutorial-easyah-intro/tutorial-easyah-intro'
 
-import { UserService } from '../../app/_services/user.service'
 import { ModalService } from '../../app/_services/modal.service'
 import { TutorialService } from '../../app/_services/tutorial.service'
 
 import { HomeService } from './_services/home.service'
 
+import { TutorialEasyahIntroPage } from '../tutorials/tutorial-easyah-intro/tutorial-easyah-intro'
 
 @Component({
     selector: 'page-home',
@@ -19,7 +18,6 @@ export class HomePage {
     mostRecentlyCreatedOffers = undefined;
 
     constructor(private _modalService: ModalService 
-                ,private _userService: UserService
                 ,private _homeService: HomeService
                 ,private _tutorialService: TutorialService
     ) {
