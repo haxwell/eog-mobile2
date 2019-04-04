@@ -163,12 +163,19 @@ export class AppComponent {
   getSelectedColor(pageName) {
     // TODO: need to create a map of pageName to route, and use that in this method
 
-    //var view = this.navCtrl.getActive();
-    //if (view && view.component.name == pageName) {
-    //  return "lightgrey";
-    //} else {
-    //  return "white"
-    //}
+    let pageURLMap = {
+      'HomePage': '/home',
+      'RequestsIncomingView': '/requests/incoming',
+      'RequestsOutgoingView': '/requests/outgoing',
+      'ProfilePage': '/profile',
+      'OfferListPage': '/offers',
+      'RecommendationListPage': '/recommendations',
+      'KeywordListPage': '/keywords',
+      'NotificationListPage': '/notifications',
+      'AboutEasyahPage': '/about-easyah',
+    }
+
+    return (this._router.url.includes(pageURLMap[pageName])) ?  "lightgrey" : "white";
   }
 
   areIncomingUnseenChanges() {

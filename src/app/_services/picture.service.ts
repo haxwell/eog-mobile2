@@ -55,7 +55,9 @@ export class PictureService {
 
 			let rtn = new Promise((resolve, reject) => 
 			{ 
-				if (!document.URL.startsWith('http')) { // if not running on desktop (https://forum.ionicframework.com/t/how-to-determine-if-browser-or-app/89149/10)
+				if (document.URL.startsWith('http')) {
+					resolve(undefined);
+				} else { // if not running on desktop (https://forum.ionicframework.com/t/how-to-determine-if-browser-or-app/89149/10)
 
 					if (!photoPath)
 						resolve(undefined);

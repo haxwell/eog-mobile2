@@ -32,7 +32,6 @@ export class SearchPage {
 				private _loadingService: LoadingService,
 				private _constants: Constants,
 				_events: Events) {
-				console.log("DSAHJKDASHJKDASGJDKSAGHDASGHJDASGHJDASHJDASJHDVGHJADS")
 	}
 
 	ngOnInit() {
@@ -42,9 +41,9 @@ export class SearchPage {
 		});
 	}
 
-	//ionViewWillEnter() {
-	//	this.onSearchBtnTap();
-	//}
+	ionViewWillEnter() {
+		this.onSearchBtnTap();
+	}
 
 	onSearchBtnTap(evt?) {
 		let self = this;
@@ -122,10 +121,15 @@ export class SearchPage {
 		return this.profileImageFilepath[user["id"]];
 	}
 
+	// TODO: Put this profile image handling stuff in a service.. This page should only say "give me the picture", and that's it. two three lines of code. period.
+
 	isProfileImageAvailable(user) {
 		let rtn = this.profileImageFilepath[user["id"]] !== undefined && this.profileImageFilepath[user["id"]] !== null;
 
 		let self = this;
+
+		self._pictureService.init();
+
 		if (this.profileImageFilepath[user["id"]] === undefined) {
 			this.profileImageFilepath[user["id"]] = null;
 
