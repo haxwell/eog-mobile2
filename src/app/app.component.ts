@@ -14,7 +14,8 @@ import { UnseenChangesIndicatorService } from './_services/unseen-changes-indica
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html'
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
 
@@ -161,7 +162,6 @@ export class AppComponent {
   }
 
   getSelectedColor(pageName) {
-    // TODO: need to create a map of pageName to route, and use that in this method
 
     let pageURLMap = {
       'HomePage': '/home',

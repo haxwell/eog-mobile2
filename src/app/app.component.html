@@ -1,29 +1,24 @@
 
 <ion-app>
   <ion-menu side="start" contentId="menuContent" menuId="main" *ngIf="isMenuCoolToShow()">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Start Menu</ion-title>
-      </ion-toolbar>
-    </ion-header>
     <ion-content id="menuContent">
       <profile-header id="profile-header" (click)="onShowProfile()"></profile-header>
       <ion-list>
-            <ion-item [ngStyle]="{'background-color':getSelectedColor('HomePage')}" (click)="onHomeClicked()">Home</ion-item>
-            <ion-item [ngStyle]="{'background-color':getSelectedColor('RequestsIncomingView')}" (click)="onPeopleAskedYouClicked()">People asked you... <ion-icon [hidden]="!areIncomingUnseenChanges()" name="bulb"></ion-icon></ion-item>
-            <ion-item [ngStyle]="{'background-color':getSelectedColor('RequestsOutgoingView')}" (click)="onYouAskedPeopleClicked()">You asked people... <ion-icon [hidden]="!areOutgoingUnseenChanges()" name="bulb"></ion-icon></ion-item>
+            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('HomePage')}" (click)="onHomeClicked()">Home</ion-button>
+            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('RequestsIncomingView')}" (click)="onPeopleAskedYouClicked()">People asked you... <ion-icon [hidden]="!areIncomingUnseenChanges()" name="bulb"></ion-icon></ion-button>
+            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('RequestsOutgoingView')}" (click)="onYouAskedPeopleClicked()">You asked people... <ion-icon [hidden]="!areOutgoingUnseenChanges()" name="bulb"></ion-icon></ion-button>
 
             <profile-points></profile-points>
 
-            <ion-item [ngStyle]="{'background-color':getSelectedColor('ProfilePage')}" (click)="onShowProfile()">About You</ion-item>
-            <ion-item [ngStyle]="{'background-color':getSelectedColor('OfferListPage')}" (click)="onYourOffersClicked()">Your Offers</ion-item>
-            <ion-item [ngStyle]="{'background-color':getSelectedColor('RecommendationListPage')}" (click)="onYourRecommendationsClicked()">Your Recommendations</ion-item>
-            <ion-item [ngStyle]="{'background-color':getSelectedColor('KeywordListPage')}" (click)="onYourKeywordsClicked()">Your Keywords</ion-item>
-            <ion-item [ngStyle]="{'background-color':getSelectedColor('NotificationListPage')}" (click)="onYourNotificationsClicked()">Notifications <ion-icon [hidden]="!areNotificationUnseenChanges()" name="bulb"></ion-icon></ion-item>
+            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('ProfilePage')}" (click)="onShowProfile()">About You</ion-button>
+            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('OfferListPage')}" (click)="onYourOffersClicked()">Your Offers</ion-button>
+            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('RecommendationListPage')}" (click)="onYourRecommendationsClicked()">Your Recommendations</ion-button>
+            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('KeywordListPage')}" (click)="onYourKeywordsClicked()">Your Keywords</ion-button>
+            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('NotificationListPage')}" (click)="onYourNotificationsClicked()">Notifications <ion-icon [hidden]="!areNotificationUnseenChanges()" name="bulb"></ion-icon></ion-button>
 
-            <ion-item [ngStyle]="{'background-color':getSelectedColor('AboutEasyahPage')}" (click)="onAboutEasyahClicked()">About Easyah </ion-item>
+            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('AboutEasyahPage')}" (click)="onAboutEasyahClicked()">About Easyah </ion-button>
 
-            <ion-item [hidden]="!isLogoutBtnVisible()" (click)="onLogoutBtnClick()">Log Out</ion-item>
+            <ion-button class="mainMenuBtn" expand="full" fill="clear" [hidden]="!isLogoutBtnVisible()" (click)="onLogoutBtnClick()">Log Out</ion-button>
         </ion-list>
       </ion-content>
   </ion-menu>
