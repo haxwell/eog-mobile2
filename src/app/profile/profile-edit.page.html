@@ -56,7 +56,7 @@
 			</ion-item>				
 			<ion-item>
 				<ion-select id="contactInfoVisibilitySelect" [(ngModel)]="contactInfoVisibilityId" (ionChange)="setDirty(true)">
-					<ion-option *ngFor="let choice of contactInfoVisibilityChoices" [value]="choice.id">{{choice.text}}</ion-option>
+					<ion-select-option *ngFor="let choice of contactInfoVisibilityChoices" [value]="choice.id">{{choice.text}}</ion-select-option>
 				</ion-select>
 			</ion-item>
 		</ion-row>

@@ -1,8 +1,10 @@
-<ion-toolbar>
-	<ion-title>
-			Complete a Request
-	</ion-title>
-</ion-toolbar>
+<ion-header>
+	<ion-toolbar>
+		<ion-title>
+				Complete a Request
+		</ion-title>
+	</ion-toolbar>
+</ion-header>
 
 <ion-content padding>
 	<div *ngIf="!isRequestInDispute()">
@@ -29,7 +31,7 @@
 		<ion-label>How much time should pass before this user can request this offer again?</ion-label>
 		<ion-item>
 			<ion-select [(ngModel)]="selectedRequestAgainDelayId" >
-				<ion-option *ngFor="let delay of requestAgainDelayCodes" [value]="delay.id">{{delay.text}}</ion-option>
+				<ion-select-option *ngFor="let delay of requestAgainDelayCodes" [value]="delay.id">{{delay.text}}</ion-select-option>
 			</ion-select>
 		</ion-item>
 	</ion-row>

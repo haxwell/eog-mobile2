@@ -9,8 +9,8 @@ const routes: Routes = [
   ,{ path: 'profile', 			            loadChildren: './profile/profile.module#ProfilePageModule', 	canActivate: [CanActivateRouteGuard] }
   ,{ path: 'offer', 			              loadChildren: './../app/offers/offer.module#OfferPageModule', 	canActivate: [CanActivateRouteGuard] }
   ,{ path: 'search/:searchString',      loadChildren: './../app/search/search.module#SearchPageModule',   canActivate: [CanActivateRouteGuard] }
-  ,{ path: 'requests/incoming', loadChildren: './requests/requests.module#RequestPageModule',   canActivate: [CanActivateRouteGuard] }
-  ,{ path: 'requests/outgoing', loadChildren: './requests/requests.module#RequestPageModule',   canActivate: [CanActivateRouteGuard] }
+  ,{ path: 'requests/incoming',         loadChildren: './../app/requests/incoming/requests-incoming.module#RequestsIncomingPageModule',   canActivate: [CanActivateRouteGuard] }
+  ,{ path: 'requests/outgoing',         loadChildren: './../app/requests/outgoing/requests-outgoing.module#RequestsOutgoingPageModule',   canActivate: [CanActivateRouteGuard] }
   //,{ path: 'keywords', 			loadChildren: './keywords/keywords.module#KeywordsPageModule', 	canActivate: [CanActivateRouteGuard] }
   //,{ path: 'recommendations', 			loadChildren: './recommendations/recommendations.module#RecommendationPageModule', 	canActivate: [CanActivateRouteGuard] }
   //,{ path: 'notifications', 			loadChildren: './notifications/notifications.module#NotificationPageModule', 	canActivate: [CanActivateRouteGuard] }
@@ -18,7 +18,7 @@ const routes: Routes = [
 ];
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { enableTracing: false, preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { enableTracing: true, preloadingStrategy: PreloadAllModules })
   ],
   exports: [RouterModule]
 })

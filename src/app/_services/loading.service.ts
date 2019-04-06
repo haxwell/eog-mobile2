@@ -19,12 +19,20 @@ export class LoadingService {
 	    if (onDidDismissFunc)
 	    	await this.loading.onDidDismiss(onDidDismissFunc);
 
+	    console.log("calling to display loading spinner")
 	    return await this.loading.present();
 	}
 
 	async dismiss() {
-		if (this.loading)
-			this.loading.dismiss();
+		if (this.loading) {
+			let temp = this.loading;
+			this.loading = undefined;
+
+			temp.dismiss();
+			console.log("loading spinner dismissed")
+		} else {
+			console.log("call to dismiss spinner, but none set");
+		}
 	}
 
 }

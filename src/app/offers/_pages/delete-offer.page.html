@@ -1,8 +1,10 @@
-<ion-toolbar>
-	<ion-title>
-			Delete an Offer - {{offer.title}}
-	</ion-title>
-</ion-toolbar>
+<ion-header>
+	<ion-toolbar>
+		<ion-title>
+				Delete an Offer - {{offer.title}}
+		</ion-title>
+	</ion-toolbar>
+</ion-header>
 
 <ion-content padding>
 	<ion-row *ngIf="!isOfferAttachedToARequestNotInProgress() && !isOfferAttachedToAnInProgressRequest()">

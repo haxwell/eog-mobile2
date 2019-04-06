@@ -83,7 +83,7 @@ export class RequestsOutgoingView {
 			content: 'Please wait...'
 		});
 
-		this._requestsService.getOutgoingRequestsForCurrentUser().then((data: Array<Object>) => {
+		self._requestsService.getOutgoingRequestsForCurrentUser().then((data: Array<Object>) => {
 				self.model = data;
 				self._loadingService.dismiss();
 			});

@@ -1,8 +1,10 @@
-<ion-toolbar>
-	<ion-title>
-		Decline a Request
-	</ion-title>
-</ion-toolbar>
+<ion-header>
+	<ion-toolbar>
+		<ion-title>
+			Decline a Request
+		</ion-title>
+	</ion-toolbar>
+</ion-header>
 
 <ion-content padding>
 	<ion-label>You are about to DECLINE a request to fulfill an offer.</ion-label>
@@ -14,7 +16,7 @@
 		<ion-item>
 
 			<ion-select [(ngModel)]="selectedDeclineReasonId" >
-				<ion-option *ngFor="let drc of declineReasonCodes" [value]="drc.id">{{drc.text}}</ion-option>
+				<ion-select-option *ngFor="let drc of declineReasonCodes" [value]="drc.id">{{drc.text}}</ion-select-option>
 			</ion-select>
 		</ion-item>
 	</ion-row>		
@@ -23,7 +25,7 @@
 		<ion-label>How much time should pass before this user can request this offer again?</ion-label>
 		<ion-item>
 			<ion-select [(ngModel)]="selectedRequestAgainDelayId" >
-				<ion-option *ngFor="let delay of requestAgainDelayCodes" [value]="delay.id">{{delay.text}}</ion-option>
+				<ion-select-option *ngFor="let delay of requestAgainDelayCodes" [value]="delay.id">{{delay.text}}</ion-select-option>
 			</ion-select>
 		</ion-item>
 	</ion-row>
