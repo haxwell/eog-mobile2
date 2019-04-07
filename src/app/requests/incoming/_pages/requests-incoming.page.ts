@@ -11,8 +11,6 @@ import { PictureService } from '../../../../app/_services/picture.service'
 
 import { Constants } from '../../../../_constants/constants'
 
-import { OfferPage } from '../../../offers/offer.page'
-
 import { AcceptRequestPage } from './accept-request.page'
 import { DeclineRequestPage } from './decline-request.page'
 import { CompleteRequestPage } from './complete-request.page'

@@ -3,21 +3,21 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { OfferEditPage } from './offer-edit.page'
-import { OfferRequestPage } from './_pages/offer-request.page'
-import { DeleteOfferPage } from './_pages/delete-offer.page'
-import { OutgoingRequestMadeTutorialPage } from './_pages/outgoing-request-made-tutorial.page'
+import { OfferRequestPage } from './offer-request.page'
+import { DeleteOfferPage } from './delete-offer.page'
+import { OutgoingRequestMadeTutorialPage } from './outgoing-request-made-tutorial.page'
 
-import { ModalService } from '../../app/_services/modal.service';
-import { AlertService } from '../../app/_services/alert.service';
-import { OfferModelService } from '../../app/_services/offer-model.service';
-import { OfferMetadataService } from '../../app/_services/offer-metadata.service';
-import { OfferDetailService } from '../../app/_services/offer-detail.service';
-import { UserService } from '../../app/_services/user.service';
-import { UserPreferencesService } from '../../app/_services/user-preferences.service';
-import { PictureService } from '../../app/_services/picture.service';
-import { RequestsService } from '../../app/_services/requests.service';
+import { ModalService } from '../../../app/_services/modal.service';
+import { AlertService } from '../../../app/_services/alert.service';
+import { OfferModelService } from '../../../app/_services/offer-model.service';
+import { OfferMetadataService } from '../../../app/_services/offer-metadata.service';
+import { OfferDetailService } from '../../../app/_services/offer-detail.service';
+import { UserService } from '../../../app/_services/user.service';
+import { UserPreferencesService } from '../../../app/_services/user-preferences.service';
+import { PictureService } from '../../../app/_services/picture.service';
+import { RequestsService } from '../../../app/_services/requests.service';
 
-import { Constants } from '../../_constants/constants';
+import { Constants } from '../../../_constants/constants';
 
 import * as Moment from 'moment'
 
@@ -44,7 +44,7 @@ export class OfferPage {
 
 	constructor(private _location: Location,
 				private _router: Router,
-				private _route: ActivatedRoute,
+				private _route: ActivatedRoute,	
 				private _modalService: ModalService,
 				private _alertService: AlertService,
 				private _offerModelService: OfferModelService,

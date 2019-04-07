@@ -10,12 +10,16 @@ import { OfferRoutingModule } from './offer-routing.module';
 import { EasyahCommonModule } from '../common/easyah-common.module';
 import { EasyahHeader } from '../common/easyah-header/easyah-header'
 
-import { OfferPage } from './offer.page';
-import { OfferEditPage } from './offer-edit.page';
+import { OfferPage } from './_pages/offer.page';
+import { OfferEditPage } from './_pages/offer-edit.page';
+import { OfferListPage } from './_pages/offer-list/offer-list.page';
 import { DeleteOfferPage } from './_pages/delete-offer.page'
 import { OfferRequestPage } from './_pages/offer-request.page'
 import { OutgoingRequestMadeTutorialPage } from './_pages/outgoing-request-made-tutorial.page'
 import { RulePage } from './_pages/rule.page'
+
+// TODO: Is this only used in the context of Offers? If so, move it closer to home.
+import { OfferCollectionService } from '../../app/_services/offer-collection.service'
 
 @NgModule({
   imports: [
@@ -30,6 +34,7 @@ import { RulePage } from './_pages/rule.page'
   ,declarations: [
 
   	OfferPage
+    ,OfferListPage
   	,OfferEditPage
     ,DeleteOfferPage
     ,OfferRequestPage
@@ -37,7 +42,7 @@ import { RulePage } from './_pages/rule.page'
     ,RulePage
   ]
   ,providers: [
-
+    OfferCollectionService
   ]
 })
 export class OfferPageModule {}

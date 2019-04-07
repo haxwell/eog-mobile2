@@ -6,20 +6,20 @@ import { File } from '@ionic-native/file/ngx'
 
 import { Events } from '@ionic/angular';
 
-import { RulePage } from './_pages/rule.page'
-import { KeywordEntryPage } from '../common/keyword.entry/keyword.entry'
-import { ChoosePhotoSourcePage } from '../common/choose-photo-source/choose-photo-source'
+import { RulePage } from './rule.page'
+import { KeywordEntryPage } from '../../common/keyword.entry/keyword.entry'
+import { ChoosePhotoSourcePage } from '../../common/choose-photo-source/choose-photo-source'
 
-import { OfferModelService } from '../../app/_services/offer-model.service'
-import { UserService } from '../../app/_services/user.service';
-import { ModalService } from '../../app/_services/modal.service';
-import { AlertService } from '../../app/_services/alert.service';
-import { LoadingService } from '../../app/_services/loading.service';
-import { PictureService } from '../../app/_services/picture.service';
-import { RequestsService } from '../../app/_services/requests.service';
-import { EventSubscriberService } from '../../app/_services/event-subscriber.service';
+import { OfferModelService } from '../../../app/_services/offer-model.service'
+import { UserService } from '../../../app/_services/user.service';
+import { ModalService } from '../../../app/_services/modal.service';
+import { AlertService } from '../../../app/_services/alert.service';
+import { LoadingService } from '../../../app/_services/loading.service';
+import { PictureService } from '../../../app/_services/picture.service';
+import { RequestsService } from '../../../app/_services/requests.service';
+import { EventSubscriberService } from '../../../app/_services/event-subscriber.service';
 
-import { Constants } from '../../_constants/constants';
+import { Constants } from '../../../_constants/constants';
 
 import { switchMap } from 'rxjs/operators';
 
