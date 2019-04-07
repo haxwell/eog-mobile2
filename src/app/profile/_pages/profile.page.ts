@@ -3,20 +3,19 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Events } from '@ionic/angular';
 
-import { GeolocationService } from '../../app/_services/geolocation.service'
-import { ProfileService } from '../../app/_services/profile.service'
-import { UserMetadataService } from '../../app/_services/user-metadata.service'
-import { RecommendationService } from '../../app/_services/recommendation.service'
-import { PointsService } from '../../app/_services/points.service'
-import { PictureService } from '../../app/_services/picture.service'
-import { UserService } from '../../app/_services/user.service'
-// import { ModalService } from '../../app/_services/modal.service'
-import { AlertService } from '../../app/_services/alert.service'
-import { ContactInfoVisibilityService } from '../../app/_services/contact-info-visibility.service'
+import { Constants } from '../../../_constants/constants'
+
+import { AlertService } from '../../../app/_services/alert.service'
+import { ContactInfoVisibilityService } from '../../../app/_services/contact-info-visibility.service'
+import { GeolocationService } from '../../../app/_services/geolocation.service'
+import { PictureService } from '../../../app/_services/picture.service'
+import { PointsService } from '../../../app/_services/points.service'
+import { ProfileService } from '../../../app/_services/profile.service'
+import { RecommendationService } from '../../../app/_services/recommendation.service'
+import { UserMetadataService } from '../../../app/_services/user-metadata.service'
+import { UserService } from '../../../app/_services/user.service'
 
 import { ProfileEditPage } from './profile-edit.page'
-
-import { Constants } from '../../_constants/constants'
 
 import * as EXIF from 'exif-js';
 import * as Moment from 'moment';
@@ -73,20 +72,20 @@ export class ProfilePage {
 
 	ngOnInit() {
 		let self = this;
-		this._route.paramMap.pipe(
-			switchMap((params) => self.userId = params.get('userId'))
-		)
+		self._route.params.subscribe((params) => {
+			self.userId = params['userId'] * 1;
 
-		this._profileService.init(self.userId);
+			self._profileService.init(self.userId);
 
-		this.setCurrentUserCanSendPointToProfileUser();
-		this.setCurrentUserCanSendRecommendationToProfileUser();
+			self.setCurrentUserCanSendPointToProfileUser();
+			self.setCurrentUserCanSendRecommendationToProfileUser();
 
-		this._contactInfoVisibilityService.getContactInfoVisibilityId(self.userId).then((visId: number) => {
-			self.contactInfoVisibilityId = visId;
-		})
+			self._contactInfoVisibilityService.getContactInfoVisibilityId(self.userId).then((visId: number) => {
+				self.contactInfoVisibilityId = visId;
+			})
 
-		this.locationDisplayString = undefined;
+			self.locationDisplayString = undefined;
+		});
 	}
 
 	ionViewWillEnter() {

@@ -16,6 +16,8 @@ import { CompleteOutgoingRequestPage } from './_pages/complete-request.page';
 import { NotCompleteOutgoingRequestPage } from './_pages/not-complete-request.page';
 import { PermanentlyDismissUnresolvedRequestPage } from './_pages/permanently-dismiss-unresolved-request.page';
 
+import { RequestsService } from '../../../app/_services/requests.service';
+
 @NgModule({
   imports: [
     IonicModule
@@ -33,7 +35,7 @@ import { PermanentlyDismissUnresolvedRequestPage } from './_pages/permanently-di
   	,RequestsOutgoingView
   ]
   ,providers: [
-
+    RequestsService
   ]
 })
 export class RequestsOutgoingPageModule {}

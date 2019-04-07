@@ -64,6 +64,7 @@ export class GeolocationService {
 						let rtn = {};
 
 						let data = Object.assign({}, b);
+						data = JSON.parse(data["_body"])
 						
 						if (data["results"][0] && data["results"][0].address_components) {
 							let obj = data["results"][0].address_components

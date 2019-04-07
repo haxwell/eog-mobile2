@@ -17,6 +17,9 @@ import { CancelRequestPage } from './_pages/cancel-request.page';
 import { CompleteRequestPage } from './_pages/complete-request.page';
 import { DeclineRequestPage } from './_pages/decline-request.page';
 
+// TODO is there anything outside of the requests module that uses requests service? If not move it into the module.
+import { RequestsService } from '../../../app/_services/requests.service';
+
 @NgModule({
   imports: [
     IonicModule
@@ -35,7 +38,7 @@ import { DeclineRequestPage } from './_pages/decline-request.page';
     ,RequestsIncomingView
   ]
   ,providers: [
-
+    RequestsService
   ]
 })
 export class RequestsIncomingPageModule {}

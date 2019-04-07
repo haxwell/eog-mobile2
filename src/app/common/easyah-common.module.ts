@@ -14,7 +14,6 @@ import { PictureService } from '../_services/picture.service'
 import { PictureEXIFService } from '../_services/picture-exif.service'
 import { PointsService } from '../_services/points.service'
 import { RecommendationService } from '../_services/recommendation.service'
-import { RequestsService } from '../_services/requests.service'
 import { DeclineReasonCodeService } from '../_services/declined-reason-codes.service'
 
 
@@ -38,7 +37,6 @@ import { DeclineReasonCodeService } from '../_services/declined-reason-codes.ser
     ,PictureEXIFService
     ,PointsService
     ,RecommendationService
-    ,RequestsService
   ]
   ,exports: [
   	EasyahHeader

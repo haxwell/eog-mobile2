@@ -11,15 +11,12 @@ import { PictureService } from '../../../../app/_services/picture.service'
 
 import { Constants } from '../../../../_constants/constants'
 
-/* TODO: Move Offers to the Common area. Since it is called from this common component. */
 import { OfferPage } from '../../../offers/offer.page'
 
 import { AcceptRequestPage } from './accept-request.page'
 import { DeclineRequestPage } from './decline-request.page'
 import { CompleteRequestPage } from './complete-request.page'
 import { CancelRequestPage } from './cancel-request.page'
-
-import { ProfilePage } from '../../../profile/profile.page'
 
 @Component({
   selector: 'requests-incoming-view',

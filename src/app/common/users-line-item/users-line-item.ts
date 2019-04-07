@@ -4,8 +4,6 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Events } from '@ionic/angular';
 
-import { ProfilePage } from '../../profile/profile.page'
-
 import { PictureService } from '../../_services/picture.service'
 
 import { Constants } from '../../../_constants/constants'

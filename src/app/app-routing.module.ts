@@ -6,7 +6,7 @@ import { CanActivateRouteGuard } from './_routeguards/can-activate.routeguard'
 const routes: Routes = [
   { path: '',           		            loadChildren: './login/login.module#LoginPageModule' }
   ,{ path: 'home',        		          loadChildren: './home/home.module#HomePageModule',    			canActivate: [CanActivateRouteGuard] }
-  ,{ path: 'profile', 			            loadChildren: './profile/profile.module#ProfilePageModule', 	canActivate: [CanActivateRouteGuard] }
+  ,{ path: 'profile/:userId', 			            loadChildren: './profile/profile.module#ProfilePageModule', 	canActivate: [CanActivateRouteGuard] }
   ,{ path: 'offer', 			              loadChildren: './../app/offers/offer.module#OfferPageModule', 	canActivate: [CanActivateRouteGuard] }
   ,{ path: 'search/:searchString',      loadChildren: './../app/search/search.module#SearchPageModule',   canActivate: [CanActivateRouteGuard] }
   ,{ path: 'requests/incoming',         loadChildren: './../app/requests/incoming/requests-incoming.module#RequestsIncomingPageModule',   canActivate: [CanActivateRouteGuard] }

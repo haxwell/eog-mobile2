@@ -5,8 +5,6 @@ import { Events } from '@ionic/angular';
 
 import { Constants } from '../../_constants/constants'
 
-import { ProfilePage } from '../profile/profile.page'
-
 import { SearchService } from '../../app/_services/search.service';
 import { PictureService } from '../../app/_services/picture.service';
 import { UserService } from '../../app/_services/user.service';

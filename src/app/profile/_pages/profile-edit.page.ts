@@ -2,19 +2,19 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
-import { Constants } from '../../_constants/constants'
+import { Constants } from '../../../_constants/constants'
 
-import { LoadingService } from '../../app/_services/loading.service'
-import { ModalService } from '../../app/_services/modal.service'
-import { AlertService } from '../../app/_services/alert.service'
-import { ProfileService } from '../../app/_services/profile.service'
-import { PictureService } from '../../app/_services/picture.service'
-import { GeolocationService } from '../../app/_services/geolocation.service'
-import { UserService } from '../../app/_services/user.service'
-import { UserMetadataService } from '../../app/_services/user-metadata.service'
-import { ContactInfoVisibilityService } from '../../app/_services/contact-info-visibility.service'
+import { LoadingService } from '../../../app/_services/loading.service'
+import { ModalService } from '../../../app/_services/modal.service'
+import { AlertService } from '../../../app/_services/alert.service'
+import { ProfileService } from '../../../app/_services/profile.service'
+import { PictureService } from '../../../app/_services/picture.service'
+import { GeolocationService } from '../../../app/_services/geolocation.service'
+import { UserService } from '../../../app/_services/user.service'
+import { UserMetadataService } from '../../../app/_services/user-metadata.service'
+import { ContactInfoVisibilityService } from '../../../app/_services/contact-info-visibility.service'
 
-import { ChoosePhotoSourcePage } from '../../app/common/choose-photo-source/choose-photo-source'
+import { ChoosePhotoSourcePage } from '../../../app/common/choose-photo-source/choose-photo-source'
 
 import { File } from '@ionic-native/file/ngx'
 
