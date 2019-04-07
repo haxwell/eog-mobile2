@@ -61,19 +61,15 @@ export class ProfileEditPage {
 
 	ngOnInit() {
 		let self = this;
-		this._route.paramMap.pipe(
-			switchMap((params) => {
-				self.userId = params.get('userId')
-				self.model = self._profileService.getModel(self.userId); 
-				self._userMetadataService.init();
+		self._route.params.subscribe((params) => {
+			self.userId = params['userId'] * 1;
+			self.model = self._profileService.getModel(self.userId); 
+			self._userMetadataService.init();
 
-				return self.userId;
+			this.contactInfoVisibilityChoices = this._contactInfoVisibilityService.getContactInfoVisibilityChoices();
+			this._contactInfoVisibilityService.getContactInfoVisibilityId(this.userId).then((visId) => {
+				this.contactInfoVisibilityId = visId;
 			})
-		)
-
-		this.contactInfoVisibilityChoices = this._contactInfoVisibilityService.getContactInfoVisibilityChoices();
-		this._contactInfoVisibilityService.getContactInfoVisibilityId(this.userId).then((visId) => {
-			this.contactInfoVisibilityId = visId;
 		})
 	}
 
@@ -284,19 +280,19 @@ export class ProfileEditPage {
 	}
 
 	onRealNameChange(event) {
-		this.setChangedAttr("realname", event._value);
+		this.setChangedAttr("realname", event.detail.value);
 	}
 
 	onDescriptionChange(event) {
-		this.setChangedAttr("description", event._value);
+		this.setChangedAttr("description", event.detail.value);
 	}
 
 	onEmailChange(event) {
-		this.setChangedAttr("email", event._value);
+		this.setChangedAttr("email", event.detail.value);
 	}
 
 	onPhoneChange(event) {
-		if (this.setChangedAttr("phone", event._value))
+		if (this.setChangedAttr("phone", event.detail.value))
 			this.verifyPhoneOnSave = true;
 	}
 

@@ -131,7 +131,7 @@ export class ProfilePage {
 	}
 
 	onEditProfileBtnClick() {
-		this._router.navigate(['/profile/edit/' + this.userId]);
+		this._router.navigate(['/profile/' + this.userId + '/edit']);
 	}
 
 	setCurrentUserCanSendPointToProfileUser() {

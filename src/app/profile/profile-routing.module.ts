@@ -8,7 +8,7 @@ import { ProfileEditPage } from './_pages/profile-edit.page';
 
 const routes: Routes = [
   { path: '', 			component: ProfilePage,			canActivate: [CanActivateRouteGuard] }
-  ,{ path: './edit', 		component: ProfileEditPage,		canActivate: [CanActivateRouteGuard] }
+  ,{ path: 'edit', 		component: ProfileEditPage,		canActivate: [CanActivateRouteGuard] }
 ];
 @NgModule({
   imports: [
