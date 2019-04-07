@@ -24,7 +24,7 @@ export class OfferModelService {
 				private _constants: Constants,
 				private _events: Events
 	) {
-
+		this._pictureService.init();
 	}
 
 	getDefaultModel() { 

@@ -33,11 +33,11 @@
 					<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
 				</button>
 
-				<ion-item-options side="left">
+				<ion-item-options side="start">
 					<button ion-button color="secondary" (click)="onCompleteOutgoingBtnTap(request)">Approve</button>
 					<button ion-button (click)="onViewContactInfoBtnTap(request)">View Their Profile</button>
 				</ion-item-options>
-				<ion-item-options side="right">
+				<ion-item-options side="end">
 					<button ion-button color="danger" (click)="onNotCompleteBtnTap(request)">Disapprove</button>
 				</ion-item-options>
 
@@ -64,10 +64,10 @@
 					<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
 				</button>
 
-				<ion-item-options side="left">
+				<ion-item-options side="start">
 					<button ion-button (click)="onViewContactInfoBtnTap(request)">View Their Profile</button>
 				</ion-item-options>
-				<ion-item-options side="right">
+				<ion-item-options side="end">
 					<button ion-button color="danger" (click)="onCancelBtnTap(request)">Cancel</button>
 				</ion-item-options>
 	  		</ion-item-sliding>
@@ -92,10 +92,10 @@
 					<span *ngIf="!hasRequestMessage(request)" class="douMsg">--<br/></span>
 					<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
 				</button>
-				<ion-item-options side="left">
+				<ion-item-options side="start">
 					<button ion-button (click)="onViewContactInfoBtnTap(request)">View Their Profile</button>
 				</ion-item-options>
-				<ion-item-options side="right">
+				<ion-item-options side="end">
 					<button ion-button color="danger" (click)="onCancelBtnTap(request)">Cancel</button>
 				</ion-item-options>
 	  		</ion-item-sliding>
@@ -121,7 +121,7 @@
 					<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
 					<span class="foo">Decline Reason: {{request.declinedReasonCode.text}}</span><br/>
 				</button>
-				<ion-item-options side="left">
+				<ion-item-options side="start">
 					<button ion-button color="secondary" (click)="onAcknowledgeDeclinedRequestBtnTap(request)">OK.. Got It.</button>
 				</ion-item-options>
 			</ion-item-sliding>
@@ -146,7 +146,7 @@
 					<span *ngIf="!hasRequestMessage(request)" class="douMsg">--<br/></span>
 					<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
 				</button>
-				<ion-item-options side="left">
+				<ion-item-options side="start">
 					<button ion-button color="secondary" (click)="onAcknowledgeCancelledRequestBtnTap(request)">OK.. Got It.</button>
 				</ion-item-options>
 			</ion-item-sliding>
@@ -171,11 +171,11 @@
 					<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
 				</button>
 
-				<ion-item-options side="left">
+				<ion-item-options side="start">
 					<button ion-button (click)="onViewContactInfoBtnTap(request)">View Their Profile</button>
 					<button ion-button color="danger" (click)="onPermanentlyDismissBtnTap(request)">Permanently Dismiss</button>
 				</ion-item-options>
-				<ion-item-options side="right">
+				<ion-item-options side="end">
 					<button ion-button color="secondary" (click)="onCompleteOutgoingBtnTap(request)">Mark as Complete</button>
 				</ion-item-options>
 
