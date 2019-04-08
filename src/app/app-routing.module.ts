@@ -14,7 +14,7 @@ const routes: Routes = [
   ,{ path: 'keywords', 			            loadChildren: './../app/keywords/keywords.module#KeywordsPageModule',                canActivate: [CanActivateRouteGuard] }
   ,{ path: 'notifications', 			      loadChildren: './../app/notifications/notifications.module#NotificationsPageModule', 	         canActivate: [CanActivateRouteGuard] }
   ,{ path: 'recommendations',           loadChildren: './../app/recommendations/recommendations.module#RecommendationsPageModule',   canActivate: [CanActivateRouteGuard] }
-  //,{ path: 'about-easyah', 			      loadChildren: './about-easyah/about-easyah.module#AboutEasyahPageModule', 	             canActivate: [CanActivateRouteGuard] }  
+  ,{ path: 'about-easyah', 	  		      loadChildren: './about-easyah/about-easyah.module#AboutEasyahPageModule', 	             canActivate: [CanActivateRouteGuard] }  
 ];
 @NgModule({
   imports: [
