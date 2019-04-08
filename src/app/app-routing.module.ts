@@ -11,9 +11,9 @@ const routes: Routes = [
   ,{ path: 'search/:searchString',      loadChildren: './../app/search/search.module#SearchPageModule',     canActivate: [CanActivateRouteGuard] }
   ,{ path: 'requests/incoming',         loadChildren: './../app/requests/incoming/requests-incoming.module#RequestsIncomingPageModule',   canActivate: [CanActivateRouteGuard] }
   ,{ path: 'requests/outgoing',         loadChildren: './../app/requests/outgoing/requests-outgoing.module#RequestsOutgoingPageModule',   canActivate: [CanActivateRouteGuard] }
-  //,{ path: 'keywords', 			          loadChildren: './keywords/keywords.module#KeywordsPageModule', 	                             canActivate: [CanActivateRouteGuard] }
-  //,{ path: 'recommendations', 			  loadChildren: './recommendations/recommendations.module#RecommendationPageModule', 	 canActivate: [CanActivateRouteGuard] }
-  //,{ path: 'notifications', 			    loadChildren: './notifications/notifications.module#NotificationPageModule', 	         canActivate: [CanActivateRouteGuard] }
+  ,{ path: 'keywords', 			            loadChildren: './../app/keywords/keywords.module#KeywordsPageModule',                canActivate: [CanActivateRouteGuard] }
+  ,{ path: 'notifications', 			      loadChildren: './../app/notifications/notifications.module#NotificationsPageModule', 	         canActivate: [CanActivateRouteGuard] }
+  ,{ path: 'recommendations',           loadChildren: './../app/recommendations/recommendations.module#RecommendationsPageModule',   canActivate: [CanActivateRouteGuard] }
   //,{ path: 'about-easyah', 			      loadChildren: './about-easyah/about-easyah.module#AboutEasyahPageModule', 	             canActivate: [CanActivateRouteGuard] }  
 ];
 @NgModule({
