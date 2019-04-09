@@ -7,29 +7,26 @@ import { LoadingController } from '@ionic/angular';
 })
 export class LoadingService { 
 
-	loading = undefined
+	loading = []
+	counter = -1;
 
 	constructor(private _ctrl: LoadingController) {
 
 	}
 
 	async show(options, onDidDismissFunc = undefined) {
-	    this.loading = await this._ctrl.create(options)
+	    this.loading[++this.counter] = await this._ctrl.create(options)
 	    
 	    if (onDidDismissFunc)
-	    	await this.loading.onDidDismiss(onDidDismissFunc);
+	    	await this.loading[this.counter].onDidDismiss(onDidDismissFunc);
 
-	    console.log("calling to display loading spinner")
-	    return await this.loading.present();
+	    console.log("calling to display loading spinner (" + this.counter + ")")
+	    return await this.loading[this.counter].present();
 	}
 
 	async dismiss() {
-		if (this.loading) {
-			let temp = this.loading;
-			this.loading = undefined;
-
-			temp.dismiss();
-			console.log("loading spinner dismissed")
+		if (this.counter > -1) {
+			this.loading[this.counter--].dismiss()
 		} else {
 			console.log("call to dismiss spinner, but none set");
 		}
