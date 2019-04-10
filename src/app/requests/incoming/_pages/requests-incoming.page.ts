@@ -6,7 +6,6 @@ import { Events } from '@ionic/angular';
 
 import { ModalController } from '@ionic/angular';
 
-import { ModalService } from '../../../../app/_services/modal.service'
 import { LoadingService } from '../../../../app/_services/loading.service'
 import { RequestsService } from '../../../../app/_services/requests.service'
 import { PictureService } from '../../../../app/_services/picture.service'
@@ -32,7 +31,6 @@ export class RequestsIncomingView {
 				private _route: ActivatedRoute,
   				private _router: Router,
 				private _modalCtrl: ModalController,
-				private _modalService: ModalService,
 				private _loadingService: LoadingService,
 				private _requestsService: RequestsService,
 				private _pictureService: PictureService,
