@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, Input } from '@angular/core';
 
 import { RequestsService } 	from '../../../../app/_services/requests.service';
 
@@ -13,26 +11,18 @@ import { switchMap } from 'rxjs/operators';
 
 export class NotCompleteOutgoingRequestPage {
 
-	confirmationString = undefined;
-	model = undefined;
+	@Input() model: any;
+	@Input() thisModal: any;
+	@Input() parentCallbackFunc: any;
 	
-	constructor(private _location: Location,
-			    private _router: Router,
-			    private _route: ActivatedRoute,
-				private _requestsService: RequestsService) {
+	confirmationString = undefined;
+
+	constructor(private _requestsService: RequestsService) {
 
 	}
 
 	ngOnInit() {
-		let self = this;
-		self._route.paramMap.pipe(
-			switchMap((params) => {
-				let requestId = params.get('requestId')
-				self.model = self._requestsService.getById(requestId);
-				
-				return requestId;
-			})
-		)
+
 	}
 
 	isSaveBtnEnabled() {
@@ -40,14 +30,16 @@ export class NotCompleteOutgoingRequestPage {
 	}
 
 	onSaveBtnTap(evt) {
+		let self = this;
 		if (this.isSaveBtnEnabled()) {
 			this._requestsService.notCompleteOutgoingRequest(this.model).then((obj) => {
-				this._location.back();
+				self.thisModal().dismiss();
+				self.parentCallbackFunc();
 			});
 		}
 	}
 
 	onCancelBtnTap(evt) {
-		this._location.back();
+		this.thisModal().dismiss();
 	}
 }

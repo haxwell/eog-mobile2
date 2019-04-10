@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, Input } from '@angular/core';
 
 import { Events } from '@ionic/angular';
 
@@ -12,32 +10,23 @@ import { switchMap } from 'rxjs/operators';
   selector: 'page-requests-outgoing-cancel',
   templateUrl: 'cancel-request.page.html'
 })
-
 export class CancelOutgoingRequestPage {
+
+	@Input() model: any;
+	@Input() thisModal: any;
+	@Input() parentCallbackFunc: any;
 
 	REQUEST_STATUS_ACCEPTED = 3;
 
 	confirmationString = '';
-	model = undefined;
 	
-	constructor(private _location: Location,
-				private _route: ActivatedRoute,
-				private _router: Router,
-				private _requestsService: RequestsService,
+	constructor(private _requestsService: RequestsService,
 				private _events : Events) {
 
 	}
 
 	ngOnInit() {
-		let self = this;
-		self._route.paramMap.pipe(
-			switchMap((params) => {
-				let requestId = params.get('requestId')
-				self.model = self._requestsService.getById(requestId);
 
-				return requestId;
-			})
-		)
 	}
 
 	isSaveBtnEnabled() {
@@ -58,11 +47,13 @@ export class CancelOutgoingRequestPage {
 			let rtnObj = self.isRequestAccepted() ? data : self.model;
 
 			self._events.publish("request:outgoing:cancelled", {request: rtnObj});
-			this._location.back();
+
+			self.thisModal().dismiss();
+			self.parentCallbackFunc();
 		})
 	}
 
 	onCancelBtnTap(evt) {
-		this._location.back();
+		this.thisModal().dismiss();
 	}
 }

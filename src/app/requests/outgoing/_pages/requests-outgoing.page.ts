@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+
 import { Events } from '@ionic/angular';
 
-import { ModalService } from '../../../../app/_services/modal.service'
+import { ModalController } from '@ionic/angular';
+
 import { LoadingService } from '../../../../app/_services/loading.service'
 import { RequestsService } from '../../../../app/_services/requests.service'
 import { PictureService } from '../../../../app/_services/picture.service'
 
 import { Constants } from '../../../../_constants/constants'
-
-// import { OfferPage } from '../../../offers/offer.page'
 
 import { PermanentlyDismissUnresolvedRequestPage } from './permanently-dismiss-unresolved-request.page'
 import { NotCompleteOutgoingRequestPage } from './not-complete-request.page'
@@ -31,7 +31,7 @@ export class RequestsOutgoingView {
 				private _route: ActivatedRoute,
   				private _router: Router,
 				private _loadingService: LoadingService,
-				private _modalService: ModalService,
+				private _modalCtrl: ModalController,
 				private _requestsService: RequestsService,
 				private _pictureService: PictureService,
 				private _constants: Constants,
@@ -79,12 +79,12 @@ export class RequestsOutgoingView {
 
 		self._loadingService.show({
 			content: 'Please wait...'
-		});
-
-		self._requestsService.getOutgoingRequestsForCurrentUser().then((data: Array<Object>) => {
-				self.model = data;
-				self._loadingService.dismiss();
+		}).then(() => {
+			self._requestsService.getOutgoingRequestsForCurrentUser().then((data: Array<Object>) => {
+					self.model = data;
+					self._loadingService.dismiss();
 			});
+		});
 	}
 
 	isRequestModelEmpty() {
@@ -226,25 +226,45 @@ export class RequestsOutgoingView {
 		this._router.navigate(['/offer/' + request.offer["id"]]);
 	}
 
+	async presentModal(_component, request) {
+		let self = this;
+		let modal = undefined;
+		let options = { component: _component, componentProps: {model: request, thisModal: () => { return modal; }, 
+			parentCallbackFunc: 
+				() => { 
+					// modal.dismiss();
+					self.ngOnInit();
+				} 
+			}
+		};
+
+		modal = await this._modalCtrl.create(options)
+		return await modal.present();
+	}
 
 	onPermanentlyDismissBtnTap(request) {
-		let self = this;
-		this._modalService.show(PermanentlyDismissUnresolvedRequestPage);
+		this.presentModal(PermanentlyDismissUnresolvedRequestPage, request);
 	}
 
 	onCompleteOutgoingBtnTap(request) {
-		let self = this;
-		this._modalService.show(CompleteOutgoingRequestPage, {request: self.model, onDidDismissFunc: data => { self._events.publish('request:markedApprovedAfterCompletion'); }});
+		//let self = this;
+		//this._modalService.show(CompleteOutgoingRequestPage, {request: self.model, onDidDismissFunc: data => { self._events.publish('request:markedApprovedAfterCompletion'); }});
+
+		this.presentModal(CompleteOutgoingRequestPage, request);
 	}
 
 	onNotCompleteBtnTap(request) {
-		let self = this;
-		this._modalService.show(NotCompleteOutgoingRequestPage);
+		// let self = this;
+		// this._modalService.show(NotCompleteOutgoingRequestPage);
+
+		this.presentModal(NotCompleteOutgoingRequestPage, request);	
 	}
 
 	onCancelBtnTap(request) {
-		let self = this;
-		this._modalService.show(CancelOutgoingRequestPage);
+		// let self = this;
+		// this._modalService.show(CancelOutgoingRequestPage);
+
+		this.presentModal(CancelOutgoingRequestPage, request);
 	}
 
 	onAcknowledgeDeclinedRequestBtnTap(request) {

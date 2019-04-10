@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, Input } from '@angular/core';
 
 import { RequestsService } 	from '../../../../app/_services/requests.service';
 
@@ -15,26 +13,17 @@ import { switchMap } from 'rxjs/operators';
 
 export class CompleteOutgoingRequestPage {
 
-	model = undefined;
-	
-	constructor(private _location: Location,
-				private _route: ActivatedRoute,
-				private _router: Router,
-				private _requestsService: RequestsService,
+	@Input() model: any;
+	@Input() thisModal: any;
+	@Input() parentCallbackFunc: any;
+
+	constructor(private _requestsService: RequestsService,
 				private _constants: Constants) {
 
 	}
 
 	ngOnInit() {
-		let self = this;
-		self._route.paramMap.pipe(
-			switchMap((params) => {
-				let requestId = params.get('requestId')
-				self.model = self._requestsService.getById(requestId);
 
-				return requestId;
-			})
-		)
 	}
 
 	isRequestInDispute() {
@@ -43,12 +32,14 @@ export class CompleteOutgoingRequestPage {
 	}
 
 	onSaveBtnTap(evt) {
+		let self = this;
 		this._requestsService.completeOutgoingRequest(this.model).then((obj) => {
-			this._location.back();
+			self.thisModal().dismiss();
+			self.parentCallbackFunc();
 		})
 	}
 
 	onCancelBtnTap(evt) {
-		this._location.back();
+		this.thisModal().dismiss();
 	}
 }
