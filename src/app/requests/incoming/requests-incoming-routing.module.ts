@@ -12,15 +12,18 @@ import { DeclineRequestPage } from './_pages/decline-request.page';
 
 const routes: Routes = [
   { path: '',                 		component: RequestsIncomingView,   	canActivate: [CanActivateRouteGuard] }
-  ,{ path: './accept', 				component: AcceptRequestPage,		canActivate: [CanActivateRouteGuard] }
-  ,{ path: './cancel', 				component: CancelRequestPage,		canActivate: [CanActivateRouteGuard] }
-  ,{ path: './complete', 			component: CompleteRequestPage,		canActivate: [CanActivateRouteGuard] }
-  ,{ path: './decline', 			component: DeclineRequestPage,		canActivate: [CanActivateRouteGuard] }
+  ,{ path: 'accept', 				component: AcceptRequestPage,		canActivate: [CanActivateRouteGuard] }
+  ,{ path: 'cancel', 				component: CancelRequestPage,		canActivate: [CanActivateRouteGuard] }
+  ,{ path: 'complete', 			component: CompleteRequestPage,		canActivate: [CanActivateRouteGuard] }
+  ,{ path: 'decline', 			component: DeclineRequestPage,		canActivate: [CanActivateRouteGuard] }
 ];
 @NgModule({
   imports: [
     RouterModule.forChild(routes)
   ],
   exports: [RouterModule]
+  ,entryComponents: [
+    AcceptRequestPage
+  ]
 })
 export class RequestsIncomingRoutingModule {}

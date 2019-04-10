@@ -4,6 +4,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Events } from '@ionic/angular';
 
+import { ModalController } from '@ionic/angular';
+
 import { ModalService } from '../../../../app/_services/modal.service'
 import { LoadingService } from '../../../../app/_services/loading.service'
 import { RequestsService } from '../../../../app/_services/requests.service'
@@ -29,6 +31,7 @@ export class RequestsIncomingView {
 	constructor(private _location: Location,
 				private _route: ActivatedRoute,
   				private _router: Router,
+				private _modalCtrl: ModalController,
 				private _modalService: ModalService,
 				private _loadingService: LoadingService,
 				private _requestsService: RequestsService,
@@ -93,14 +96,18 @@ export class RequestsIncomingView {
 
 		self._loadingService.show({
 			content: 'Please wait...'
-		});
-
-		this._requestsService.getIncomingRequestsForCurrentUser().then((data: Array<Object>) => {
-			self.model = data;
-			self.dirty = false;
-			self._loadingService.dismiss();
-		});
+		}).then(() => {
+			this._requestsService.getIncomingRequestsForCurrentUser().then((data: Array<Object>) => {
+				self.model = data;
+				self.dirty = false;
+				self._loadingService.dismiss();
+			});
+		})
 	};
+
+	ionViewWillEnter() {
+		this.ngOnInit();
+	}
 
 	isRequestModelEmpty() {
 		let rtn = this.model === undefined || this.model.length === 0;
@@ -241,33 +248,46 @@ export class RequestsIncomingView {
 		this._router.navigate(['/offer/' + request.offer["id"]])
 	}
 
-	onAcceptBtnTap(request) {
+	async presentModal(_component, request) {
 		let self = this;
-		this._modalService.show(AcceptRequestPage, {request: request, onDidDismissFunc: (data => { 
-			self.replaceModelElement(data)
-		})});
+		let modal = undefined;
+		let options = { component: _component, componentProps: {model: request, thisModal: () => { return modal; }, 
+			parentCallbackFunc: 
+				() => { 
+					// modal.dismiss();
+					self.ngOnInit();
+				} 
+			}
+		};
+
+		modal = await this._modalCtrl.create(options)
+		return await modal.present();
+	}
+
+	onAcceptBtnTap(request) {
+	 	this.presentModal(AcceptRequestPage, request);
 	}
 
 	onDeclineBtnTap(request) {
-		let self = this;
-		this._modalService.show(DeclineRequestPage, {request: request, onDidDismissFunc: (data => { 
-			self.replaceModelElement(data)
-		})});
+		this.presentModal(DeclineRequestPage, request);
 	}
 
 	onCancelBtnTap(request) {
-		let self = this;
-		this._modalService.show(CancelRequestPage, {request: request, onDidDismissFunc: (data => { 
-			self.replaceModelElement(data)
-		})});
+		this.presentModal(CancelRequestPage, request);
 	}
 
 	onCompleteBtnTap(request) {
-		let self = this;
-		this._modalService.show(CompleteRequestPage, {request: request, onDidDismissFunc: (data => { 
-			self.replaceModelElement(data)
-		})});
+		this.presentModal(CompleteRequestPage, request);
 	}
+
+	
+
+
+	// WILO: CancelRequestPage, et al.. need to operate like AcceptRequestPage.. remove _location.back(), make them act as modals, etc.
+
+
+
+
 
 	onHideRequestBtnTap(request) {
 		let self = this;

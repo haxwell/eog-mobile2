@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, Input } from '@angular/core';
 
-import { ModalService } from '../../../../app/_services/modal.service';
+import { ModalController } from '@ionic/angular';
+
 import { RequestsService } 	from '../../../../app/_services/requests.service';
 import { UserPreferencesService } 	from '../../../../app/_services/user-preferences.service';
 
@@ -14,13 +13,13 @@ import { AcceptRequestTutorialPage } from './accept-request.tutorial';
 })
 export class AcceptRequestPage {
 
-	model = undefined;
+	@Input() model: any;
+	@Input() thisModal: any;
+	@Input() parentCallbackFunc: any;
+
 	showTutorialAfterRequestAccepted = true;
 	
-	constructor(private _location: Location,
-				private _route: ActivatedRoute,
-				private _router: Router,
-				private _modalService: ModalService,
+	constructor(private _modalCtrl: ModalController,
 				private _requestsService: RequestsService,
 				private _userPreferencesService: UserPreferencesService) {
 
@@ -38,15 +37,35 @@ export class AcceptRequestPage {
 		self._requestsService.acceptIncomingRequest(self.model).then((obj) => {
 
 			if (self.showTutorialAfterRequestAccepted) {
-				let modal = self._modalService.show(AcceptRequestTutorialPage);
+				self.presentAcceptRequestTutorial();
 			} else {
-				self._location.back();
+				self.thisModal().dismiss();
+				self.parentCallbackFunc();
 			}
 		})
 	}
 
+	async presentAcceptRequestTutorial() {
+		let self = this;
+		let _tutorialModal = undefined;
+		let options = { 
+			component: AcceptRequestTutorialPage, 
+			componentProps: { 
+				func: () => {
+					_tutorialModal.dismiss();
+					self.thisModal().dismiss();
+					self.parentCallbackFunc();
+				}
+			}
+		};
+
+		_tutorialModal = await this._modalCtrl.create(options)
+
+		return await _tutorialModal.present();
+	}
+
 	onCancelBtnTap(evt) {
-		this._location.back();
+		this.thisModal().dismiss();
 	}
 
 }

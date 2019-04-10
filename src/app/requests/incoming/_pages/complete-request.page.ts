@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, Input } from '@angular/core';
+
+import { ModalController } from '@ionic/angular';
 
 import { RequestsService } 	from '../../../../app/_services/requests.service';
 import { ApiService } 	from '../../../../app/_services/api.service';
@@ -17,14 +17,15 @@ import { switchMap } from 'rxjs/operators';
 
 export class CompleteRequestPage {
 
+	@Input() model: any;
+	@Input() thisModal: any;
+	@Input() parentCallbackFunc: any;
+
 	confirmationString = '';
-	model = undefined;
 	requestAgainDelayCodes = undefined;
 	selectedRequestAgainDelayId = undefined;
 	
-	constructor(private _location: Location,
-				private _route: ActivatedRoute,
-				private _router: Router,
+	constructor(private _modalCtrl: ModalController,
 				private _requestsService: RequestsService,
 				private _apiService: ApiService,
 				private _constants : Constants) {
@@ -33,15 +34,6 @@ export class CompleteRequestPage {
 
 	ngOnInit() {
 		let self = this;
-
-		self._route.paramMap.pipe(
-			switchMap((params) => {
-				let requestId = params.get('requestId')
-				self.model = self._requestsService.getById(requestId);
-
-				return requestId;
-			})
-		)
 
 		let url = environment.apiUrl + "/api/requestAgainDelayCodes";
 		this._apiService.get(url).subscribe((data) => {
@@ -66,15 +58,17 @@ export class CompleteRequestPage {
 	}
 
 	onSaveBtnTap(evt) {
-		if (this.isSaveBtnEnabled()) {
-			this.model["requestAgainDelayCode"] = this.getSelectedRequestAgainDelayId(); 
-			this._requestsService.completeIncomingRequest(this.model).then((obj) => {
-				this._location.back();
+		let self = this;
+		if (self.isSaveBtnEnabled()) {
+			self.model["requestAgainDelayCode"] = self.getSelectedRequestAgainDelayId(); 
+			self._requestsService.completeIncomingRequest(self.model).then((obj) => {
+				self.thisModal().dismiss();
+				self.parentCallbackFunc();
 			});
 		}
 	}
 
 	onCancelBtnTap(evt) {
-		this._location.back();
+		this.thisModal.dismiss();
 	}
 }

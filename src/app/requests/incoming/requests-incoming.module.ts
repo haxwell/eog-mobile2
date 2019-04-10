@@ -40,5 +40,9 @@ import { RequestsService } from '../../../app/_services/requests.service';
   ,providers: [
     RequestsService
   ]
+  ,entryComponents: [
+    AcceptRequestPage
+    ,AcceptRequestTutorialPage
+  ]
 })
 export class RequestsIncomingPageModule {}

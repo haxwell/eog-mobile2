@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { AbstractTutorialPage } from '../../../../app/tutorials/abstract-tutorial.page'
 
@@ -11,6 +11,8 @@ import { UserPreferencesService } 	from '../../../../app/_services/user-preferen
 })
 export class AcceptRequestTutorialPage extends AbstractTutorialPage {
 
+	@Input() func: any;
+	
 	showSkip = true;
 	showThisTutorialNextTime = true;
 	dirty = false;
@@ -29,6 +31,6 @@ export class AcceptRequestTutorialPage extends AbstractTutorialPage {
 		if (this.dirty)
 			this._userPreferencesService.setPreference("showTutorialAfterRequestAccepted", this.showThisTutorialNextTime);
 
-		this._modalService.dismiss(AcceptRequestTutorialPage);
+		this.func();
 	}
 }

@@ -189,13 +189,12 @@ export class RequestsService {
 			this._apiService.post(url, data).subscribe((obj: any[]) => {
 				let model = undefined;
 				
-				if (obj && obj.length > 0)
+				if (obj){
 					model = obj;
-
-				if (model)
 					this._offerModelService.setOfferImageOrientation(model.offer).then((offer) => {
 						resolve(this.changePromiseAttributeToOffer(model));
 					})
+				}
 				else {
 					resolve(undefined);
 				}

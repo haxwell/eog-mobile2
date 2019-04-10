@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, Input } from '@angular/core';
 
-import { environment } from '../../../../_environments/environment';
+import { ModalController } from '@ionic/angular';
 
 import { RequestsService } 	from '../../../../app/_services/requests.service';
-import { DeclineReasonCodeService } from '../../../../app/_services/declined-reason-codes.service';
 import { ApiService } 	from '../../../../app/_services/api.service';
+import { DeclineReasonCodeService } from '../../../../app/_services/declined-reason-codes.service';
+
+import { environment } from '../../../../_environments/environment';
 
 import { switchMap } from 'rxjs/operators';
 
@@ -15,16 +15,17 @@ import { switchMap } from 'rxjs/operators';
   templateUrl: 'decline-request.page.html'
 })
 export class DeclineRequestPage {
-	
-	model = undefined;
+
+	@Input() model: any;
+	@Input() thisModal: any;
+	@Input() parentCallbackFunc: any;
+
 	declineReasonCodes = undefined;
 	selectedDeclineReasonId = undefined;
 	requestAgainDelayCodes = undefined;
 	selectedRequestAgainDelayId = undefined;
 
-	constructor(private _location: Location,
-				private _route: ActivatedRoute,
-				private _router: Router,
+	constructor(private _modalCtrl: ModalController,
 				private _requestsService: RequestsService,
 				private _declinedReasonCodeService: DeclineReasonCodeService,
 				private _apiService: ApiService) {
@@ -33,15 +34,6 @@ export class DeclineRequestPage {
 
 	ngOnInit() {
 		let self = this;
-
-		self._route.paramMap.pipe(
-			switchMap((params) => {
-				let requestId = params.get('requestId')
-				self.model = self._requestsService.getById(requestId);
-
-				return requestId;
-			})
-		)
 
 		let url = environment.apiUrl + "/api/declineReasonCodes";
 		self._apiService.get(url).subscribe((data) => {
@@ -73,14 +65,14 @@ export class DeclineRequestPage {
 			self._declinedReasonCodeService.getDeclineReasonCodes().then((codes) => {
 				let x = codes.filter((code) => { return code["id"] === obj["declinedReasonCode"]});
 				obj["declinedReasonCode"] = x[0];
-				//self.viewCtrl.dismiss(obj);
 
-				this._location.back();
+				self.thisModal().dismiss();
+				self.parentCallbackFunc();
 			})
 		})
 	}
 
 	onCancelBtnTap(evt) {
-		this._location.back();
+		this.thisModal.dismiss();
 	}
 }
