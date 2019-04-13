@@ -23,9 +23,18 @@ ion-card-header {
 	text-align: center;
 }
 
+.requestsHeaderRow {
+  padding-bottom: 1em;
+}
+
+.offerTitle {
+  font-size: 1.25em;
+  font-weight: bold;
+  padding-top: .4em;
+}
 
 $categories: (
- ionic: color($colors, primary),
+ // ionic: color($colors, primary),
  pending: yellow,
  accepted: green,
  declined: red,
@@ -34,12 +43,15 @@ $categories: (
  cancelled: red
 );
 
-@function auxiliary-categories() {
-  @return map-remove($categories);
-}
+  @each $track, $value in $categories {
+   ion-item-sliding.#{$track} {
+     border-left: 6px solid $value;
+     padding-left: 10px;
+   }
+  };
 
 $categories2: (
- ionic: color($colors, primary),
+ // ionic: color($colors, primary),
  pending: white,
  accepted: white,
  declined: white,
@@ -48,21 +60,8 @@ $categories2: (
  cancelled: white
 );
 
-@function auxiliary-categories2() {
-  @return map-remove($categories2);
-}
-
-requests-incoming-view {
-  @each $track, $value in auxiliary-categories() {
-   ion-item-sliding[track=#{$track}] ion-label {
-     border-left: 6px solid $value;
-     padding-left: 10px;
+  @each $track, $foo in $categories2 {
+   ion-item-sliding.#{$track} {
+   		background-color: $foo;
    }
-  }
-
-  @each $track, $value2 in auxiliary-categories2() {
-   ion-item-sliding[track=#{$track}] ion-label {
-   		background-color: $value2;
-   }
-  }
-}
+  };

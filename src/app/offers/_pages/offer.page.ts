@@ -208,7 +208,7 @@ export class OfferPage {
 	}
 
 	onRequestBtnTap(evt) {
-		this._router.navigate(['/offer/' + this.model["id"] + '/request']);
+		this._router.navigate(['/offers/' + this.model["id"] + '/request']);
 	}
 
 	onGoBackBtnTap(evt) {

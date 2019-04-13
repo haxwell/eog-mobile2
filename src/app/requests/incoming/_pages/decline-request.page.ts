@@ -73,6 +73,6 @@ export class DeclineRequestPage {
 	}
 
 	onCancelBtnTap(evt) {
-		this.thisModal.dismiss();
+		this.thisModal().dismiss();
 	}
 }

@@ -19,7 +19,8 @@ import { CancelOutgoingRequestPage } from './cancel-request.page'
 
 @Component({
   selector: 'requests-outgoing-view',
-  templateUrl: 'requests-outgoing.page.html'
+  templateUrl: 'requests-outgoing.page.html',
+  styleUrls: ['./requests-outgoing.page.scss']
 })
 
 export class RequestsOutgoingView {
@@ -223,7 +224,7 @@ export class RequestsOutgoingView {
 	}
 
 	onViewOffer(request) {
-		this._router.navigate(['/offer/' + request.offer["id"]]);
+		this._router.navigate(['/offers/' + request.offer["id"]]);
 	}
 
 	async presentModal(_component, request) {

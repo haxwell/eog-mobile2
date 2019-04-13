@@ -20,25 +20,41 @@
 			</ion-label>
 		</ion-item-divider>
 		<ion-item-group *ngFor="let request of getCompletedAwaitingApprovalRequests()">
-			<ion-item-sliding #slidingItem [attr.track]="getTrack(request)" (press)="onViewOffer(request)">
-				<button ion-item>
-					<ion-avatar item-start>
+			<ion-item-sliding  [attr.track]="getTrack(request)" (press)="onViewOffer(request)">
+				<ion-item>
+					<ion-avatar slot="start">
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
 					</ion-avatar>
 
-					<span class="offerTitle"><b>{{request.offer.title}}</b></span><br/>
-					<span class="offerQuantity">{{request.offer.quantity}} {{request.offer.quantityDescription}}</span><br/>
-					<span *ngIf="hasRequestMessage(request)" class="douMsg">{{getRequestMessage(request)}}<br/></span>
-					<span *ngIf="!hasRequestMessage(request)" class="douMsg">--<br/></span>
-					<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
-				</button>
+					<div class="offerMetadataDiv">
+						<table>
+							<tr>
+								<div class="offerTitle">
+									<span class="offerTitle"><b>{{request.offer.title}}</b></span><br/>
+								</div>
+							</tr>
+							<tr>
+								<span class="offerQuantity">{{request.offer.quantity}} {{request.offer.quantityDescription}}</span><br/>
+							</tr>
+							<tr>
+								<span *ngIf="hasRequestMessage(request)" class="douMsg">{{getRequestMessage(request)}}<br/></span>
+							</tr>
+							<tr>
+								<span *ngIf="!hasRequestMessage(request)" class="douMsg">--<br/></span>
+							</tr>
+							<tr>
+								<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
+							</tr>
+						</table>
+					</div>
+				</ion-item>
 
 				<ion-item-options side="start">
-					<button ion-button color="secondary" (click)="onCompleteOutgoingBtnTap(request)">Approve</button>
-					<button ion-button (click)="onViewContactInfoBtnTap(request)">View Their Profile</button>
+					<ion-item-option color="secondary" (click)="onCompleteOutgoingBtnTap(request)">Approve</ion-item-option>
+					<ion-item-option (click)="onViewContactInfoBtnTap(request)">View Their Profile</ion-item-option>
 				</ion-item-options>
 				<ion-item-options side="end">
-					<button ion-button color="danger" (click)="onNotCompleteBtnTap(request)">Disapprove</button>
+					<ion-item-option color="danger" (click)="onNotCompleteBtnTap(request)">Disapprove</ion-item-option>
 				</ion-item-options>
 
 			</ion-item-sliding>
@@ -51,24 +67,40 @@
 			</ion-label>
 		</ion-item-divider>
 		<ion-item-group *ngFor="let request of getPendingRequests()">
-			<ion-item-sliding #slidingItem [attr.track]="getTrack(request)" (press)="onViewOffer(request)">
-				<button ion-item>
-					<ion-avatar item-start>
+			<ion-item-sliding  [attr.track]="getTrack(request)" (press)="onViewOffer(request)">
+				<ion-item>
+					<ion-avatar slot="start">
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
 					</ion-avatar>
 
-					<span class="offerTitle"><b>{{request.offer.title}}</b></span><br/>
-					<span class="offerQuantity">{{request.offer.quantity}} {{request.offer.quantityDescription}}</span><br/>
-					<span *ngIf="hasRequestMessage(request)" class="douMsg">{{getRequestMessage(request)}}<br/></span>
-					<span *ngIf="!hasRequestMessage(request)" class="douMsg">--<br/></span>
-					<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
-				</button>
+					<div class="offerMetadataDiv">
+						<table>
+							<tr>
+								<div class="offerTitle">
+									<span class="offerTitle"><b>{{request.offer.title}}</b></span><br/>
+								</div>
+							</tr>
+							<tr>
+								<span class="offerQuantity">{{request.offer.quantity}} {{request.offer.quantityDescription}}</span><br/>
+							</tr>
+							<tr>
+								<span *ngIf="hasRequestMessage(request)" class="douMsg">{{getRequestMessage(request)}}<br/></span>
+							</tr>
+							<tr>
+								<span *ngIf="!hasRequestMessage(request)" class="douMsg">--<br/></span>
+							</tr>
+							<tr>
+								<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
+							</tr>
+						</table>
+					</div>
+				</ion-item>
 
 				<ion-item-options side="start">
-					<button ion-button (click)="onViewContactInfoBtnTap(request)">View Their Profile</button>
+					<ion-item-option (click)="onViewContactInfoBtnTap(request)">View Their Profile</ion-item-option>
 				</ion-item-options>
 				<ion-item-options side="end">
-					<button ion-button color="danger" (click)="onCancelBtnTap(request)">Cancel</button>
+					<ion-item-option color="danger" (click)="onCancelBtnTap(request)">Cancel</ion-item-option>
 				</ion-item-options>
 	  		</ion-item-sliding>
 		</ion-item-group>
@@ -80,23 +112,39 @@
 			</ion-label>
 		</ion-item-divider>
 		<ion-item-group *ngFor="let request of getAcceptedRequests()">
-			<ion-item-sliding #slidingItem [attr.track]="getTrack(request)" (press)="onViewOffer(request)">
-				<button ion-item>
-					<ion-avatar item-start>
+			<ion-item-sliding  [attr.track]="getTrack(request)" (press)="onViewOffer(request)">
+				<ion-item>
+					<ion-avatar slot="start">
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
 					</ion-avatar>
 
-					<span class="offerTitle"><b>{{request.offer.title}}</b></span><br/>
-					<span class="offerQuantity">{{request.offer.quantity}} {{request.offer.quantityDescription}}</span><br/>
-					<span *ngIf="hasRequestMessage(request)" class="douMsg">{{getRequestMessage(request)}}<br/></span>
-					<span *ngIf="!hasRequestMessage(request)" class="douMsg">--<br/></span>
-					<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
-				</button>
+					<div class="offerMetadataDiv">
+						<table>
+							<tr>
+								<div class="offerTitle">
+									<span class="offerTitle"><b>{{request.offer.title}}</b></span><br/>
+								</div>
+							</tr>
+							<tr>
+								<span class="offerQuantity">{{request.offer.quantity}} {{request.offer.quantityDescription}}</span><br/>
+							</tr>
+							<tr>
+								<span *ngIf="hasRequestMessage(request)" class="douMsg">{{getRequestMessage(request)}}<br/></span>
+							</tr>
+							<tr>
+								<span *ngIf="!hasRequestMessage(request)" class="douMsg">--<br/></span>
+							</tr>
+							<tr>
+								<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
+							</tr>
+						</table>
+					</div>
+				</ion-item>
 				<ion-item-options side="start">
-					<button ion-button (click)="onViewContactInfoBtnTap(request)">View Their Profile</button>
+					<ion-item-option (click)="onViewContactInfoBtnTap(request)">View Their Profile</ion-item-option>
 				</ion-item-options>
 				<ion-item-options side="end">
-					<button ion-button color="danger" (click)="onCancelBtnTap(request)">Cancel</button>
+					<ion-item-option color="danger" (click)="onCancelBtnTap(request)">Cancel</ion-item-option>
 				</ion-item-options>
 	  		</ion-item-sliding>
 		</ion-item-group>
@@ -108,21 +156,39 @@
 			</ion-label>
 		</ion-item-divider>
 		<ion-item-group *ngFor="let request of getDeclinedRequests()">
-			<ion-item-sliding #slidingItem [attr.track]="getTrack(request)" (press)="onViewOffer(request)">
-				<button ion-item>
-					<ion-avatar item-start>
+			<ion-item-sliding  [attr.track]="getTrack(request)" (press)="onViewOffer(request)">
+				<ion-item>
+					<ion-avatar slot="start">
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
 					</ion-avatar>
 
-					<span class="offerTitle"><b>{{request.offer.title}}</b></span><br/>
-					<span class="offerQuantity">{{request.offer.quantity}} {{request.offer.quantityDescription}}</span><br/>
-					<span *ngIf="hasRequestMessage(request)" class="douMsg">{{getRequestMessage(request)}}<br/></span>
-					<span *ngIf="!hasRequestMessage(request)" class="douMsg">--<br/></span>
-					<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
-					<span class="foo">Decline Reason: {{request.declinedReasonCode.text}}</span><br/>
-				</button>
+					<div class="offerMetadataDiv">
+						<table>
+							<tr>
+								<div class="offerTitle">
+									<span class="offerTitle"><b>{{request.offer.title}}</b></span><br/>
+								</div>
+							</tr>
+							<tr>
+								<span class="offerQuantity">{{request.offer.quantity}} {{request.offer.quantityDescription}}</span><br/>
+							</tr>
+							<tr>
+								<span *ngIf="hasRequestMessage(request)" class="douMsg">{{getRequestMessage(request)}}<br/></span>
+							</tr>
+							<tr>
+								<span *ngIf="!hasRequestMessage(request)" class="douMsg">--<br/></span>
+							</tr>
+							<tr>
+								<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
+							</tr>
+							<tr>
+								<span class="foo">Decline Reason: {{request.declinedReasonCode.text}}</span><br/>
+							</tr>
+						</table>
+					</div>
+				</ion-item>
 				<ion-item-options side="start">
-					<button ion-button color="secondary" (click)="onAcknowledgeDeclinedRequestBtnTap(request)">OK.. Got It.</button>
+					<ion-item-option color="secondary" (click)="onAcknowledgeDeclinedRequestBtnTap(request)">OK.. Got It.</ion-item-option>
 				</ion-item-options>
 			</ion-item-sliding>
 		</ion-item-group >
@@ -134,20 +200,36 @@
 			</ion-label>
 		</ion-item-divider>
 		<ion-item-group *ngFor="let request of getCancelledRequests()">
-			<ion-item-sliding #slidingItem [attr.track]="getTrack(request)" (press)="onViewOffer(request)">
-				<button ion-item>
-					<ion-avatar item-start>
+			<ion-item-sliding  [attr.track]="getTrack(request)" (press)="onViewOffer(request)">
+				<ion-item>
+					<ion-avatar slot="start">
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
 					</ion-avatar>
 
-					<span class="offerTitle"><b>{{request.offer.title}}</b></span><br/>
-					<span class="offerQuantity">{{request.offer.quantity}} {{request.offer.quantityDescription}}</span><br/>
-					<span *ngIf="hasRequestMessage(request)" class="douMsg">{{getRequestMessage(request)}}<br/></span>
-					<span *ngIf="!hasRequestMessage(request)" class="douMsg">--<br/></span>
-					<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
-				</button>
+					<div class="offerMetadataDiv">
+						<table>
+							<tr>
+								<div class="offerTitle">
+									<span class="offerTitle"><b>{{request.offer.title}}</b></span><br/>
+								</div>
+							</tr>
+							<tr>
+								<span class="offerQuantity">{{request.offer.quantity}} {{request.offer.quantityDescription}}</span><br/>
+							</tr>
+							<tr>
+								<span *ngIf="hasRequestMessage(request)" class="douMsg">{{getRequestMessage(request)}}<br/></span>
+							</tr>
+							<tr>
+								<span *ngIf="!hasRequestMessage(request)" class="douMsg">--<br/></span>
+							</tr>
+							<tr>
+								<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
+							</tr>
+						</table>
+					</div>
+				</ion-item>
 				<ion-item-options side="start">
-					<button ion-button color="secondary" (click)="onAcknowledgeCancelledRequestBtnTap(request)">OK.. Got It.</button>
+					<ion-item-option color="secondary" (click)="onAcknowledgeCancelledRequestBtnTap(request)">OK.. Got It.</ion-item-option>
 				</ion-item-options>
 			</ion-item-sliding>
 		</ion-item-group >
@@ -159,24 +241,36 @@
 			</ion-label>
 		</ion-item-divider>
 		<ion-item-group *ngFor="let request of getNotCompleteAwaitingResolution()">
-			<ion-item-sliding #slidingItem [attr.track]="getTrack(request)" (press)="onViewOffer(request)">
-				<button ion-item>
-					<ion-avatar item-start>
+			<ion-item-sliding  [attr.track]="getTrack(request)" (press)="onViewOffer(request)">
+				<ion-item>
+					<ion-avatar slot="start">
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
 					</ion-avatar>
 
-					<span class="offerTitle"><b>{{request.offer.title}}</b></span><br/>
-					<span class="offerQuantity">{{request.offer.quantity}} {{request.offer.quantityDescription}}</span><br/>
-					<!-- <span class="douMsg">This is where the message from the other user will go. Right in this line. It may be a long message. Like this one.</span><br/> -->
-					<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
-				</button>
-
+					<div class="offerMetadataDiv">
+						<table>
+							<tr>
+								<div class="offerTitle">
+									<span class="offerTitle"><b>{{request.offer.title}}</b></span><br/>
+								</div>
+							</tr>
+							<tr>
+								<span class="offerQuantity">{{request.offer.quantity}} {{request.offer.quantityDescription}}</span><br/>
+							</tr>
+							<tr>
+								<!-- <span class="douMsg">This is where the message from the other user will go. Right in this line. It 
+								may be a long message. Like this one.</span><br/> -->
+								<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
+							</tr>
+						</table>
+					</div>
+				</ion-item>
 				<ion-item-options side="start">
-					<button ion-button (click)="onViewContactInfoBtnTap(request)">View Their Profile</button>
-					<button ion-button color="danger" (click)="onPermanentlyDismissBtnTap(request)">Permanently Dismiss</button>
+					<ion-item-option (click)="onViewContactInfoBtnTap(request)">View Their Profile</ion-item-option>
+					<ion-item-option color="danger" (click)="onPermanentlyDismissBtnTap(request)">Permanently Dismiss</ion-item-option>
 				</ion-item-options>
 				<ion-item-options side="end">
-					<button ion-button color="secondary" (click)="onCompleteOutgoingBtnTap(request)">Mark as Complete</button>
+					<ion-item-option color="secondary" (click)="onCompleteOutgoingBtnTap(request)">Mark as Complete</ion-item-option>
 				</ion-item-options>
 
 			</ion-item-sliding>

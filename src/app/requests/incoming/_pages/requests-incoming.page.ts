@@ -19,13 +19,18 @@ import { CancelRequestPage } from './cancel-request.page'
 
 @Component({
   selector: 'requests-incoming-view',
-  templateUrl: 'requests-incoming.page.html'
+  templateUrl: 'requests-incoming.page.html',
+  styleUrls: ['./requests-incoming.page.scss']
 })
 export class RequestsIncomingView {
 
 	model = undefined;
 	dirty = false;
 	theOtherUser = undefined;
+
+	slideOpts = {
+		click: () => { console.log("Clicked!"); }
+	}
 	
 	constructor(private _location: Location,
 				private _route: ActivatedRoute,
@@ -243,7 +248,7 @@ export class RequestsIncomingView {
 	}
 
 	onViewOffer(request) {
-		this._router.navigate(['/offer/' + request.offer["id"]])
+		this._router.navigate(['/offers/' + request.offer["id"]])
 	}
 
 	async presentModal(_component, request) {

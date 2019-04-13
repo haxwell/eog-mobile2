@@ -43,6 +43,6 @@ export class CancelRequestPage {
 	}
 
 	onCancelBtnTap(evt) {
-		this.thisModal.dismiss();
+		this.thisModal().dismiss();
 	}
 }
