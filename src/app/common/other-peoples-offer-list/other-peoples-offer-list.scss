@@ -1,6 +1,11 @@
-.offerTitle {
-	font-size: 1.25em;
+.otherPeoplesOfferTitle {
+	font-size: 1.15em;
 	font-weight: bold;
+	padding-top: 0.3em;
+}
+
+.offerQuantity {
+	font-style: italic;
 }
 
 .floatDivLeft {
@@ -15,8 +20,15 @@
 	background-color: white;
 }
 
+.otherPeoplesOfferIconRow {
+	padding-bottom: 0.4em;
+}
+
+.otherPeoplesOfferDesc {
+	margin-left: 0.6em;
+	padding-bottom: 0.3em;
+}
+
 #opol-avatar {
-	width: 2em;
-    height: 2em;
-    border-radius: 50%;
+
 }
