@@ -4,17 +4,18 @@
 	margin: 0 auto;
 }
 
-.socialNetworkImg {
-	display: inline;
-	width: 3em;
-	height: 3em;
+.displayBlock {
+	display: block;
+	font-size: 3em;
+	font-weight: bold;
 }
 
-.socialNetworkImg > img {
-	width: 3em;
-	height: 3em;
-	margin: 0 0 0 0;
+.ptsTdElement {
+	padding: 0 1em 0 1em;
 }
+
+
+
 
 .blockItem {
 	display: inline-block;
@@ -25,9 +26,11 @@
 	margin-bottom: .5em;
 }
 
-.contactInfoField {
-	font-size: 1.45em;
-}
+
+
+
+
+
 
 .profileIcon {
 	font-size: 1.45em;
@@ -36,10 +39,6 @@
 
 .circularized {
 	border-radius: 50%;
-}
-
-.cornfieldBlueColor {
-	color: #6495ed;
 }
 
 .profileName {
@@ -51,8 +50,22 @@
 	padding: 1em 0 0 0;
 }
 
+.wide {
+	width: 100%;
+}
+
 .centered {
 	display: block;
 	margin: 0 auto;
 	text-align: center;
 }
+
+.sectionHeader {
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+	font-weight: 300;
+	background-color: #6495ed;
+	padding: .25em 0 .25em 0;
+}
+

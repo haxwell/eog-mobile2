@@ -31,27 +31,25 @@
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
 					</ion-avatar>
 
-					<div class="offerMetadataDiv">
-						<table>
-							<tr>
-								<div class="offerTitle">
-									<span><b>{{request.offer.title}}</b></span><br/>
-								</div>
-							</tr>
-							<tr>
-								<span class="offerQuantity">{{request.offer.quantity}} {{request.offer.quantityDescription}}</span><br/>
-							</tr>
-							<tr>
-								<span *ngIf="hasRequestMessage(request)" class="douMsg">{{getRequestMessage(request)}}<br/></span>
-							</tr>
-							<tr>
-								<span *ngIf="!hasRequestMessage(request)" class="douMsg">--<br/></span>
-							</tr>
-							<tr>
-								<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
-							</tr>
-						</table>
-					</div>
+					<table>
+						<tr>
+							<div class="offerTitle">
+								<span><b>{{request.offer.title}}</b></span><br/>
+							</div>
+						</tr>
+						<tr>
+							<span class="offerQuantity">{{request.offer.quantity}} {{request.offer.quantityDescription}}</span><br/>
+						</tr>
+						<tr>
+							<span *ngIf="hasRequestMessage(request)" class="douMsg">{{getRequestMessage(request)}}<br/></span>
+						</tr>
+						<tr>
+							<span *ngIf="!hasRequestMessage(request)" class="douMsg">--<br/></span>
+						</tr>
+						<tr>
+							<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
+						</tr>
+					</table>
 
 				</ion-item>
 				<ion-item-options side="start">
@@ -77,7 +75,7 @@
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
 					</ion-avatar>
 
-					<div class="offerMetadataDiv">
+					<div >
 						<table>
 							<tr>
 								<div class="offerTitle">
@@ -122,7 +120,7 @@
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
 					</ion-avatar>
 
-					<div class="offerMetadataDiv">
+					<div >
 						<table>
 							<tr>
 								<div class="offerTitle">
@@ -169,7 +167,7 @@
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
 					</ion-avatar>
 
-					<div class="offerMetadataDiv">
+					<div >
 						<table>
 							<tr>
 								<div class="offerTitle">
@@ -210,7 +208,7 @@
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
 					</ion-avatar>
 
-					<div class="offerMetadataDiv">
+					<div >
 						<table>
 							<tr>
 								<div class="offerTitle">

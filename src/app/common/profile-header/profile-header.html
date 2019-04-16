@@ -1,20 +1,20 @@
 <ion-grid>
 	<ion-row>
-		<ion-col col-auto>
+		<ion-col>
 			<ion-item *ngIf="isThumbnailImageAvailable()">
 				<ion-avatar item-start >
-					<img id="profileAvatarImg" [class]="getAvatarCSSClassString()" [src]="getThumbnailImage()" alt="profile_image" (load)="loaded($event)" (press)="onThumbnailPress($event)">
+					<img [class]="getAvatarCSSClassString()" [src]="getThumbnailImage()" alt="profile_image" (load)="loaded($event)" (press)="onThumbnailPress($event)">
 				</ion-avatar>
 			</ion-item>
 			<ion-item *ngIf="!isThumbnailImageAvailable()">
 				<ion-avatar item-start >
-					<img id="profileAvatarImg" src="assets/img/mushroom.jpg" (press)="onThumbnailPress($event)">
+					<img src="assets/img/mushroom.jpg" (press)="onThumbnailPress($event)">
 				</ion-avatar>
 			</ion-item>
 		</ion-col>
 	</ion-row>
 	<ion-row>
-		<ion-col col-auto>
+		<ion-col>
 			<span class="profile_header__text">{{getModelAttr('realname')}}</span><br/>
 			<hr/>
 			<span class="profile_header__desc1">{{getModelAttr('description')}}</span>

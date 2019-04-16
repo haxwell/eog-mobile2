@@ -9,8 +9,12 @@
 <ion-content padding>
 
 	<ion-item *ngIf="isRequestModelEmpty()">
-		<img class="centered" src="assets/img/no-outgoing-requests.jpg">
-		<span class="centered"><br/>Go forth and be useful! Earn some points! Then, ask someone for something!</span>
+		<div>
+			<img class="centered" src="assets/img/no-outgoing-requests.jpg">
+		</div>
+		<div>
+			<span class="centered"><br/>Go forth and be useful! Earn some points! Then, ask someone for something!</span>
+		</div>
 	</ion-item>
 
 	<ion-list *ngIf="getCompletedAwaitingApprovalRequests()">
@@ -26,7 +30,7 @@
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
 					</ion-avatar>
 
-					<div class="offerMetadataDiv">
+					<div otherPeoplesOfferTitle">
 						<table>
 							<tr>
 								<div class="offerTitle">
@@ -73,7 +77,7 @@
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
 					</ion-avatar>
 
-					<div class="offerMetadataDiv">
+					<div otherPeoplesOfferTitle">
 						<table>
 							<tr>
 								<div class="offerTitle">
@@ -118,7 +122,7 @@
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
 					</ion-avatar>
 
-					<div class="offerMetadataDiv">
+					<div otherPeoplesOfferTitle">
 						<table>
 							<tr>
 								<div class="offerTitle">
@@ -162,7 +166,7 @@
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
 					</ion-avatar>
 
-					<div class="offerMetadataDiv">
+					<div otherPeoplesOfferTitle">
 						<table>
 							<tr>
 								<div class="offerTitle">
@@ -206,7 +210,7 @@
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
 					</ion-avatar>
 
-					<div class="offerMetadataDiv">
+					<div otherPeoplesOfferTitle">
 						<table>
 							<tr>
 								<div class="offerTitle">
@@ -247,7 +251,7 @@
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
 					</ion-avatar>
 
-					<div class="offerMetadataDiv">
+					<div otherPeoplesOfferTitle">
 						<table>
 							<tr>
 								<div class="offerTitle">

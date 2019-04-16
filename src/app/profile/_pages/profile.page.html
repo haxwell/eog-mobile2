@@ -6,15 +6,17 @@
 
 	<ion-grid >
 			<ion-row >
-				<ion-item lines="none">
-					<button ion-button (click)="onGoBackBtnTap($event)">Go Back</button>
-					<button *ngIf="isCurrentUsersProfile()" ion-button item-right (click)="onChangePasswordBtnClick($event)">Change Password</button>
-					<button *ngIf="isCurrentUsersProfile()" round ion-button item-right (click)="onEditProfileBtnClick($event)"><ion-icon slot="start" class="whiteText profileIcon" name="create"></ion-icon></button>
-				</ion-item>
+				<div class="centered">
+					<ion-item lines="none">
+						<ion-button ion-button (click)="onGoBackBtnTap($event)">Go Back</ion-button>
+						<ion-button *ngIf="isCurrentUsersProfile()" ion-button item-right (click)="onChangePasswordBtnClick($event)">Change Password</ion-button>
+						<ion-button *ngIf="isCurrentUsersProfile()" round ion-button item-right (click)="onEditProfileBtnClick($event)"><ion-icon slot="start" class="whiteText profileIcon" name="create"></ion-icon></ion-button>
+					</ion-item>
+				</div>
 			</ion-row>
-
+			<br/>
 			<ion-row>
-				<div class="card">
+				<div class="centered">
 					<img id="profileDisplayHeaderImg" [class]="getAvatarCSSClassString()" [src]="getThumbnailImage()" alt="profile_image">
 				</div>
 			</ion-row>
@@ -58,19 +60,19 @@
 
 	<ion-row *ngIf="!isCurrentUsersProfile()">
 		<div class="centered">
-			<button ion-button [disabled]="!isSendPointBtnAvailable()" (click)="onSendPointBtnTap($event)">Send Point</button>
-			<button ion-button [disabled]="!isSendRecommendBtnAvailable()" (click)="onSendRecommendationBtnTap($event)">Send Recommendation</button>
+			<ion-button ion-button [disabled]="!isSendPointBtnAvailable()" (click)="onSendPointBtnTap($event)">Send Point</ion-button>
+			<ion-button ion-button [disabled]="!isSendRecommendBtnAvailable()" (click)="onSendRecommendationBtnTap($event)">Send Recommendation</ion-button>
 		</div>
 	</ion-row>
 
 	<br/>
 	<!-- <ion-row *ngIf="!isCurrentUsersProfile()"> -->
 	<ion-row>
-		<div class="centered">
+		<div class="wide centered">
 			<ion-list>
-				<ion-list-header class="listHeader">
+				<div class="sectionHeader">
 					Profile Info
-				</ion-list-header>
+				</div>
 				<table>
 					<tr>
 						<td class="ptsTdElement">
@@ -88,26 +90,25 @@
 		</div>
 	</ion-row>
 
-	<div [ngStyle]="{'padding-top':'2em'}">
-	</div>
-
 	<ion-row *ngIf="isCurrentUsersProfile()">
-		<div class="centered">
+		<div class="wide centered">
 			<ion-list>
-				<ion-list-header class="listHeader">
+				<div class="sectionHeader">
 					Communication Settings
-				</ion-list-header>
+				</div>
+				<br/>
 				When you accept an offer, the other user can see your [ {{getContactInfoVisibilityDisplayString()}} ].
 			</ion-list>
 		</div>
 	</ion-row>
 
 	<ion-row *ngIf="isCurrentUsersProfile()">
-		<div class="centered">
+		<div class="wide centered">
 			<ion-list>
-				<ion-list-header class="listHeader">
+				<div class="sectionHeader">
 					Location Settings
-				</ion-list-header>
+				</div>
+				<br/>
 				Your location is in, or near, [ {{getLocationDisplayString()}} ].
 			</ion-list>
 		</div>
