@@ -39,14 +39,25 @@
 #displayOfferTitle {
 	font-size: 1.6em;
 	font-weight: bold;
+	padding: .1em .8em;
 }
 
 #displayOfferDescription {
 	font-size: 1.15em;
 	font-weight: bold;
+	padding: .2em .8em;
 }
 
 #displayOfferQuantity {
 	font-size: 1.15em;
 	font-weight: bold;
+	padding-left: .5em;
+}
+
+.divdisplayOfferQuantity {
+	padding: .5em .8em;
+}
+
+ion-button.end {
+	float: right;	
 }

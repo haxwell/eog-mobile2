@@ -8,8 +8,8 @@
 
 		<ion-row>
 			<ion-item lines="none">
-				<button ion-button (click)="onGoBackBtnTap($event)">Go Back</button>
-				<button *ngIf="isCurrentUsersOffer()" round ion-button item-right (click)="onEditOfferBtnClick($event)"><ion-icon slot="start" class="whiteText profileIcon" name="create"></ion-icon></button>
+				<ion-button (click)="onGoBackBtnTap($event)">Go Back</ion-button>
+				<ion-button class="end" *ngIf="isCurrentUsersOffer()" shape="round" (click)="onEditOfferBtnClick($event)"><ion-icon slot="start" class="whiteText profileIcon" name="create"></ion-icon></ion-button>
 			</ion-item>
 		</ion-row>
 
@@ -20,10 +20,18 @@
 			</div>
 		</ion-row>	
 
-		<h1 id="displayOfferTitle">{{ getModel()["title"] }}</h1>
+		<ion-row>
+			<h1 id="displayOfferTitle">{{ getModel()["title"] }}</h1>
+		</ion-row>
 
-		Offering <span id="displayOfferQuantity">{{ getModel()["quantity"] }} {{ getModel()["quantityDescription"] }}</span>
-		<h4 id="displayOfferDescription">{{ getModel()["description"] }}</h4>
+		<ion-row>
+			<div class="divdisplayOfferQuantity">
+				Offering <span id="displayOfferQuantity">{{ getModel()["quantity"] }} {{ getModel()["quantityDescription"] }}</span>
+			</div>
+		</ion-row>
+		<ion-row>
+			<h4 id="displayOfferDescription">{{ getModel()["description"] }}</h4>
+		</ion-row>
 
 		<ion-row>
 			<ion-item lines="none">
@@ -97,8 +105,8 @@
 		<p></p>
 		
 		<ion-row>
-			<button ion-button [hidden]="!isDeleteBtnVisible()" color="danger" (click)="onDeleteBtnTap($event)">Delete</button>			
-			<button ion-button [hidden]="!isRequestBtnVisible()" (click)="onRequestBtnTap($event)">Request</button>
+			<ion-button [hidden]="!isDeleteBtnVisible()" color="danger" (click)="onDeleteBtnTap($event)">Delete</ion-button>			
+			<ion-button [hidden]="!isRequestBtnVisible()" (click)="onRequestBtnTap($event)">Request</ion-button>
 		</ion-row>
 
 		<p></p>
