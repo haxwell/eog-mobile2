@@ -9,8 +9,8 @@
 				<div class="centered">
 					<ion-item lines="none">
 						<ion-button ion-button (click)="onGoBackBtnTap($event)">Go Back</ion-button>
-						<ion-button *ngIf="isCurrentUsersProfile()" ion-button item-right (click)="onChangePasswordBtnClick($event)">Change Password</ion-button>
-						<ion-button *ngIf="isCurrentUsersProfile()" round ion-button item-right (click)="onEditProfileBtnClick($event)"><ion-icon slot="start" class="whiteText profileIcon" name="create"></ion-icon></ion-button>
+						<ion-button *ngIf="isCurrentUsersProfile()" slot="end" (click)="onChangePasswordBtnClick($event)">Change Password</ion-button>
+						<ion-button *ngIf="isCurrentUsersProfile()" shape="round" slot="end" (click)="onEditProfileBtnClick($event)"><ion-icon slot="start" class="whiteText profileIcon" name="create"></ion-icon></ion-button>
 					</ion-item>
 				</div>
 			</ion-row>
