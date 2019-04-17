@@ -17,10 +17,20 @@ ion-card-header {
   background-color: lightgray;
 }
 
-centered {
+.centered {
 	display: block;
 	margin: 0 auto;
 	text-align: center;
+}
+
+.requestsHeaderRow {
+  padding-bottom: 1em;
+}
+
+.offerTitle {
+  font-size: 1.25em;
+  font-weight: bold;
+  padding-top: .4em;
 }
 
 $categories: (
@@ -33,12 +43,12 @@ $categories: (
  cancelled: red
 );
 
-@each $track, $value in $categories {
- ion-item-sliding.#{$track} {
-   border-left: 6px solid $value;
-   padding-left: 10px;
- }
-};
+  @each $track, $value in $categories {
+   ion-item-sliding.#{$track} {
+     border-left: 6px solid $value;
+     padding-left: 10px;
+   }
+  };
 
 $categories2: (
  // ionic: color($colors, primary),
@@ -50,8 +60,8 @@ $categories2: (
  cancelled: white
 );
 
-@each $track, $foo in $categories2 {
- ion-item-sliding.#{$track} {
-    background-color: $foo;
- }
-};
+  @each $track, $foo in $categories2 {
+   ion-item-sliding.#{$track} {
+      background-color: $foo;
+   }
+  };
