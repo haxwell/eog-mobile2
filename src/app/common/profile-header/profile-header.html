@@ -2,12 +2,12 @@
 	<ion-row>
 		<ion-col>
 			<ion-item *ngIf="isThumbnailImageAvailable()">
-				<ion-avatar item-start >
+				<ion-avatar slot="start" >
 					<img [class]="getAvatarCSSClassString()" [src]="getThumbnailImage()" alt="profile_image" (load)="loaded($event)" (press)="onThumbnailPress($event)">
 				</ion-avatar>
 			</ion-item>
 			<ion-item *ngIf="!isThumbnailImageAvailable()">
-				<ion-avatar item-start >
+				<ion-avatar slot="start" >
 					<img src="assets/img/mushroom.jpg" (press)="onThumbnailPress($event)">
 				</ion-avatar>
 			</ion-item>

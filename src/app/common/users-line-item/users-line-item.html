@@ -1,8 +1,8 @@
 <ion-item (click)="onViewProfile()" no-lines>
-	<ion-avatar *ngIf="isProfileImageAvailable()" item-start>
+	<ion-avatar *ngIf="isProfileImageAvailable()" slot="start">
 		<img [src]="getProfileImageFilepath()">
 	</ion-avatar>
-	<ion-avatar *ngIf="!isProfileImageAvailable()" item-start>
+	<ion-avatar *ngIf="!isProfileImageAvailable()" slot="start">
 		<img src="assets/img/mushroom.jpg">
 	</ion-avatar>
 
