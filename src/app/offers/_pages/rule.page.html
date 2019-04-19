@@ -45,9 +45,9 @@
 		<hr/>
 		<ion-row>
 			<ion-input type="text" placeholder="To require a recommend, search a user name" (ionChange)="handleSearchStringChange($event)" [(ngModel)]="searchString" #ctrl="ngModel" (keyup.enter)="onSearchUserBtnTap($event)" required></ion-input>
-			<button ion-button icon-only [disabled]="!isSearchBtnEnabled()" (click)="onSearchUserBtnTap($event)">
+			<ion-button icon-only [disabled]="!isSearchBtnEnabled()" (click)="onSearchUserBtnTap($event)">
 				<ion-icon slot="start" name="search"></ion-icon>
-			</button>
+			</ion-button>
 		</ion-row>
 		<ion-row *ngIf="getSearchResultListCountString()">
 			{{getSearchResultListCountString()}}
@@ -61,8 +61,8 @@
 		</ion-row>
 
 		<ion-row>
-			<button ion-button (click)="onCancelBtnTap($event)">Cancel</button>
-			<button ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap($event)">Save</button>
+			<ion-button (click)="onCancelBtnTap($event)">Cancel</ion-button>
+			<ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap($event)">Save</ion-button>
 		</ion-row>
 
 	</ion-content>

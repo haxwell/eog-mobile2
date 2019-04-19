@@ -3,8 +3,8 @@
 		<ion-row>
 			<ion-col>
 				<span class="centered">
-					<button ion-button (click)="onCancelBtnTap($event)">Cancel</button>
-					<button ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap($event)">Save</button>
+					<ion-button (click)="onCancelBtnTap($event)">Cancel</ion-button>
+					<ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap($event)">Save</ion-button>
 				</span>
 			</ion-col>
 		</ion-row>
@@ -69,15 +69,15 @@
 				<ion-label>Press this button to read your device's location.</ion-label>
 			</ion-item>				
 			<ion-item>
-				<button ion-button [disabled]="!isSetCurrentLocationBtnAvailable()" (click)="onSetCurrentLocationAsOfficialLocation($event)">Set Your Location</button>
+				<ion-button ion-button [disabled]="!isSetCurrentLocationBtnAvailable()" (click)="onSetCurrentLocationAsOfficialLocation($event)">Set Your Location</ion-button>
 			</ion-item>
 		</ion-row>
 
 		<ion-row>
 			<ion-col>
 				<span class="centered">
-					<button ion-button (click)="onCancelBtnTap($event)">Cancel</button>
-					<button ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap($event)">Save</button>
+					<ion-button (click)="onCancelBtnTap($event)">Cancel</ion-button>
+					<ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap($event)">Save</ion-button>
 				</span>
 			</ion-col>
 		</ion-row>

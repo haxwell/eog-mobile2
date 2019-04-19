@@ -18,8 +18,8 @@
 	<ion-textarea placeholder="a short message..." (ionChange)="onMessageChange($event)" [value]="getMessageValue()" required></ion-textarea>
 
 	<ion-row>
-		<button ion-button (click)="onCancelBtnTap($event)">Cancel</button>
-		<button ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap($event)">Save</button>
+		<ion-button (click)="onCancelBtnTap($event)">Cancel</ion-button>
+		<ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap($event)">Save</ion-button>
 	</ion-row>
 
 </ion-content>

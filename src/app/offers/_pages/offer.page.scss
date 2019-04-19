@@ -3,6 +3,13 @@
 	display: contents;
 }
 
+.offerPageButtonHeader {
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+	width: 100%;	
+}
+
 .card {
     height: 100%;
     width: 100%;
@@ -39,7 +46,7 @@
 #displayOfferTitle {
 	font-size: 1.6em;
 	font-weight: bold;
-	padding: .1em .8em;
+	padding: .1em .5em;
 }
 
 #displayOfferDescription {

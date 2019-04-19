@@ -33,9 +33,9 @@
 			<span class="displayOfferSectionHeader">
 				Rules
 				<ion-buttons>
-					<button ion-button end (click)="onNewRuleBtnTap($event)">
+					<ion-button end (click)="onNewRuleBtnTap($event)">
 						<ion-icon slot="start" name="add"></ion-icon>
-					</button>
+					</ion-button>
 				</ion-buttons>
 			</span>
 
@@ -59,9 +59,9 @@
 			<span class="displayOfferSectionHeader">
 				Keywords
 				<ion-buttons>
-					<button ion-button (click)="onAddKeywordBtnTap($event)">
+					<ion-button (click)="onAddKeywordBtnTap($event)">
 						<ion-icon slot="start" name="add"></ion-icon>
-					</button>
+					</ion-button>
 				</ion-buttons>
 			</span>
 			<ion-item *ngIf="offerHasNoKeywords()">
@@ -80,9 +80,9 @@
 			<span class="displayOfferSectionHeader">
 				Image
 				<ion-buttons>
-					<button ion-button (click)="onThumbnailClick($event)">
+					<ion-button (click)="onThumbnailClick($event)">
 						<ion-icon slot="start" name="add"></ion-icon>
-					</button>
+					</ion-button>
 				</ion-buttons>
 			</span>
 			<ion-item *ngIf="isThumbnailImageAvailable()">
@@ -91,8 +91,8 @@
 		</ion-row>	
 
 		<ion-row>
-			<button ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap(true)">Save</button>
-			<button ion-button (click)="onCancelBtnTap()">Cancel</button>
+			<ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap(true)">Save</ion-button>
+			<ion-button (click)="onCancelBtnTap()">Cancel</ion-button>
 		</ion-row>
 	</ion-grid>
 </ion-content>

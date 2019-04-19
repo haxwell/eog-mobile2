@@ -1,6 +1,6 @@
 <ion-toolbar>
 	<ion-buttons end *ngIf="showSkip">
-		<button ion-button (click)="dismissTutorialView()" color="primary">Exit Tutorial</button>
+		<ion-button (click)="dismissTutorialView()" color="primary">Exit Tutorial</ion-button>
 	</ion-buttons>
 </ion-toolbar>
 
@@ -58,10 +58,10 @@
 			<ion-label>Show This Tutorial On Next Login</ion-label>
 			<br/>
 
-			<button ion-button icon-end large clear (click)="dismissTutorialView()">
+			<ion-button icon-end large clear (click)="dismissTutorialView()">
 				Continue
 				<ion-icon slot="start" name="arrow-forward"></ion-icon>
-			</button>
+			</ion-button>
 		</ion-slide>
 	</ion-slides>
 </ion-content>

@@ -1,6 +1,6 @@
 <ion-toolbar>
 		<ion-buttons end *ngIf="showSkip">
-			<button ion-button (click)="dismissTutorial()" color="primary">Exit Tutorial</button>
+			<ion-button (click)="dismissTutorial()" color="primary">Exit Tutorial</ion-button>
 		</ion-buttons>
 </ion-toolbar>
 
@@ -20,10 +20,10 @@
 			<ion-label>Show This Tutorial Next Time</ion-label>
 			<br/>
 
-			<button ion-button icon-end large clear (click)="dismissTutorial()">
+			<ion-button icon-end large clear (click)="dismissTutorial()">
 				Continue
 				<ion-icon name="arrow-forward"></ion-icon>
-			</button>				
+			</ion-button>				
 		</ion-slide>
 	</ion-slides>
 

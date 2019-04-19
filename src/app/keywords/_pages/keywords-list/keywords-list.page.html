@@ -33,7 +33,7 @@
 
 				<ion-row>
 					<ion-input type="text" placeholder="..type..words..press..add" (ionChange)="onAddKeywordFieldChange($event)" [value]="getAddKeywordFieldValue()" (keyup.enter)="onAddBtnTap($event)" required></ion-input>
-					<button ion-button [disabled]="!isAddBtnEnabled()" (click)="onAddBtnTap($event)">Add</button>
+					<ion-button [disabled]="!isAddBtnEnabled()" (click)="onAddBtnTap($event)">Add</ion-button>
 				</ion-row>
 			</ion-card-content>
 		</ion-card>

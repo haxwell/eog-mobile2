@@ -27,12 +27,12 @@
 
 	<ion-row>
 		<ion-input type="text" placeholder="..type..words..press..add" (ionChange)="onAddKeywordFieldChange($event)" [value]="getAddKeywordFieldValue()" (keyup.enter)="onAddBtnTap($event)" required></ion-input>
-		<button ion-button [disabled]="!isAddBtnEnabled()" (click)="onAddBtnTap($event)">Add</button>
+		<ion-button [disabled]="!isAddBtnEnabled()" (click)="onAddBtnTap($event)">Add</ion-button>
 	</ion-row>
 
 	<ion-row>
-		<button ion-button (click)="onCancelBtnTap($event)">Sorry, no.. Cancel</button>
-		<button ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap($event)">OK</button>
+		<ion-button (click)="onCancelBtnTap($event)">Sorry, no.. Cancel</ion-button>
+		<ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap($event)">OK</ion-button>
 	</ion-row>
 
 </ion-content>
