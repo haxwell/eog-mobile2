@@ -37,7 +37,7 @@ export class RulePage {
 	searchResultList: Array<Object> = [];
 	userList: Array<Object> = [];
 
-	permitOnlyEditsToPoints = undefined;
+	permitOnlyEditsToPoints = undefined; // todo: needed?
 
 	offer = undefined;
 
@@ -47,22 +47,19 @@ export class RulePage {
 				private _offerModelService: OfferModelService, 
 				private _searchService: SearchService) {
 
-		// this.permitOnlyEditsToPoints = navParams.get('permitOnlyEditsToPoints');
 	}
 
 	ngOnInit() {
 		let self = this;
-		this._route.paramMap.pipe(
-			switchMap((params) => {
-				let offerId = params.get('offerId')
-				self.offer = self._offerModelService.get(offerId);
+
+		self._route.params.subscribe((params) => {
+			self._offerModelService.get(params["offerId"]).then((model) => {
+				self.offer = model;
 
 				self.pointsQuantity = self.offer["requiredPointsQuantity"];
 				self.requiredUserRecommendations = self.offer["requiredUserRecommendations"]; // .slice() ?
-
-				return offerId;
 			})
-		)
+		})
 	}
 
 	onSearchUserBtnTap(evt) {

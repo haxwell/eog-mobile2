@@ -60,22 +60,29 @@ export class OfferPage {
 
 	ngOnInit() {
 		let self = this;
+
+		let initFunc = (model) => {
+
+			self._offerMetadataService.init();
+			self._offerMetadataService.getMetadataValue(model, self._constants.FUNCTION_KEY_OFFER_IS_REQUESTABLE).then((bool) => { 
+				self._isRequestBtnVisible = bool;
+			});
+
+			self.requestMsgs = self._offerDetailService.getOfferDetailMessages(model);
+		}
+
 		self._route.params.subscribe((params) => {
+			if (params['offerId'] && params['offerId'] !== 'new')
+			{
+				self._offerModelService.get(params['offerId']).then((model) => {
+					self.setModel(Object.assign({}, model));
 
-			self._offerModelService.get(params['offerId']).then((model) => {
-				self.model = model;
-
-				self._offerModelService.setOfferMetadata(model).then((offer) => {
-					this.setModel(Object.assign({}, offer));
-				});
-
-				self._offerMetadataService.init();
-				self._offerMetadataService.getMetadataValue(model, self._constants.FUNCTION_KEY_OFFER_IS_REQUESTABLE).then((bool) => { 
-					self._isRequestBtnVisible = bool;
-				});
-
-				self.requestMsgs = self._offerDetailService.getOfferDetailMessages(model);
-			})
+					initFunc(self.model);
+				})
+			} else {
+				self.model = self._offerModelService.getDefaultModel();
+				initFunc(self.model);
+			}
 		})
 	}
 

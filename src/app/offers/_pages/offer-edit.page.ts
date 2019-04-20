@@ -61,34 +61,43 @@ export class OfferEditPage {
 		let self = this;
 		self._route.params.subscribe((params) => {
 
-			self._offerModelService.get(params['offerId']).then((model) => {
-				self.model = model;
+			if (params["offerId"] && params["offerId"] !== 'new') {
 
-				self.setDirty(false);
+				console.log("editing existing offer");
 
-				self._requestsService.getIncomingRequestsForCurrentUser().then((data: Array<Object>) => {
-					let reqsForThisOffer = data.filter((obj) => { return obj["offer"]["id"] === self.model["id"]; });
-					reqsForThisOffer = reqsForThisOffer.filter((obj) => { return obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED_AND_HIDDEN && obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED; })
+				self._offerModelService.get(params['offerId']).then((model) => {
+					self.model = model;
 
-					if (reqsForThisOffer !== undefined && reqsForThisOffer.length > 0) {
-						// this offer has outstanding requests (pending and/or in-progress)
-						//  the user can only change the picture, and number of points required
+					self.setDirty(false);
 
-						self.permitOnlyEditsToPoints = true;
+					self._requestsService.getIncomingRequestsForCurrentUser().then((data: Array<Object>) => {
+						let reqsForThisOffer = data.filter((obj) => { return obj["offer"]["id"] === self.model["id"]; });
+						reqsForThisOffer = reqsForThisOffer.filter((obj) => { return obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED_AND_HIDDEN && obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED; })
 
-						self._alertService.show({
-						      header: 'Just FYI',
-						      message: "This offer has requests that are pending or in-progress.<br/><br/>You will only be able to edit the picture, and the number of points that it requires. Edits to points will only apply to future requests.",
-						      buttons: [{
-						        text: 'OK',
-						        handler: () => {
+						if (reqsForThisOffer !== undefined && reqsForThisOffer.length > 0) {
+							// this offer has outstanding requests (pending and/or in-progress)
+							//  the user can only change the picture, and number of points required
 
-						        }
-							}]
-						})
-					}
+							self.permitOnlyEditsToPoints = true;
+
+							self._alertService.show({
+							      header: 'Just FYI',
+							      message: "This offer has requests that are pending or in-progress.<br/><br/>You will only be able to edit the picture, and the number of points that it requires. Edits to points will only apply to future requests.",
+							      buttons: [{
+							        text: 'OK',
+							        handler: () => {
+
+							        }
+								}]
+							})
+						}
+					})
 				})
-			})
+			} else {
+				console.log("editing new offer");
+				this.new = true;
+				self.model = self._offerModelService.getDefaultModel();
+			}
 		})
 	}
 
@@ -425,11 +434,7 @@ export class OfferEditPage {
 					},
 				}, {
 					text: 'Yes', handler: () => {
-						//let self = this;
-
 						let func = () => {
-							//let model = self._profileService.getModel(self.user["id"]);
-
 							self.model["imageFileURI"] = undefined;
 							self.model["imageFileSource"] = undefined;
 
@@ -438,34 +443,33 @@ export class OfferEditPage {
 
 						console.log('deleting photo ' + self.model["id"]);
 
-						self._pictureService.delete(self._constants.PHOTO_TYPE_PROFILE, self.model["id"]).then(() => { 
+						self._pictureService.delete(self._constants.PHOTO_TYPE_OFFER, self.model["id"]).then(() => { 
 
-							let model = self._offerModelService.get(self.model["id"]);
-
-							if (model["imageFileSource"] === 'camera' || model["imageFileSource"] === 'eog') {
-								
-								console.log("This image came from the camera, or the api.. deleting off the phone now. path=" + model['imageFileURI'] + "]")
-
-								let lastSlash = model["imageFileURI"].lastIndexOf('/');
-								let path = model["imageFileURI"].substring(0,lastSlash+1);
-								let filename = model["imageFileURI"].substring(lastSlash+1);
-
-								self._file.removeFile(path, filename).then((data) => {
-									console.log("Call to pictureService to DELETE photo for "+model['id']+" successful! Image was from camera or the eog api, so it was removed from phone.");
-
-									func();
+							self._offerModelService.get(self.model["id"]).then((model) => {
+								if (model["imageFileSource"] === 'camera' || model["imageFileSource"] === 'eog') {
 									
-								}).catch(() => {
-									console.log("Caught error trying to remove file from phone");
+									console.log("This image came from the camera, or the api.. deleting off the phone now. path=" + model['imageFileURI'] + "]")
 
-									func();
-								});
-							} else {
-								console.log("Call to pictureService to DELETE photo for "+model['id']+" successful! Image was from phone's gallery, so did not try to remove it.");
+									let lastSlash = model["imageFileURI"].lastIndexOf('/');
+									let path = model["imageFileURI"].substring(0,lastSlash+1);
+									let filename = model["imageFileURI"].substring(lastSlash+1);
 
-								func();								
-							}
+									self._file.removeFile(path, filename).then((data) => {
+										console.log("Call to pictureService to DELETE photo for "+model['id']+" successful! Image was from camera or the eog api, so it was removed from phone.");
 
+										func();
+										
+									}).catch(() => {
+										console.log("Caught error trying to remove file from phone");
+
+										func();
+									});
+								} else {
+									console.log("Call to pictureService to DELETE photo for "+model['id']+" successful! Image was from phone's gallery, so did not try to remove it.");
+
+									func();								
+								}
+							})
 						}).catch(() => {
 							console.log("An error occurred deleting the image from the server. Probably, it didn't exist there. Noting it, in case things look wonky..")
 

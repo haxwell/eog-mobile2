@@ -91,15 +91,17 @@ export class OfferModelService {
 		self._pictureService.init();
 
 		self.modelCache[offerId] = self._functionPromiseService.get(offerId, offerId+"offerFuncKey", offerId);
-		return self.modelCache[offerId];
+		
+		return new Promise((resolve, reject) => {
+			self.modelCache[offerId].then((model) => {
+				self.setOfferMetadata(model).then((finalModel) => {
+					resolve(finalModel);
+				});
+			})
+		})
 	}
 
-	isEditingLimitedToPointsOnly() {
-
-	}
-
-	// TODO: This should probably not be an externally accessible method.. Is there ever a time we do not want to do this when
-	//  we get a new offer model? If not, we should call it as a part of get()
+	// TODO: Move this to the offerMetadataService
 	setOfferMetadata(offer) {
 
 		// TODO:
@@ -113,7 +115,7 @@ export class OfferModelService {
 			let func = (offer) => {
 				let numPiecesOfMetadata = 4;
 
-				if (++count > numPiecesOfMetadata)
+				if (++count > (numPiecesOfMetadata - 1))
 					resolve(offer);
 			}
 
@@ -237,4 +239,9 @@ export class OfferModelService {
 			});
 		});	
 	}
+
+	isEditingLimitedToPointsOnly() {
+
+	}
+
 }

@@ -10,8 +10,8 @@ import { OfferRequestPage } from './_pages/offer-request.page';
 
 const routes: Routes = [
   { path: '', 			component: OfferListPage,			canActivate: [CanActivateRouteGuard] }
-  ,{ path: ':offerId', 			component: OfferPage,			canActivate: [CanActivateRouteGuard] }
   ,{ path: 'new', 				component: OfferEditPage,		canActivate: [CanActivateRouteGuard] }
+  ,{ path: ':offerId', 			component: OfferPage,			canActivate: [CanActivateRouteGuard] }
   ,{ path: ':offerId/edit', 		component: OfferEditPage,		canActivate: [CanActivateRouteGuard] }
   ,{ path: ':offerId/request', 	component: OfferRequestPage, 	canActivate: [CanActivateRouteGuard] }
 ];

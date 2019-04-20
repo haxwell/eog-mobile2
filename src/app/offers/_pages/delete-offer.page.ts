@@ -43,38 +43,42 @@ export class DeleteOfferPage {
 
 		let offerId = undefined;
 
-		self._route.paramMap.pipe(
-			switchMap((params) => {offerId = params.get('offerId'); self.offer = self._offerModelService.get(offerId); return offerId;})
-		)
+		self._route.params.subscribe((params) => {
+			if (params['offerId'] && params['offerId'] !== 'new') {
+				self._offerModelService.get(offerId).then((model) => {
+					self.offer = model;
 
-		self._requestMetadataService.init();
+					self._requestMetadataService.init();
 
-		// get all the requests
-		this._requestsService.getIncomingRequestsForCurrentUser().then((model: Array<Object>) => {
-			// then, for all that are for this offer
-			self.offerRequests = model.filter((obj) => {
-				return obj["offer"]["id"] === self.offer["id"]; });
+					// get all the requests
+					self._requestsService.getIncomingRequestsForCurrentUser().then((model: Array<Object>) => {
+						// then, for all that are for this offer
+						self.offerRequests = model.filter((obj) => {
+							return obj["offer"]["id"] === self.offer["id"]; });
 
-			// sort them according to whether they are in progress
-			self.offerRequests.forEach((request) => {
-				self._requestMetadataService.getMetadataValue(request, self._constants.FUNCTION_KEY_REQUEST_IS_IN_PROGRESS).then((bool) => {
-					if (bool) {
-						if (self.offerRequestsInProgress === undefined)
-							self.offerRequestsInProgress = [];
+						// sort them according to whether they are in progress
+						self.offerRequests.forEach((request) => {
+							self._requestMetadataService.getMetadataValue(request, self._constants.FUNCTION_KEY_REQUEST_IS_IN_PROGRESS).then((bool) => {
+								if (bool) {
+									if (self.offerRequestsInProgress === undefined)
+										self.offerRequestsInProgress = [];
 
-						self.offerRequestsInProgress.push(request);
-					}
-					else {
-						if (self.offerRequestsNotInProgress === undefined)
-							self.offerRequestsNotInProgress = [];
+									self.offerRequestsInProgress.push(request);
+								}
+								else {
+									if (self.offerRequestsNotInProgress === undefined)
+										self.offerRequestsNotInProgress = [];
 
-						self.offerRequestsNotInProgress.push(request);
-					}
-				})
-			});
+									self.offerRequestsNotInProgress.push(request);
+								}
+							})
+						});
 
-			self.isInitialized = true;
-		});
+						self.isInitialized = true;
+					});
+				});
+			}
+		})
 	}
 
 	getOfferRequestsNotInProgress() {
