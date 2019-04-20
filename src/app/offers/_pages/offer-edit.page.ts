@@ -82,7 +82,7 @@ export class OfferEditPage {
 
 							self._alertService.show({
 							      header: 'Just FYI',
-							      message: "This offer has requests that are pending or in-progress.<br/><br/>You will only be able to edit the picture, and the number of points that it requires. Edits to points will only apply to future requests.",
+							      message: "This offer has requests that are pending or in-progress.<br/><br/>You will only be able to edit the picture, and the number of points that it requires.<br/><br/>Edits to points will only apply to future requests.",
 							      buttons: [{
 							        text: 'OK',
 							        handler: () => {

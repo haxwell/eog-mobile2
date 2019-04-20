@@ -1,31 +1,37 @@
 <ion-header>
 	<easyah-header></easyah-header>
+	<br/>
+	<ion-row >
+		<div *ngIf="!isNewObject()" class="centered offerEditHeaderRow">
+			<h1 class="centered">Edit Your Offer<br/></h1>
+		</div>
+		<div *ngIf="isNewObject()" class="centered offerEditHeaderRow">
+			<h1 class="centered">Create New Offer<br/></h1>
+		</div>
+	</ion-row>
 </ion-header>
 
 <ion-content>
 	<ion-grid>
 		<ion-row>
 			<ion-item lines="none">
-				<ion-label color="primary" stacked>Title: </ion-label>
+				<ion-label color="primary" position="stacked">Title: </ion-label>
 				<ion-input type="text" placeholder="Teach a skill..." (ionChange)="handleTitleChange($event)" [disabled]="!isModelTitleEditable()" [(ngModel)]="model.title" #ctrl="ngModel" required></ion-input>
 			</ion-item>
 		</ion-row>
 		<ion-row>
-			<ion-item lines="none">
-				<ion-label color="primary" stacked>Quantity: </ion-label>
-			</ion-item>
-			<ion-row>
-				<ion-col col-2>
-					<ion-input id="offerQuantity" type="number" (ionChange)="handleQuantityChange($event)" [disabled]="!isModelQuantityEditable()" [(ngModel)]="model.quantity" #ctrl="ngModel" required></ion-input>
-				</ion-col>
-				<ion-col>
-					<ion-input id="offerQuantityDesc" type="text" maxlength="50" placeholder="Offered units" (ionChange)="handleQuantityDescriptionChange($event)" [disabled]="!isModelQuantityDescEditable()" [(ngModel)]="model.quantityDescription" #ctrl="ngModel" required></ion-input>
-				</ion-col>
-			</ion-row>
+			<ion-col col-2>
+				<ion-label color="primary" position="stacked">Quantity </ion-label>
+				<ion-input id="offerQuantity" type="number" (ionChange)="handleQuantityChange($event)" [disabled]="!isModelQuantityEditable()" [(ngModel)]="model.quantity" #ctrl="ngModel" required></ion-input>
+			</ion-col>
+			<ion-col>
+				<ion-label color="primary" position="stacked">units: </ion-label>
+				<ion-input id="offerQuantityDesc" type="text" maxlength="50" placeholder="Offered units" (ionChange)="handleQuantityDescriptionChange($event)" [disabled]="!isModelQuantityDescEditable()" [(ngModel)]="model.quantityDescription" #ctrl="ngModel" required></ion-input>
+			</ion-col>
 		</ion-row>
 		<ion-row>
-			<ion-item>
-				<ion-label color="primary" stacked>Description: </ion-label>
+			<ion-item class="oneHundredPercentWidth" lines="none">
+				<ion-label color="primary" position="stacked">Description: </ion-label>
 				<ion-textarea rows="5" placeholder="I have many moons experience in XYZ and I will teach..." (ionChange)="handleDescriptionChange($event)" [disabled]="!isModelDescriptionEditable()" [(ngModel)]="model.description" #ctrl="ngModel" required></ion-textarea>
 			</ion-item>
 		</ion-row>

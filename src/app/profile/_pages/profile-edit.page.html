@@ -30,19 +30,19 @@
 		<ion-row>
 			<ion-col>
 				<ion-item>
-					<ion-label color="primary" stacked>Real Name</ion-label>
+					<ion-label color="primary" position="stacked">Real Name</ion-label>
 					<ion-input type="text" (ionChange)="onRealNameChange($event)" [value]="getModelAttr('realname')" required></ion-input>
 				</ion-item>
 				<ion-item>
-					<ion-label color="primary" stacked>Description</ion-label>
+					<ion-label color="primary" position="stacked">Description</ion-label>
 					<ion-input type="text" (ionChange)="onDescriptionChange($event)" [value]="getModelAttr('description')" required></ion-input>
 				</ion-item>
 				<ion-item>
-					<ion-label color="primary" stacked>Phone Number</ion-label>
+					<ion-label color="primary" position="stacked">Phone Number</ion-label>
 					<ion-input type="number" (ionChange)="onPhoneChange($event)" [value]="getModelAttr('phone')" required></ion-input>
 				</ion-item>
 				<ion-item>
-					<ion-label color="primary" stacked>Email Address</ion-label>
+					<ion-label color="primary" position="stacked">Email Address</ion-label>
 					<ion-input type="text" (ionChange)="onEmailChange($event)" [value]="getModelAttr('email')" required></ion-input>
 				</ion-item>
 			</ion-col>
