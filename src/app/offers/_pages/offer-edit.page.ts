@@ -59,40 +59,37 @@ export class OfferEditPage {
 
 	ngOnInit() {
 		let self = this;
+		self._route.params.subscribe((params) => {
 
-		let offerId = undefined;
+			self._offerModelService.get(params['offerId']).then((model) => {
+				self.model = model;
 
-		self._route.paramMap.pipe(
-			switchMap((params) => {
-				offerId = params.get('offerId')
-				this.model = this._offerModelService.get(offerId);
-				return offerId;
-			})
-		)
+				self.setDirty(false);
 
-		self._requestsService.getIncomingRequestsForCurrentUser().then((data: Array<Object>) => {
-			let reqsForThisOffer = data.filter((obj) => { return obj["offer"]["id"] === self.model["id"]; });
-			reqsForThisOffer = reqsForThisOffer.filter((obj) => { return obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED_AND_HIDDEN && obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED; })
+				self._requestsService.getIncomingRequestsForCurrentUser().then((data: Array<Object>) => {
+					let reqsForThisOffer = data.filter((obj) => { return obj["offer"]["id"] === self.model["id"]; });
+					reqsForThisOffer = reqsForThisOffer.filter((obj) => { return obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED_AND_HIDDEN && obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED; })
 
-			if (reqsForThisOffer !== undefined && reqsForThisOffer.length > 0) {
-				// this offer has outstanding requests (pending and/or in-progress)
-				//  the user can only change the picture, and number of points required
+					if (reqsForThisOffer !== undefined && reqsForThisOffer.length > 0) {
+						// this offer has outstanding requests (pending and/or in-progress)
+						//  the user can only change the picture, and number of points required
 
-				self.permitOnlyEditsToPoints = true;
+						self.permitOnlyEditsToPoints = true;
 
-				self._alertService.show({
-				      title: 'Just FYI',
-				      subTitle: "This offer has requests that are pending or in-progress.<br/><br/>You will only be able to edit the picture, and the number of points that it requires. Edits to points will only apply to future requests.",
-				      buttons: [{
-				        text: 'OK',
-				        handler: () => {
+						self._alertService.show({
+						      header: 'Just FYI',
+						      message: "This offer has requests that are pending or in-progress.<br/><br/>You will only be able to edit the picture, and the number of points that it requires. Edits to points will only apply to future requests.",
+						      buttons: [{
+						        text: 'OK',
+						        handler: () => {
 
-				        }
-					}]
+						        }
+							}]
+						})
+					}
 				})
-			}
+			})
 		})
-
 	}
 
 	ionViewCanLeave() {
@@ -177,20 +174,20 @@ export class OfferEditPage {
 		return this._router.url.endsWith("/new");
 	}
 
-	handleDescriptionChange() {
-		this.setDirty(true);
+	handleDescriptionChange(evt) {
+		this.setDirty(evt.srcElement.value !== this.model["description"]);
 	}
 
-	handleTitleChange() {
-		this.setDirty(true);
+	handleTitleChange(evt) {
+		this.setDirty(evt.srcElement.value !== this.model["title"]);
 	}
 
-	handleQuantityChange() {
-		this.setDirty(true);
+	handleQuantityChange(evt) {
+		this.setDirty(evt.srcElement.value !== this.model["quantity"]);
 	}
 
-	handleQuantityDescriptionChange() {
-		this.setDirty(true);
+	handleQuantityDescriptionChange(evt) {
+		this.setDirty(evt.srcElement.value !== this.model["quantityDescription"]);
 	}
 
 	isModelTitleEditable() {

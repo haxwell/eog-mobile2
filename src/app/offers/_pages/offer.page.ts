@@ -224,8 +224,7 @@ export class OfferPage {
 	}
 
 	onEditOfferBtnClick() {
-		let self = this;
-
+		this._router.navigate(['/offers/' + this.model["id"] + '/edit']);
 	}
 
 	getThumbnailImage() {

@@ -8,12 +8,12 @@
 
 		<ion-row>
 			<div class="offerPageButtonHeader">
-			<ion-item lines="none">
-				<ion-button (click)="onGoBackBtnTap($event)">Go Back</ion-button>
-				<ion-button slot="end" *ngIf="isCurrentUsersOffer()" shape="round" (click)="onEditOfferBtnClick($event)">
-					<ion-icon class="whiteText profileIcon" name="create"></ion-icon>
-				</ion-button>
-			</ion-item>
+				<ion-item lines="none">
+					<ion-button (click)="onGoBackBtnTap($event)">Go Back</ion-button>
+					<ion-button slot="end" *ngIf="isCurrentUsersOffer()" (click)="onEditOfferBtnClick($event)">
+						<ion-icon class="whiteText profileIcon" name="create"></ion-icon>
+					</ion-button>
+				</ion-item>
 			</div>
 		</ion-row>
 

@@ -32,11 +32,13 @@
 		<ion-row>
 			<span class="displayOfferSectionHeader">
 				Rules
-				<ion-buttons>
-					<ion-button end (click)="onNewRuleBtnTap($event)">
-						<ion-icon slot="start" name="add"></ion-icon>
-					</ion-button>
-				</ion-buttons>
+				<div >
+					<ion-item lines="none">
+						<ion-button (click)="onNewRuleBtnTap($event)">
+							<ion-icon name="add"></ion-icon>
+						</ion-button>
+					</ion-item>
+				</div>
 			</span>
 
 			<ion-item>
@@ -58,11 +60,13 @@
 		<ion-row>
 			<span class="displayOfferSectionHeader">
 				Keywords
-				<ion-buttons>
-					<ion-button (click)="onAddKeywordBtnTap($event)">
-						<ion-icon slot="start" name="add"></ion-icon>
-					</ion-button>
-				</ion-buttons>
+				<div >
+					<ion-item lines="none">
+						<ion-button (click)="onAddKeywordBtnTap($event)">
+							<ion-icon name="add"></ion-icon>
+						</ion-button>
+					</ion-item>
+				</div>
 			</span>
 			<ion-item *ngIf="offerHasNoKeywords()">
 				<span >
@@ -78,12 +82,14 @@
 
 		<ion-row>
 			<span class="displayOfferSectionHeader">
-				Image
-				<ion-buttons>
-					<ion-button (click)="onThumbnailClick($event)">
-						<ion-icon slot="start" name="add"></ion-icon>
-					</ion-button>
-				</ion-buttons>
+				Image (optional)
+				<div >
+					<ion-item lines="none">
+						<ion-button (click)="onThumbnailClick($event)">
+							<ion-icon name="add"></ion-icon>
+						</ion-button>
+					</ion-item>
+				</div>
 			</span>
 			<ion-item *ngIf="isThumbnailImageAvailable()">
 					<img [class]="getAvatarCSSClassString()" [src]="getThumbnailImage()" alt="profile_image" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)">
