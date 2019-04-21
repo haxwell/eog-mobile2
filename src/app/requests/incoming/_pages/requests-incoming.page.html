@@ -10,11 +10,18 @@
 
 <ion-content padding>
 	<!-- TODO: Add a Refresher -->
-
-	<ion-item *ngIf="isRequestModelEmpty()">
-		<img class="centered" src="assets/img/no-incoming-requests.jpg">
-		<span class="centered"><br/>You don't have any open requests from others... yet!</span>
+	<ion-item *ngIf="isRequestModelEmpty()" lines="none">
+		<table>
+			<tr>
+				<img class="centered" src="assets/img/no-incoming-requests.jpg">
+			</tr>
+			<tr>
+				<span id="goForthMsg" class="centered"><br/>You don't have any open requests from others... yet!</span>
+			</tr>
+		</table>
 	</ion-item>
+
+
 
 	<ion-list *ngIf="getPendingRequests()">
 		<ion-item-divider sticky>
