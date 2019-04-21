@@ -15,7 +15,6 @@ export class TutorialEasyahIntroPage extends AbstractTutorialPage {
 
 	@Input() func: any;
 
-	currentStepNumber = 1;
 	showThisTutorialNextTime = true;
 	dirty = false;
 
@@ -45,7 +44,5 @@ export class TutorialEasyahIntroPage extends AbstractTutorialPage {
 		this._tutorialService.setTutorialEasyahIntroPageHasBeenShown(true);
 
 		this.func();
-
-		// this._modalService.dismiss(TutorialEasyahIntroPage);
 	}
 }

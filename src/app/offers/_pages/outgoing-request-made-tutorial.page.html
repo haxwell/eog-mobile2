@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content no-bounce>
-	<ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager>
+	<ion-slides data-test="outgoing-request-made-tutorial-modal" pager="true" (ionSlideWillChange)="onSlideChangeStart($event)">
 		<ion-slide>
 			Excellent! You've just sent a request to another user, asking them to do their offer for you.<br/><br/>
 			Now, just wait for them to make the next move.<br/><br/>

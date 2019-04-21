@@ -1,19 +1,11 @@
 
 export class AbstractTutorialPage {
-	showSkip = undefined;
+	showSkip = true;
 
-	onSlideChangeStart(slider) {
-		let self = this;
-
-		if (this.showSkip === undefined) {
-			
-			this.showSkip = null;
-
-			slider.currentTarget.isEnd().then((b) => {
-				self.showSkip = b;
-			})
-		} else {
-			return true;
-		}
-	}
+	onSlideChangeStart(slider: Slides) {
+    	let self = this;
+    	slider.target.isEnd().then((bool) => {
+    		self.showSkip = !bool;
+    	})
+  	}
 }

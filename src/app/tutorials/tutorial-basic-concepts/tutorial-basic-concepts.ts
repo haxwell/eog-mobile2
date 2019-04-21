@@ -10,10 +10,10 @@ import { TutorialService } from '../../../app/_services/tutorial.service';
   templateUrl: 'tutorial-basic-concepts.html'
   ,styleUrls: ['./tutorial-basic-concepts.scss']
 })
-export class TutorialPage {
+export class TutorialPage extends AbstractTutorialPage {
 
-	showSkip = true;
-	currentStepNumber = 1;
+	@Input func: any;
+	
 	showThisTutorialNextTime = true;
 
 	constructor(private _modalService: ModalService,
@@ -23,6 +23,6 @@ export class TutorialPage {
 	}
 
 	dismissTutorialView() { 
-		this._modalService.dismiss(TutorialPage);
+		this.func();
 	}
 }

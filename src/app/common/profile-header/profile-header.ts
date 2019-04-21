@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+
 import { Events } from '@ionic/angular';
 
 import { ProfileService } from '../../_services/profile.service'
@@ -12,13 +14,13 @@ import * as EXIF from 'exif-js'
   templateUrl: 'profile-header.html',
   styleUrls: ['profile-header.scss'],
 })
-
 export class ProfileHeader {
 
 	userId = undefined;
 	imageOrientation = undefined;
 
-	constructor(private _profileService: ProfileService, 
+	constructor(private _router: Router,
+				private _profileService: ProfileService, 
 				private _pictureService: PictureService,
 				private _userService: UserService) {
 
@@ -26,6 +28,10 @@ export class ProfileHeader {
 
 	ngOnInit() {
 		this.userId = this._userService.getCurrentUser()["id"];
+	}
+
+	onProfileHeaderClick() {
+		this._router.navigate(['/profile/' + this._userService.getCurrentUser()["id"]]);
 	}
 
 	isThumbnailImageAvailable() {

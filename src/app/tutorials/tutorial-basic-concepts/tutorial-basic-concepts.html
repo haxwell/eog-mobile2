@@ -1,13 +1,11 @@
-<ion-header no-border>
-	<ion-navbar>
-		<ion-buttons end *ngIf="showSkip">
+<ion-toolbar>
+		<ion-buttons slot="end" *ngIf="showSkip">
 			<ion-button (click)="startApp()" color="primary">Exit Tutorial</ion-button>
 		</ion-buttons>
-	</ion-navbar>
-</ion-header>
+</ion-toolbar>
 
 <ion-content no-bounce>
-	<ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager>
+	<ion-slides data-test="basic-concepts-tutorial-modal" pager="true" (ionSlideWillChange)="onSlideChangeStart($event)">
 		<ion-slide>
 			Easyah<br/><br/>
 

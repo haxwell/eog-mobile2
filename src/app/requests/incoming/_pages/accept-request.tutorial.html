@@ -5,7 +5,7 @@
 </ion-toolbar>
 
 <ion-content no-bounce>
-	<ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager>
+	<ion-slides data-test="accept-request-tutorial-modal" pager="true" (ionSlideWillChange)="onSlideChangeStart($event)">
 		<ion-slide>
 			Now that you have accepted a request, reach out to the person, and make arrangements for you to do your thing!<br/><br/>
 			You can see their contact information on their profile page.<br/><br/><br/>

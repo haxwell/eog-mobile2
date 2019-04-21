@@ -11,7 +11,6 @@ import { ModalService } 			from '../../../app/_services/modal.service';
 })
 export class OutgoingRequestMadeTutorialPage extends AbstractTutorialPage {
 
-	showSkip = true;
 	showThisTutorialNextTime = true;
 	dirty = false;
 
