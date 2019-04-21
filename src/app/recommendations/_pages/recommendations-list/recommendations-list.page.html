@@ -1,15 +1,14 @@
 <ion-header>
 	<easyah-header></easyah-header>
+	<br/>
+	<ion-row >
+		<div class="centered recommendationsHeaderRow">
+			<h1 class="centered">Your Recommendations<br/></h1>
+		</div>
+	</ion-row>
 </ion-header>
 
 <ion-content padding>
-
-	<ion-row>
-		<ion-col>
-			<h1 id="pageHeaderText">Your recommendations...<br/></h1>
-		</ion-col>
-	</ion-row>
-
 	<ion-item *ngIf="!areIncomingRecommendationsAvailable()">
 		<img class="centered" src="assets/img/no-recommendations.jpg">
 		<span class="centered"><br/>You don't have any active recommendations.. yet!</span>

@@ -46,6 +46,8 @@ export class RecommendationsListPage {
 		if (this.isDirty()) {
 			let self = this;
 
+			self._pictureService.init();
+
 			self._recommendationService.init();
 			self._recommendationService.getIncomingRecommendations().then((data: Array<any>) => {
 				self.incomingRecommendations = data;
