@@ -165,7 +165,12 @@ export class PictureService {
 
 	get(photoType, objId) {
 		let data = {photoType: photoType, objId: objId, path: this.getMostProbablePhotoPath(photoType, objId)}
-		return this._functionPromiseService.get(photoType+objId, this._constants.FUNCTION_KEY_PROFILE_PICTURE_GET, data);
+		
+		return new Promise((resolve, reject) => {
+			this._functionPromiseService.get(photoType+objId, this._constants.FUNCTION_KEY_PROFILE_PICTURE_GET, data).then((path) => {
+				resolve(path);
+			});
+		});
 	}
 
 	delete(photoType, objId) {

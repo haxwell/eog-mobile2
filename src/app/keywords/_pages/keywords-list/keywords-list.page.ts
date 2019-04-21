@@ -70,11 +70,11 @@ export class KeywordsListPage {
 	}
 
 	isAddBtnEnabled() {
-		return this.newKeywordsString.length > 0;
+		return this.newKeywordsString && this.newKeywordsString.length > 0;
 	}
 
 	onAddKeywordFieldChange(evt) {
-		this.newKeywordsString = evt._value;
+		this.newKeywordsString = evt.detail.value;
 	}
 
 	getAddKeywordFieldValue() {
