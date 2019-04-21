@@ -15,6 +15,7 @@ import { TutorialService } from '../_services/tutorial.service'
 import { HomeService } from './_services/home.service'
 
 import { HomePage } from './home.page';
+import { TutorialEasyahIntroPage } from '../tutorials/tutorial-easyah-intro/tutorial-easyah-intro'
 
 @NgModule({
   imports: [
@@ -28,11 +29,15 @@ import { HomePage } from './home.page';
   ]
   ,declarations: [
     HomePage
+    ,TutorialEasyahIntroPage
   ]
   ,providers: [
     ModalService
     ,TutorialService
     ,HomeService
+  ]
+  ,entryComponents: [
+    TutorialEasyahIntroPage
   ]
 })
 export class HomePageModule {}

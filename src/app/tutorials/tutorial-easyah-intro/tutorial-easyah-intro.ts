@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { AbstractTutorialPage } from '../abstract-tutorial.page'
 
@@ -12,6 +12,8 @@ import { TutorialService } from '../../../app/_services/tutorial.service';
   styleUrls: ['tutorial-easyah-intro.scss']  
 })
 export class TutorialEasyahIntroPage extends AbstractTutorialPage {
+
+	@Input() func: any;
 
 	currentStepNumber = 1;
 	showThisTutorialNextTime = true;
@@ -42,6 +44,8 @@ export class TutorialEasyahIntroPage extends AbstractTutorialPage {
 
 		this._tutorialService.setTutorialEasyahIntroPageHasBeenShown(true);
 
-		this._modalService.dismiss(TutorialEasyahIntroPage);
+		this.func();
+
+		// this._modalService.dismiss(TutorialEasyahIntroPage);
 	}
 }

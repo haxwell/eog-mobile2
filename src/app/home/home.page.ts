@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
-import { ModalService } from '../../app/_services/modal.service'
+import { ModalController } from '@ionic/angular';
+
 import { TutorialService } from '../../app/_services/tutorial.service'
 
 import { HomeService } from './_services/home.service'
@@ -17,7 +18,7 @@ export class HomePage {
     showTutorialPromise = undefined;
     mostRecentlyCreatedOffers = undefined;
 
-    constructor(private _modalService: ModalService 
+    constructor(private _modalCtrl: ModalController 
                 ,private _homeService: HomeService
                 ,private _tutorialService: TutorialService
     ) {
@@ -38,7 +39,7 @@ export class HomePage {
         if (self.showTutorialPromise !== undefined && self._tutorialService.getTutorialEasyahIntroPageHasBeenShown() !== true) {
             self.showTutorialPromise.then((b) => {
                 if (b === true) {
-                    self._modalService.show(TutorialEasyahIntroPage);
+                    self.presentTutorial();
                 }
             });
         }
@@ -48,4 +49,22 @@ export class HomePage {
         return this.mostRecentlyCreatedOffers;
     }
 
+    async presentTutorial() {
+        let self = this;
+        let _tutorialModal = undefined;
+        let options = { 
+            component: TutorialEasyahIntroPage, 
+            componentProps: {
+                func: () => {
+                    _tutorialModal.dismiss();
+                    // self.thisModal().dismiss();
+                    // self.parentCallbackFunc();
+                }
+            }
+        };
+
+        _tutorialModal = await this._modalCtrl.create(options)
+
+        return await _tutorialModal.present();
+    }
 }

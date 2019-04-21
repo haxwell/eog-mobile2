@@ -64,13 +64,13 @@ export class TutorialService {
 
 			return new Promise((resolve, reject) => {
 				this._apiService.get(url).subscribe(
-					(val) => { resolve(val === '' || val === true ); }, (err) => { reject(err); }
+					(val) => { resolve(val === null || val === true ); }, (err) => { reject(err); }
 				)
 			});
 		} else {
 			return new Promise((resolve, reject) => {
 				console.error("trying to get a user specific property before the user has been set")
-				resolve(false);
+				reject();
 			});
 		}
 	}
