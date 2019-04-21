@@ -10,7 +10,8 @@ import { OutgoingRequestMadeTutorialPage } from '../../../app/offers/_pages/outg
 
 @Component({
     selector: 'page-tutorials-list',
-    templateUrl: './tutorials-list.page.html'
+    templateUrl: './tutorials-list.page.html',
+    styleUrls: ['./about-easyah.page.scss']
 })
 export class TutorialsListPage {
 

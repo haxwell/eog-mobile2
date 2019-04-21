@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 
 @Component({
     selector: 'page-about-easyah',
-    templateUrl: 'about-easyah.page.html'
+    templateUrl: 'about-easyah.page.html',
+    styleUrls: ['./about-easyah.page.scss']
 })
 export class AboutEasyahPage {
 
