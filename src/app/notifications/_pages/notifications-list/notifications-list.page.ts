@@ -49,6 +49,9 @@ export class NotificationsListPage {
 
 	ngOnInit() {
 		var self = this;
+
+		self._pictureService.init();
+
 		if (self.isDirty()) {
 			self._notificationService.get(true /* force update */ ).then((data) => {
 				self.model = data;
@@ -69,7 +72,7 @@ export class NotificationsListPage {
 	}
 
 	userHasNoNotifications() { 
-		return this.model === undefined || this.model.length ==0;
+		return this.model === undefined || this.model.length == 0;
 	}
 
 	getNotifications() {
