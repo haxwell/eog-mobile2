@@ -28,7 +28,7 @@
 			</ion-label>
 		</ion-item-divider>
 		<ion-item-group *ngFor="let request of getCompletedAwaitingApprovalRequests()">
-			<ion-item-sliding  [attr.track]="getTrack(request)" (press)="onViewOffer(request)">
+			<ion-item-sliding  [class]="getTrack(request)" (press)="onViewOffer(request)">
 				<ion-item>
 					<ion-avatar slot="start">
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
@@ -75,7 +75,7 @@
 			</ion-label>
 		</ion-item-divider>
 		<ion-item-group *ngFor="let request of getPendingRequests()">
-			<ion-item-sliding  [attr.track]="getTrack(request)" (press)="onViewOffer(request)">
+			<ion-item-sliding  [class]="getTrack(request)" (press)="onViewOffer(request)">
 				<ion-item>
 					<ion-avatar slot="start">
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
@@ -97,16 +97,16 @@
 							<tr>
 								<span *ngIf="!hasRequestMessage(request)" class="douMsg">--<br/></span>
 							</tr>
-							<tr>
+							<!-- <tr>
 								<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
-							</tr>
+							</tr> -->
 						</table>
 					</div>
 				</ion-item>
 
-				<ion-item-options side="start">
+				<!-- <ion-item-options side="start">
 					<ion-item-option (click)="onViewContactInfoBtnTap(request)">View Their Profile</ion-item-option>
-				</ion-item-options>
+				</ion-item-options> -->
 				<ion-item-options side="end">
 					<ion-item-option color="danger" (click)="onCancelBtnTap(request)">Cancel</ion-item-option>
 				</ion-item-options>
@@ -120,7 +120,7 @@
 			</ion-label>
 		</ion-item-divider>
 		<ion-item-group *ngFor="let request of getAcceptedRequests()">
-			<ion-item-sliding  [attr.track]="getTrack(request)" (press)="onViewOffer(request)">
+			<ion-item-sliding  [class]="getTrack(request)" (press)="onViewOffer(request)">
 				<ion-item>
 					<ion-avatar slot="start">
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
@@ -164,7 +164,7 @@
 			</ion-label>
 		</ion-item-divider>
 		<ion-item-group *ngFor="let request of getDeclinedRequests()">
-			<ion-item-sliding  [attr.track]="getTrack(request)" (press)="onViewOffer(request)">
+			<ion-item-sliding  [class]="getTrack(request)" (press)="onViewOffer(request)">
 				<ion-item>
 					<ion-avatar slot="start">
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
@@ -186,9 +186,9 @@
 							<tr>
 								<span *ngIf="!hasRequestMessage(request)" class="douMsg">--<br/></span>
 							</tr>
-							<tr>
+							<!-- <tr>
 								<span class="douName">{{request.directionallyOppositeUser.realname}}</span><br/>
-							</tr>
+							</tr> -->
 							<tr>
 								<span class="foo">Decline Reason: {{request.declinedReasonCode.text}}</span><br/>
 							</tr>
@@ -208,7 +208,7 @@
 			</ion-label>
 		</ion-item-divider>
 		<ion-item-group *ngFor="let request of getCancelledRequests()">
-			<ion-item-sliding  [attr.track]="getTrack(request)" (press)="onViewOffer(request)">
+			<ion-item-sliding  [class]="getTrack(request)" (press)="onViewOffer(request)">
 				<ion-item>
 					<ion-avatar slot="start">
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
@@ -249,7 +249,7 @@
 			</ion-label>
 		</ion-item-divider>
 		<ion-item-group *ngFor="let request of getNotCompleteAwaitingResolution()">
-			<ion-item-sliding  [attr.track]="getTrack(request)" (press)="onViewOffer(request)">
+			<ion-item-sliding  [class]="getTrack(request)" (press)="onViewOffer(request)">
 				<ion-item>
 					<ion-avatar slot="start">
 						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">

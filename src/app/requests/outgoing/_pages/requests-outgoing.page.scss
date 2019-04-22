@@ -49,14 +49,14 @@ $categories: (
 
   @each $track, $value in $categories {
    ion-item-sliding.#{$track} {
-     border-left: 6px solid $value;
-     padding-left: 10px;
+     border-left: 6px solid #{$value};
+     // padding-left: 10px;
    }
   };
 
 $categories2: (
  // ionic: color($colors, primary),
- pending: white,
+ pending: lightgrey,
  accepted: white,
  declined: white,
  completedAwaitingApproval: lightgrey,
@@ -66,6 +66,6 @@ $categories2: (
 
   @each $track, $foo in $categories2 {
    ion-item-sliding.#{$track} {
-      background-color: $foo;
+      --ion-background-color: #{$foo};
    }
   };
