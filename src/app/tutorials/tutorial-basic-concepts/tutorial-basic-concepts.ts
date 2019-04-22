@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AbstractTutorialPage } from '../abstract-tutorial.page'
 
 import { UserService } from '../../../app/_services/user.service';
@@ -12,14 +12,14 @@ import { TutorialService } from '../../../app/_services/tutorial.service';
 })
 export class TutorialPage extends AbstractTutorialPage {
 
-	@Input func: any;
+	@Input() func: any;
 	
 	showThisTutorialNextTime = true;
 
 	constructor(private _modalService: ModalService,
 				private _userService: UserService,
 				private _tutorialService: TutorialService) {
-
+		super();
 	}
 
 	dismissTutorialView() { 
