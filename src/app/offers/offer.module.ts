@@ -44,5 +44,9 @@ import { OfferCollectionService } from '../../app/_services/offer-collection.ser
   ,providers: [
     OfferCollectionService
   ]
+  ,entryComponents: [
+    DeleteOfferPage
+    ,RulePage
+  ]
 })
 export class OfferPageModule {}

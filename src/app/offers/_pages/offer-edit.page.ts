@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
+import { ModalController } from '@ionic/angular';
+
 import { File } from '@ionic-native/file/ngx'
 
 import { Events } from '@ionic/angular';
@@ -44,6 +46,7 @@ export class OfferEditPage {
 				private _router: Router,
 				private _route: ActivatedRoute,
 				private _modalService: ModalService,
+				private _modalCtrl: ModalController,
 				private _alertService: AlertService,
 				private _loadingService: LoadingService,
 				private _offerModelService: OfferModelService,
@@ -60,6 +63,8 @@ export class OfferEditPage {
 	ngOnInit() {
 		let self = this;
 		self._route.params.subscribe((params) => {
+
+			self.permitOnlyEditsToPoints = false;
 
 			if (params["offerId"] && params["offerId"] !== 'new') {
 
@@ -309,13 +314,13 @@ export class OfferEditPage {
 
 	onNewRuleBtnTap(evt) {
 		let self = this;
-		this._modalService.show(RulePage, {
-			props: {
+		self.presentModal(RulePage, self.model, {
+			propsObj: {
 				requiredPointsQuantity: self.model["requiredPointsQuantity"],
 				requiredUserRecommendations: self.model["requiredUserRecommendations"],
 				permitOnlyEditsToPoints: this.permitOnlyEditsToPoints
 			},
-			onDidDismissFunc: 
+			callbackFunc: 
 				(data) => {
 					if (data) {
 						self.model["requiredPointsQuantity"] = data["requiredPointsQuantity"];
@@ -324,6 +329,24 @@ export class OfferEditPage {
 					}
 				}
 		});
+	}
+
+	async presentModal(_component, offer, props) {
+		let self = this;
+		let modal = undefined;
+		let options = { 
+			component: _component, 
+			componentProps: {
+				model: offer, 
+				props: props.propsObj,  
+				callbackFunc: (data) => { 
+					props.callbackFunc(data); modal.dismiss(); 
+				}
+			}
+		};
+
+		modal = await this._modalCtrl.create(options)
+		return await modal.present();
 	}
 
 	onCancelBtnTap(evt) {

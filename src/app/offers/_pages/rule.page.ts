@@ -1,14 +1,11 @@
-import { Component } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, Input } from '@angular/core';
 
 import { SearchService } from '../../../app/_services/search.service';
-import { OfferModelService } from '../../../app/_services/offer-model.service';
 
 import { switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'page-offer-detail-rule',
+  selector: 'page-offer-edit-rule',
   templateUrl: 'rule.page.html'
   ,styleUrls: ['./rule.page.scss']
 })
@@ -27,6 +24,9 @@ export class RulePage {
 		so as to send me a daily report. #RabbitHole
 	*/
 
+	@Input() model: any;
+	@Input() callbackFunc: any;
+
 	searchString: string = '';
 	searchResultListCountString: string = undefined;
 	origSearchResultSize = 0;
@@ -39,27 +39,15 @@ export class RulePage {
 
 	permitOnlyEditsToPoints = undefined; // todo: needed?
 
-	offer = undefined;
-
-	constructor(private _location: Location,
-				private _router: Router,
-				private _route: ActivatedRoute,
-				private _offerModelService: OfferModelService, 
-				private _searchService: SearchService) {
+	constructor(private _searchService: SearchService) {
 
 	}
 
 	ngOnInit() {
 		let self = this;
 
-		self._route.params.subscribe((params) => {
-			self._offerModelService.get(params["offerId"]).then((model) => {
-				self.offer = model;
-
-				self.pointsQuantity = self.offer["requiredPointsQuantity"];
-				self.requiredUserRecommendations = self.offer["requiredUserRecommendations"]; // .slice() ?
-			})
-		})
+		self.pointsQuantity = self.model["requiredPointsQuantity"] || 0;
+		self.requiredUserRecommendations = self.model["requiredUserRecommendations"] || []; // .slice() ?
 	}
 
 	onSearchUserBtnTap(evt) {
@@ -138,13 +126,13 @@ export class RulePage {
 	}
 
 	onSaveBtnTap(evt) {
-		this.offer["requiredPointsQuantity"] = this.pointsQuantity;
-		this.offer["requiredUserRecommendations"] = this.requiredUserRecommendations;
+		this.model["requiredPointsQuantity"] = this.pointsQuantity;
+		this.model["requiredUserRecommendations"] = this.requiredUserRecommendations;
 
-		this._location.back();
+		this.callbackFunc(this.model);
 	}
 
 	onCancelBtnTap(evt) {
-		this._location.back();
+		this.callbackFunc(undefined);
 	}
 }
