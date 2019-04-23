@@ -294,30 +294,35 @@ export class OfferEditPage {
 	}
 
 	onAddKeywordBtnTap(evt) {
-		if (this.permitOnlyEditsToPoints !== true) {
-			let self = this;
-			this._modalService.show(KeywordEntryPage, { 
-				props: {
-					keywordArray: self.model["keywords"] 
-				}, 
-				onDidDismissFunc:
-					(data: Array<Object>) => { 
+		let self = this;
+		if (self.permitOnlyEditsToPoints !== true) {
+	
+			let tmp = self.model["keywords"];
+			let tmp2 = [];
+			tmp.map((obj) => { 
+				if (!tmp2.some((obj2) => { return obj2["text"].toLowerCase() === obj["text"].toLowerCase(); }))
+					tmp2.push(obj);
+			});
+
+			self.presentModal(KeywordEntryPage, tmp2, {
+				propsObj: {
+					
+				},
+				callbackFunc: 
+					(data) => {
 						if (data) {
-							self.setDirty(true); 
 							self.model["keywords"] = data;
 							self.model["keywords"].sort((a, b) => { let aText = a.text.toLowerCase(); let bText = b.text.toLowerCase(); if (aText > bText) return 1; else if (aText < bText) return -1; else return 0; })
-						} 
+						}
 					}
-			});
-		}
+			})
+		};
 	}
 
 	onNewRuleBtnTap(evt) {
 		let self = this;
 		self.presentModal(RulePage, self.model, {
 			propsObj: {
-				requiredPointsQuantity: self.model["requiredPointsQuantity"],
-				requiredUserRecommendations: self.model["requiredUserRecommendations"],
 				permitOnlyEditsToPoints: this.permitOnlyEditsToPoints
 			},
 			callbackFunc: 
@@ -331,13 +336,13 @@ export class OfferEditPage {
 		});
 	}
 
-	async presentModal(_component, offer, props) {
+	async presentModal(_component, _model, props) {
 		let self = this;
 		let modal = undefined;
 		let options = { 
 			component: _component, 
 			componentProps: {
-				model: offer, 
+				model: _model, 
 				props: props.propsObj,  
 				callbackFunc: (data) => { 
 					props.callbackFunc(data); modal.dismiss(); 

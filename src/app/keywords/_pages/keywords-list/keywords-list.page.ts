@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalService } from '../../../../app/_services/modal.service';
 
-import { KeywordsEntryPage } from '../keywords-entry/keywords-entry.page'
+import { KeywordEntryPage } from '../../../../app/common/keyword.entry/keyword.entry' // TODO Rename this files to keyword-entry.page
 
 import { ProfileKeywordService } from '../../../../app/_services/profile-keyword.service'
 
@@ -54,7 +54,7 @@ export class KeywordsListPage {
 
 	onModifyKeywordBtnTap() {
 		let self = this;
-		this._modalService.show(KeywordsEntryPage, {props: { keywordArray: self.model["keywords"]}, onDidDismissFunc: ((data: Array<Object>) => { 
+		this._modalService.show(KeywordEntryPage, {props: { keywordArray: self.model["keywords"]}, onDidDismissFunc: ((data: Array<Object>) => { 
 			if (data) {
 				self.setDirty(true);
 				self.model["keywords"] = data;

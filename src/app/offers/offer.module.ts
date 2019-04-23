@@ -17,6 +17,7 @@ import { DeleteOfferPage } from './_pages/delete-offer.page'
 import { OfferRequestPage } from './_pages/offer-request.page'
 import { OutgoingRequestMadeTutorialPage } from './_pages/outgoing-request-made-tutorial.page'
 import { RulePage } from './_pages/rule.page'
+import { KeywordEntryPage } from '../common/keyword.entry/keyword.entry'
 
 // TODO: Is this only used in the context of Offers? If so, move it closer to home.
 import { OfferCollectionService } from '../../app/_services/offer-collection.service'
@@ -40,6 +41,7 @@ import { OfferCollectionService } from '../../app/_services/offer-collection.ser
     ,OfferRequestPage
     ,OutgoingRequestMadeTutorialPage
     ,RulePage
+    ,KeywordEntryPage
   ]
   ,providers: [
     OfferCollectionService
@@ -47,6 +49,7 @@ import { OfferCollectionService } from '../../app/_services/offer-collection.ser
   ,entryComponents: [
     DeleteOfferPage
     ,RulePage
+    ,KeywordEntryPage
   ]
 })
 export class OfferPageModule {}

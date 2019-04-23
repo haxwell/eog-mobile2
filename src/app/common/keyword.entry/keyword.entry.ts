@@ -5,16 +5,18 @@ import { ModalService } from '../../../app/_services/modal.service';
 @Component({
   selector: 'page-keyword-entry',
   templateUrl: 'keyword.entry.html'
+  ,styleUrls: ['keyword.entry.scss']
 })
 export class KeywordEntryPage {
 
 	newKeywordsString: string = '';
 	dirty = false;
 
-	@Input() keywordArray;
+	@Input() model;
+	@Input() callbackFunc: any;
 
 	constructor(private _modalService: ModalService) {
-		//this.keywordArray = navParams.get('keywordArray').slice();
+
 	}
 
 	isDirty() {
@@ -26,11 +28,11 @@ export class KeywordEntryPage {
 	}
 
 	getKeywordArray() {
-		return this.keywordArray || [];
+		return this.model || [];
 	}
 
 	userHasNoKeywords() {
-		return this.keywordArray.length === 0;
+		return this.model.length === 0;
 	}
 
 	isAddBtnEnabled() {
@@ -50,7 +52,7 @@ export class KeywordEntryPage {
 	}
 
 	onIndividualKeywordPress(item) {
-		this.keywordArray = this.keywordArray.filter((obj) => {
+		this.model = this.model.filter((obj) => {
 			return obj["text"] !== item["text"];
 		});
 
@@ -67,12 +69,12 @@ export class KeywordEntryPage {
 				if (obj.length > 0) {
 					this.setDirty(true);
 
-					let dupes = this.keywordArray.filter((kw) => {
+					let dupes = this.model.filter((kw) => {
 						return kw["text"] == obj;
 					})
 
 					if (dupes.length == 0)
-						this.keywordArray.push({id: -1, text: obj});
+						this.model.push({id: -1, text: obj});
 				}
 			})
 
@@ -81,19 +83,17 @@ export class KeywordEntryPage {
 	}
 
 	onSaveBtnTap(evt) {
-		let tmp = this.keywordArray;
+		let tmp = this.model;
 		let tmp2 = [];
 		tmp.map((obj) => { 
 			if (!tmp2.some((obj2) => { return obj2["text"].toLowerCase() === obj["text"].toLowerCase(); }))
 				tmp2.push(obj);
 		});
-		
-		this._modalService.dismiss(KeywordEntryPage, tmp2);
 
-		return tmp2;
+		this.callbackFunc(tmp2);		
 	}
 
 	onCancelBtnTap(evt) {
-		this._modalService.dismiss(KeywordEntryPage);
+		this.callbackFunc();
 	}
 }

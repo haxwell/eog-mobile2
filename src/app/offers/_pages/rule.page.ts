@@ -25,6 +25,7 @@ export class RulePage {
 	*/
 
 	@Input() model: any;
+	@Input() props: any;
 	@Input() callbackFunc: any;
 
 	searchString: string = '';
@@ -36,8 +37,6 @@ export class RulePage {
 	requiredUserRecommendations: Array<Object> = undefined;
 	searchResultList: Array<Object> = [];
 	userList: Array<Object> = [];
-
-	permitOnlyEditsToPoints = undefined; // todo: needed?
 
 	constructor(private _searchService: SearchService) {
 
@@ -87,7 +86,7 @@ export class RulePage {
 	}
 
 	isSearchBtnEnabled() {
-		return this.searchString.length > 2 && this.permitOnlyEditsToPoints !== true;
+		return this.searchString.length > 2 && this.props.permitOnlyEditsToPoints !== true;
 	}
 
 	isSaveBtnEnabled() {
@@ -99,7 +98,7 @@ export class RulePage {
 	}
 
 	onIndividualSearchResultTap(item) {
-		if (this.permitOnlyEditsToPoints !== true) {
+		if (this.props.permitOnlyEditsToPoints !== true) {
 			this.requiredUserRecommendations.push({id: -1, requiredRecommendUserId: item["id"], userObj: item});
 			this.searchResultList = this.searchResultList.filter((obj) => { return obj["id"] !== item["id"]; });
 
@@ -109,7 +108,7 @@ export class RulePage {
 	}
 
 	onIndividualRequiredUserPress(item) {
-		if (this.permitOnlyEditsToPoints !== true) {
+		if (this.props.permitOnlyEditsToPoints !== true) {
 			this.requiredUserRecommendations = this.requiredUserRecommendations.filter((obj) => { return obj["userObj"]["id"] !== item["userObj"]["id"]; });
 			this.searchResultList.push(item["userObj"]);
 
@@ -119,7 +118,7 @@ export class RulePage {
 	}
 
 	getSearchResultList() {
-		if (this.searchResultList === undefined || this.searchResultList.length === 0 || this.permitOnlyEditsToPoints)
+		if (this.searchResultList === undefined || this.searchResultList.length === 0 || this.props.permitOnlyEditsToPoints)
 			return undefined;
 
 		return this.searchResultList;
