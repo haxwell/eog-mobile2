@@ -12,7 +12,8 @@ import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'page-requests-incoming-decline',
-  templateUrl: 'decline-request.page.html'
+  templateUrl: 'decline-request.page.html',
+  styleUrls: ['./decline-request.page.scss']
 })
 export class DeclineRequestPage {
 

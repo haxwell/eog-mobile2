@@ -8,6 +8,7 @@
 
 <ion-content padding>
 	<ion-label>You are about to CANCEL a request that you made.</ion-label>
+	<br/><br/>
 	<div *ngIf="isRequestAccepted()"> 
 		<br/>
 		{{model.directionallyOppositeUser.realname}} has already accepted your request.
@@ -15,7 +16,7 @@
 		If you cancel, they will get all the points you both agreed upon!<br/>
 	</div>
 	<br/>
-	<ion-label>{{model.title}}</ion-label>
+	<ion-label><b>{{model.offer.title}}</b></ion-label><br/><br/>
 
 	<ion-row *ngIf="isRequestAccepted()"> 
 		<ion-label>Type the word cancel, and then press the YES! button if you're sure.</ion-label>
