@@ -9,9 +9,15 @@
 </ion-header>
 
 <ion-content padding>
-	<ion-item *ngIf="userHasNoNotifications()">
-		<img class="centered" src="assets/img/no-notifications.jpg">
-		<span class="centered"><br/>No notifications.. go make something happen!</span>
+	<ion-item *ngIf="userHasNoNotifications()" lines="none">
+		<table>
+			<tr>
+				<img class="centered" src="assets/img/no-notifications.jpg">
+			</tr>
+			<tr>
+				<span class="centered"><br/>No notifications.. go make something happen!</span>
+			</tr>
+		</table>
 	</ion-item>
 
 	<ion-list *ngIf="!userHasNoNotifications()">
