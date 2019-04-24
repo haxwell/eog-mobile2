@@ -32,9 +32,13 @@ import { PictureService } from './_services/picture.service';
 
 import { CanActivateRouteGuard } from './_routeguards/can-activate.routeguard';
 
-// import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
-// import { myRxStompConfig } from './my-rx-stomp.config';
+export class CustomHammerConfig extends HammerGestureConfig {
+    overrides = {
+        'press': { time: 700 }  //set press delay for .70 seconds
+    }
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -71,9 +75,8 @@ import { CanActivateRouteGuard } from './_routeguards/can-activate.routeguard';
     
     ,CanActivateRouteGuard
     
-    ,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
-    // ,{ provide: InjectableRxStompConfig, useValue: myRxStompConfig }
-    // ,{ provide: RxStompService, useFactory: rxStompServiceFactory, deps: [InjectableRxStompConfig] }
+    ,{ provide: RouteReuseStrategy,       useClass: IonicRouteStrategy }
+    ,{ provide: HAMMER_GESTURE_CONFIG,    useClass: CustomHammerConfig }
   ],
   bootstrap: [AppComponent]
 })
