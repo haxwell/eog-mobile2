@@ -106,20 +106,22 @@ export class OfferEditPage {
 		})
 	}
 
-	ionViewCanLeave() {
+	onCancelBtnTap(evt) {
 		let self = this;
 		if (!this.isDirty()) {
-			return new Promise((resolve, reject) => {resolve(true);})
+			self._location.back();
 		} else { 
 
 			this._eventSubscriberService.subscribe("ios-edit-offer-exit", (data) => {
 				data["clearDirtyFunc"]();
+				self.clearIOSExitEventSubscriptions();
 				self._location.back();
 			});
 
 			this._eventSubscriberService.subscribe("ios-edit-offer-save-then-exit", (data) => {
 				self.onSaveBtnTap(false);
 				data["clearDirtyFunc"]();
+				self.clearIOSExitEventSubscriptions();
 				self._location.back();
 			});
 
@@ -166,7 +168,7 @@ export class OfferEditPage {
 		}
 	}
 
-	ionViewDidLeave() {
+	clearIOSExitEventSubscriptions() {
 		this._eventSubscriberService.reset("ios-confirm-exit-on-edit-offer");
 		this._eventSubscriberService.reset("ios-edit-offer-save-then-exit");
 		this._eventSubscriberService.reset("ios-edit-offer-exit");
@@ -352,10 +354,6 @@ export class OfferEditPage {
 
 		modal = await this._modalCtrl.create(options)
 		return await modal.present();
-	}
-
-	onCancelBtnTap(evt) {
-		this._location.back();
 	}
 
 	getRequiredUserRecommendations() {

@@ -18,9 +18,6 @@ import Stomp from 'stompjs';
 })
 export class WebsocketService {
 
-	// wilo... no services are being registered to receive events.. so, the current user does not get set on login.. and the home page then cant come up because of the routeguard.. was dealing w making services singletons.. not sure if thats 100%
-
-
 	client = undefined;
 
 	constructor(private _requestsService: RequestsService,

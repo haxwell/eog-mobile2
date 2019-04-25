@@ -283,15 +283,6 @@ export class RequestsIncomingView {
 		this.presentModal(CompleteRequestPage, request);
 	}
 
-	
-
-
-	// WILO: CancelRequestPage, et al.. need to operate like AcceptRequestPage.. remove _location.back(), make them act as modals, etc.
-
-
-
-
-
 	onHideRequestBtnTap(request) {
 		let self = this;
 		this._requestsService.hideIncomingAndDeclinedRequest(request).then((data) => {

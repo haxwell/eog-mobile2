@@ -83,18 +83,28 @@
 		</ion-row>
 
 		<ion-row *ngIf="isRequestMessageAvailable()">
-			<ion-item >
-				<span class="displayOfferSectionHeader">Messages</span>
-				<br/>
+			<ion-item lines="none">
+				<div>
+					<span class="displayOfferSectionHeader">Messages</span>
+				</div>
+			</ion-item>
+			<br/>
+			<ion-item lines="none">
 				<span *ngFor="let item of getStillMoreTimeLeftMessages()" class="redColorMsg" >
 					{{item.msg}}<br/>
 				</span>
+			</ion-item>
+			<ion-item lines="none">
 				<span *ngFor="let item of getAlreadyRequestedRequestMessages()" class="redColorMsg" >
 					{{item.msg}}<br/>
 				</span>
+			</ion-item>
+			<ion-item lines="none">
 				<span *ngFor="let item of getPointsRequestMessages()" class="redColorMsg" >
 					You need {{item.msg}}.<br/>
 				</span>
+			</ion-item>
+			<ion-item lines="none">
 				<span *ngIf="isRecommendationsRequestMessageAvailable()">
 					You need recommendations from:
 						<ul>
@@ -103,7 +113,7 @@
 							</li>
 						</ul>
 				</span>
-			</ion-item>		
+			</ion-item>
 		</ion-row>
 		
 		<p></p>
