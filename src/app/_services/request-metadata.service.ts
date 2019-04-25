@@ -27,6 +27,12 @@ export class RequestMetadataService extends DomainObjectMetadataService {
 			(request) => {
 					return request["deliveringStatusId"] === self._constants.REQUEST_STATUS_ACCEPTED;
 			});
+
+		self.addMetadataCalculationFunction(
+			self._constants.FUNCTION_KEY_REQUEST_IS_COMPLETED_AWAITING_CONFIRMATION,
+			(request) => {
+				return request["deliveringStatusId"] === self._constants.REQUEST_STATUS_COMPLETED && request["requestingStatusId"] !== self._constants.REQUEST_STATUS_COMPLETED;
+			})
 	}
 
 }

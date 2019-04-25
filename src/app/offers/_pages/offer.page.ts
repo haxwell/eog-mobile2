@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
+import { ModalController } from '@ionic/angular';
+
 import { OfferEditPage } from './offer-edit.page'
 import { OfferRequestPage } from './offer-request.page'
 import { DeleteOfferPage } from './delete-offer.page'
 import { OutgoingRequestMadeTutorialPage } from './outgoing-request-made-tutorial.page'
 
-import { ModalService } from '../../../app/_services/modal.service';
 import { AlertService } from '../../../app/_services/alert.service';
 import { OfferModelService } from '../../../app/_services/offer-model.service';
 import { OfferMetadataService } from '../../../app/_services/offer-metadata.service';
@@ -31,6 +32,12 @@ import { switchMap } from 'rxjs/operators';
 
 export class OfferPage {
 
+
+	
+	// WILO.. The delete button is not working. I accepted a request, and marked it complete, and then viewed the offer, and I could not click the DELETE button. It had no effect. Also, the grey of the item in the offer list was not of the whole item, just the border.
+
+
+
 	model = undefined;
 	offerId = undefined;
 	
@@ -45,7 +52,7 @@ export class OfferPage {
 	constructor(private _location: Location,
 				private _router: Router,
 				private _route: ActivatedRoute,	
-				private _modalService: ModalService,
+				private _modalCtrl: ModalController,
 				private _alertService: AlertService,
 				private _offerModelService: OfferModelService,
 				private _offerMetadataService: OfferMetadataService,
@@ -200,18 +207,35 @@ export class OfferPage {
 
 	onDeleteBtnTap(evt) {
 		let self = this;
-		this._modalService.show(DeleteOfferPage, {
-			props: {
+		self.presentModal(DeleteOfferPage, self.model, {
+			propsObj: {
 				offer: this.model
 			}, 
-			onDidDismissFunc: 
+			callbackFunc: 
 				(data) => { 
-					self.callback(data).then(() => { 
-						if (data === true) 
-							self._location.back(); 
-					}) 
-				} 
-			});
+					if (data === true) 
+						self._location.back(); 
+				}
+			}
+		);
+	} 
+
+	async presentModal(_component, _model, props) {
+		let self = this;
+		let modal = undefined;
+		let options = { 
+			component: _component, 
+			componentProps: {
+				model: _model, 
+				props: props.propsObj,  
+				callbackFunc: (data) => { 
+					props.callbackFunc(data); modal.dismiss(); 
+				}
+			}
+		};
+
+		modal = await this._modalCtrl.create(options)
+		return await modal.present();
 	}
 
 	onRequestBtnTap(evt) {
