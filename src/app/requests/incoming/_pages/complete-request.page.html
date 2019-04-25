@@ -11,31 +11,32 @@
 		<ion-label>You are about to indicate you have fulfilled the following offer:</ion-label>
 		<hr/>
 		<ion-label><b>{{model.offer.title}}</b> for {{model.directionallyOppositeUser.realname}}</ion-label>
-		<br/>
-		<ion-label>The requesting user will have a chance to mark it COMPLETE, as well.</ion-label>
-		<ion-label>If they do mark it COMPLETE, you'll then get their points.</ion-label>
+		<br/><br/>
+		<ion-label>The requesting user will have a chance to mark it COMPLETE, as well.</ion-label><br/><br/>
+		<ion-label>If they do mark it COMPLETE, you'll then get their points.</ion-label><br/><br/>
 	</div>
 	<div *ngIf="isRequestInDispute()">
-		<ion-label>You are about to resolve this disputed request inamicably.</ion-label>
-		<ion-label>You will get half the points, and they will keep half. It will show on records for both of you, that this request was resolved inamicably.</ion-label>
+		<ion-label>You are about to resolve this disputed request inamicably.</ion-label><br/><br/>
+		<ion-label>You will get half the points, and they will keep half. It will show on records for both of you, that this request was resolved inamicably.</ion-label><br/><br/>
 		<br/>
 		<ion-label>Are you sure?</ion-label>
 	</div>
 
 	<ion-row>
-		<ion-label>Type the word complete, and then press the YES! button if you're sure.</ion-label>
+		<ion-label>Type the word complete, and then press the YES! button if you're sure.</ion-label><br/>
 		<ion-input type="text" placeholder="type complete here..." [(ngModel)]="confirmationString" #ctrl="ngModel" (keyup.enter)="onSaveBtnTap($event)" required></ion-input>
 	</ion-row>
 
 	<ion-row>
+		<br/>
 		<ion-label>How much time should pass before this user can request this offer again?</ion-label>
+		<br/>
 		<ion-item>
 			<ion-select [(ngModel)]="selectedRequestAgainDelayId" >
 				<ion-select-option *ngFor="let delay of requestAgainDelayCodes" [value]="delay.id">{{delay.text}}</ion-select-option>
 			</ion-select>
 		</ion-item>
 	</ion-row>
-
 
 	<ion-row>
 		<ion-button (click)="onCancelBtnTap($event)">Sorry, no.. Cancel</ion-button>

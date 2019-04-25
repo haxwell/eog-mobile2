@@ -13,6 +13,7 @@ import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'page-requests-incoming-complete',
   templateUrl: 'complete-request.page.html'
+  ,styleUrls: ['./complete-request.page.scss']
 })
 
 export class CompleteRequestPage {
