@@ -32,12 +32,6 @@ import { switchMap } from 'rxjs/operators';
 
 export class OfferPage {
 
-
-	
-	// WILO.. The delete button is not working. I accepted a request, and marked it complete, and then viewed the offer, and I could not click the DELETE button. It had no effect. Also, the grey of the item in the offer list was not of the whole item, just the border.
-
-
-
 	model = undefined;
 	offerId = undefined;
 	
