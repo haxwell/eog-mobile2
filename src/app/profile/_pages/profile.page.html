@@ -34,22 +34,22 @@
 			</ion-row>
 			<ion-row>
 				<table class="centered">
-					<tr>
-						<span *ngIf="isCurrentUserAllowedToSeePhoneInfo()">
+					<tr *ngIf="isCurrentUserAllowedToSeePhoneInfo()">
+						<span >
 							<td>
 								<ion-icon slot="start" class="cornfieldBlueColor profileIcon" name="phone-portrait"></ion-icon>
 							</td>
-							<td [ngStyle]="{'padding':'0 0 0 1.5em'}">
+							<td [ngStyle]="{'padding':'0 0 0 0.9em'}">
 								<span class="cornfieldBlueColor">{{getModelAttr('phone')}}</span>
 							</td>
 						</span>
-						<td [ngStyle]="{'padding':'0 1.5em 0 1.5em'}">
-						</td>
-						<span *ngIf="isCurrentUserAllowedToSeeEmailInfo()">						
+					</tr>
+					<tr *ngIf="isCurrentUserAllowedToSeeEmailInfo()">
+						<span >						
 							<td>
 								<ion-icon slot="start" class="cornfieldBlueColor profileIcon" name="mail"></ion-icon>
 							</td>
-							<td [ngStyle]="{'padding':'0 0 0 1.5em'}">
+							<td [ngStyle]="{'padding':'0 0 0 0.9em'}">
 								<span class="cornfieldBlueColor">{{getModelAttr('email')}}</span>
 							</td>
 						</span>

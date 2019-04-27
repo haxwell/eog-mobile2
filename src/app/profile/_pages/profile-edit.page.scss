@@ -1,6 +1,11 @@
+ion-select {
+	width: 100%;
+	max-width: 100%;
+}
+
 #profileAvatarImg {
-	width: 6em;
-	height: 6em;
+	width: 100%;
+	height: 100%;
 }
 
 .centered {
@@ -16,4 +21,8 @@
 
 #contactInfoVisibilitySelect {
 	max-width: 60%;
+}
+
+.width100 {
+	width: 100%;
 }
