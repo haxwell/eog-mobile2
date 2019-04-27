@@ -12,6 +12,8 @@ import { EasyahHeader } from '../common/easyah-header/easyah-header';
 import { ProfilePage } from './_pages/profile.page';
 import { ProfileEditPage } from './_pages/profile-edit.page';
 
+import { ChoosePhotoSourcePage } from '../common/choose-photo-source/choose-photo-source';
+
 import { ContactInfoVisibilityService } from '../../app/_services/contact-info-visibility.service'
 import { GeolocationService } from '../../app/_services/geolocation.service'
 import { PointsService } from '../../app/_services/points.service'
@@ -29,8 +31,9 @@ import { UserMetadataService } from '../../app/_services/user-metadata.service'
   	,ProfileRoutingModule
   ]
   ,declarations: [
-  	ProfilePage,
-  	ProfileEditPage
+  	ProfilePage
+  	,ProfileEditPage
+    ,ChoosePhotoSourcePage
   ]
   ,providers: [
     ContactInfoVisibilityService
@@ -39,6 +42,9 @@ import { UserMetadataService } from '../../app/_services/user-metadata.service'
     ,ProfileService
     ,RecommendationService
     ,UserMetadataService
+  ]
+  ,entryComponents: [
+    ChoosePhotoSourcePage
   ]
 })
 export class ProfilePageModule {}

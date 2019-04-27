@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
+import { ModalController } from '@ionic/angular';
+
 import { Constants } from '../../../_constants/constants'
 
 import { LoadingService } from '../../../app/_services/loading.service'
-import { ModalService } from '../../../app/_services/modal.service'
 import { AlertService } from '../../../app/_services/alert.service'
 import { ProfileService } from '../../../app/_services/profile.service'
 import { PictureService } from '../../../app/_services/picture.service'
@@ -19,14 +20,12 @@ import { ChoosePhotoSourcePage } from '../../../app/common/choose-photo-source/c
 import { File } from '@ionic-native/file/ngx'
 
 import * as EXIF from 'exif-js';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'page-profile-edit',
   templateUrl: 'profile-edit.page.html',
   styleUrls: ['./profile-edit.page.scss']
 })
-
 export class ProfileEditPage {
 
 	model = undefined;
@@ -42,7 +41,7 @@ export class ProfileEditPage {
 	contactInfoVisibilityId = undefined;
 	contactInfoVisibilityChoices = undefined;
 
-	constructor(private _modalService: ModalService,
+	constructor(private _modalCtrl: ModalController,
 				private _loadingService: LoadingService,
 				private _alertService: AlertService,
 				private _location: Location,
@@ -315,58 +314,71 @@ export class ProfileEditPage {
 			return this._profileService.getModel(this.userId)["imageFileURI"];
 	}
 
+	async presentModal(_component, _model, props) {
+		let self = this;
+		let modal = undefined;
+		let options = { 
+			component: _component, 
+			componentProps: {
+				model: _model, 
+				props: props.propsObj,  
+				callbackFunc: (data) => { 
+					props.callbackFunc(data); modal.dismiss(); 
+				}
+			}
+		};
+
+		modal = await this._modalCtrl.create(options)
+		return await modal.present();
+	}
+
 	onThumbnailClick($event) {
 		let self = this;
 		let model = this._profileService.getModel(this.userId);
 
-		this._modalService.show(ChoosePhotoSourcePage, 
+		self.presentModal(ChoosePhotoSourcePage, { }, 
 			{
-				props: {
+				propsObj: {
 					fileURI: model["imageFileURI"], 
 					fileSource: model["imageFileSource"]
 					}, 
-				onDidDismissFunc: (promise) => {
-					if (promise) {
-						promise.then((uriAndSource) => { 
-							if (uriAndSource === undefined) {
-								uriAndSource = {};
-							}
+				callbackFunc: (uriAndSource) => {
+					if (uriAndSource !== undefined) {
 
-							let model = this._profileService.getModel(this.userId);
+						let model = this._profileService.getModel(this.userId);
 
-							if (model["imageFileURI"] !== undefined && model["imageFileSource"] == 'camera') {
-								let lastSlash = model["imageFileURI"].lastIndexOf('/');
-								let path = model["imageFileURI"].substring(0,lastSlash+1);
-								let filename = model["imageFileURI"].substring(lastSlash+1);
+						if (model["imageFileURI"] !== undefined && model["imageFileSource"] == 'camera') {
+							let lastSlash = model["imageFileURI"].lastIndexOf('/');
+							let path = model["imageFileURI"].substring(0,lastSlash+1);
+							let filename = model["imageFileURI"].substring(lastSlash+1);
 
-								self._file.removeFile(path, filename).then((data) => {
-									self._pictureService.setMostProbablePhotoPath(self._constants.PHOTO_TYPE_PROFILE, self.userId, uriAndSource["imageFileURI"]);
-
-									console.log("User saved a new profile image. [" + model["imageFileURI"] + "] is no longer the image to use, so it has been removed." );
-									console.log("setting profile header model to [" + uriAndSource["imageFileURI"] + "]");
-
-									model["imageFileURI"] = uriAndSource["imageFileURI"];
-									model["imageFileSource"] = uriAndSource["imageFileSource"];
-
-									//self._events.publish('profile:changedProfileImage', model["imageFileURI"]);
-									self.setDirty(true);						
-								})
-							} else {
-								console.log("no previous image to delete, so skipping that step...")
-								console.log("uriAndSource = " + JSON.stringify(uriAndSource))
-
+							self._file.removeFile(path, filename).then((data) => {
 								self._pictureService.setMostProbablePhotoPath(self._constants.PHOTO_TYPE_PROFILE, self.userId, uriAndSource["imageFileURI"]);
+
+								console.log("User saved a new profile image. [" + model["imageFileURI"] + "] is no longer the image to use, so it has been removed." );
+								console.log("setting profile header model to [" + uriAndSource["imageFileURI"] + "]");
 
 								model["imageFileURI"] = uriAndSource["imageFileURI"];
 								model["imageFileSource"] = uriAndSource["imageFileSource"];
 
 								//self._events.publish('profile:changedProfileImage', model["imageFileURI"]);
-								self.setDirty(true);
-							}
+								self.setDirty(true);						
+							})
+						} else {
+							console.log("no previous image to delete, so skipping that step...")
+							console.log("uriAndSource = " + JSON.stringify(uriAndSource))
 
-						});
+							self._pictureService.setMostProbablePhotoPath(self._constants.PHOTO_TYPE_PROFILE, self.userId, uriAndSource["imageFileURI"]);
+
+							model["imageFileURI"] = uriAndSource["imageFileURI"];
+							model["imageFileSource"] = uriAndSource["imageFileSource"];
+
+							//self._events.publish('profile:changedProfileImage', model["imageFileURI"]);
+							self.setDirty(true);
+						}
 					}
-				}});
+				}
+			});
 	}
 
 	onThumbnailPress($event) {
