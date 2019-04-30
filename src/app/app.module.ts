@@ -12,6 +12,7 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx'
 import { File } from '@ionic-native/file/ngx'
 import { FilePath } from '@ionic-native/file-path/ngx'
 import { Geolocation } from '@ionic-native/geolocation/ngx'
+import { WebView } from '@ionic-native/ionic-webview/ngx'
 
 import { Events, IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -32,6 +33,8 @@ import { PictureService } from './_services/picture.service';
 
 import { CanActivateRouteGuard } from './_routeguards/can-activate.routeguard';
 
+import { IonicImageLoader } from 'ionic-image-loader';
+
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 export class CustomHammerConfig extends HammerGestureConfig {
@@ -51,6 +54,8 @@ export class CustomHammerConfig extends HammerGestureConfig {
     HttpClientModule
 
     ,EasyahCommonModule
+
+    ,IonicImageLoader.forRoot()
   ],
 
   providers: [
@@ -62,6 +67,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
     ,Geolocation
     ,StatusBar
     ,SplashScreen
+    ,WebView
 
     ,Constants
     

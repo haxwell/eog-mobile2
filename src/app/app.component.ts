@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { HttpHeaders } from '@angular/common/http';
 
 import { Platform, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -11,6 +12,8 @@ import { AlertService } from './_services/alert.service';
 import { WebsocketService } from './_services/websocket.service';
 import { UserPreferencesService } from './_services/user-preferences.service';
 import { UnseenChangesIndicatorService } from './_services/unseen-changes-indicator.service';
+
+import { ImageLoaderConfigService } from 'ionic-image-loader';
 
 @Component({
   selector: 'app-root',
@@ -33,7 +36,8 @@ export class AppComponent {
     private _userService : UserService,
     private _menuCtrl : MenuController,
     private _alertService: AlertService,
-    private _uciService: UnseenChangesIndicatorService
+    private _uciService: UnseenChangesIndicatorService,
+    private _imageLoaderConfigService: ImageLoaderConfigService
   ) {
     this.initializeApp();
   }
@@ -55,6 +59,12 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+
+    // TODO: Create a specific user which is only used to retrieve images
+    let httpHeaders = new HttpHeaders()
+      .set("Authorization", "Basic " + btoa("eoguser2" + ":" + "password"))
+
+    this._imageLoaderConfigService.setHttpHeaders(httpHeaders);
   }
 
   isMenuCoolToShow() {

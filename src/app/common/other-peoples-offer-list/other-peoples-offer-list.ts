@@ -10,6 +10,8 @@ import { PointsService } from '../../../app/_services/points.service';
 import { PictureService } from '../../../app/_services/picture.service';
 import { RecommendationService } from '../../../app/_services/recommendation.service';
 
+import { environment } from '../../../_environments/environment';
+
 @Component({
   selector: 'other-peoples-offer-list',
   templateUrl: 'other-peoples-offer-list.html',
@@ -74,10 +76,9 @@ export class OtherPeoplesOfferList {
 	}
 
 	getThumbnailImage(offer) {
-		if (offer["imageFileURI"] !== undefined && offer["imageOrientation"] !== undefined)
-			return offer["imageFileURI"];
-		else
-			return "assets/img/mushroom.jpg";
+		let photoType = "offer";
+		let objId = offer["id"];
+		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
 	}
 
 	getAvatarCSSClassString(offer) {
