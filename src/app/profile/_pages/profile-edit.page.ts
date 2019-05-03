@@ -144,7 +144,7 @@ export class ProfileEditPage {
 	isSaveBtnEnabled() {
 		let model = this._profileService.getModel(this.userId);
 
-		return this.isDirty() && model["phone"].length == 10;
+		return this.isDirty() && (model["phone"] && model["phone"].length == 10);
 	}
 
 	onSaveBtnTap() {
