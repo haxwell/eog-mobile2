@@ -13,12 +13,11 @@ import { WebsocketService } from './_services/websocket.service';
 import { UserPreferencesService } from './_services/user-preferences.service';
 import { UnseenChangesIndicatorService } from './_services/unseen-changes-indicator.service';
 
-import { ImageLoaderConfigService } from 'ionic-image-loader';
+import { ImageLoaderService, ImageLoaderConfigService } from 'ionic-image-loader';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
 
@@ -37,7 +36,8 @@ export class AppComponent {
     private _menuCtrl : MenuController,
     private _alertService: AlertService,
     private _uciService: UnseenChangesIndicatorService,
-    private _imageLoaderConfigService: ImageLoaderConfigService
+    private _imageLoaderConfigService: ImageLoaderConfigService,
+    private _imageLoaderService: ImageLoaderService
   ) {
     this.initializeApp();
   }
@@ -65,6 +65,8 @@ export class AppComponent {
       .set("Authorization", "Basic " + btoa("eoguser2" + ":" + "password"))
 
     this._imageLoaderConfigService.setHttpHeaders(httpHeaders);
+
+    this._imageLoaderService.clearCache();
   }
 
   isMenuCoolToShow() {
