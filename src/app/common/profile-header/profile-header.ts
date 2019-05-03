@@ -9,6 +9,8 @@ import { UserService } from '../../_services/user.service'
 
 import * as EXIF from 'exif-js'
 
+import { environment } from '../../../_environments/environment';
+
 @Component({
   selector: 'profile-header',
   templateUrl: 'profile-header.html',
@@ -42,10 +44,7 @@ export class ProfileHeader {
 	}
 
 	getThumbnailImage() {
-		if (this.userId && this._profileService.getModel(this.userId)["imageFileURI"] !== undefined)
-			return this._profileService.getModel(this.userId)["imageFileURI"];
-		else
-			return "assets/img/mushroom.jpg";
+		return environment.apiUrl + "/api/resource/profile/" + this.userId;
 	}
 
 	getModelAttr(key) {

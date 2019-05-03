@@ -1,9 +1,13 @@
+.circular {
+	border-radius: 50%;	
+}
 
--table {
-	margin: 0 auto;
+.centerBackgroundPosition {
+	background-position: center;
 }
 
 .profile_header__text {
+	margin: 0 auto;
 	font-size: 2em;
 }
 

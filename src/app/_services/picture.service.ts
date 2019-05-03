@@ -301,7 +301,7 @@ export class PictureService {
 				rtn = "rotate90Clockwise";
 		}
 
-		rtn += " centered " + additionalCSSClassList || '';
+		rtn += " centered " + (additionalCSSClassList || '');
 
 		return rtn;
 	}

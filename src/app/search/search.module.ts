@@ -13,6 +13,8 @@ import { SearchService } from '../../app/_services/search.service';
 
 import { SearchPage } from './search.page';
 
+import { IonicImageLoader } from 'ionic-image-loader';
+
 @NgModule({
   imports: [
   	IonicModule,
@@ -20,6 +22,7 @@ import { SearchPage } from './search.page';
   	CommonModule,
   	SearchRoutingModule,
     RouterModule.forChild([{ path: '', component: SearchPage }])
+    ,IonicImageLoader
   ]
   ,declarations: [
   	SearchPage

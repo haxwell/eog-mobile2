@@ -81,10 +81,6 @@ export class OtherPeoplesOfferList {
 		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
 	}
 
-	getAvatarCSSClassString(offer) {
-		return this._pictureService.getOrientationCSS(offer);
-	}
-
 	getAlreadyRequestedIconColor(offer) {
 		if (this.isAlreadyRequested[offer["id"]] === undefined) {
 			this.isAlreadyRequested[offer["id"]] = null;

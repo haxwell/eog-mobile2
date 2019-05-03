@@ -10,7 +10,7 @@ import { PictureService } from '../../app/_services/picture.service';
 import { UserService } from '../../app/_services/user.service';
 import { LoadingService } from '../../app/_services/loading.service';
 
-import { switchMap } from 'rxjs/operators';
+import { environment } from '../../_environments/environment';
 
 @Component({
   selector: 'page-search',
@@ -114,30 +114,15 @@ export class SearchPage {
 		}
 	}
 
-	profileImageFilepath = [];
-	getProfileImageFilepath(user) {
-		return this.profileImageFilepath[user["id"]];
+	getImageLoaderId(user) {
+		return "image" + user["id"];
 	}
 
-	// TODO: Put this profile image handling stuff in a service.. This page should only say "give me the picture", and that's it. two three lines of code. period.
-
-	isProfileImageAvailable(user) {
-		let rtn = this.profileImageFilepath[user["id"]] !== undefined && this.profileImageFilepath[user["id"]] !== null;
-
-		let self = this;
-
-		self._pictureService.init();
-
-		if (this.profileImageFilepath[user["id"]] === undefined) {
-			this.profileImageFilepath[user["id"]] = null;
-
-			self._pictureService.get(this._constants.PHOTO_TYPE_PROFILE, user["id"]).then((path) => {
-				if (path !== undefined)
-					self.profileImageFilepath[user["id"]] = path;
-			});
-		}
-
-		return rtn; 
+	getProfileImageFilepath(user) {
+		let photoType = "profile";
+		let objId = user["id"];
+		console.log(":::::::::: " + environment.apiUrl + "/api/resource/profile/" + objId);
+		return environment.apiUrl + "/api/resource/profile/" + objId;
 	}
 
 	onViewUser(_user) {

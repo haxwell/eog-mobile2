@@ -33,3 +33,9 @@
     -ms-transform: rotate(180deg);
     transform: rotate(180deg);
 }
+
+.centered {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}

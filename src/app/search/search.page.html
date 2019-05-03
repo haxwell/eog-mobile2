@@ -36,21 +36,18 @@
 
 			<ion-item-group *ngFor="let user of getUsersResults()">
 
-				<ion-item-sliding (click)="onViewUser(user)">
-					<ion-item>
-						<ion-avatar slot="start" *ngIf="isProfileImageAvailable(user)">
-							<img [src]="getProfileImageFilepath(user)">
-						</ion-avatar>
-						<ion-avatar *ngIf="!isProfileImageAvailable(user)">
-							<img src="assets/img/mushroom.jpg">
-						</ion-avatar>
+				<ion-item (click)="onViewUser(user)">
+					<div>
+					<div class="centered avatar">
+							<img-loader id="getImageLoaderId(user)" class="circular centerBackgroundPosition" [src]="getProfileImageFilepath(user)" backgroundSize="cover"></img-loader>
+					</div>
+					</div>
 
-						<div class="usernameMetadataDiv">
-							<span class="userRealname">{{user.realname}}</span>
-						</div>
-					</ion-item>
+					<div class="usernameMetadataDiv">
+						<span class="userRealname">{{user.realname}}</span>
+					</div>
+				</ion-item>
 
-				</ion-item-sliding>
 			</ion-item-group>
 		</ion-list>
 
