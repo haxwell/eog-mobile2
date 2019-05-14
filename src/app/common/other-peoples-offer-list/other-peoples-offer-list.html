@@ -7,7 +7,7 @@
 </ion-item-group>
 
 <ion-item-group *ngFor="let offer of getListOfOffers()">
-	<ion-item>
+	<ion-item (click)="onViewOffer(offer)">
 		<div>
 			<div class="centered avatar">
 				<img-loader class="circular centerBackgroundPosition" [src]="getThumbnailImage(offer)" backgroundSize="cover"></img-loader>

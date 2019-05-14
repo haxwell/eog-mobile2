@@ -121,7 +121,6 @@ export class SearchPage {
 	getProfileImageFilepath(user) {
 		let photoType = "profile";
 		let objId = user["id"];
-		console.log(":::::::::: " + environment.apiUrl + "/api/resource/profile/" + objId);
 		return environment.apiUrl + "/api/resource/profile/" + objId;
 	}
 
