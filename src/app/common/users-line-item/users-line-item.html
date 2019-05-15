@@ -1,10 +1,15 @@
 <ion-item (click)="onViewProfile()" no-lines>
-	<ion-avatar *ngIf="isProfileImageAvailable()" slot="start">
+	<div class="centered avatar">
+		<img-loader class="circular centerBackgroundPosition" [src]="getThumbnailImage(offer)" backgroundSize="cover"></img-loader>
+	</div>
+
+	<!-- <ion-avatar *ngIf="isProfileImageAvailable()" slot="start">
 		<img [src]="getProfileImageFilepath()">
 	</ion-avatar>
 	<ion-avatar *ngIf="!isProfileImageAvailable()" slot="start">
 		<img src="assets/img/mushroom.jpg">
 	</ion-avatar>
-
+	-->
+	
 	<span class="userRealname">{{item.realname}}</span>
 </ion-item>

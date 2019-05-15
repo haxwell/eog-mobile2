@@ -11,6 +11,7 @@ import { RequestsService } from '../../../../app/_services/requests.service'
 import { PictureService } from '../../../../app/_services/picture.service'
 
 import { Constants } from '../../../../_constants/constants'
+import { environment } from '../../../../_environments/environment';
 
 import { PermanentlyDismissUnresolvedRequestPage } from './permanently-dismiss-unresolved-request.page'
 import { NotCompleteOutgoingRequestPage } from './not-complete-request.page'
@@ -201,10 +202,9 @@ export class RequestsOutgoingView {
 	}
 
 	getThumbnailImage(offer) {
-		if (offer["imageFileURI"] !== undefined && offer["imageOrientation"] !== undefined)
-			return offer["imageFileURI"];
-		else
-			return "assets/img/mushroom.jpg";
+		let photoType = "offer";
+		let objId = offer["id"];
+		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
 	}
 
 	getAvatarCSSClassString(offer) {

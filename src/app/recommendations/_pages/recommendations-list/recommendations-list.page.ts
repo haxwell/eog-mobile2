@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Events } from '@ionic/angular';
 
 import { Constants } from '../../../../_constants/constants'
+import { environment } from '../../../../_environments/environment';
 
 import { UserService } from '../../../../app/_services/user.service';
 import { RecommendationService } from '../../../../app/_services/recommendation.service'
@@ -79,24 +80,9 @@ export class RecommendationsListPage {
 	}
 
 	getDOUserProfileImageFilepath(userId) {
-		return this.directionallyOppositeUserProfileImageFilepath[userId];
-	}
-
-	// TODO: This method appears in several classes. Refactor this to a single source.
-	isDOUserProfileImageAvailable(userId) {
-		let rtn = this.directionallyOppositeUserProfileImageFilepath[userId] !== undefined && this.directionallyOppositeUserProfileImageFilepath[userId] !== null;
-
-		let self = this;
-		if (self.directionallyOppositeUserProfileImageFilepath[userId] === undefined && userId !== undefined) {
-			self.directionallyOppositeUserProfileImageFilepath[userId] = null;
-
-			self._pictureService.get(self._constants.PHOTO_TYPE_PROFILE, userId).then((path) => {
-				if (path !== undefined)
-					self.directionallyOppositeUserProfileImageFilepath[userId] = path;
-			});
-		}
-
-		return rtn; 
+		let photoType = "profile";
+		let objId = userId;
+		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
 	}
 
 	getRealName(item) {
@@ -111,17 +97,5 @@ export class RecommendationsListPage {
 
 	onViewUser(item) {
 		this._router.navigate(['/profile/' + item["userInfo"]["id"]])
-	}
-
-	getAvatarCSSClassString() {
-		// This didn't have the centered classs as default either.. everything okay?
-		return this._pictureService.getOrientationCSS(this);
-	}
-
-	loaded(evt) {
-		let self = this;
-		EXIF.getData(evt.target, function() {
-			self.imageOrientation = EXIF.getTag(this, "Orientation");
-		});
 	}
 }

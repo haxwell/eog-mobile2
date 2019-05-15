@@ -17,6 +17,8 @@ import { ContactInfoVisibilityService } from '../../../app/_services/contact-inf
 
 import { ChoosePhotoSourcePage } from '../../../app/common/choose-photo-source/choose-photo-source'
 
+import { environment } from '../../../_environments/environment';
+
 import { File } from '@ionic-native/file/ngx'
 
 import * as EXIF from 'exif-js';
@@ -308,10 +310,9 @@ export class ProfileEditPage {
 	}
 
 	getThumbnailImage() {
-		if (this._profileService.getModel(this.userId)["imageFileURI"] === undefined)
-			return "assets/img/mushroom.jpg";
-		else
-			return this._profileService.getModel(this.userId)["imageFileURI"];
+		let photoType = "profile";
+		let objId = this.userId;
+		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
 	}
 
 	async presentModal(_component, _model, props) {

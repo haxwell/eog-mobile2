@@ -22,7 +22,7 @@ import { Constants } from '../../../_constants/constants';
 
 import * as Moment from 'moment'
 
-import { switchMap } from 'rxjs/operators';
+import { environment } from '../../../_environments/environment';
 
 @Component({
   selector: 'page-display-offer',
@@ -35,6 +35,7 @@ export class OfferPage {
 	model = undefined;
 	offerId = undefined;
 	
+	thumbnailUrl = undefined;
 	requestMsgs = undefined;
 	_isRequestBtnVisible = undefined;
 	callback = undefined; // TODO: necessary?
@@ -73,6 +74,12 @@ export class OfferPage {
 		}
 
 		self._route.params.subscribe((params) => {
+			// initialize the thumbnail url param
+			let photoType = "offer";
+			// let objId = model["id"];
+			self.thumbnailUrl = environment.apiUrl + "/api/resource/" + photoType + "/" + params['offerId']
+			
+			// initialize the model
 			if (params['offerId'] && params['offerId'] !== 'new')
 			{
 				self._offerModelService.get(params['offerId']).then((model) => {
@@ -253,17 +260,7 @@ export class OfferPage {
 	}
 
 	getThumbnailImage() {
-		let rtn = undefined;
-		
-		if (this.model && this.model["imageFileURI"] !== undefined && this.model["imageOrientation"] !== undefined)
-			rtn = this.model["imageFileURI"];
-		else
-			rtn = "assets/img/logo.jpg";
-
-		return rtn;
-	}
-
-	getAvatarCSSClassString() {
-		return this._pictureService.getOrientationCSS(this.model);
+		console.log("^^^^^^^^^^^^^^ getThumbnailImage is called. Returning " + this.thumbnailUrl);
+		return this.thumbnailUrl;
 	}
 }

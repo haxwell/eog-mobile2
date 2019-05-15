@@ -97,8 +97,10 @@
 					</ion-item>
 				</div>
 			</span>
-			<ion-item *ngIf="isThumbnailImageAvailable()">
-					<img [class]="getAvatarCSSClassString()" [src]="getThumbnailImage()" alt="profile_image" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)">
+			<ion-item>
+				<div class="centered avatar">
+					<img-loader class="circular centerBackgroundPosition" [src]="getThumbnailImage()" backgroundSize="cover" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)"></img-loader>
+				</div>
 			</ion-item>
 		</ion-row>	
 

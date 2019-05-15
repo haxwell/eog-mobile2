@@ -14,15 +14,9 @@
 	padding: 0 1em 0 1em;
 }
 
-
-
 .profileIcon {
 	font-size: 1.45em;
 	margin-top: .3em; 
-}
-
-.circularized {
-	border-radius: 50%;
 }
 
 .profileName {
@@ -38,12 +32,6 @@
 	width: 100%;
 }
 
-.centered {
-	display: block;
-	margin: 0 auto;
-	text-align: center;
-}
-
 .sectionHeader {
 	display: block;
 	margin: 0 auto;
@@ -53,3 +41,8 @@
 	padding: .25em 0 .25em 0;
 }
 
+.card {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}

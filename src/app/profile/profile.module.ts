@@ -21,6 +21,8 @@ import { ProfileService } from '../../app/_services/profile.service'
 import { RecommendationService } from '../../app/_services/recommendation.service'
 import { UserMetadataService } from '../../app/_services/user-metadata.service'
 
+import { IonicImageLoader } from 'ionic-image-loader';
+
 @NgModule({
   imports: [
     IonicModule
@@ -29,6 +31,7 @@ import { UserMetadataService } from '../../app/_services/user-metadata.service'
     ,HttpModule
     ,EasyahCommonModule
   	,ProfileRoutingModule
+    ,IonicImageLoader
   ]
   ,declarations: [
   	ProfilePage

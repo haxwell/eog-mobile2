@@ -25,12 +25,18 @@
 		<ion-item-group *ngFor="let item of getNotifications()">
 			<ion-item-sliding  [class]="getTrack(item)" >
 				<ion-item>
-					<ion-avatar slot="start" *ngIf="isDOUserProfileImageAvailable(item['oppUserId'])">
+					<div class="centered avatar">
+						<img-loader class="circular centerBackgroundPosition" [src]="getDOUserProfileImageFilepath(item['oppUserId'])" backgroundSize="cover"></img-loader>
+					</div>
+
+					<!-- <ion-avatar slot="start" *ngIf="isDOUserProfileImageAvailable(item['oppUserId'])">
 						<img [class]="getAvatarCSSClassString()" [src]="getDOUserProfileImageFilepath(item['oppUserId'])" alt="profile_image" (load)="loaded($event)">
 					</ion-avatar>
 					<ion-avatar slot="start" *ngIf="!isDOUserProfileImageAvailable(item['oppUserId'])">
 						<img src="assets/img/mushroom.jpg">
-					</ion-avatar>
+					</ion-avatar> 
+				-->
+				
 					<span >
 						<span class="howLongAgo">{{item.howLongAgo}}</span><span class="notificationMsg">{{item.message}}</span>
 					</span>

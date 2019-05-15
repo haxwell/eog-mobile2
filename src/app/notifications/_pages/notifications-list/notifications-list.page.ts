@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Events } from '@ionic/angular';
 
 import { Constants } from '../../../../_constants/constants'
+import { environment } from '../../../../_environments/environment';
 
 import { NotificationService } from '../../../../app/_services/notification.service'
 import { PictureService } from '../../../../app/_services/picture.service'
@@ -102,34 +103,8 @@ export class NotificationsListPage {
 	}
 
 	getDOUserProfileImageFilepath(userId) {
-		return this.directionallyOppositeUserProfileImageFilepath[userId];
-	}
-
-	isDOUserProfileImageAvailable(userId) {
-		let rtn = this.directionallyOppositeUserProfileImageFilepath[userId] !== undefined && this.directionallyOppositeUserProfileImageFilepath[userId] !== null;
-
-		let self = this;
-		if (self.directionallyOppositeUserProfileImageFilepath[userId] === undefined && userId !== undefined) {
-			self.directionallyOppositeUserProfileImageFilepath[userId] = null;
-
-			self._pictureService.get(this._constants.PHOTO_TYPE_PROFILE, userId).then((path) => {
-				if (path !== undefined)
-					self.directionallyOppositeUserProfileImageFilepath[userId] = path;
-			});
-		}
-
-		return rtn; 
-	}
-
-	getAvatarCSSClassString() {
-		// this did not have "centered" as a default css class.. everything still look okay?
-		return this._pictureService.getOrientationCSS(this);
-	}
-
-	loaded(evt) {
-		let self = this;
-		EXIF.getData(evt.target, function() {
-			self.imageOrientation = EXIF.getTag(this, "Orientation");
-		});
+		let photoType = "profile";
+		let objId = userId;
+		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
 	}
 }

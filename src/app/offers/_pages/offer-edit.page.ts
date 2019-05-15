@@ -22,8 +22,7 @@ import { RequestsService } from '../../../app/_services/requests.service';
 import { EventSubscriberService } from '../../../app/_services/event-subscriber.service';
 
 import { Constants } from '../../../_constants/constants';
-
-import { switchMap } from 'rxjs/operators';
+import { environment } from '../../../_environments/environment';
 
 @Component({
   selector: 'page-offer-edit',
@@ -381,15 +380,10 @@ export class OfferEditPage {
 		return (this.model["requiredUserRecommendations"] && this.model["requiredUserRecommendations"].length > 0);
 	}
 
-	isThumbnailImageAvailable() {
-		return this.model["imageFileURI"] !== undefined;
-	}
-
 	getThumbnailImage() {
-		if (this.model["imageFileURI"] !== undefined && this.model["imageOrientation"] !== undefined)
-			return this.model["imageFileURI"];
-		else
-			return "assets/img/mushroom.jpg";
+		let photoType = "offer";
+		let objId = this.model["id"];
+		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
 	}
 
 	getAvatarCSSClassString() {

@@ -17,9 +17,10 @@
 
 	<ion-list *ngIf="userHasAnActiveOffer()">
 		<ion-item *ngFor="let offer of getOffers()" (click)="onOfferBtnTap(offer)">
-			<ion-avatar slot="start">
-				<img id="offerAvatarImg" [class]="getAvatarCSSClassString(offer)" [src]="getThumbnailImage(offer)" alt="profile_image">
-			</ion-avatar>
+			<div class="centered avatar">
+				<img-loader class="circular centerBackgroundPosition" [src]="getThumbnailImage(offer)" backgroundSize="cover"></img-loader>
+			</div>
+
 			<div>
 				<table>
 					<tr>

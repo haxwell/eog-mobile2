@@ -32,9 +32,7 @@
 		<ion-item-group *ngFor="let request of getPendingRequests()">
 			<ion-item-sliding [class]="getTrack(request)" (press)="onViewOffer(request)">
 				<ion-item>
-					<ion-avatar slot="start">
-						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
-					</ion-avatar>
+					<img-loader class="circular centerBackgroundPosition" [src]="getThumbnailImage(request.offer)" backgroundSize="cover"></img-loader>
 
 					<table>
 						<tr>
@@ -76,9 +74,7 @@
 		<ion-item-group *ngFor="let request of getAcceptedRequests()">
 			<ion-item-sliding  [class]="getTrack(request)" (press)="onViewOffer(request)">
 				<ion-item>
-					<ion-avatar slot="start">
-						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
-					</ion-avatar>
+					<img-loader class="circular centerBackgroundPosition" [src]="getThumbnailImage(request.offer)" backgroundSize="cover"></img-loader>
 
 					<div >
 						<table>
@@ -121,9 +117,7 @@
 		<ion-item-group *ngFor="let request of getDeclinedRequests()">
 			<ion-item-sliding  [class]="getTrack(request)" (press)="onViewOffer(request)">
 				<ion-item>
-					<ion-avatar slot="start">
-						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
-					</ion-avatar>
+					<img-loader class="circular centerBackgroundPosition" [src]="getThumbnailImage(request.offer)" backgroundSize="cover"></img-loader>
 
 					<div >
 						<table>
@@ -168,9 +162,7 @@
 		<ion-item-group *ngFor="let request of getCompletedPendingApprovalRequests()">
 			<ion-item-sliding  [class]="getTrack(request)" (press)="onViewOffer(request)">
 				<ion-item>
-					<ion-avatar slot="start">
-						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
-					</ion-avatar>
+					<img-loader class="circular centerBackgroundPosition" [src]="getThumbnailImage(request.offer)" backgroundSize="cover"></img-loader>
 
 					<div >
 						<table>
@@ -209,9 +201,7 @@
 		<ion-item-group *ngFor="let request of getDisputedCompletedRequests()">
 			<ion-item-sliding  [class]="getTrack(request)" (press)="onViewOffer(request)">
 				<ion-item>
-					<ion-avatar slot="start">
-						<img id="offerAvatarImg" [class]="getAvatarCSSClassString(request.offer)" [src]="getThumbnailImage(request.offer)" alt="profile_image">
-					</ion-avatar>
+					<img-loader class="circular centerBackgroundPosition" [src]="getThumbnailImage(request.offer)" backgroundSize="cover"></img-loader>
 
 					<div >
 						<table>

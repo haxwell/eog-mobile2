@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Events } from '@ionic/angular';
 
 import { Constants } from '../../../_constants/constants'
+import { environment } from '../../../_environments/environment';
 
 import { AlertService } from '../../../app/_services/alert.service'
 import { ContactInfoVisibilityService } from '../../../app/_services/contact-info-visibility.service'
@@ -164,10 +165,9 @@ export class ProfilePage {
 	}
 
 	getThumbnailImage() {
-		if (this._profileService.getModel(this.userId)["imageFileURI"] === undefined)
-			return "assets/img/mushroom.jpg";
-		else
-			return this._profileService.getModel(this.userId)["imageFileURI"];
+		let photoType = "profile";
+		let objId = this.userId;
+		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
 	}
 
 	onGoBackBtnTap(evt) {

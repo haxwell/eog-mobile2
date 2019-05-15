@@ -7,6 +7,7 @@ import { Events } from '@ionic/angular';
 import { PictureService } from '../../_services/picture.service'
 
 import { Constants } from '../../../_constants/constants'
+import { environment } from '../../../_environments/environment';
 
 @Component({
   selector: 'users-line-item',
@@ -39,23 +40,8 @@ export class UsersLineItem {
 	}
 
 	getProfileImageFilepath() {
-		return this.profileImageFilepath;
+		let photoType = "profile";
+		let objId = this.item["id"];
+		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
 	}
-
-	isProfileImageAvailable() {
-		let rtn = this.profileImageFilepath !== undefined && this.profileImageFilepath !== null;
-
-		let self = this;
-		if (this.profileImageFilepath === undefined) {
-			this.profileImageFilepath = null;
-
-			self._pictureService.get(self._constants.PHOTO_TYPE_PROFILE, self.item["id"]).then((path) => {
-				if (path !== undefined)
-					self.profileImageFilepath = path;
-			});
-		}
-
-		return rtn; 
-	}
-
 }

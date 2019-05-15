@@ -10,6 +10,12 @@
 		</ion-row>
 
 		<ion-row>
+				<div class="profileAvatarImg centered">
+					<img-loader class="circular centerBackgroundPosition" [src]="getThumbnailImage()" backgroundSize="cover" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)"></img-loader>
+				</div>
+
+
+			<!--
 			<ion-item id="profileAvatarImg" *ngIf="isThumbnailImageAvailable() && !isFromGallery()">
 				<ion-avatar>
 					<img [hidden]="!isThumbnailImageVisible()" [class]="getAvatarCSSClassString()" [src]="getThumbnailImage()" alt="profile_image" (load)="loaded($event)" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)">
@@ -25,6 +31,8 @@
 					<img id="profileAvatarImg" class="centered" src="assets/img/mushroom.jpg" (click)="onThumbnailClick($event)">
 				</ion-avatar>
 			</ion-item>
+		-->
+		
 		</ion-row>
 
 		<ion-row>
