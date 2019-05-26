@@ -61,6 +61,7 @@ export class AppComponent {
     });
 
     // TODO: Create a specific user which is only used to retrieve images
+    // TODO2: Not sure this is necessary anymore -- will we ever need to call for images when there is no user logged in?
     let httpHeaders = new HttpHeaders()
       .set("Authorization", "Basic " + btoa("eoguser2" + ":" + "password"))
 

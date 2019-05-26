@@ -20,6 +20,9 @@ import { ChoosePhotoSourcePage } from '../../../app/common/choose-photo-source/c
 import { environment } from '../../../_environments/environment';
 
 import { File } from '@ionic-native/file/ngx'
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+
+import { ImageLoaderService } from 'ionic-image-loader'
 
 import * as EXIF from 'exif-js';
 
@@ -55,8 +58,10 @@ export class ProfileEditPage {
 				private _userMetadataService: UserMetadataService,
 				private _contactInfoVisibilityService: ContactInfoVisibilityService,
 				private _geolocationService: GeolocationService,
+				private _imageLoaderService: ImageLoaderService,
 				private _constants: Constants,
-				private _file: File) {
+				private _file: File,
+				private _webview: WebView) {
 
 	}
 
@@ -80,6 +85,10 @@ export class ProfileEditPage {
 
 	setDirty(b) {
 		this.dirty = b;
+	}
+
+	ionViewWillEnter() {
+		console.log("--- entering profile edit page");
 	}
 
 	ionViewCanLeave() {
@@ -140,6 +149,7 @@ export class ProfileEditPage {
 
 	onCancelBtnTap() {
 		this.cancelBtnPressed = true;
+		// this._imageLoaderService.removeFromOverrideMap(this.getEnvironmentAPIURLForThisProfile());
 		this._location.back();
 	}
 
@@ -151,27 +161,46 @@ export class ProfileEditPage {
 
 	onSaveBtnTap() {
 		let self = this;
-		let model = this._profileService.getModel(this.userId);
+		let presave_model = this._profileService.getModel(this.userId); // *was 'model'
 
 		if (this.verifyPhoneOnSave) {
-			this.verifyPhone(model["phone"]);
+			this.verifyPhone(presave_model["phone"]);
 			return;
 		}
 
 		self._loadingService.show({
-			message: this._profileService.isProfileImageChanged(model) ?
+			message: this._profileService.isProfileImageChanged(presave_model) ?
 					'Please wait... Uploading as fast as your data connection will allow..' :
 					'Please wait...'
 		})
 
 		self._contactInfoVisibilityService.saveContactInfoVisibilityByUserId(self.userId, self.contactInfoVisibilityId);
 
-		this._profileService.save(model).then(() => {
+		console.log("Here is the PRE-SAVE model")
+		console.log(presave_model);
+
+		this._profileService.save(presave_model).then(() => {
 				self.setDirty(false);
-				self._loadingService.dismiss();
 				
+				console.log("SAVE complete. Here's the profile-service model");
+				let _model = self._profileService.getModel(self.userId);
+				console.log(_model)
+
+				// WILO.. the passing imageFileURI on the model is dead. The model recreates too often, too unpredictably.
+				//  Remove that shit. The fucking profile page needs to refresh its image. Set a flag on the profile page, saying that we have gone to
+				//  the edit page. When we get a viewWillEnter event on the profile DO WHATEVER THE FUCK IS NECESSARY TO REFRESH THE PAGE.
+				//
+				// THAT IS THE SOLUTION. 
+				//
+				// The image has been saved, pushed to the server, it is waiting. THIS FUCKING PAGE NEEDS TO GO GET IT. FDSGDKJLvl
+				
+				// self._imageLoaderService.removeFromOverrideMap(self.getEnvironmentAPIURLForThisProfile());
+
+				self._loadingService.dismiss();
+
 				if (!self.isExiting)
 					self._location.back();
+
 			}, (err) => {
             	self._alertService.show({
 	                header: 'Arggh!',
@@ -305,11 +334,23 @@ export class ProfileEditPage {
 		return this._profileService.getModel(this.userId)["imageFileSource"] == 'gallery';
 	}
 
-	isThumbnailImageAvailable() {
+	isDirectFilepathToImageSet() {
 		return this._profileService.getModel(this.userId)["imageFileURI"] !== undefined;
 	}
 
 	getThumbnailImage() {
+		let rtn = undefined;
+
+		if (this.isDirectFilepathToImageSet()) {
+			rtn = this._webview.convertFileSrc(this._profileService.getModel(this.userId)["imageFileURI"]);
+		} else {
+			rtn = this.getEnvironmentAPIURLForThisProfile();
+		}
+
+		return rtn;
+	}
+
+	getEnvironmentAPIURLForThisProfile() {
 		let photoType = "profile";
 		let objId = this.userId;
 		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
@@ -371,9 +412,26 @@ export class ProfileEditPage {
 
 							self._pictureService.setMostProbablePhotoPath(self._constants.PHOTO_TYPE_PROFILE, self.userId, uriAndSource["imageFileURI"]);
 
+							let befor = model["imageFileURI"];
+
+							console.log("model[imageFileURI] was " + model["imageFileURI"])
+
 							model["imageFileURI"] = uriAndSource["imageFileURI"];
+							console.log("model[imageFileURI] is now " + model["imageFileURI"] + " |after being set to the value from the ChoosePhotoSource page")
+
+							model["imageChanged"] = (model["imageFileURI"] !== befor);
+							
+							if (model["imageChanged"]) {
+								// override the normal image that the image-loader would return
+								//  when the profile gets saved, we remove the override.
+								//  when the profile edit is cancelled, we removed the override.
+
+								self._imageLoaderService.addToOverrideMap(this.getEnvironmentAPIURLForThisProfile(), model["imageFileURI"]);
+							}
+
 							model["imageFileSource"] = uriAndSource["imageFileSource"];
 
+							console.log("^^^^^^^^^^^^^^^^^ model['imageChanged'] = " + model['imageChanged'])
 							//self._events.publish('profile:changedProfileImage', model["imageFileURI"]);
 							self.setDirty(true);
 						}

@@ -64,6 +64,13 @@ export class CameraService {
 		return base64Regex.test(data); // data is the base64 string
 	}
 
+
+// WILO 18 may - the image loader component is using the asynchronus job queue version of the loading 
+//  func that it was doing before.. same everything scept its using the code I wrote.. I think that is
+//  all good. For some reason the photo does not show up in the client. I think it is expecting a callback
+// via a promise or something.
+
+
 	loadGalleryPicture() {
 		let self = this;
 

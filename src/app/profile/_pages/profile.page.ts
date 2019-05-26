@@ -36,6 +36,8 @@ export class ProfilePage {
 	isExiting = false;
 	locationDisplayString = undefined;
 
+	_editCount = 0; 
+
 	_currentUserCanSendRecommendationToProfileUser = undefined;
 	_currentUserCanSendPointToProfileUser = undefined;
 
@@ -90,6 +92,8 @@ export class ProfilePage {
 	}
 
 	ionViewWillEnter() {
+		console.log("VIEW WILL ENTER - ProfilePage");
+		// this._editCount++;
 		this.ngOnInit();
 	}
 
@@ -132,6 +136,7 @@ export class ProfilePage {
 	}
 
 	onEditProfileBtnClick() {
+		// this._editCount++;
 		this._router.navigate(['/profile/' + this.userId + '/edit']);
 	}
 
@@ -156,18 +161,20 @@ export class ProfilePage {
 		return this._profileService.getModel(this.userId)["imageFileSource"] == 'gallery';
 	}
 
-	isThumbnailImageAvailable() {
+	isDirectFilepathToImageSet() {
 		return this._profileService.getModel(this.userId)["imageFileURI"] !== undefined;
 	}
 
+/*
 	isThumbnailImageVisible() {
 		return this.imageOrientation !== undefined;
 	}
+*/
 
 	getThumbnailImage() {
 		let photoType = "profile";
 		let objId = this.userId;
-		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
+		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId; 
 	}
 
 	onGoBackBtnTap(evt) {
