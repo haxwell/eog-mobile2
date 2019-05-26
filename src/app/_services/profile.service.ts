@@ -42,6 +42,7 @@ export class ProfileService {
 
 	getModel(userId: number) {
 		if (this.modelCache[userId] === undefined) {
+			console.log("PROFILE MODEL was undefined. CREATING A NEW PROFILE MODEL.");
 			this.modelCache[userId] = {};
 			return this.initModel(userId, this.modelCache[userId]);
 		} else { 
@@ -161,7 +162,6 @@ export class ProfileService {
 
 				if (self.isProfileImageChanged(model)) {
 					self._pictureService.save(this._constants.PHOTO_TYPE_PROFILE, user["id"], model["imageFileURI"]).then((data) => {
-						self.init(user["id"]);
 						userUpdateFunc();
 					}, (err) => {
 						reject(err);
