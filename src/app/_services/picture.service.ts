@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-import { File } from '@ionic-native/file/ngx'
+import { File, FileEntry } from '@ionic-native/file/ngx'
+
+import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 import { ApiService } from './api.service'
+import { UserService } from './user.service'
 import { FunctionPromiseService } from './function-promise.service';
+
+import { ImageLoaderService } from 'ionic-image-loader'
 
 import { Constants } from '../../_constants/constants';
 
@@ -19,10 +26,14 @@ export class PictureService {
 	platformName = undefined;
 
 	constructor(private _platform: Platform,
+				private _http: HttpClient,
 				private _apiService: ApiService,
+				private _userService: UserService,
+				private _imageLoaderService: ImageLoaderService,
 				private _constants: Constants,
+				private _webview: WebView,
 				private transfer: FileTransfer,
-				private file: File) { 
+				private file: File) {
 
 	}
 
@@ -190,83 +201,66 @@ export class PictureService {
 		let self = this;
 		return new Promise((resolve, reject) => {
 			if (filename !== undefined) {
-				console.log("PictureService is about to upload a file....")
+				console.log("@@@ PictureService is about to upload a file....")
 				const fileTransfer: FileTransferObject = this.transfer.create();
+
+				// filename = this._webview.convertFileSrc(filename);
+				let currentUser = this._userService.getCurrentUser();
 
 				let options: FileUploadOptions = {
 				     fileKey: 'file',
 				     fileName: filename, 
-				     headers: {}
+				     headers: {
+				     	'Authorization': "Basic " + btoa(currentUser["name"] + ":" + currentUser["password"])
+				     }
 				}
+				
+				console.log("Options");
+				console.log(options);
 
-				fileTransfer.upload(filename, environment.apiUrl + "/api/resource/" + photoType + "/" + objId, options)
-				   .then((data) => {
-				    // success
-				    // console.log("File upload from picture service was a success...");
+				this.file.resolveLocalFilesystemUrl(filename)
+			        .then(entry => {
+			            ( < FileEntry > entry).file(file => {
+						    const reader = new FileReader();
+						    reader.onloadend = () => {
+						        const formData = new FormData();
+						        const imgBlob = new Blob([reader.result], {
+						            type: file.type
+						        });
+						        formData.append('file', imgBlob, file.name);
+						        
+							 	const url = environment.apiUrl + "/api/resource/" + photoType + "/" + objId;
+							 	const httpOptions = {
+								  headers: new HttpHeaders({
+								    'Authorization': "Basic " + btoa(currentUser["name"] + ":" + currentUser["password"])
+								  })
+								};
 
-				    let photoTypeFilename = "eogApp" +photoType+ "Pic" + objId
+							    self._http.post(url, formData, httpOptions)
+							        .subscribe(res => {
+							            if (res['msg'] === 'ok') {
 
-				    let func = () => { 
-						let lastSlash = filename.lastIndexOf('/');
-						let lastQuestionMark = filename.lastIndexOf('?');
+							            	self._imageLoaderService.clearImageCache(url)
+							            	//.then(() => {
+								                console.log('File upload complete. POST to ' + url);
+								                resolve();
+							            	//});
 
-						if (lastQuestionMark === -1) 
-							lastQuestionMark = filename.length;
-
-					    let path = filename.substring(0,lastSlash+1);
-					    let relativeFilename = filename.substring(lastSlash+1, lastQuestionMark);
-
-					    //console.log("copying file to cache directory. from [" + path + ", " + relativeFilename + "] to [" + this.file.cacheDirectory + "]");
-
-					    this.file.copyFile(path, // path
-					     					relativeFilename, // relative filename
-					     					this.file.cacheDirectory, // to path
-					     					photoTypeFilename // to relative filename
-					     					).then(() => {
-					     	this.reset(photoType, objId);
-					     	resolve({path: path, relativeFilename: relativeFilename});
-					    }).catch(err => { 
-					     	console.log("Error copying file. filename = " + filename)
-					     	console.log(JSON.stringify(err));
-					     	reject();
-					    });
-				    }
-
-					self.file.checkFile(this.file.cacheDirectory, photoTypeFilename).then((isFileExists) => {
-						if (isFileExists) {
-							// we need to remove this file, and replace it with this currently-being-saved picture 
-							self.file.removeFile(this.file.cacheDirectory, photoTypeFilename).then((promiseResult) => {
-								func();
-							}).catch((err) => {
-								console.log("Error removing existing file in the process of replacing it with a new file of the same name, in picture.service")
-								console.log(JSON.stringify(err))
-								reject();
-							})
-						} else {
-							func();
-						}
-
-					}).catch(err => { 
-						if (err["code"] === 1 && err["message"] === "NOT_FOUND_ERR")
-							func();
-						else {
-							console.log("Error checking if [" + self.file.cacheDirectory + "/" + photoTypeFilename + "] exists. This is more than the file not existing... :(");
-							console.log(JSON.stringify(err))
-							reject();
-						}
-					})				     
-
-				}, (err) => {
-					// error
-					console.log("Error uploading file in pictureService::save()")
-					console.log(JSON.stringify(err));
-					reject();
-				});
-			} else {
-				this.reset(photoType, objId);
-				resolve(undefined);
+							            } else {
+							                console.log('File upload failed.')
+							                reject("error posting image to server");
+							            }
+							        });
+						    };
+						    reader.readAsArrayBuffer(file);
+						})
+			        })
+			        .catch(err => {
+			            console.log('01 Error while reading file.');
+			            reject(err)
+			        });
 			}
-		});
+		})
 	}
 
 	setMostProbablePhotoPath(photoType, objId, str) {
