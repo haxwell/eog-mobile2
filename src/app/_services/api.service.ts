@@ -24,6 +24,13 @@ export class ApiService {
 		return { headers: httpHeaders };
 	}
 
+	getAuthHeadersForCurrentUser() {
+		let httpHeaders = new HttpHeaders()
+			.set("Authorization", "Basic " + btoa(this.currentUser["name"] + ":" + this.currentUser["password"]));
+
+		return httpHeaders;
+	}
+
 	get(url: string) {
 		let user = this.currentUser;
 
