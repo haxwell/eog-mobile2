@@ -38,3 +38,4 @@ easyah-release-key.keystore
 easyah.apk
 src/_environments/environment.ts
 
+.attach_*

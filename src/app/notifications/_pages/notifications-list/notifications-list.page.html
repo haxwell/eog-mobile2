@@ -29,14 +29,6 @@
 						<img class="circular centerBackgroundPosition backgroundSizeCover" [src]="getDOUserProfileImageFilepath(item['oppUserId'])"/>
 					</div>
 
-					<!-- <ion-avatar slot="start" *ngIf="isDOUserProfileImageAvailable(item['oppUserId'])">
-						<img [class]="getAvatarCSSClassString()" [src]="getDOUserProfileImageFilepath(item['oppUserId'])" alt="profile_image" (load)="loaded($event)">
-					</ion-avatar>
-					<ion-avatar slot="start" *ngIf="!isDOUserProfileImageAvailable(item['oppUserId'])">
-						<img src="assets/img/mushroom.jpg">
-					</ion-avatar> 
-				-->
-				
 					<span >
 						<span class="howLongAgo">{{item.howLongAgo}}</span><span class="notificationMsg">{{item.message}}</span>
 					</span>

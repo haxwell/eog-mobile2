@@ -4,7 +4,6 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpHeaders } from '@angular/common/http';
 
 import { Platform, MenuController } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { UserService } from './_services/user.service';
@@ -27,7 +26,6 @@ export class AppComponent {
     private _router: Router,
     private _route: ActivatedRoute,
     private platform: Platform,
-    private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private websocketService: WebsocketService, // defined here so it will be initialized, but not used in this class
     private userPreferencesService : UserPreferencesService, // defined here so it will be initialized, but not used in this class
@@ -55,7 +53,6 @@ export class AppComponent {
       // Here you can do any higher level native things you might need.
 
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
     });
   }
 

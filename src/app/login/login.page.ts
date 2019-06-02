@@ -38,12 +38,12 @@ export class LoginPage {
                 this.user = {id:-1, name: 'eoguser2', password: 'password'};
   }
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
+      console.log("*********** LOGIN PAGE HAS ALREADY ENTERED! NOW HIDING THE SPLASH SCREEN **************");
       this.splashScreen.hide();
   }
 
   onLoginBtnTap(event) {
-
     if (this.user.name.length > 0 && this.user.password.length > 0) {
       let self = this;
 
