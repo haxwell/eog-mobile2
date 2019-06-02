@@ -2,6 +2,7 @@
 <ion-app>
   <ion-menu side="start" contentId="menuContent" menuId="main" *ngIf="isMenuCoolToShow()" (ionWillOpen)="handleMenuWillOpenEvent()">
     <ion-content id="menuContent">
+      <br/>
       <profile-header id="profile-header" (click)="onShowProfile()"></profile-header>
       <ion-list>
             <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('HomePage')}" (click)="onHomeClicked()">Home</ion-button>

@@ -1,7 +1,11 @@
 <div (click)="onProfileHeaderClick()">
 	<img class="centered profileHeaderAvatar circular centerBackgroundPosition backgroundSizeCover" [src]="getThumbnailImage()" (press)="onThumbnailPress($event)"/>
-
+	<br/>
 	<span class="centered profile_header__text">{{getModelAttr('realname')}}</span><br/>
 	<hr/>
-	<span class="profile_header__desc1">{{getModelAttr('description')}}</span>
+	<div class="profile_header__desc1_div">
+		<span class="profile_header__desc1">{{getModelAttr('description')}}</span>
+	</div>
+	<br/>
+	<span class="centered">---</span>
 </div>

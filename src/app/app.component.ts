@@ -64,7 +64,11 @@ export class AppComponent {
   }
 
   handleMenuWillOpenEvent() {
-    console.log("MENU OPENED!MENU OPENED!MENU OPENED!MENU OPENED!MENU OPENED!MENU OPENED!MENU OPENED!");
+    // This is part of a hacky implementation of the profile images. The server takes a url, specific to a profile, and
+    //  adds a number that changes at times we want to force a refresh of the image. The image is cached in the browser,
+    //  and so, if we just have it return 'api/resource/profile/4' each time would say to the browser, you already have
+    //  this image, serve it from the cache.
+
     this._profileService.bumpTheThumbnailCounter();
   }
 

@@ -38,7 +38,7 @@ export class ProfileHeader {
 		this.ngOnInit();
 	}
 
-	onProfileHeaderClick() {
+	onThumbnailPress($event) {
 		console.log("^^^^ on ProfileHeaderClick                  ****  * * * * * * *");
 		this._router.navigate(['/profile/' + this._userService.getCurrentUser()["id"]]);
 	}
