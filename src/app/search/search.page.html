@@ -37,11 +37,13 @@
 			<ion-item-group *ngFor="let user of getUsersResults()">
 
 				<ion-item (click)="onViewUser(user)">
-					<div>
-					<div class="centered avatar">
-							<img id="getUniqueId(user)" class="circular centerBackgroundPosition backgroundSizeCover" [src]="getProfileImageFilepath(user)"/>
-					</div>
-					</div>
+<!--					<div> -->
+
+						<div class="avatar-in-a-list-wrapper-div">
+							<img id="getUniqueId(user)" class="avatar-in-a-list" [src]="getProfileImageFilepath(user)"/>
+						</div>
+
+<!--					</div> -->
 
 					<div class="usernameMetadataDiv">
 						<span class="userRealname">{{user.realname}}</span>

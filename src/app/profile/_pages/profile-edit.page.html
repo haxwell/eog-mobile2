@@ -10,29 +10,9 @@
 		</ion-row>
 
 		<ion-row>
-				<div class="profileAvatarImg centered">
-					<img class="circular centerBackgroundPosition backgroundSizeCover" [src]="getThumbnailImage()" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)"/>
+				<div class="centered profileAvatarImg avatar-in-a-list-wrapper-div">
+					<img class="avatar-in-a-list" [src]="getThumbnailImage()" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)"/>
 				</div>
-
-
-			<!--
-			<ion-item id="profileAvatarImg" *ngIf="isThumbnailImageAvailable() && !isFromGallery()">
-				<ion-avatar>
-					<img [hidden]="!isThumbnailImageVisible()" [class]="getAvatarCSSClassString()" [src]="getThumbnailImage()" alt="profile_image" (load)="loaded($event)" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)">
-				</ion-avatar>
-			</ion-item>
-			<ion-item *ngIf="isThumbnailImageAvailable() && isFromGallery()">
-				<ion-avatar >
-					<img id="profileAvatarImg" [hidden]="!isThumbnailImageVisible()" [class]="getAvatarCSSClassString()" [src]="getThumbnailImage()" alt="profile_image" (load)="loaded($event)" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)">
-				</ion-avatar>
-			</ion-item>
-			<ion-item *ngIf="!isThumbnailImageAvailable()">
-				<ion-avatar>
-					<img id="profileAvatarImg" class="centered" src="assets/img/mushroom.jpg" (click)="onThumbnailClick($event)">
-				</ion-avatar>
-			</ion-item>
-		-->
-		
 		</ion-row>
 
 		<ion-row>

@@ -30,7 +30,9 @@
 		<ion-item-group *ngFor="let request of getCompletedAwaitingApprovalRequests()">
 			<ion-item-sliding  [class]="getTrack(request)" (press)="onViewOffer(request)">
 				<ion-item>
-					<img class="circular centerBackgroundPosition backgroundSizeCover" [src]="getThumbnailImage(request.offer)" />
+					<div class="avatar-in-a-list-wrapper-div">
+						<img class="avatar-in-a-list" [src]="getThumbnailImage(request.offer)"/>
+					</div>
 
 					<div>
 						<table>
@@ -75,7 +77,10 @@
 		<ion-item-group *ngFor="let request of getPendingRequests()">
 			<ion-item-sliding  [class]="getTrack(request)" (press)="onViewOffer(request)">
 				<ion-item>
-					<img class="circular centerBackgroundPosition backgroundSizeCover" [src]="getThumbnailImage(request.offer)" />
+					<div class="avatar-in-a-list-wrapper-div">
+						<img class="avatar-in-a-list" [src]="getThumbnailImage(request.offer)"/>
+					</div>
+
 					<div>
 						<table>
 							<tr>
@@ -117,7 +122,10 @@
 		<ion-item-group *ngFor="let request of getAcceptedRequests()">
 			<ion-item-sliding  [class]="getTrack(request)" (press)="onViewOffer(request)">
 				<ion-item>
-					<img class="circular centerBackgroundPosition backgroundSizeCover" [src]="getThumbnailImage(request.offer)" />
+					<div class="avatar-in-a-list-wrapper-div">
+						<img class="avatar-in-a-list" [src]="getThumbnailImage(request.offer)"/>
+					</div>
+
 					<div>
 						<table>
 							<tr>
@@ -158,7 +166,10 @@
 		<ion-item-group *ngFor="let request of getDeclinedRequests()">
 			<ion-item-sliding  [class]="getTrack(request)" (press)="onViewOffer(request)">
 				<ion-item>
-					<img class="circular centerBackgroundPosition backgroundSizeCover" [src]="getThumbnailImage(request.offer)" />
+					<div class="avatar-in-a-list-wrapper-div">
+						<img class="avatar-in-a-list" [src]="getThumbnailImage(request.offer)"/>
+					</div>
+
 					<div>
 						<table>
 							<tr>
@@ -199,7 +210,10 @@
 		<ion-item-group *ngFor="let request of getCancelledRequests()">
 			<ion-item-sliding  [class]="getTrack(request)" (press)="onViewOffer(request)">
 				<ion-item>
-					<img class="circular centerBackgroundPosition backgroundSizeCover" [src]="getThumbnailImage(request.offer)" />
+					<div class="avatar-in-a-list-wrapper-div">
+						<img class="avatar-in-a-list" [src]="getThumbnailImage(request.offer)"/>
+					</div>
+
 					<div>
 						<table>
 							<tr>
@@ -237,7 +251,10 @@
 		<ion-item-group *ngFor="let request of getNotCompleteAwaitingResolution()">
 			<ion-item-sliding  [class]="getTrack(request)" (press)="onViewOffer(request)">
 				<ion-item>
-					<img class="circular centerBackgroundPosition backgroundSizeCover" [src]="getThumbnailImage(request.offer)" />
+					<div class="avatar-in-a-list-wrapper-div">
+						<img class="avatar-in-a-list" [src]="getThumbnailImage(request.offer)"/>
+					</div>
+
 					<div>
 						<table>
 							<tr>
