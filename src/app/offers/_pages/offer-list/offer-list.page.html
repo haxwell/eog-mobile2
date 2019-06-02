@@ -18,7 +18,7 @@
 	<ion-list *ngIf="userHasAnActiveOffer()">
 		<ion-item *ngFor="let offer of getOffers()" (click)="onOfferBtnTap(offer)">
 			<div class="centered">
-				<img class="circular centerBackgroundPosition avatar-offer-list backgroundSizeCover" [src]="getThumbnailImage(offer)"/>
+				<img class="circular centerBackgroundPosition avatar-in-a-list backgroundSizeCover" [src]="getThumbnailImage(offer)"/>
 			</div>
 
 			<div>

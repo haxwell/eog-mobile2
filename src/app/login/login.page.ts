@@ -39,7 +39,6 @@ export class LoginPage {
   }
 
   ionViewDidEnter() {
-      console.log("*********** LOGIN PAGE HAS ALREADY ENTERED! NOW HIDING THE SPLASH SCREEN **************");
       this.splashScreen.hide();
   }
 
