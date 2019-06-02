@@ -13,6 +13,8 @@ import { OfferPage } from '../offer.page'
 
 import { OfferCollectionService } from '../../../../app/_services/offer-collection.service'
 
+import { environment } from '../../../../_environments/environment';
+
 @Component({
   selector: 'offer-list',
   templateUrl: './offer-list.page.html',
@@ -109,10 +111,9 @@ export class OfferListPage {
 	}
 
 	getThumbnailImage(offer) {
-		if (offer["imageFileURI"] !== undefined && offer["imageOrientation"] !== undefined)
-			return offer["imageFileURI"];
-		else
-			return "assets/img/mushroom.jpg";
+		let photoType = "offer";
+		let objId = offer["id"];
+		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
 	}
 
 	getAvatarCSSClassString(offer) {
