@@ -1,16 +1,7 @@
-<ion-grid (click)="onProfileHeaderClick()">
-	<ion-row>
-		<ion-col>
-			<div class="centered profileHeaderAvatar">
-				<img-loader class="circular centerBackgroundPosition" [src]="getThumbnailImage()" (press)="onThumbnailPress($event)" backgroundSize="cover"></img-loader>
-			</div>
-		</ion-col>
-	</ion-row>
-	<ion-row>
-		<ion-col>
-			<span class="centered profile_header__text">{{getModelAttr('realname')}}</span><br/>
-			<hr/>
-			<span class="profile_header__desc1">{{getModelAttr('description')}}</span>
-		</ion-col>
-	</ion-row>
-</ion-grid>
+<div (click)="onProfileHeaderClick()">
+	<img class="centered profileHeaderAvatar circular centerBackgroundPosition backgroundSizeCover" [src]="getThumbnailImage()" (press)="onThumbnailPress($event)"/>
+
+	<span class="centered profile_header__text">{{getModelAttr('realname')}}</span><br/>
+	<hr/>
+	<span class="profile_header__desc1">{{getModelAttr('description')}}</span>
+</div>

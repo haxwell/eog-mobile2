@@ -1,6 +1,6 @@
 
 <ion-app>
-  <ion-menu side="start" contentId="menuContent" menuId="main" *ngIf="isMenuCoolToShow()">
+  <ion-menu side="start" contentId="menuContent" menuId="main" *ngIf="isMenuCoolToShow()" (ionWillOpen)="handleMenuWillOpenEvent()">
     <ion-content id="menuContent">
       <profile-header id="profile-header" (click)="onShowProfile()"></profile-header>
       <ion-list>

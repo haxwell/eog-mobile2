@@ -114,7 +114,7 @@ export class SearchPage {
 		}
 	}
 
-	getImageLoaderId(user) {
+	getUniqueId(user) {
 		return "image" + user["id"];
 	}
 

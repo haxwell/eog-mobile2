@@ -26,7 +26,7 @@
 			<ion-item-sliding  [class]="getTrack(item)" >
 				<ion-item>
 					<div class="centered avatar">
-						<img-loader class="circular centerBackgroundPosition" [src]="getDOUserProfileImageFilepath(item['oppUserId'])" backgroundSize="cover"></img-loader>
+						<img class="circular centerBackgroundPosition backgroundSizeCover" [src]="getDOUserProfileImageFilepath(item['oppUserId'])"/>
 					</div>
 
 					<!-- <ion-avatar slot="start" *ngIf="isDOUserProfileImageAvailable(item['oppUserId'])">

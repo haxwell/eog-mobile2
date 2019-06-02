@@ -32,7 +32,14 @@ export class ProfileHeader {
 		this.userId = this._userService.getCurrentUser()["id"];
 	}
 
+	ionViewWillEnter() {
+		console.log("VIEW WILL ENTER - HeaderProfile");
+		this._profileService.bumpTheThumbnailCounter();
+		this.ngOnInit();
+	}
+
 	onProfileHeaderClick() {
+		console.log("^^^^ on ProfileHeaderClick                  ****  * * * * * * *");
 		this._router.navigate(['/profile/' + this._userService.getCurrentUser()["id"]]);
 	}
 
@@ -44,7 +51,7 @@ export class ProfileHeader {
 	}
 
 	getThumbnailImage() {
-		return environment.apiUrl + "/api/resource/profile/" + this.userId;
+		return this._profileService.getThumbnailImagePath(this.userId);
 	}
 
 	getModelAttr(key) {

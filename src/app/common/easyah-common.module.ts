@@ -16,13 +16,10 @@ import { PointsService } from '../_services/points.service'
 import { RecommendationService } from '../_services/recommendation.service'
 import { DeclineReasonCodeService } from '../_services/declined-reason-codes.service'
 
-import { IonicImageLoader } from 'ionic-image-loader';
-
 @NgModule({
   imports: [
   	CommonModule
   	,IonicModule
-    ,IonicImageLoader
   ]
   ,declarations: [
   	EasyahHeader

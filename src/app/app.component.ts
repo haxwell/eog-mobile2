@@ -8,12 +8,11 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { UserService } from './_services/user.service';
+import { ProfileService } from './_services/profile.service';
 import { AlertService } from './_services/alert.service';
 import { WebsocketService } from './_services/websocket.service';
 import { UserPreferencesService } from './_services/user-preferences.service';
 import { UnseenChangesIndicatorService } from './_services/unseen-changes-indicator.service';
-
-import { ImageLoaderService, ImageLoaderConfigService } from 'ionic-image-loader';
 
 @Component({
   selector: 'app-root',
@@ -35,9 +34,8 @@ export class AppComponent {
     private _userService : UserService,
     private _menuCtrl : MenuController,
     private _alertService: AlertService,
+    private _profileService: ProfileService,
     private _uciService: UnseenChangesIndicatorService,
-    private _imageLoaderConfigService: ImageLoaderConfigService,
-    private _imageLoaderService: ImageLoaderService
   ) {
     this.initializeApp();
   }
@@ -59,19 +57,15 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
-
-    // TODO: Create a specific user which is only used to retrieve images
-    // TODO2: Not sure this is necessary anymore -- will we ever need to call for images when there is no user logged in?
-    let httpHeaders = new HttpHeaders()
-      .set("Authorization", "Basic " + btoa("eoguser2" + ":" + "password"))
-
-    this._imageLoaderConfigService.setHttpHeaders(httpHeaders);
-
-    this._imageLoaderService.clearCache();
   }
 
   isMenuCoolToShow() {
     return this._userService.getCurrentUser() !== undefined;
+  }
+
+  handleMenuWillOpenEvent() {
+    console.log("MENU OPENED!MENU OPENED!MENU OPENED!MENU OPENED!MENU OPENED!MENU OPENED!MENU OPENED!");
+    this._profileService.bumpTheThumbnailCounter();
   }
 
   getUser() {

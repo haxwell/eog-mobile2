@@ -39,7 +39,7 @@
 				<ion-item (click)="onViewUser(user)">
 					<div>
 					<div class="centered avatar">
-							<img-loader id="getImageLoaderId(user)" class="circular centerBackgroundPosition" [src]="getProfileImageFilepath(user)" backgroundSize="cover"></img-loader>
+							<img id="getUniqueId(user)" class="circular centerBackgroundPosition backgroundSizeCover" [src]="getProfileImageFilepath(user)"/>
 					</div>
 					</div>
 

@@ -191,4 +191,13 @@ export class ProfileService {
   		return list.join('&');
 	}
 
+	_counter = 0;
+	bumpTheThumbnailCounter() {
+		this._counter++;
+	}
+
+	getThumbnailImagePath(userId) {
+		return environment.apiUrl + "/api/resource/profile/" + userId + '/sendAnew/' + this._counter; 
+	}	
+
 }

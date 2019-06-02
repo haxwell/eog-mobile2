@@ -22,8 +22,6 @@ import { environment } from '../../../_environments/environment';
 import { File } from '@ionic-native/file/ngx'
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 
-import { ImageLoaderService } from 'ionic-image-loader'
-
 import * as EXIF from 'exif-js';
 
 @Component({
@@ -58,7 +56,6 @@ export class ProfileEditPage {
 				private _userMetadataService: UserMetadataService,
 				private _contactInfoVisibilityService: ContactInfoVisibilityService,
 				private _geolocationService: GeolocationService,
-				private _imageLoaderService: ImageLoaderService,
 				private _constants: Constants,
 				private _file: File,
 				private _webview: WebView) {
@@ -149,7 +146,6 @@ export class ProfileEditPage {
 
 	onCancelBtnTap() {
 		this.cancelBtnPressed = true;
-		// this._imageLoaderService.removeFromOverrideMap(this.getEnvironmentAPIURLForThisProfile());
 		this._location.back();
 	}
 
@@ -182,19 +178,7 @@ export class ProfileEditPage {
 		this._profileService.save(presave_model).then(() => {
 				self.setDirty(false);
 				
-				console.log("SAVE complete. Here's the profile-service model");
 				let _model = self._profileService.getModel(self.userId);
-				console.log(_model)
-
-				// WILO.. the passing imageFileURI on the model is dead. The model recreates too often, too unpredictably.
-				//  Remove that shit. The fucking profile page needs to refresh its image. Set a flag on the profile page, saying that we have gone to
-				//  the edit page. When we get a viewWillEnter event on the profile DO WHATEVER THE FUCK IS NECESSARY TO REFRESH THE PAGE.
-				//
-				// THAT IS THE SOLUTION. 
-				//
-				// The image has been saved, pushed to the server, it is waiting. THIS FUCKING PAGE NEEDS TO GO GET IT. FDSGDKJLvl
-				
-				// self._imageLoaderService.removeFromOverrideMap(self.getEnvironmentAPIURLForThisProfile());
 
 				self._loadingService.dismiss();
 
@@ -412,26 +396,9 @@ export class ProfileEditPage {
 
 							self._pictureService.setMostProbablePhotoPath(self._constants.PHOTO_TYPE_PROFILE, self.userId, uriAndSource["imageFileURI"]);
 
-							let befor = model["imageFileURI"];
-
-							console.log("model[imageFileURI] was " + model["imageFileURI"])
-
 							model["imageFileURI"] = uriAndSource["imageFileURI"];
-							console.log("model[imageFileURI] is now " + model["imageFileURI"] + " |after being set to the value from the ChoosePhotoSource page")
-
-							model["imageChanged"] = (model["imageFileURI"] !== befor);
-							
-							if (model["imageChanged"]) {
-								// override the normal image that the image-loader would return
-								//  when the profile gets saved, we remove the override.
-								//  when the profile edit is cancelled, we removed the override.
-
-								self._imageLoaderService.addToOverrideMap(this.getEnvironmentAPIURLForThisProfile(), model["imageFileURI"]);
-							}
-
 							model["imageFileSource"] = uriAndSource["imageFileSource"];
 
-							console.log("^^^^^^^^^^^^^^^^^ model['imageChanged'] = " + model['imageChanged'])
 							//self._events.publish('profile:changedProfileImage', model["imageFileURI"]);
 							self.setDirty(true);
 						}

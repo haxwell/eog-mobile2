@@ -12,8 +12,6 @@ import { ApiService } from './api.service'
 import { UserService } from './user.service'
 import { FunctionPromiseService } from './function-promise.service';
 
-import { ImageLoaderService } from 'ionic-image-loader'
-
 import { Constants } from '../../_constants/constants';
 
 import { environment } from '../../_environments/environment';
@@ -29,7 +27,6 @@ export class PictureService {
 				private _http: HttpClient,
 				private _apiService: ApiService,
 				private _userService: UserService,
-				private _imageLoaderService: ImageLoaderService,
 				private _constants: Constants,
 				private _webview: WebView,
 				private transfer: FileTransfer,
@@ -239,13 +236,8 @@ export class PictureService {
 							    self._http.post(url, formData, httpOptions)
 							        .subscribe(res => {
 							            if (res['msg'] === 'ok') {
-
-							            	self._imageLoaderService.clearImageCache(url)
-							            	//.then(() => {
-								                console.log('File upload complete. POST to ' + url);
-								                resolve();
-							            	//});
-
+							                console.log('File upload complete. POST to ' + url);
+							                resolve();
 							            } else {
 							                console.log('File upload failed.')
 							                reject("error posting image to server");
@@ -257,6 +249,7 @@ export class PictureService {
 			        })
 			        .catch(err => {
 			            console.log('01 Error while reading file.');
+			            console.log(err);
 			            reject(err)
 			        });
 			}

@@ -88,12 +88,14 @@ export class ProfilePage {
 			})
 
 			self.locationDisplayString = undefined;
+			
+			console.log("*** completed profile page ngOnInit");
 		});
 	}
 
 	ionViewWillEnter() {
 		console.log("VIEW WILL ENTER - ProfilePage");
-		// this._editCount++;
+		this._profileService.bumpTheThumbnailCounter();
 		this.ngOnInit();
 	}
 
@@ -136,7 +138,7 @@ export class ProfilePage {
 	}
 
 	onEditProfileBtnClick() {
-		// this._editCount++;
+		this._editCount++;
 		this._router.navigate(['/profile/' + this.userId + '/edit']);
 	}
 
@@ -172,9 +174,7 @@ export class ProfilePage {
 */
 
 	getThumbnailImage() {
-		let photoType = "profile";
-		let objId = this.userId;
-		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId; 
+		return this._profileService.getThumbnailImagePath(this.userId);
 	}
 
 	onGoBackBtnTap(evt) {

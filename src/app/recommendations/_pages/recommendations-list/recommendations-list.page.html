@@ -16,7 +16,7 @@
 
 	<ion-list>
 		<ion-item *ngFor="let item of getAvailableIncomingRecommendations()" (click)="onViewUser(item)">
-			<img-loader class="circular centerBackgroundPosition" [src]="getDOUserProfileImageFilepath(item['providingUserId'])" backgroundSize="cover"></img-loader>
+			<img class="circular centerBackgroundPosition backgroundSizeCover" [src]="getDOUserProfileImageFilepath(item['providingUserId'])"/>
 			<span>
 				{{getRealName(item)}}
 			</span>

@@ -33,8 +33,6 @@ import { PictureService } from './_services/picture.service';
 
 import { CanActivateRouteGuard } from './_routeguards/can-activate.routeguard';
 
-import { IonicImageLoader } from 'ionic-image-loader';
-
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 export class CustomHammerConfig extends HammerGestureConfig {
@@ -54,8 +52,6 @@ export class CustomHammerConfig extends HammerGestureConfig {
     HttpClientModule
 
     ,EasyahCommonModule
-
-    ,IonicImageLoader.forRoot()
   ],
 
   providers: [
