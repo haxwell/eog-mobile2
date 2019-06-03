@@ -1,106 +1,239 @@
 <ion-toolbar>
-		<ion-buttons slot="end" *ngIf="showSkip">
-			<ion-button (click)="startApp()" color="primary">Exit Tutorial</ion-button>
-		</ion-buttons>
+	<ion-buttons slot="end" *ngIf="showSkip">
+		<ion-button (click)="dismissTutorialView()" color="primary">Exit Tutorial</ion-button>
+	</ion-buttons>
 </ion-toolbar>
 
 <ion-content no-bounce>
 	<ion-slides data-test="basic-concepts-tutorial-modal" pager="true" (ionSlideWillChange)="onSlideChangeStart($event)">
 		<ion-slide>
-			Easyah<br/><br/>
+			<table>
+				<tr>
+					<div>
+						Easyah<br/><br/>
 
-			Basic Concepts Tutorial<br/><br/>
+						Basic Concepts Tutorial<br/><br/>
 
-			Your feedback makes us awesome, so let us know your thoughts at info@easyah.io!<br/><br/>
-
-			<img id="login-logo-img" src="assets/img/logo.jpg">
+						Your feedback makes us awesome, so let us know your thoughts at info@easyah.io!<br/><br/>
+					</div>
+				</tr>
+				<tr>
+					<div class="tutorialLogo">
+						<img id="login-logo-img" src="assets/img/logo.jpg">
+					</div>
+				</tr>
+			</table>
 		</ion-slide>
 		<ion-slide>
-			First, the Menu button in the upper left, is how you get to places in the application.<br/><br/>
-
-			<img id="slide-1-img-1" src="assets/img/tutorial/header-with-menu-circled.png"><br/><br/>
-
-			Let's look at the <b>Your Offers</b> menu option first.<br/><br/>
-
-			<img id="slide-1-img-2" src="assets/img/tutorial/menu-with-your-offers-highlighted.png">
+			<table>
+				<tr>
+					<div>
+						First, the Menu button in the upper left, is how you get to places in the application.<br/><br/>
+					</div>
+				</tr>
+				<tr>
+					<img id="slide-1-img-1" src="assets/img/tutorial/header-with-menu-circled.png"><br/><br/>
+				</tr>
+				<tr>
+					<div>
+						Let's look at the <b>Your Offers</b> menu option first.<br/><br/>
+					</div>
+				</tr>
+				<tr>
+					<img id="slide-1-img-2" src="assets/img/tutorial/menu-with-your-offers-highlighted.png">
+				</tr>
+			</table>
 		</ion-slide>
 		<ion-slide>
-			Every Easyah user makes an offer to do something for another user.<br/><br/>
-			When you select <b>Your Offers</b> from the menu, it shows a list of the offers you have made.<br/><br/> Click the blue button to create a new offer. (1)<br/> If you want to edit an offer you already have, tap on it! (2)<br/><br/>
-			<img id="slide-2-img-1" src="assets/img/tutorial/your-offers-1-2.png"><br/><br/>
-			Let's look at creating a new offer.
+			<table>
+				<tr>
+					<div>
+						Every Easyah user makes an offer to do something for another user.<br/><br/>
+						When you select <b>Your Offers</b> from the menu, it shows a list of the offers you have made.<br/><br/> Click the blue button to create a new offer. (1)<br/> If you want to edit an offer you already have, tap on it! (2)<br/><br/>
+					</div>
+				</tr>
+				<tr>
+					<img id="slide-2-img-1" src="assets/img/tutorial/your-offers-1-2.png"><br/><br/>
+				</tr>
+				<tr>
+					<div>
+						Let's look at creating a new offer.
+					</div>
+				</tr>
+			</table>
 		</ion-slide>
 		<ion-slide>
+			<table>
+				<tr>
+					<div>
 			The most important thing about an offer is <i>what</i> you are offering, and <i>how much</i>. These images are from the Edit Offer screen, and show how you may enter a title, and a descriptive quantity for your offer.<br/><br/>
+					</div>
+				</tr>
+				<tr>
+					<img id="slide-3-img-1" src="assets/img/tutorial/offer-title-offer-1.png"><br/>
+					<img id="slide-3-img-2" src="assets/img/tutorial/offer-title-offer-2.png"><br/><br/>
+					<img id="slide-3-img-3" src="assets/img/tutorial/offer-title-offer-3.png"><br/>
+				</tr>
+				<tr>
+					<div>
+						<br/>
+						Notice in each image, it shows a specific quantity being offered. This is important! You want to be clear on <i>how much</i> you're promising!
+					</div>
+				</tr>
+			</table>
+		</ion-slide>
+		<ion-slide>
+			<table>
+				<tr>
+					<div>
+						Next, you will need to know about <b>Points</b>.<br/><br/>
+						The true value in Easyah comes from the people who use it, and what they offer. To make use of other people's offers, you will need to have points. Points indicate your ability to request the help of other people in the app.<br/><br/>
+						You can see your points in the main menu.<br/><br/>
+					</div>
+				</tr>
+				<tr>
+					<img id="slide-4-img-1" src="assets/img/tutorial/menu-showing-points.png"><br/><br/>
+				</tr>
+				<tr>
+					<div>
+						Total = # you currently have<br/>
+						Available = # available to make offer requests<br/>
+						All Time = # you've earned over all time<br/>
+					</div>
+				</tr>
+			</table>
+		</ion-slide>
+		<ion-slide>
+			<table>
+				<tr>
+					<div>
+						When you create an Offer, you have to decide how valuable your offer is to YOU.<br/><br/> Will doing your offer require a lot from you? Will it be in high demand? Then you would want to require more points.<br/><br/> If it's something relatively small, you would require fewer points.<br/><br/>
+					</div>
+				</tr>
+				<tr>
+					<img id="slide-dividing-line-img" src="assets/img/tutorial/white-on-black-8-divider.png"><br/><br/>
+				</tr>
+				<tr>
+					<div>
+						The cool thing is that people have to DO good things for others to earn their points.<br/><br/> So, your simple act of making a offer inspires good in the world, because before anyone can contact you, they will need to have earned at least the number of points you specify.<br/>
+					</div>
+				</tr>
+			</table>
+		</ion-slide>
+		<ion-slide>
+			<table>
+				<tr>
+					<div>
+						But, wait. Say you want to be even more specific about who can request your offer.<br/><br/>As you create your offer, you can set a <b>Recommendation</b>. This allows you to say, Only people who have a certain stamp of approval from a specific user can request this offer.<br/><br/> 
+					</div>
+				</tr>
+				<tr>
+					<img id="slide-6-img-1" src="assets/img/tutorial/offer-rules-recommendations.png"><br/>
+				</tr>
+			</table>
+		</ion-slide>
+		<ion-slide>
+			<table>
+				<tr>
+					<div>
+						<b>Searching</b><br/><br/>
+						You can search for offers, and other users, by using the magnifying glass button in the upper right of your screen.<br/><br/>
+					</div>
+				</tr>
+				<tr>
+					<img id="slide-7-img-1" src="assets/img/tutorial/header-with-search-circled.png"><br/>
+				</tr>
+			</table>
+		</ion-slide>
+		<ion-slide>
+			<table>
+				<tr>
+					<div>
+						When you see an offer that interests you, tap on it!<br/><br/> The icons on each offer tell you what it requires. If they are all green, you have what it takes! If any are red, this means you cannot request this offer. Perhaps you need more points, or there is a time limit. Tap the Offer to find out! <br/><br/>
+					</div>
+				</tr>
+				<tr>
+					<img id="slide-8-img-1" src="assets/img/tutorial/search-show-offer-results.png"><br/>
+				</tr>
+			</table>
+		</ion-slide>
+		<ion-slide>
+			<table>
+				<tr>
+					<div>
+						On the bottom of the search page, you can see users who's name or profile information matches what you searched for.<br/><br/> If you click on their name, you will be taken to their profile page, where you can get some basic info about them.<br/><br/>
+					</div>
+				</tr>
+				<tr>
+					<img id="slide-9-img-1" src="assets/img/tutorial/search-show-user-results.png"><br/>
+				</tr>
+			</table>
+		</ion-slide>
+		<ion-slide>
+			<table>
+				<tr>
+					<div>
+						If you haven't done it recently, you can send them a point! Just like that!<br/><br/> Also, if they do not already have a recommendation from you, you can send them your stamp of approval.<br/><br/>
+					</div>
+				</tr>
+				<tr>
+					<img id="slide-10-img-1" src="assets/img/tutorial/other-user-profile-showing-send-buttons.png"><br/>
+				</tr>
+			</table>
+		</ion-slide>
+		<ion-slide>
+			<table>
+				<tr>
+					<div>
+						Finally, you can view the requests that people have sent you, or the ones you've sent to someone else, by going to the "<b>People asked you..</b>" or "<b>You asked people..</b>" sections, as the case may be.
+					</div>
+				</tr>
+				<tr>
+					<img id="slide-11-img-1" src="assets/img/tutorial/menu-excerpt-showing-people-asked-you-asked.png"><br/><br/>
+				</tr>
+				<tr>
+					<div>
+						The screen will look like this...<br/><br/>
+					</div>
+				</tr>
+				<tr>
+					<img id="slide-11-img-2" src="assets/img/tutorial/people-asked-you-1.png"><br/>
+				</tr>
+			</table>
+		</ion-slide>
+		<ion-slide>
+			<table>
+				<tr>
+					<div>
+						Slide the request to the left or right to take an action on it. This is how you accept someone's request for your offer, or perhaps cancel if need be.<br/><br/>Slide left or right.<br/><br/>
+					</div>
+				</tr>
+				<tr>
+					<img id="slide-12-img-1" src="assets/img/tutorial/people-asked-you-2.png"><br/><br/>
+				</tr>
+				<tr>
+					<img id="slide-12-img-2" src="assets/img/tutorial/people-asked-you-3.png"><br/>
+				</tr>
+			</table>
+		</ion-slide>
+		<ion-slide>
+			<table>
+				<tr>
+					<div>
+						Phew! That's it for now! There is still more we haven't discussed, but play with the app, and see what else you can discover!<br/><br/>
+						If you ever want to see this tutorial again, you can always go to the <b>About Easyah</b> section in the menu.<br/><br/>
+						If you can think of a way to make our app better, be sure to let us know at<br/><br/>
+						<b>info @ easyah . io </b>
+						<br/><br/>
+						Join us online, in our Facebook group! Search for 'easyah.io'.<br/><br/>
 
-			<img id="slide-3-img-1" src="assets/img/tutorial/offer-title-offer-1.png"><br/>
-			<img id="slide-3-img-2" src="assets/img/tutorial/offer-title-offer-2.png"><br/><br/>
-			<img id="slide-3-img-3" src="assets/img/tutorial/offer-title-offer-3.png"><br/>
-
-			<br/>
-			Notice in each image, it shows a specific quantity being offered. This is important! You want to be clear on <i>how much</i> you're promising!
-
-		</ion-slide>
-		<ion-slide>
-			Next, you will need to know about <b>Points</b>.<br/><br/>
-			The true value in Easyah comes from the people who use it, and what they offer. To make use of other people's offers, you will need to have points. Points indicate your ability to request the help of other people in the app.<br/><br/>
-			You can see your points in the main menu.<br/><br/>
-			<img id="slide-4-img-1" src="assets/img/tutorial/menu-showing-points.png"><br/><br/>
-			Total = # you currently have<br/>
-			Available = # available to make offer requests<br/>
-			All Time = # you've earned over all time<br/>
-		</ion-slide>
-		<ion-slide>
-			When you create an Offer, you have to decide how valuable your offer is to YOU.<br/><br/> Will doing your offer require a lot from you? Will it be in high demand? Then you would want to require more points.<br/><br/> If it's something relatively small, you would require fewer points.<br/><br/>
-			<img id="slide-dividing-line-img" src="assets/img/tutorial/white-on-black-8-divider.png"><br/><br/>
-			The cool thing is that people have to DO good things for others to earn their points.<br/><br/> So, your simple act of making a offer inspires good in the world, because before anyone can contact you, they will need to have earned at least the number of points you specify.<br/>
-		</ion-slide>
-		<ion-slide>
-			But, wait. Say you want to be even more specific about who can request your offer.<br/><br/>As you create your offer, you can set a <b>Recommendation</b>. This allows you to say, Only people who have a certain stamp of approval from a specific user can request this offer.<br/><br/> 
-			<img id="slide-6-img-1" src="assets/img/tutorial/offer-rules-recommendations.png"><br/>
-		</ion-slide>
-		<ion-slide>
-			<b>Searching</b><br/><br/>
-			You can search for offers, and other users, by using the magnifying glass button in the upper right of your screen.<br/><br/>
-			<img id="slide-7-img-1" src="assets/img/tutorial/header-with-search-circled.png"><br/>
-		</ion-slide>
-		<ion-slide>
-			When you see an offer that interests you, tap on it!<br/><br/> The icons on each offer tell you what it requires. If they are all green, you have what it takes! If any are red, this means you cannot request this offer. Perhaps you need more points, or there is a time limit. Tap the Offer to find out! <br/><br/>
-			<img id="slide-8-img-1" src="assets/img/tutorial/search-show-offer-results.png"><br/>
-		</ion-slide>
-		<ion-slide>
-			On the bottom of the search page, you can see users who's name or profile information matches what you searched for.<br/><br/> If you click on their name, you will be taken to their profile page, where you can get some basic info about them.<br/><br/>
-			<img id="slide-9-img-1" src="assets/img/tutorial/search-show-user-results.png"><br/>
-		</ion-slide>
-		<ion-slide>
-			If you haven't done it recently, you can send them a point! Just like that!<br/><br/> Also, if they do not already have a recommendation from you, you can send them your stamp of approval.<br/><br/>
-			<img id="slide-10-img-1" src="assets/img/tutorial/other-user-profile-showing-send-buttons.png"><br/>
-		</ion-slide>
-		<ion-slide>
-			Finally, you can view the requests that people have sent you, or the ones you've sent to someone else, by going to the "<b>People asked you..</b>" or "<b>You asked people..</b>" sections, as the case may be.
-			<img id="slide-11-img-1" src="assets/img/tutorial/menu-excerpt-showing-people-asked-you-asked.png"><br/><br/>
-			The screen will look like this...<br/><br/>
-			<img id="slide-11-img-2" src="assets/img/tutorial/people-asked-you-1.png"><br/>
-		</ion-slide>
-		<ion-slide>
-			Slide the request to the left or right to take an action on it. This is how you accept someone's request for your offer, or perhaps cancel if need be.<br/><br/>Slide left or right.<br/><br/>
-			<img id="slide-12-img-1" src="assets/img/tutorial/people-asked-you-2.png"><br/><br/>
-			<img id="slide-12-img-2" src="assets/img/tutorial/people-asked-you-3.png"><br/>
-		</ion-slide>
-		<ion-slide>
-			Phew! That's it for now! There is still more we haven't discussed, but play with the app, and see what else you can discover!<br/><br/>
-			If you ever want to see this tutorial again, you can always go to the <b>About Easyah</b> section in the menu.<br/><br/>
-			If you can think of a way to make our app better, be sure to let us know at<br/><br/>
-			<b>info @ easyah . io </b>
-		<!--/ion-slide>
-		<ion-slide -->
-			<br/><br/>
-			Join us online, in our Facebook group! Search for 'easyah.io'.<br/><br/>
-
-			<ion-button icon-end large clear (click)="dismissTutorialView()">
-				Continue
-				<ion-icon name="arrow-forward"></ion-icon>
-			</ion-button>				
+						<ion-button icon-end large clear (click)="dismissTutorialView()">
+							Continue
+							<ion-icon name="arrow-forward"></ion-icon>
+						</ion-button>				
+					</div>
+				</tr>
+			</table>
 		</ion-slide>
 	</ion-slides>
 </ion-content>	

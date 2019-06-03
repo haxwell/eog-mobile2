@@ -1,0 +1,27 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title>
+				Make a Request
+		</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content no-bounce>
+	<ion-slides data-test="outgoing-request-made-tutorial-modal" pager="true" (ionSlideWillChange)="onSlideChangeStart($event)">
+		<ion-slide>
+			Excellent! You've just sent a request to another user, asking them to do their offer for you.<br/><br/>
+			Now, just wait for them to make the next move.<br/><br/>
+			If you go to the menu and tap the "<b>You asked people...</b>" item, you will be able to see the status of your request.<br/><br/><br/>
+
+			<ion-checkbox [(ngModel)]="showThisTutorialNextTime" (ionChange)="showThisTutorialNextTimeChanged()"></ion-checkbox>
+			<ion-label>Show This Tutorial Next Time</ion-label>
+			<br/>
+
+			<ion-button icon-end large clear (click)="dismissTutorial()">
+				Continue
+				<ion-icon slot="start" name="arrow-forward"></ion-icon>
+			</ion-button>				
+		</ion-slide>
+	</ion-slides>
+
+</ion-content>	
