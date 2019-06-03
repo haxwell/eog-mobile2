@@ -6,7 +6,8 @@ import { UserPreferencesService } 	from '../../../app/_services/user-preferences
 
 @Component({
   selector: 'page-tutorial-outgoing-request-made',
-  templateUrl: 'outgoing-request-made-tutorial.page.html'
+  templateUrl: 'outgoing-request-made-tutorial.page.html',
+  styleUrls: ['../tutorial.module.scss']
 })
 export class OutgoingRequestMadeTutorialPage extends AbstractTutorialPage {
 

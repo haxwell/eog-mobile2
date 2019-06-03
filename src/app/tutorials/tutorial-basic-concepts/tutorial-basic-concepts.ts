@@ -7,7 +7,7 @@ import { TutorialService } from '../../../app/_services/tutorial.service';
 @Component({
   selector: 'page-tutorial',
   templateUrl: 'tutorial-basic-concepts.html'
-  ,styleUrls: ['./tutorial-basic-concepts.scss']
+  ,styleUrls: ['./tutorial-basic-concepts.scss', '../tutorial.module.scss']  
 })
 export class TutorialBasicConceptsPage extends AbstractTutorialPage {
 

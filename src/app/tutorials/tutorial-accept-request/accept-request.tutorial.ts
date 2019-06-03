@@ -7,7 +7,7 @@ import { UserPreferencesService } 	from '../../../app/_services/user-preferences
 @Component({
   selector: 'page-tutorial-accept-request',
   templateUrl: 'accept-request.tutorial.html'
-  ,styleUrls: ['./accept-request.tutorial.scss']
+  ,styleUrls: ['./accept-request.tutorial.scss', '../tutorial.module.scss']
 })
 export class AcceptRequestTutorialPage extends AbstractTutorialPage {
 
