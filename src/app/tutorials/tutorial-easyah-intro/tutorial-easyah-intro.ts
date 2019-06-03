@@ -3,7 +3,6 @@ import { Component, Input } from '@angular/core';
 import { AbstractTutorialPage } from '../abstract-tutorial.page'
 
 import { UserService } from '../../../app/_services/user.service';
-import { ModalService } from '../../../app/_services/modal.service';
 import { TutorialService } from '../../../app/_services/tutorial.service';
 
 @Component({
@@ -18,11 +17,10 @@ export class TutorialEasyahIntroPage extends AbstractTutorialPage {
 	showThisTutorialNextTime = true;
 	dirty = false;
 
-	constructor(private _modalService: ModalService,
-				private _userService: UserService,
+	constructor(private _userService: UserService,
 				private _tutorialService: TutorialService) {
 
-				super();
+		super();
 	}
 
 	ngOnInit() {

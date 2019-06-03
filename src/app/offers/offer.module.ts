@@ -9,13 +9,14 @@ import { OfferRoutingModule } from './offer-routing.module';
 
 import { EasyahCommonModule } from '../common/easyah-common.module';
 import { EasyahHeader } from '../common/easyah-header/easyah-header'
+import { TutorialModule } from '../tutorials/tutorial.module'
 
 import { OfferPage } from './_pages/offer.page';
 import { OfferEditPage } from './_pages/offer-edit.page';
 import { OfferListPage } from './_pages/offer-list/offer-list.page';
 import { DeleteOfferPage } from './_pages/delete-offer.page'
 import { OfferRequestPage } from './_pages/offer-request.page'
-import { OutgoingRequestMadeTutorialPage } from './_pages/outgoing-request-made-tutorial.page'
+// import { OutgoingRequestMadeTutorialPage } from './_pages/outgoing-request-made-tutorial.page'
 import { RulePage } from './_pages/rule.page'
 import { KeywordEntryPage } from '../common/keyword.entry/keyword.entry'
 
@@ -31,6 +32,7 @@ import { OfferCollectionService } from '../../app/_services/offer-collection.ser
     ,RouterModule
     ,FormsModule
     ,HttpModule
+    ,TutorialModule
   ]
   ,declarations: [
 
@@ -39,7 +41,7 @@ import { OfferCollectionService } from '../../app/_services/offer-collection.ser
   	,OfferEditPage
     ,DeleteOfferPage
     ,OfferRequestPage
-    ,OutgoingRequestMadeTutorialPage
+    // ,OutgoingRequestMadeTutorialPage
     ,RulePage
     ,KeywordEntryPage
   ]

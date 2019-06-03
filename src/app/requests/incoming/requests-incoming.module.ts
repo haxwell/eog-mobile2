@@ -8,11 +8,11 @@ import { RequestsIncomingRoutingModule } from './requests-incoming-routing.modul
 
 import { EasyahCommonModule } from '../../common/easyah-common.module';
 import { EasyahHeader } from '../../common/easyah-header/easyah-header';
+import { TutorialModule } from '../../tutorials/tutorial.module'
 
 import { RequestsIncomingView } from './_pages/requests-incoming.page';
 
 import { AcceptRequestPage } from './_pages/accept-request.page';
-import { AcceptRequestTutorialPage } from './_pages/accept-request.tutorial';
 import { CancelRequestPage } from './_pages/cancel-request.page';
 import { CompleteRequestPage } from './_pages/complete-request.page';
 import { DeclineRequestPage } from './_pages/decline-request.page';
@@ -28,10 +28,10 @@ import { RequestsService } from '../../../app/_services/requests.service';
     ,HttpModule
     ,EasyahCommonModule
     ,RequestsIncomingRoutingModule
+    ,TutorialModule
   ]
   ,declarations: [
   	AcceptRequestPage
-  	,AcceptRequestTutorialPage
   	,CancelRequestPage
   	,CompleteRequestPage
   	,DeclineRequestPage
@@ -42,7 +42,6 @@ import { RequestsService } from '../../../app/_services/requests.service';
   ]
   ,entryComponents: [
     AcceptRequestPage
-    ,AcceptRequestTutorialPage
   ]
 })
 export class RequestsIncomingPageModule {}

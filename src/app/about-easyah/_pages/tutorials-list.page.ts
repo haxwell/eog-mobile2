@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 
+import { ModalController } from '@ionic/angular';
 import { ModalService } from '../../../app/_services/modal.service';
 
-import { TutorialPage } from '../../../app/tutorials/tutorial-basic-concepts/tutorial-basic-concepts'
+import { TutorialBasicConceptsPage } from '../../../app/tutorials/tutorial-basic-concepts/tutorial-basic-concepts'
 import { TutorialEasyahIntroPage } from '../../../app/tutorials/tutorial-easyah-intro/tutorial-easyah-intro'
-import { AcceptRequestTutorialPage } from '../../../app/requests/incoming/_pages/accept-request.tutorial';
-import { OutgoingRequestMadeTutorialPage } from '../../../app/offers/_pages/outgoing-request-made-tutorial.page';
+import { AcceptRequestTutorialPage } from '../../../app/tutorials/tutorial-accept-request/accept-request.tutorial';
+import { OutgoingRequestMadeTutorialPage } from '../../../app/tutorials/tutorial-outgoing-request-made/outgoing-request-made-tutorial.page';
 
 @Component({
     selector: 'page-tutorials-list',
@@ -16,7 +17,8 @@ import { OutgoingRequestMadeTutorialPage } from '../../../app/offers/_pages/outg
 export class TutorialsListPage {
 
     constructor(private _location: Location,
-                private _modalService: ModalService ) {
+                private _modalService: ModalService,
+                private _modalCtrl: ModalController ) {
 
     }
 
@@ -29,19 +31,35 @@ export class TutorialsListPage {
     }
 
     onOutgoingTutorialBtnTap() {
-    	this._modalService.show(OutgoingRequestMadeTutorialPage, { });
+    	this.presentTutorial(OutgoingRequestMadeTutorialPage);
     }
 
     onIncomingTutorialBtnTap() {
-    	this._modalService.show(AcceptRequestTutorialPage, { });
+    	this.presentTutorial(AcceptRequestTutorialPage);
     }
 
     onBasicConceptsTutorialBtnTap() {
-        this._modalService.show(TutorialPage, { });
+        this.presentTutorial(TutorialBasicConceptsPage);
     }
 
     onWelcomeTutorialBtnTap() {
-        this._modalService.show(TutorialEasyahIntroPage, { });
+        this.presentTutorial(TutorialEasyahIntroPage);
     }
 
+    async presentTutorial(_component) {
+        let self = this;
+        let _tutorialModal = undefined;
+        let options = { 
+            component: _component, 
+            componentProps: {
+                func: () => {
+                    _tutorialModal.dismiss();
+                }
+            }
+        };
+
+        _tutorialModal = await this._modalCtrl.create(options)
+
+        return await _tutorialModal.present();
+    }
 }

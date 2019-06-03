@@ -5,7 +5,7 @@ import { ModalController } from '@ionic/angular';
 import { RequestsService } 	from '../../../../app/_services/requests.service';
 import { UserPreferencesService } 	from '../../../../app/_services/user-preferences.service';
 
-import { AcceptRequestTutorialPage } from './accept-request.tutorial';
+import { AcceptRequestTutorialPage } from '../../../../app/tutorials/tutorial-accept-request/accept-request.tutorial';
 
 @Component({
   selector: 'page-requests-incoming-accept',

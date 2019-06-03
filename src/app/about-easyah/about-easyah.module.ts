@@ -9,6 +9,7 @@ import { AboutEasyahRoutingModule } from './about-easyah-routing.module';
 
 import { EasyahCommonModule } from '../common/easyah-common.module';
 import { EasyahHeader } from '../common/easyah-header/easyah-header'
+import { TutorialModule } from '../tutorials/tutorial.module'
 
 import { AboutEasyahPage } from './_pages/about-easyah.page';
 import { PrivacyPolicyPage } from './_pages/privacy-policy.page';
@@ -20,6 +21,7 @@ import { TutorialsListPage } from './_pages/tutorials-list.page';
   	CommonModule,
   	AboutEasyahRoutingModule
     ,EasyahCommonModule
+    ,TutorialModule
     ,RouterModule
     ,FormsModule
     ,HttpModule
@@ -28,6 +30,9 @@ import { TutorialsListPage } from './_pages/tutorials-list.page';
     AboutEasyahPage
     ,PrivacyPolicyPage
     ,TutorialsListPage
+  ]
+  ,exports: [
+    AboutEasyahPage
   ]
   ,providers: [
 
