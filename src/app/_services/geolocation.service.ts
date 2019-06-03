@@ -8,6 +8,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 })
 export class GeolocationService { 
 
+	// TODO: Conceal this better.
 	API_KEY = "AIzaSyCUQEnW_Z6Oz3Y5_nYY98sR90pKyYbbdkI";
 
 	constructor(private _http: Http,
@@ -38,11 +39,12 @@ export class GeolocationService {
 		return new Promise(
 			(resolve, reject) => {
 				this._http.get(url).subscribe(
-					(b) => { 
+					(resp) => { 
 						let rtn = {};
-
-						let data = Object.assign({}, b);
-						let obj = data["results"][0].geometry.location;
+						
+						let data = Object.assign({}, resp);
+						let objj = JSON.parse(data["_body"]);
+						let obj = objj.results[0].geometry.location;
 
 						rtn["latitude"] = obj.lat;
 						rtn["longitude"] = obj.lng;

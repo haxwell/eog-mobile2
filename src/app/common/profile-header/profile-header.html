@@ -1,5 +1,5 @@
 <div (click)="onProfileHeaderClick()">
-	<img class="avatar-in-a-list" [src]="getThumbnailImage()" (press)="onThumbnailPress($event)"/>
+	<img class="centered avatar-in-a-list" [src]="getThumbnailImage()" (press)="onThumbnailPress($event)"/>
 	<br/>
 	<span class="centered profile_header__text">{{getModelAttr('realname')}}</span><br/>
 	<hr/>

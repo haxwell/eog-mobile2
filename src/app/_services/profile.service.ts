@@ -42,7 +42,6 @@ export class ProfileService {
 
 	getModel(userId: number) {
 		if (this.modelCache[userId] === undefined) {
-			console.log("PROFILE MODEL was undefined. CREATING A NEW PROFILE MODEL.");
 			this.modelCache[userId] = {};
 			return this.initModel(userId, this.modelCache[userId]);
 		} else { 
