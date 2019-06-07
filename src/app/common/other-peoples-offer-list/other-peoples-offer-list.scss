@@ -1,3 +1,5 @@
+@import '../../app.scss';
+
 .otherPeoplesOfferTitle {
 	font-size: 1.15em;
 	font-weight: bold;
@@ -29,7 +31,11 @@
 	padding-bottom: 0.3em;
 }
 
-.avatar {
-	height: 5em;
-	width: 5em;
+.opoAvatar-wrapper {
+	@extend .avatar-in-a-list-wrapper-div;
+}
+
+.opoAvatar {
+	@extend .avatar-in-a-list;
+	width: 7em;
 }
