@@ -40,7 +40,10 @@ export class ProfileService {
 		this.modelCache[userId] = undefined;
 	}
 
-	getModel(userId: number) {
+	getModel(userId?: number) {
+		if (!userId)
+			userId = this._userService.getCurrentUser()["id"];
+
 		if (this.modelCache[userId] === undefined) {
 			this.modelCache[userId] = {};
 			return this.initModel(userId, this.modelCache[userId]);
@@ -195,7 +198,10 @@ export class ProfileService {
 		this._counter++;
 	}
 
-	getThumbnailImagePath(userId) {
+	getThumbnailImagePath(userId?) {
+		if (!userId)
+			userId = this._userService.getCurrentUser()["id"];
+
 		return environment.apiUrl + "/api/resource/profile/" + userId + '/sendAnew/' + this._counter; 
 	}	
 
