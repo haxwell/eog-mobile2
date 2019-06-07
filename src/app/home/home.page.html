@@ -2,17 +2,60 @@
 	<easyah-header></easyah-header>
 </ion-header>
 
+<br/>
 <ion-content>
-	
 	<ion-grid>
 		<ion-row>
-			<ion-col >
+			<div>
+				<div class="centered homeAvatar-wrapper">
+					<img class="homeAvatar" [src]="getThumbnailImage()"/>
+				</div>
+			</div>
+			<div>
+				<table>
+					<tr>
+						<div class="homeUserName">
+							<h2>{{getUserName()}}</h2>
+						</div>
+					</tr>
+					<tr>
+						<div class="homeUserDescription">
+							<h4>{{getUserDescription()}}</h4>
+						</div>
+					</tr>						
+				</table>
+			</div>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-list>
+					<ion-item-divider sticky>
+						<ion-label>
+							Your Points
+						</ion-label>
+					</ion-item-divider>
+					<table>
+						<tr>
+							<td class="ptsTdElement">
+								<span class="displayBlock">{{getTotalPoints()}}</span> Total
+							</td>
+							<td class="ptsTdElement">
+								<span class="displayBlock">{{getAvailablePoints()}}</span> Available
+							</td>
+							<td class="ptsTdElement">
+								<span class="displayBlock">{{getAllTimePointsCount()}}</span> All Time
+							</td>
+						</tr>
+					</table>	
+				</ion-list>
+			</ion-col>
+			<!-- ion-col>
 				<img id="login-logo-img" src="assets/img/logo.jpg">
 				<span class="centered">
 					Click the menu icon in the upper left!<br/>
 					Or Search in the upper right!
 				</span>
-			</ion-col>
+			</ion-col -->
 		</ion-row>
 	</ion-grid>
 

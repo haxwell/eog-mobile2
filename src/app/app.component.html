@@ -2,14 +2,13 @@
 <ion-app>
   <ion-menu side="start" contentId="menuContent" menuId="main" *ngIf="isMenuCoolToShow()" (ionWillOpen)="handleMenuWillOpenEvent()">
     <ion-content id="menuContent">
-      <br/>
-      <profile-header id="profile-header" (click)="onShowProfile()"></profile-header>
       <ion-list>
             <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('HomePage')}" (click)="onHomeClicked()">Home</ion-button>
             <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('RequestsIncomingView')}" (click)="onPeopleAskedYouClicked()">People asked you... <ion-icon [hidden]="!areIncomingUnseenChanges()" name="bulb"></ion-icon></ion-button>
             <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('RequestsOutgoingView')}" (click)="onYouAskedPeopleClicked()">You asked people... <ion-icon [hidden]="!areOutgoingUnseenChanges()" name="bulb"></ion-icon></ion-button>
 
-            <profile-points></profile-points>
+            <!-- Empty menu item, for spacing -->
+            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('ProfilePage')}" (click)="onShowProfile()"></ion-button>
 
             <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('ProfilePage')}" (click)="onShowProfile()">About You</ion-button>
             <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('OfferListPage')}" (click)="onYourOffersClicked()">Your Offers</ion-button>

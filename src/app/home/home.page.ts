@@ -3,6 +3,9 @@ import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 import { TutorialService } from '../../app/_services/tutorial.service'
+import { UserService } from '../../app/_services/user.service'
+import { PointsService } from '../../app/_services/points.service'
+import { ProfileService } from '../../app/_services/profile.service'
 
 import { HomeService } from './_services/home.service'
 
@@ -18,9 +21,15 @@ export class HomePage {
     showTutorialPromise = undefined;
     mostRecentlyCreatedOffers = undefined;
 
+    totalPoints = undefined;
+    availablePoints = undefined;
+
     constructor(private _modalCtrl: ModalController 
                 ,private _homeService: HomeService
                 ,private _tutorialService: TutorialService
+                ,private _userService: UserService
+                ,private _pointsService: PointsService
+                ,private _profileService: ProfileService                
     ) {
 
     }
@@ -32,6 +41,24 @@ export class HomePage {
         self._homeService.getMostRecentlyCreatedOffers().then((data) => {
             self.mostRecentlyCreatedOffers = data;
         });
+
+        ///////
+        this.totalPoints = '-';
+        this.availablePoints = '-';
+
+        this._pointsService.init();
+
+        var user = this._userService.getCurrentUser();
+        if (user) 
+            this._profileService.init(user["id"]);
+
+        this._pointsService.getCurrentAvailableUserPoints().then((caPoints) => {
+            this.availablePoints = caPoints;
+        });
+
+        this._pointsService.getCurrentUserPointsAsSum().then((sumPoints) => {
+            this.totalPoints = sumPoints;
+        });
     }
 
     ionViewWillEnter() {
@@ -42,6 +69,37 @@ export class HomePage {
                     self.presentTutorial();
                 }
             });
+        }
+    }
+
+    getThumbnailImage() {
+        return this._profileService.getThumbnailImagePath();
+    }
+
+    getUserName() {
+        return this._profileService.getModel()["realname"];
+    }
+
+    getUserDescription() {
+        return this._profileService.getModel()["description"];
+    }
+
+    getTotalPoints() {
+        return this.totalPoints;
+    }
+
+    getAvailablePoints() {
+        return this.availablePoints;
+    }
+
+    getAllTimePointsCount() {
+        var user = this._userService.getCurrentUser();
+        
+        if (user) {
+            var pts = this._profileService.getModel(user["id"])["allTimePointCount"]
+            return pts;
+        } else {
+            return 0;
         }
     }
 

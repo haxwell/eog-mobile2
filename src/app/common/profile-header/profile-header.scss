@@ -1,3 +1,4 @@
+@import '../../app.scss';
 
 .profile_header__text {
 	margin: 0 auto;
@@ -20,4 +21,11 @@
 
 .backgroundSizeCover {
   background-size: cover;
+}
+
+.phAvatarImg {
+	@extend .avatar-in-a-list;
+
+	height: 7em;
+	width: 9em;
 }
