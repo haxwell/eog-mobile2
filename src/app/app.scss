@@ -17,3 +17,11 @@
 .avatar-in-a-list {
 	@extend %avatarInAList
 }
+
+%pageHeaderRow {
+	padding-bottom: 1em;
+}
+
+.page-header-row {
+	@extend %pageHeaderRow
+}
