@@ -15,3 +15,12 @@
 .notificationsHeaderRow {
 	padding-bottom: 1em;
 }
+
+.noAvatar-wrapper {
+	@extend .avatar-in-a-list-wrapper-div;
+}
+
+.noAvatar {
+	@extend .avatar-in-a-list;
+	width: 7em;
+}

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { ModalController } from '@ionic/angular';
 
@@ -24,7 +25,8 @@ export class HomePage {
     totalPoints = undefined;
     availablePoints = undefined;
 
-    constructor(private _modalCtrl: ModalController 
+    constructor(private _router: Router
+                ,private _modalCtrl: ModalController 
                 ,private _homeService: HomeService
                 ,private _tutorialService: TutorialService
                 ,private _userService: UserService
@@ -124,5 +126,9 @@ export class HomePage {
         _tutorialModal = await this._modalCtrl.create(options)
 
         return await _tutorialModal.present();
+    }
+
+    onThumbnailImageClick() {
+        this._router.navigate(['/profile/' + this._userService.getCurrentUser()["id"]]);
     }
 }

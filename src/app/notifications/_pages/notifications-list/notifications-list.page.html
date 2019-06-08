@@ -25,8 +25,8 @@
 		<ion-item-group *ngFor="let item of getNotifications()">
 			<ion-item-sliding  [class]="getTrack(item)" >
 				<ion-item>
-					<div class="centered avatar-in-a-list-wrapper-div">
-						<img class="avatar-in-a-list" [src]="getDOUserProfileImageFilepath(item['oppUserId'])"/>
+					<div class="centered noAvatar-wrapper">
+						<img class="noAvatar" [src]="getDOUserProfileImageFilepath(item['oppUserId'])"/>
 					</div>
 
 					<span >

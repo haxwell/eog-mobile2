@@ -8,7 +8,7 @@
 		<ion-row>
 			<div>
 				<div class="centered homeAvatar-wrapper">
-					<img class="homeAvatar" [src]="getThumbnailImage()"/>
+					<img class="homeAvatar" [src]="getThumbnailImage()" (click)="onThumbnailImageClick($evt)" />
 				</div>
 			</div>
 			<div>
