@@ -6,7 +6,7 @@
 
 	<ion-grid >
 			<ion-row >
-				<div class="centered">
+				<div>
 					<ion-item lines="none">
 						<ion-button (click)="onGoBackBtnTap($event)">Go Back</ion-button>
 						<ion-button *ngIf="isCurrentUsersProfile()" slot="end" (click)="onChangePasswordBtnClick($event)">Change Password</ion-button>
@@ -16,7 +16,7 @@
 			</ion-row>
 			<br/>
 			<ion-row>
-				<div class="card">
+				<div class="centered card">
 					<img height="275px" [src]="getThumbnailImage()"/>
 				</div>
 			</ion-row>	

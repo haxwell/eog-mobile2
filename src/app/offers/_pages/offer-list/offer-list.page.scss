@@ -1,3 +1,5 @@
+@import '../../../app.scss';
+
 .listFooterBtn {
 	float: right;
 }
@@ -44,3 +46,11 @@ div.offerDetail span.offerReqdPts {
 	padding-bottom: 1em;
 }
 
+.olAvatar-wrapper {
+	@extend .avatar-in-a-list-wrapper-div;
+}
+
+.olAvatar {
+	@extend .avatar-in-a-list;
+	width: 7em;
+}
