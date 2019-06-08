@@ -54,7 +54,7 @@ export class SearchPage {
 		this.offerResults = undefined;
 
 		let count = 0;
-		let func = () => {
+		let dismissFunc = () => {
 			count++;
 			if (count >= 2)
 				self._loadingService.dismiss();
@@ -68,7 +68,7 @@ export class SearchPage {
 			if (data.length === 0) {
 				self.offerResults = data;
 
-				func();
+				dismissFunc();
 
 			} else {
 				data.map((obj) => {
@@ -78,16 +78,16 @@ export class SearchPage {
 
 						if (!data.some((obj) => { return obj["userId"] != undefined; })) {
 							self.offerResults = data;
-							func();
+							dismissFunc();
 						}
 					});
 				});
 			}
 		});
 
-		this._searchService.searchUsers(this.searchString).then((data: Array<Object>) => {
+		this._searchService.searchUsers(this.searchString, distance, user["id"]).then((data: Array<Object>) => {
 			self.usersResults = data;
-			func();
+			dismissFunc();
 		});
 	}
 

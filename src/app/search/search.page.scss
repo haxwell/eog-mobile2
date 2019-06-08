@@ -1,16 +1,14 @@
-.icon-requestable {
-	color: green;
-}
-
-.icon-not-requestable {
-	color: red;
-}
+@import '../app.scss';
 
 .usernameMetadataDiv {
 	padding-left: 1.2em;
 }
 
-.avatar {
-	height: 3em;
-	width: 3em;
+.searchAvatar-wrapper {
+	@extend .avatar-in-a-list-wrapper-div;
+}
+
+.searchAvatar {
+	@extend .avatar-in-a-list;
+	width: 3.25em;
 }

@@ -52,7 +52,7 @@ export class RulePage {
 	onSearchUserBtnTap(evt) {
 		if (this.isSearchBtnEnabled()) {
 			let self = this;
-			this._searchService.searchUsers(this.searchString).then((data: Array<Object>) => {
+			this._searchService.searchUsers(this.searchString, 50).then((data: Array<Object>) => {
 				self.searchResultList = data;
 				self.origSearchResultSize = data.length;
 				self.origSearchResultsAlreadyRequiredCount = 0;

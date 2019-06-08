@@ -20,8 +20,13 @@ export class SearchService {
 
 	}
 
-	searchOffers(qStr, distance, userId) {
+	searchOffers(qStr, distance, userId?) {
 		let self = this;
+
+		if (!userId) {
+			userId = this._userService.getCurrentUser()["id"];
+		}
+
 		return new Promise((resolve, reject) => {
 			let user = self._userService.getCurrentUser();
 			let url = environment.apiUrl + "/api/offers?q=" + qStr + "&d=" + distance + "&uid=" + userId;
@@ -42,10 +47,16 @@ export class SearchService {
 		});
 	}
 
-	searchUsers(qStr) {
+	searchUsers(qStr, distance, userId?) {
+		let self = this;
+
+		if (!userId) {
+			userId = this._userService.getCurrentUser()["id"];
+		}
+
 		return new Promise((resolve, reject) => {
-			let url = environment.apiUrl + "/api/users?q=" + qStr;
-			this._apiService.get(url)
+			let url = environment.apiUrl + "/api/users?q=" + qStr + "&d=" + distance + "&uid=" + userId;
+			self._apiService.get(url)
 			.subscribe((searchObj) => {
 				resolve(searchObj);
 			}, (err) => {
