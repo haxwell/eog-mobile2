@@ -2,9 +2,12 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
+import { ModalController } from '@ionic/angular';
+
+import { AlertService } 			from '../../../app/_services/alert.service';
+import { LoadingService } 			from '../../../app/_services/loading.service'
 import { RequestsService } 			from '../../../app/_services/requests.service';
 import { OfferModelService } 		from '../../../app/_services/offer-model.service'
-import { ModalService } 			from '../../../app/_services/modal.service'
 import { UserService } 				from '../../../app/_services/user.service'
 import { UserPreferencesService } 	from '../../../app/_services/user-preferences.service'
 
@@ -27,11 +30,13 @@ export class OfferRequestPage {
 	constructor(private _location: Location,
 				private _route: ActivatedRoute,
   				private _router: Router,
+  				private _alertService: AlertService,
+  				private _loadingService: LoadingService,
 				private _requestsService: RequestsService,
 				private _userService: UserService,
 				private _offerModelService: OfferModelService,
 				private _userPreferencesService: UserPreferencesService,
-				private _modalService: ModalService) {
+				private _modalCtrl: ModalController) {
 
 	}
 
@@ -102,20 +107,61 @@ export class OfferRequestPage {
 
 	onSaveBtnTap(evt) {
 		let self = this;
-		this._requestsService.saveNew(this.model, this.message).then((data) => {
+
+		self._loadingService.show({message: "Please wait..."});
+
+
+
+
+
+/**
+		WILO.. The COntinue button on the tutorial is covered by the little circles at the bottome of the tutorial. Also, clicking the Go Back button leaves you in a state where you can press Save again. It should either not allow it, or act as if the user pressed Continue.
+
+		Also, for
+*/
+
+
+
+
+
+
+
+		self._requestsService.saveNew(this.model, this.message).then((data) => {
+			console.log("ATTEMPT TO CREATE A NEW REEQUEST JUST RETURNED!");
+			console.log(data);
 			if (data !== undefined) {
 				if (self.showTutorialAfterOutgoingRequestMade) {
-					self._modalService.show(OutgoingRequestMadeTutorialPage, { 
-						onDidDismissFunc: (data) => {
+					console.log("show tutorial was true!")
+					self._loadingService.dismiss();
+					self.presentModal(OutgoingRequestMadeTutorialPage, { }, { 
+						callbackFunc: (data) => {
+							console.log("33333333333")
 							self._location.back();
-						}
-					});
+						}});
 				} else {
+					console.log("222222222222222222");
+					self._loadingService.dismiss();
 					self._location.back();
 				}
 			} else {
+				console.log("1111111111111111");
+				self._loadingService.dismiss();
 				self._location.back();
 			}
+		}).catch((err) => {
+
+			self._loadingService.dismiss();
+
+            self._alertService.show({
+              header: 'Aargh...',
+              message: "We got an error trying to save that request :!",
+              buttons: [{
+                text: 'Grr.',
+                handler: () => {
+                  self._location.back();
+                }
+              }]
+            })
 		});
 	}
 
@@ -130,4 +176,23 @@ export class OfferRequestPage {
 	onMessageChange(evt) {
 		this.message = evt.srcElement.value;
 	}
+
+	async presentModal(_component, _model, props) {
+		let self = this;
+		let modal = undefined;
+		let options = { 
+			component: _component, 
+			componentProps: {
+				model: _model, 
+				props: props.propsObj,  
+				callbackFunc: (data) => { 
+					props.callbackFunc(data); modal.dismiss(); 
+				}
+			}
+		};
+
+		modal = await this._modalCtrl.create(options)
+		return await modal.present();
+	}
+
 }
