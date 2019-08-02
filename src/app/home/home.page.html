@@ -6,34 +6,36 @@
 <ion-content>
 	<ion-grid>
 		<ion-row>
-			<div>
-				<div class="centered homeAvatar-wrapper">
-					<img class="homeAvatar" [src]="getThumbnailImage()" (click)="onThumbnailImageClick($evt)" />
-				</div>
-			</div>
-			<div>
-				<table>
-					<tr>
-						<div class="homeUserName">
-							<h2>{{getUserName()}}</h2>
-						</div>
-					</tr>
-					<tr>
-						<div class="homeUserDescription">
-							<h4>{{getUserDescription()}}</h4>
-						</div>
-					</tr>						
-				</table>
-			</div>
+			<ion-card>
+				<ion-card-content>
+					<div id="forImgOverlapDiv">
+						<img [src]="getThumbnailImage()" (click)="onThumbnailImageClick($evt)" />
+					</div>
+					<div class="home-profile-info-content-div">
+						<table>
+							<tr>
+								<div class="homeUserName">
+									<h2>{{getUserName()}}</h2>
+								</div>
+							</tr>
+							<tr>
+								<div class="homeUserDescription">
+									<h4>{{getUserDescription()}}</h4>
+								</div>
+							</tr>
+						</table>
+					</div>
+				</ion-card-content>
+			</ion-card>
 		</ion-row>
 		<ion-row>
-			<ion-col>
-				<ion-list>
-					<ion-item-divider sticky>
-						<ion-label>
-							Your Points
-						</ion-label>
-					</ion-item-divider>
+			<ion-card [ngStyle]="{'width':'100%'}">
+				<ion-card-header>
+					<div class="pointsSectionDescription">
+						<h4>Your Points</h4>
+					</div>
+				</ion-card-header>
+				<ion-card-content>
 					<table>
 						<tr>
 							<td class="ptsTdElement">
@@ -46,9 +48,10 @@
 								<span class="displayBlock">{{getAllTimePointsCount()}}</span> All Time
 							</td>
 						</tr>
-					</table>	
-				</ion-list>
-			</ion-col>
+					</table>
+				</ion-card-content>
+			</ion-card>
+
 			<!-- ion-col>
 				<img id="login-logo-img" src="assets/img/logo.jpg">
 				<span class="centered">
@@ -57,17 +60,19 @@
 				</span>
 			</ion-col -->
 		</ion-row>
+		<ion-row>
+			<ion-card>
+				<ion-card-header>
+					<div class="pointsSectionDescription">
+						<h4>Offers Recently Created By Others</h4>
+					</div>
+				</ion-card-header>
+				<ion-card-content>
+					<other-peoples-offer-list [offers]="getMostRecentlyCreatedOffers()">
+					</other-peoples-offer-list>
+				</ion-card-content>
+			</ion-card>
+		</ion-row>
 	</ion-grid>
-
-	<ion-list>
-		<ion-item-divider sticky>
-			<ion-label>
-				Offers Recently Created By Others
-			</ion-label>
-		</ion-item-divider>
-
-		<other-peoples-offer-list [offers]="getMostRecentlyCreatedOffers()">
-		</other-peoples-offer-list>
-	</ion-list>
 
 </ion-content>

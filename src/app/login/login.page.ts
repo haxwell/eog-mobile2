@@ -38,7 +38,7 @@ export class LoginPage {
                 this.user = {id:-1, name: 'eoguser2', password: 'password'};
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
       this.splashScreen.hide();
   }
 
