@@ -70,13 +70,18 @@ export class OfferEditPage {
 
 				console.log("editing existing offer");
 
+				self._offerModelService.init();
+				
 				self._offerModelService.get(self.offerId).then((model) => {
 
+					console.log("abt to check for incoming reqs on this offer...")
 					self.setDirty(false);
 
 					self._requestsService.getIncomingRequestsForCurrentUser().then((data: Array<Object>) => {
 						let reqsForThisOffer = data.filter((obj) => { return obj["offer"]["id"] === model["id"]; });
 						reqsForThisOffer = reqsForThisOffer.filter((obj) => { return obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED_AND_HIDDEN && obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED; })
+
+						console.log("Got incoming reqs......6")
 
 						if (reqsForThisOffer !== undefined && reqsForThisOffer.length > 0) {
 							// this offer has outstanding requests (pending and/or in-progress)

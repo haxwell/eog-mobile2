@@ -79,15 +79,24 @@ export class OfferPage {
 			// let objId = model["id"];
 			self.thumbnailUrl = environment.apiUrl + "/api/resource/" + photoType + "/" + params['offerId']
 			
+			self._offerModelService.init();
+
 			// initialize the model
 			if (params['offerId'] && params['offerId'] !== 'new')
 			{
+				console.log("Got an offerId param: " + params['offerId'])
+
 				self._offerModelService.get(params['offerId']).then((model) => {
 					self.setModel(Object.assign({}, model));
+
+					console.log("Got, and are initing the offer model: ")
+					console.log(model)
 
 					initFunc(self.model);
 				})
 			} else {
+				console.log("This is a NEW offer!")
+
 				self.model = self._offerModelService.getDefaultModel();
 				initFunc(self.model);
 			}
@@ -260,7 +269,6 @@ export class OfferPage {
 	}
 
 	getThumbnailImage() {
-		console.log("^^^^^^^^^^^^^^ getThumbnailImage is called. Returning " + this.thumbnailUrl);
 		return this.thumbnailUrl;
 	}
 }

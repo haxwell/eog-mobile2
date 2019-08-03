@@ -22,7 +22,7 @@ import { switchMap } from 'rxjs/operators';
 })
 export class OfferRequestPage {
 
-	model = undefined;
+	offerId = undefined;
 	message = undefined;
 
 	showTutorialAfterOutgoingRequestMade = undefined;
@@ -43,10 +43,8 @@ export class OfferRequestPage {
 	ngOnInit() {
 		let self = this;
 		self._route.params.subscribe((params) => {
-			self._offerModelService.get(params['offerId']).then((model) => {
-				self.model = model;
-				self.initRequiredUserRecommendationsAsUserObjects();
-			})
+			self.offerId = params['offerId']
+			self.initRequiredUserRecommendationsAsUserObjects();
 		})
 
 		self._userPreferencesService.getPreference("showTutorialAfterOutgoingRequestMade", true).then((data) => {
@@ -66,7 +64,7 @@ export class OfferRequestPage {
 
 	initRequiredUserRecommendationsAsUserObjects() {
 		let self = this;
-		self.model["requiredUserRecommendations"].map((obj) => {
+		self._offerModelService.get(self.offerId)["requiredUserRecommendations"].map((obj) => {
 			self._userService.getUser(obj["requiredRecommendUserId"]).then((user) => {
 				if (self.requiredUserRecommendationsAsUserObjects === null) 
 					self.requiredUserRecommendationsAsUserObjects = [];
@@ -77,21 +75,13 @@ export class OfferRequestPage {
 	}
 
 	getTitle() {
-		let rtn = undefined;
-
-		if (this.model) {
-			rtn = this.model["title"];
-		}
-
-		return rtn;
+		let self = this;
+		return self._offerModelService.get(self.offerId)['title'];
 	}
 
 	getRequiredPointsQuantityString() {
-		let rtn = undefined;
-
-		if (this.model) {
-			rtn = this.model["requiredPointsQuantity"];
-		}
+		let self = this;
+		let rtn = self._offerModelService.get(self.offerId)['requiredPointsQuantity']
 
 		if (rtn*1 > 1)
 			rtn = rtn + " points";
@@ -126,7 +116,7 @@ export class OfferRequestPage {
 
 
 
-		self._requestsService.saveNew(this.model, this.message).then((data) => {
+		self._requestsService.saveNew(self._offerModelService.get(self.offerId), this.message).then((data) => {
 			console.log("ATTEMPT TO CREATE A NEW REEQUEST JUST RETURNED!");
 			console.log(data);
 			if (data !== undefined) {

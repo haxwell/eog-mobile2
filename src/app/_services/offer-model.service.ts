@@ -27,6 +27,10 @@ export class OfferModelService {
 		this._pictureService.init();
 	}
 
+	init() {
+		this.modelCache = { }
+	}
+
 	getDefaultModel() { 
 		let user = this._userService.getCurrentUser();
 		let rtn = {};
@@ -46,110 +50,148 @@ export class OfferModelService {
 	get(offerId) {
 		let self = this;
 
-		self._functionPromiseService.initFunc(offerId+"offerFuncKey", () => {
-			return new Promise((resolve, reject) => {
-				let url = environment.apiUrl + "/api/offers/" + offerId; 
-				this._apiService.get(url)
-				.subscribe((offerObj) => {
-					
-					if (offerObj["requiredUserRecommendations"]) {
-						offerObj["requiredUserRecommendations"].forEach((rec) => {
-							self._userService.getUser(rec["requiredRecommendUserId"]).then((user) => {
-								rec["userObj"] = user;
-							})
-						});
-					}
+		if (self.modelCache[offerId] !== undefined) {
+			return self.modelCache[offerId];
+		} else {
+			self._functionPromiseService.initFunc(offerId+"offerFuncKey", () => {
+				return new Promise((resolve, reject) => {
+					console.log("Got in the offermodelservice offerFuncKey function!!")
 
-					offerObj["keywords"].sort((a, b) => { let aText = a.text.toLowerCase(); let bText = b.text.toLowerCase(); if (aText > bText) return 1; else if (aText < bText) return -1; else return 0; })
+					let url = environment.apiUrl + "/api/offers/" + offerId; 
+					this._apiService.get(url)
+					.subscribe((offerObj) => {
+						
+						if (offerObj["requiredUserRecommendations"]) {
+							offerObj["requiredUserRecommendations"].forEach((rec) => {
+								self._userService.getUser(rec["requiredRecommendUserId"]).then((user) => {
+									rec["userObj"] = user;
+								})
+							});
+						}
 
-			        if (offerObj["userId"] !== this._userService.getCurrentUser()["id"] && 
-			        	offerObj["directionallyOppositeUser"] === undefined) {
-					        let getUserOffer = this._userService.getUser(offerObj["userId"]);
-					        getUserOffer.then((user) => {
-					            offerObj["directionallyOppositeUser"] = user;
-					            delete offerObj["userId"];
-					        });
-			        }
+						offerObj["keywords"].sort((a, b) => { let aText = a.text.toLowerCase(); let bText = b.text.toLowerCase(); if (aText > bText) return 1; else if (aText < bText) return -1; else return 0; })
 
-					if (offerObj["requiredUserRecommendations"]) {
-						offerObj["requiredUserRecommendations"].forEach((rec) => {
-							this._userService.getUser(rec["requiredRecommendUserId"]).then((user) => {
-								rec["userObj"] = user;
-								//this.requiredUserObjectsLoadedCount++;
-							})
-						});
-					}
+				        if (offerObj["userId"] !== this._userService.getCurrentUser()["id"] && 
+				        	offerObj["directionallyOppositeUser"] === undefined) {
+						        let getUserOffer = this._userService.getUser(offerObj["userId"]);
+						        getUserOffer.then((user) => {
+						            offerObj["directionallyOppositeUser"] = user;
+						            delete offerObj["userId"];
+						        });
+				        }
 
+						if (offerObj["requiredUserRecommendations"]) {
+							offerObj["requiredUserRecommendations"].forEach((rec) => {
+								this._userService.getUser(rec["requiredRecommendUserId"]).then((user) => {
+									rec["userObj"] = user;
+									//this.requiredUserObjectsLoadedCount++;
+								})
+							});
+						}
 
-					resolve(offerObj);
-				}, (err) => {
-					reject(err);
+						resolve(offerObj);
+					}, (err) => {
+						reject(err);
+					});
 				});
 			});
-		});
 
-		self._pictureService.init();
+			self._pictureService.init();
 
-		self.modelCache[offerId] = self._functionPromiseService.get(offerId, offerId+"offerFuncKey", offerId);
-		
-		return new Promise((resolve, reject) => {
-			self.modelCache[offerId].then((model) => {
-				self.setOfferMetadata(model).then((finalModel) => {
-					resolve(finalModel);
-				});
+			let fpsPromise = self._functionPromiseService.get(offerId, offerId+"offerFuncKey", offerId);
+			
+			self.modelCache[offerId] = new Promise((resolve, reject) => {
+				fpsPromise.then((model) => {
+					self.setOfferMetadata(model).then((finalModel) => {
+						resolve(finalModel);
+					});
+				})
 			})
-		})
+
+			return self.modelCache[offerId];
+		}
 	}
+
+	offerMetadata = {}
 
 	// TODO: Move this to the offerMetadataService
 	setOfferMetadata(offer) {
+		let self = this;
 
-		// TODO:
-		// There's a piece of the framework here.. An object which takes tuples of apiURLs,domainObjects, and DO-property-names
-		// Perhaps it takes the domain object, then apiURL and DO property name pairs. Then returns a promise which will have
-		// set the properties to the results of all the API calls when it resolves. So I don't have to check each property in each
-		//  method here. I've done this pattern (checking each) in other places too.
-
-		return new Promise((resolve, reject) => {
-			let count = 0;
-			let func = (offer) => {
-				let numPiecesOfMetadata = 4;
-
-				if (++count > (numPiecesOfMetadata - 1))
-					resolve(offer);
-			}
-
-			let url = environment.apiUrl + "/api/offers/" + offer["id"] + "/fulfillment-dates"; 
-			this._apiService.get(url)
-			.subscribe((data) => {
-				offer["fulfillment_dates"] = data;
-				func(offer);
-			}, (err) => {
-				reject(err);
+		if (self.offerMetadata[offer['id']] !== undefined) {
+			return self.offerMetadata[offer['id']]
+		} else {
+			self._functionPromiseService.initFunc("fulfillment-dates", (_offer) => {
+				return new Promise((resolve, reject) => {
+					let url = environment.apiUrl + "/api/offers/" + _offer["id"] + "/fulfillment-dates"; 
+					this._apiService.get(url)
+					.subscribe((data) => {
+						_offer["fulfillment_dates"] = data;
+						resolve(_offer)
+					}, (err) => {
+						reject(err);
+					});
+				})
 			});
 
-			url = environment.apiUrl + "/api/offers/" + offer["id"] + "/complaint-count"; 
-			this._apiService.get(url)
-			.subscribe((data) => {
-				offer["num_of_complaints"] = data;
-				func(offer);
-			}, (err) => {
-				reject(err);
+			self._functionPromiseService.initFunc("complaint-count", (_offer) => {
+				return new Promise((resolve, reject) => {
+					let url = environment.apiUrl + "/api/offers/" + _offer["id"] + "/complaint-count"; 
+					this._apiService.get(url)
+					.subscribe((data) => {
+						_offer["num_of_complaints"] = data;
+						resolve(_offer)					
+					}, (err) => {
+						reject(err);
+					});
+				})
 			});
 
-			url = environment.apiUrl + "/api/offers/" + offer["id"] + "/total-points-earned"; 
-			this._apiService.get(url)
-			.subscribe((data) => {
-				offer["total_points_earned"] = data;
-				func(offer);
-			}, (err) => {
-				reject(err);
+			self._functionPromiseService.initFunc("total-points-earned", (_offer) => {
+				return new Promise((resolve, reject) => {
+					let url = environment.apiUrl + "/api/offers/" + _offer["id"] + "/total-points-earned"; 
+					this._apiService.get(url)
+					.subscribe((data) => {
+						_offer["total_points_earned"] = data;
+						resolve(_offer)					
+					}, (err) => {
+						reject(err);
+					});
+				})
 			});
 
-			this.setOfferImageOrientation(offer).then((offer) => {
-				func(offer);
-			})
-		});
+			self.offerMetadata[offer['id']] = new Promise((resolve, reject) => {
+				let count = 0;
+				let func = (offer) => {
+					let numPiecesOfMetadata = 4;
+
+					if (++count > (numPiecesOfMetadata - 1)) {
+						console.log("Got all FOUR!")
+						resolve(offer);
+					}
+				}
+
+				self._functionPromiseService.get(offer["id"]+"fulfillment-dates", "fulfillment-dates", offer).then(() => {
+					func(offer);
+				})
+
+				self._functionPromiseService.get(offer["id"]+"complaint-count", "complaint-count", offer).then(() => {
+					func(offer);
+				})
+
+				self._functionPromiseService.get(offer["id"]+"total-points-earned", "total-points-earned", offer).then(() => {
+					func(offer);
+				})
+
+				self.setOfferImageOrientation(offer).then((offer) => {
+					func(offer);
+				})
+			});
+
+			console.log("saved " + offer['id'] + " to offermodelservice offerMetadata cache...")
+
+			return self.offerMetadata[offer['id']];
+		}
 	}
 
 	setOfferImageOrientation(offer) {
