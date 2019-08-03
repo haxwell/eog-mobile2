@@ -41,7 +41,7 @@ export class AppComponent {
   initializeApp() {
 
     this.exitFunction = () => {
-      // this.platform.exitApp();  // not sure how you do this anymore... :( 
+      // this.platform.exitApp();  // see https://forum.ionicframework.com/t/v4-back-button-doesnt-exit-app-solved-tutorial/149994/4
     }
 
     this.isAndroidFunction = () => {
