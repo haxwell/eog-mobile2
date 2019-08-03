@@ -19,6 +19,7 @@ import { OfferRequestPage } from './_pages/offer-request.page'
 // import { OutgoingRequestMadeTutorialPage } from './_pages/outgoing-request-made-tutorial.page'
 import { RulePage } from './_pages/rule.page'
 import { KeywordEntryPage } from '../common/keyword.entry/keyword.entry'
+import { ChoosePhotoSourcePage } from '../common/choose-photo-source/choose-photo-source'
 
 // TODO: Is this only used in the context of Offers? If so, move it closer to home.
 import { OfferCollectionService } from '../../app/_services/offer-collection.service'
@@ -44,6 +45,7 @@ import { OfferCollectionService } from '../../app/_services/offer-collection.ser
     // ,OutgoingRequestMadeTutorialPage
     ,RulePage
     ,KeywordEntryPage
+    ,ChoosePhotoSourcePage
   ]
   ,providers: [
     OfferCollectionService
@@ -52,6 +54,7 @@ import { OfferCollectionService } from '../../app/_services/offer-collection.ser
     DeleteOfferPage
     ,RulePage
     ,KeywordEntryPage
+    ,ChoosePhotoSourcePage
   ]
 })
 export class OfferPageModule {}
