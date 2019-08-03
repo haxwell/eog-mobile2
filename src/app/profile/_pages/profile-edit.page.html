@@ -10,9 +10,27 @@
 		</ion-row>
 
 		<ion-row>
-				<div class="centered avatar-in-a-list-wrapper-div">
-					<img class="avatar-in-a-list" [src]="getThumbnailImage()" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)"/>
-				</div>
+				<ion-card>
+					<ion-card-content>
+						<div id="forImgOverlapDiv">
+							<img [src]="getThumbnailImage()" (click)="onThumbnailImageClick($evt)" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)"/>
+						</div>
+						<!-- div class="home-profile-info-content-div">
+							<table>
+								<tr>
+									<div class="homeUserName">
+										<h2>{{getModelAttr('realname')}}</h2>
+									</div>
+								</tr>
+								<tr>
+									<div class="homeUserDescription">
+										<h4>{{getModelAttr('description')}}</h4>
+									</div>
+								</tr>
+							</table>
+						</div -->
+					</ion-card-content>
+				</ion-card>
 		</ion-row>
 
 		<ion-row>

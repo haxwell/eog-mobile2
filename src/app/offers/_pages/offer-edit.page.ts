@@ -14,7 +14,6 @@ import { ChoosePhotoSourcePage } from '../../common/choose-photo-source/choose-p
 
 import { OfferModelService } from '../../../app/_services/offer-model.service'
 import { UserService } from '../../../app/_services/user.service';
-import { ModalService } from '../../../app/_services/modal.service';
 import { AlertService } from '../../../app/_services/alert.service';
 import { LoadingService } from '../../../app/_services/loading.service';
 import { PictureService } from '../../../app/_services/picture.service';
@@ -33,6 +32,7 @@ import { environment } from '../../../_environments/environment';
 export class OfferEditPage {
 
 	model = {};
+	offerId = undefined;
 	callback = undefined;
 	new = false;
 	dirty = false;
@@ -44,7 +44,6 @@ export class OfferEditPage {
 	constructor(private _location: Location,
 				private _router: Router,
 				private _route: ActivatedRoute,
-				private _modalService: ModalService,
 				private _modalCtrl: ModalController,
 				private _alertService: AlertService,
 				private _loadingService: LoadingService,
@@ -67,15 +66,16 @@ export class OfferEditPage {
 
 			if (params["offerId"] && params["offerId"] !== 'new') {
 
+				self.offerId = params["offerId"];
+
 				console.log("editing existing offer");
 
-				self._offerModelService.get(params['offerId']).then((model) => {
-					self.model = model;
+				self._offerModelService.get(self.offerId).then((model) => {
 
 					self.setDirty(false);
 
 					self._requestsService.getIncomingRequestsForCurrentUser().then((data: Array<Object>) => {
-						let reqsForThisOffer = data.filter((obj) => { return obj["offer"]["id"] === self.model["id"]; });
+						let reqsForThisOffer = data.filter((obj) => { return obj["offer"]["id"] === model["id"]; });
 						reqsForThisOffer = reqsForThisOffer.filter((obj) => { return obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED_AND_HIDDEN && obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED; })
 
 						if (reqsForThisOffer !== undefined && reqsForThisOffer.length > 0) {
@@ -100,7 +100,7 @@ export class OfferEditPage {
 			} else {
 				console.log("editing new offer");
 				this.new = true;
-				self.model = self._offerModelService.getDefaultModel();
+				// self.model = self._offerModelService.getDefaultModel();
 			}
 		})
 	}
@@ -173,10 +173,6 @@ export class OfferEditPage {
 		this._eventSubscriberService.reset("ios-edit-offer-exit");
 	}
 
-	setModel(m) {
-		this.model = m;
-	}
-
 	isDirty() {
 		return this.dirty;
 	}
@@ -190,19 +186,23 @@ export class OfferEditPage {
 	}
 
 	handleDescriptionChange(evt) {
-		this.setDirty(evt.srcElement.value !== this.model["description"]);
+		let model = this._offerModelService.get(this.offerId);
+		this.setDirty(evt.srcElement.value !== model["description"]);
 	}
 
 	handleTitleChange(evt) {
-		this.setDirty(evt.srcElement.value !== this.model["title"]);
+		let model = this._offerModelService.get(this.offerId);
+		this.setDirty(evt.srcElement.value !== model["title"]);
 	}
 
 	handleQuantityChange(evt) {
-		this.setDirty(evt.srcElement.value !== this.model["quantity"]);
+		let model = this._offerModelService.get(this.offerId);
+		this.setDirty(evt.srcElement.value !== model["quantity"]);
 	}
 
 	handleQuantityDescriptionChange(evt) {
-		this.setDirty(evt.srcElement.value !== this.model["quantityDescription"]);
+		let model = this._offerModelService.get(this.offerId);
+		this.setDirty(evt.srcElement.value !== model["quantityDescription"]);
 	}
 
 	isModelTitleEditable() {
@@ -222,72 +222,57 @@ export class OfferEditPage {
 	}
 
 	offerHasNoKeywords() {
-		return this.model["keywords"] === undefined || this.model["keywords"].length === 0;
+		let model = this._offerModelService.get(this.offerId);
+		return model["keywords"] === undefined || model["keywords"].length === 0;
 	}
 
 	getOfferOwnerName() {
-		return this.model["directionallyOppositeUser"] !== undefined ? this.model["directionallyOppositeUser"]["realname"] : "";
+		let model = this._offerModelService.get(this.offerId);
+
+		return model["directionallyOppositeUser"] !== undefined ? model["directionallyOppositeUser"]["realname"] : "";
 	}
 
 	isSaveBtnEnabled() {
+		let model = this._offerModelService.get(this.offerId);
+
 		return this.isDirty() && 
-			(this.model["requiredPointsQuantity"] !== undefined && this.model["requiredPointsQuantity"] > 0) &&
-			this.model["keywords"].length > 0 &&
-			this.model["title"].length > 0 &&
-			this.model["description"].length > 0 &&
-			(this.model["quantity"] !== undefined && this.model["quantity"] > 0) &&
-			this.model["quantityDescription"].length > 0;
+			(model["requiredPointsQuantity"] !== undefined && model["requiredPointsQuantity"] > 0) &&
+			model["keywords"].length > 0 &&
+			model["title"].length > 0 &&
+			model["description"].length > 0 &&
+			(model["quantity"] !== undefined && model["quantity"] > 0) &&
+			model["quantityDescription"].length > 0;
 	}
 
 	onSaveBtnTap(shouldCallNavCtrlPop) {
 		let self = this;
+		let presave_model = this._offerModelService.get(this.offerId);
 
 		self._loadingService.show({
-			message: 'Please wait...'
+			message: this._offerModelService.isOfferImageChanged(presave_model) ?
+					'Please wait... Uploading as fast as your data connection will allow..' :
+					'Please wait...'
 		})
-
-		let func = (obj) => {
-			return new Promise((resolve, reject) => {
-				if (self.isImageChanged(self.model)) {
-					self._pictureService.save(self._constants.PHOTO_TYPE_OFFER, obj["id"], self.model["imageFileURI"]).then((data) => {
-						console.log("offer " + obj["id"] + " picture is saved...");
-						resolve();
-					})
-				} else {
-					resolve();
-				}
-			})
-		}
 
 		// call to save the model, and then the offerModelService will call func(). This order is important, because this may
 		//  be a new object, and to save the image associated with it, we need an ID. So save, get an ID, then save the offer image
 		//  via the callback.
 		
-		self._offerModelService.save(self.model, func).then((newObj) => {
+		self._offerModelService.save(presave_model).then(() => {
+			let _model = self._offerModelService.get(self.offerId)
 
-			self.callback(self.model).then(() => {
-				self.setDirty(false);
-				self._loadingService.dismiss();
+			self.setDirty(false);
+			self._loadingService.dismiss();
 
-				self._pictureService.reset(self._constants.PHOTO_TYPE_PROFILE, newObj["id"]);
+			self._pictureService.reset(self._constants.PHOTO_TYPE_PROFILE, _model["id"]);
 
-				if (shouldCallNavCtrlPop)
-					self._location.back();
-			}).catch((err) => {
-				console.log("Error calling edit offer callback");
-				console.log(JSON.stringify(err));
-			})
+			if (shouldCallNavCtrlPop)
+				self._location.back();
 
 		}).catch((err) => {
 			console.log("Error calling offerModelService::save()")
 			console.log(JSON.stringify(err))
 		})
-	}
-
-	isImageChanged(model) {
-		let rtn = this.model["imageFileURI_OriginalValue"] != model["imageFileURI"];
-		console.log("edit-offer::isImageChanged() returning " + rtn);
-		return rtn;
 	}
 
 	onIndividualKeywordPress(item) {
@@ -296,9 +281,10 @@ export class OfferEditPage {
 
 	onAddKeywordBtnTap(evt) {
 		let self = this;
+		let _model = this._offerModelService.get(this.offerId);
 		if (self.permitOnlyEditsToPoints !== true) {
 	
-			let tmp = self.model["keywords"];
+			let tmp = _model["keywords"];
 			let tmp2 = [];
 			tmp.map((obj) => { 
 				if (!tmp2.some((obj2) => { return obj2["text"].toLowerCase() === obj["text"].toLowerCase(); }))
@@ -312,8 +298,8 @@ export class OfferEditPage {
 				callbackFunc: 
 					(data) => {
 						if (data) {
-							self.model["keywords"] = data;
-							self.model["keywords"].sort((a, b) => { let aText = a.text.toLowerCase(); let bText = b.text.toLowerCase(); if (aText > bText) return 1; else if (aText < bText) return -1; else return 0; })
+							_model["keywords"] = data;
+							_model["keywords"].sort((a, b) => { let aText = a.text.toLowerCase(); let bText = b.text.toLowerCase(); if (aText > bText) return 1; else if (aText < bText) return -1; else return 0; })
 						}
 					}
 			})
@@ -322,15 +308,18 @@ export class OfferEditPage {
 
 	onNewRuleBtnTap(evt) {
 		let self = this;
-		self.presentModal(RulePage, self.model, {
+		let _model = this._offerModelService.get(this.offerId);
+
+		self.presentModal(RulePage, _model, {
 			propsObj: {
 				permitOnlyEditsToPoints: this.permitOnlyEditsToPoints
 			},
 			callbackFunc: 
 				(data) => {
 					if (data) {
-						self.model["requiredPointsQuantity"] = data["requiredPointsQuantity"];
-						self.model["requiredUserRecommendations"] = data["requiredUserRecommendations"];
+						_model["requiredPointsQuantity"] = data["requiredPointsQuantity"];
+						_model["requiredUserRecommendations"] = data["requiredUserRecommendations"];
+
 						this.setDirty(true);
 					}
 				}
@@ -352,97 +341,107 @@ export class OfferEditPage {
 		};
 
 		modal = await this._modalCtrl.create(options)
+
+		console.log("about to call modal.present()")
 		return await modal.present();
 	}
 
 	getRequiredUserRecommendations() {
-		if (this.model["requiredUserRecommendations"] !== undefined && !this.model["requiredUserRecommendations"].some((rec) => { return rec["userObj"] === undefined; })) {
-			return this.model["requiredUserRecommendations"];
+		let model = this._offerModelService.get(this.offerId);
+		if (model["requiredUserRecommendations"] !== undefined && !model["requiredUserRecommendations"].some((rec) => { return rec["userObj"] === undefined; })) {
+			return model["requiredUserRecommendations"];
 		} else {
 			return [];
 		}
 	}
 
 	getRequiredPointsQuantity() {
-		return this.model["requiredPointsQuantity"];
+		let model = this._offerModelService.get(this.offerId);
+		return model["requiredPointsQuantity"];
 	}
 
 	getRequiredPointsQuantityString() {
-		let rtn = this.model["requiredPointsQuantity"] + " point";
+		let model = this._offerModelService.get(this.offerId);
+		let rtn = model["requiredPointsQuantity"] + " point";
 
-		if (this.model["requiredPointsQuantity"] > 1)
+		if (model["requiredPointsQuantity"] > 1)
 			rtn += "s";
 
 		return rtn;
 	}
 
 	areRecommendationsRequired(offer) {
-		return (this.model["requiredUserRecommendations"] && this.model["requiredUserRecommendations"].length > 0);
+		let model = this._offerModelService.get(this.offerId);
+		return (model["requiredUserRecommendations"] && model["requiredUserRecommendations"].length > 0);
 	}
 
 	getThumbnailImage() {
 		let photoType = "offer";
-		let objId = this.model["id"];
+		let objId = this.offerId;
 		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
 	}
 
 	getAvatarCSSClassString() {
-		return this._pictureService.getOrientationCSS(this.model, "editOfferImage");
+		return this._pictureService.getOrientationCSS(this._offerModelService.get(this.offerId), "editOfferImage");
 	}
 
 	onThumbnailClick($event) {
 		let self = this;
-		let model = this.model;
-		this._modalService.show(ChoosePhotoSourcePage, {
-			props: {
-				fileURI: this.model["imageFileURI"], fileSource: this.model["imageFileSource"]
-			},
-			onDidDismissFunc: 
-				(offer) => {
-					if (offer) {
-						offer.then((uriAndSource) => { 
-							if (uriAndSource === undefined) {
-								uriAndSource = {};
-							}
+		let _model = this._offerModelService.get(this.offerId);
 
+		console.log("CLICK1!!!!")
 
-							if (model["imageFileURI"] !== undefined && model["imageFileSource"] == 'camera') {
-								let lastSlash = model["imageFileURI"].lastIndexOf('/');
-								let path = model["imageFileURI"].substring(0,lastSlash+1);
-								let filename = model["imageFileURI"].substring(lastSlash+1);
+		self.presentModal(ChoosePhotoSourcePage, { },
+			{
+				propsObj: {
+					// TODO: are these used? ??
+					fileURI: _model["imageFileURI"], 
+					fileSource: _model["imageFileSource"]
+					},
+				callbackFunc: (uriAndSource) => {
 
-								self._file.removeFile(path, filename).then((data) => {
-									self._pictureService.setMostProbablePhotoPath(self._constants.PHOTO_TYPE_OFFER, model["id"], uriAndSource["imageFileURI"]);
-
-									console.log("User saved a new offer image. [" + model["imageFileURI"] + "] is no longer the image to use, so it has been removed." );
-									console.log("setting offer model to [" + uriAndSource["imageFileURI"] + "]");
-
-									model["imageFileURI"] = uriAndSource["imageFileURI"];
-									model["imageFileSource"] = uriAndSource["imageFileSource"];
-									model["imageOrientation"] = uriAndSource["exif"]["Orientation"];
-
-									self.setDirty(true);						
-								})
-							} else {
-								console.log("no previous image was set on the model, so skipping the 'delete previous image' step...")
-
-								self._pictureService.setMostProbablePhotoPath(self._constants.PHOTO_TYPE_OFFER, model["id"], uriAndSource["imageFileURI"]);
-
-								model["imageFileURI"] = uriAndSource["imageFileURI"];
-								model["imageFileSource"] = uriAndSource["imageFileSource"];
-								model["imageOrientation"] = uriAndSource["exif"]["Orientation"];
-
-								self.setDirty(true);
-							}
-
-						});
+					if (uriAndSource === undefined) {
+						uriAndSource = {};
 					}
+
+					if (uriAndSource !== undefined) {
+						if (_model["imageFileURI"] !== undefined && _model["imageFileSource"] == 'camera') {
+							let lastSlash = _model["imageFileURI"].lastIndexOf('/');
+							let path = _model["imageFileURI"].substring(0,lastSlash+1);
+							let filename = _model["imageFileURI"].substring(lastSlash+1);
+
+							self._file.removeFile(path, filename).then((data) => {
+								self._pictureService.setMostProbablePhotoPath(self._constants.PHOTO_TYPE_OFFER, _model["id"], uriAndSource["imageFileURI"]);
+
+								console.log("User saved a new offer image. [" + _model["imageFileURI"] + "] is no longer the image to use, so it has been removed." );
+								console.log("setting offer model to [" + uriAndSource["imageFileURI"] + "]");
+
+								_model["imageFileURI"] = uriAndSource["imageFileURI"];
+								_model["imageFileSource"] = uriAndSource["imageFileSource"];
+								_model["imageOrientation"] = uriAndSource["exif"]["Orientation"];
+
+								self.setDirty(true);						
+							})
+						} else {
+							console.log("no previous image was set on the model, so skipping the 'delete previous image' step...")
+
+							self._pictureService.setMostProbablePhotoPath(self._constants.PHOTO_TYPE_OFFER, _model["id"], uriAndSource["imageFileURI"]);
+
+							_model["imageFileURI"] = uriAndSource["imageFileURI"];
+							_model["imageFileSource"] = uriAndSource["imageFileSource"];
+							_model["imageOrientation"] = uriAndSource["exif"]["Orientation"];
+
+							self.setDirty(true);
+						}
+
+					};
 				}
-		});
+			})
 	}
 
 	onThumbnailPress($event) {
 		let self = this;
+		let _model = this._offerModelService.get(this.offerId);
 
 		this._alertService.show({
 			title: 'Delete Photo?',
@@ -455,24 +454,24 @@ export class OfferEditPage {
 				}, {
 					text: 'Yes', handler: () => {
 						let func = () => {
-							self.model["imageFileURI"] = undefined;
-							self.model["imageFileSource"] = undefined;
+							_model["imageFileURI"] = undefined;
+							_model["imageFileSource"] = undefined;
 
-							self._pictureService.setMostProbablePhotoPath(self._constants.PHOTO_TYPE_OFFER, self.model["id"], self.model["imageFileURI"]);
+							self._pictureService.setMostProbablePhotoPath(self._constants.PHOTO_TYPE_OFFER, _model["id"], _model["imageFileURI"]);
 						}
 
-						console.log('deleting photo ' + self.model["id"]);
+						console.log('deleting photo ' + _model["id"]);
 
-						self._pictureService.delete(self._constants.PHOTO_TYPE_OFFER, self.model["id"]).then(() => { 
+						self._pictureService.delete(self._constants.PHOTO_TYPE_OFFER, _model["id"]).then(() => { 
 
-							self._offerModelService.get(self.model["id"]).then((model) => {
+							self._offerModelService.get(_model["id"]).then((model) => {
 								if (model["imageFileSource"] === 'camera' || model["imageFileSource"] === 'eog') {
 									
 									console.log("This image came from the camera, or the api.. deleting off the phone now. path=" + model['imageFileURI'] + "]")
 
-									let lastSlash = model["imageFileURI"].lastIndexOf('/');
-									let path = model["imageFileURI"].substring(0,lastSlash+1);
-									let filename = model["imageFileURI"].substring(lastSlash+1);
+									let lastSlash = _model["imageFileURI"].lastIndexOf('/');
+									let path = _model["imageFileURI"].substring(0,lastSlash+1);
+									let filename = _model["imageFileURI"].substring(lastSlash+1);
 
 									self._file.removeFile(path, filename).then((data) => {
 										console.log("Call to pictureService to DELETE photo for "+model['id']+" successful! Image was from camera or the eog api, so it was removed from phone.");

@@ -8,10 +8,7 @@
 
 <ion-item-group *ngFor="let offer of getListOfOffers()">
 	<ion-item (click)="onViewOffer(offer)">
-				<img [src]="getThumbnailImage(offer)"/>
-
-		<div class="makeOpaqueDiv">
-		</div>
+		<img [src]="getThumbnailImage(offer)"/>
 
 		<div class="opol-ion-item-content-div">
 			<table>

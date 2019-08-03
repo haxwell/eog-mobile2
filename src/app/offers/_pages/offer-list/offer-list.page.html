@@ -10,18 +10,16 @@
 
 <ion-content padding>
 	<ion-row >
-		 <ion-button round (click)="onNewOfferBtnTap()">
-			<ion-icon name="add"></ion-icon>
+		 <ion-button round class="centered" (click)="onNewOfferBtnTap()">
+			Make a New Offer
 		</ion-button>
 	</ion-row>
 
 	<ion-list *ngIf="userHasAnActiveOffer()">
 		<ion-item *ngFor="let offer of getOffers()" (click)="onOfferBtnTap(offer)">
-			<div class="olAvatar-wrapper">
-				<img class="olAvatar" [src]="getThumbnailImage(offer)"/>
-			</div>
+			<img [src]="getThumbnailImage(offer)"/>
 
-			<div>
+			<div class="opol-ion-item-content-div">
 				<table>
 					<tr>
 						<div class="offerTitle">
@@ -52,3 +50,8 @@
 		</ion-item>
 	</ion-list>
 </ion-content>
+<ion-footer>
+	<ion-row>
+		<span class="centered">Tap your offer to view, edit or delete!</span>
+	</ion-row>
+</ion-footer>

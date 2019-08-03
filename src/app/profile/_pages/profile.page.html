@@ -9,32 +9,40 @@
 </ion-header>
 
 <ion-content cache-view="false" padding>
-
 	<ion-grid >
 			<ion-row >
 				<div>
 					<ion-item lines="none">
 						<ion-button (click)="onGoBackBtnTap($event)">Go Back</ion-button>
 						<ion-button *ngIf="isCurrentUsersProfile()" slot="end" (click)="onChangePasswordBtnClick($event)">Change Password</ion-button>
-						<ion-button *ngIf="isCurrentUsersProfile()" shape="round" slot="end" (click)="onEditProfileBtnClick($event)"><ion-icon slot="start" class="whiteText profileIcon" name="create"></ion-icon></ion-button>
+						<ion-button *ngIf="isCurrentUsersProfile()" shape="round" slot="end" (click)="onEditProfileBtnClick($event)">Edit</ion-button>
 					</ion-item>
 				</div>
 			</ion-row>
 			<br/>
 			<ion-row>
-				<div class="centered card">
-					<img height="275px" [src]="getThumbnailImage()"/>
-				</div>
+				<ion-card>
+					<ion-card-content>
+						<div id="forImgOverlapDiv">
+							<img [src]="getThumbnailImage()" (click)="onThumbnailImageClick($evt)" />
+						</div>
+						<div class="home-profile-info-content-div">
+							<table>
+								<tr>
+									<div class="homeUserName">
+										<h2>{{getModelAttr('realname')}}</h2>
+									</div>
+								</tr>
+								<tr>
+									<div class="homeUserDescription">
+										<h4>{{getModelAttr('description')}}</h4>
+									</div>
+								</tr>
+							</table>
+						</div>
+					</ion-card-content>
+				</ion-card>
 			</ion-row>	
-
-			<ion-row>
-				<div class="centered">
-					<br/>
-					<span class="cornfieldBlueColor profileName">{{getModelAttr('realname')}}</span>
-					<br/>
-					<span class="cornfieldBlueColor profileDescription">{{getModelAttr('description')}}</span>
-				</div>
-			</ion-row>			
 			<ion-row>
 				<br/>
 			</ion-row>

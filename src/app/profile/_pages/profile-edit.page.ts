@@ -157,7 +157,7 @@ export class ProfileEditPage {
 
 	onSaveBtnTap() {
 		let self = this;
-		let presave_model = this._profileService.getModel(this.userId); // *was 'model'
+		let presave_model = this._profileService.getModel(this.userId);
 
 		if (this.verifyPhoneOnSave) {
 			this.verifyPhone(presave_model["phone"]);

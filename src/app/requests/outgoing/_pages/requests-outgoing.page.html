@@ -23,7 +23,7 @@
 
 	<ion-list *ngIf="getCompletedAwaitingApprovalRequests()">
 		<ion-item-divider sticky>
-			<ion-label>
+			<ion-label text-wrap>
 				Others did these requests for you. You Need to Approve!
 			</ion-label>
 		</ion-item-divider>
@@ -70,7 +70,7 @@
 	</ion-list>
 	<ion-list *ngIf="getPendingRequests()">
 		<ion-item-divider sticky>
-			<ion-label>
+			<ion-label text-wrap>
 				You made these requests. Awaiting a decision by others..
 			</ion-label>
 		</ion-item-divider>
@@ -115,7 +115,7 @@
 	</ion-list>
 	<ion-list *ngIf="getAcceptedRequests()">
 		<ion-item-divider sticky>
-			<ion-label>
+			<ion-label text-wrap>
 				They Accepted! These requests are in-progress.
 			</ion-label>
 		</ion-item-divider>
@@ -159,7 +159,7 @@
 	</ion-list>
 	<ion-list *ngIf="getDeclinedRequests()">
 		<ion-item-divider sticky>
-			<ion-label>
+			<ion-label text-wrap>
 				You made these requests; they're declined :(
 			</ion-label>
 		</ion-item-divider>
@@ -203,7 +203,7 @@
 	</ion-list>
 	<ion-list *ngIf="getCancelledRequests()">
 		<ion-item-divider sticky>
-			<ion-label>
+			<ion-label text-wrap>
 				These requests were accepted, but the other side cancelled :(
 			</ion-label>
 		</ion-item-divider>
@@ -244,7 +244,7 @@
 	</ion-list>
 	<ion-list *ngIf="getNotCompleteAwaitingResolution()">
 		<ion-item-divider sticky>
-			<ion-label>
+			<ion-label text-wrap>
 				You marked these Not Complete. Awaiting the other side's decision..
 			</ion-label>
 		</ion-item-divider>

@@ -177,7 +177,7 @@ export class OfferModelService {
 		})
 	}
 
-	save(model, cb) {
+	save(model) {
 		let self = this;
 		let data = this.JSON_to_URLEncoded(model, undefined, undefined);
 
@@ -185,23 +185,22 @@ export class OfferModelService {
 			let url = environment.apiUrl + "/api/offers";
 			this._apiService.post(url, data)
 			.subscribe((resp) => {
-				let obj = resp;
+				let newModel = resp;
 
 				let func = () => {
-					self._events.publish("offer:saved", obj)
-					resolve(obj);
+					self._events.publish("offer:saved", newModel)
+					resolve(newModel);
 				}
 
-				if (cb) {
-					cb(obj).then(() => {
+				if (self.isOfferImageChanged(model)) {
+					self._pictureService.save(this._constants.PHOTO_TYPE_OFFER, model["id"], model["imageFileURI"]).then((data) => {
 						func();
-					}).catch((err) => {
-						console.log("error in offerModelService calling the callback");
-						console.log(JSON.stringify(err));
-					})
-				} else {
+					}, (err) => {
+						reject(err);
+		            });
+
+				} else
 					func();
-				}
 			},
 			(err) => {
 				console.log("Error calling API POST for " + url)
@@ -244,4 +243,7 @@ export class OfferModelService {
 
 	}
 
+	isOfferImageChanged(model) {
+		return model["imageFileURI_OriginalValue"] != model["imageFileURI"];
+	}
 }
