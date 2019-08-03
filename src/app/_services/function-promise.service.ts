@@ -19,13 +19,14 @@ export class FunctionPromiseService {
 	results = {};
 	funcs = {};
 
-	freshnessLengthInMillis = 10 * 1000; // ten seconds
+	freshnessLengthInMillis = 30 * 1000; // thirty seconds
 
 	constructor() {
 
 	}
 
 	reset(resultKey) {
+		console.log("resetting " + resultKey)
 		this.results[resultKey] = undefined;
 	}
 
