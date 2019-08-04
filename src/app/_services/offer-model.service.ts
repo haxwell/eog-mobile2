@@ -17,6 +17,8 @@ export class OfferModelService {
 	
 	modelCache = { };
 
+	requiredUserObjectsLoadedCount = 0;
+
 	constructor(private _functionPromiseService: FunctionPromiseService,
 				private _apiService: ApiService, private _userService: UserService,
 				private _pictureService: PictureService,
@@ -50,67 +52,98 @@ export class OfferModelService {
 	get(offerId) {
 		let self = this;
 
-		if (self.modelCache[offerId] !== undefined) {
-			return self.modelCache[offerId];
+		if (!offerId)
+			return { };
+
+		if (self.modelCache[offerId] === undefined) {
+			return self.initModel(offerId, self.modelCache[offerId]);
 		} else {
-			self._functionPromiseService.initFunc(offerId+"offerFuncKey", () => {
-				return new Promise((resolve, reject) => {
-					console.log("Got in the offermodelservice offerFuncKey function!!")
-
-					let url = environment.apiUrl + "/api/offers/" + offerId; 
-					this._apiService.get(url)
-					.subscribe((offerObj) => {
-						
-						if (offerObj["requiredUserRecommendations"]) {
-							offerObj["requiredUserRecommendations"].forEach((rec) => {
-								self._userService.getUser(rec["requiredRecommendUserId"]).then((user) => {
-									rec["userObj"] = user;
-								})
-							});
-						}
-
-						offerObj["keywords"].sort((a, b) => { let aText = a.text.toLowerCase(); let bText = b.text.toLowerCase(); if (aText > bText) return 1; else if (aText < bText) return -1; else return 0; })
-
-				        if (offerObj["userId"] !== this._userService.getCurrentUser()["id"] && 
-				        	offerObj["directionallyOppositeUser"] === undefined) {
-						        let getUserOffer = this._userService.getUser(offerObj["userId"]);
-						        getUserOffer.then((user) => {
-						            offerObj["directionallyOppositeUser"] = user;
-						            delete offerObj["userId"];
-						        });
-				        }
-
-						if (offerObj["requiredUserRecommendations"]) {
-							offerObj["requiredUserRecommendations"].forEach((rec) => {
-								this._userService.getUser(rec["requiredRecommendUserId"]).then((user) => {
-									rec["userObj"] = user;
-									//this.requiredUserObjectsLoadedCount++;
-								})
-							});
-						}
-
-						resolve(offerObj);
-					}, (err) => {
-						reject(err);
-					});
-				});
-			});
-
-			self._pictureService.init();
-
-			let fpsPromise = self._functionPromiseService.get(offerId, offerId+"offerFuncKey", offerId);
-			
-			self.modelCache[offerId] = new Promise((resolve, reject) => {
-				fpsPromise.then((model) => {
-					self.setOfferMetadata(model).then((finalModel) => {
-						resolve(finalModel);
-					});
-				})
-			})
-
 			return self.modelCache[offerId];
 		}
 	}
+
+	initModel(offerId: number, model) {
+		let self = this;
+
+		self._pictureService.init();
+
+		self._functionPromiseService.initFunc(offerId+"offerFuncKey", () => {
+			return new Promise((resolve, reject) => {
+				console.log("Got in the offermodelservice offerFuncKey function!!")
+
+				let url = environment.apiUrl + "/api/offers/" + offerId; 
+				this._apiService.get(url)
+				.subscribe((offerObj) => {
+					
+					if (offerObj["requiredUserRecommendations"]) {
+						offerObj["requiredUserRecommendations"].forEach((rec) => {
+							self._userService.getUser(rec["requiredRecommendUserId"]).then((user) => {
+								rec["userObj"] = user;
+							})
+						});
+					}
+
+					offerObj["keywords"].sort((a, b) => { let aText = a.text.toLowerCase(); let bText = b.text.toLowerCase(); if (aText > bText) return 1; else if (aText < bText) return -1; else return 0; })
+
+			        if (offerObj["userId"] !== this._userService.getCurrentUser()["id"] && 
+			        	offerObj["directionallyOppositeUser"] === undefined) {
+					        let getUserOffer = this._userService.getUser(offerObj["userId"]);
+					        getUserOffer.then((user) => {
+					            offerObj["directionallyOppositeUser"] = user;
+					            delete offerObj["userId"];
+					        });
+			        }
+
+					if (offerObj["requiredUserRecommendations"]) {
+						offerObj["requiredUserRecommendations"].forEach((rec) => {
+							this._userService.getUser(rec["requiredRecommendUserId"]).then((user) => {
+								rec["userObj"] = user;
+								this.requiredUserObjectsLoadedCount++;
+							})
+						});
+					}
+
+					resolve(offerObj);
+				}, (err) => {
+					reject(err);
+				});
+			});
+		});
+
+		// call the init function
+		let fpsPromise = self._functionPromiseService.get(offerId, offerId+"offerFuncKey", offerId);
+			
+		fpsPromise.then((model) => {
+			self.setOfferMetadata(model).then((finalModel) => {
+				self.modelCache[offerId] = finalModel
+			});
+		});
+
+		if (!self.modelCache[offerId])
+			self.modelCache[offerId] = { };
+
+		return self.modelCache[offerId];
+	}
+
+	getRequiredRecommendationUserObjects(offerId) {
+		let rtn = undefined;
+
+		let _model = this.get(offerId);
+
+		if (_model["requiredUserRecommendations"] && _model["requiredUserRecommendations"].length === this.requiredUserObjectsLoadedCount) {
+			rtn = [];
+
+			_model["requiredUserRecommendations"].forEach((req) => {
+				rtn.push(req["userObj"]);
+			})
+		}
+
+		return rtn;
+	}	
+
+	
+	// TODO: I think the caching here is redundant. If the get() and initModel() calls are handled
+	//  correctly, setOfferMetadata should only ever be called once per offer-model-initialization. Previously, this was being called over and over, thus the cache.
 
 	offerMetadata = {}
 
@@ -187,8 +220,6 @@ export class OfferModelService {
 					func(offer);
 				})
 			});
-
-			console.log("saved " + offer['id'] + " to offermodelservice offerMetadata cache...")
 
 			return self.offerMetadata[offer['id']];
 		}

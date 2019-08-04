@@ -93,7 +93,9 @@ export class ProfileEditPage {
 		if (this.isDirty() && !self.isExiting) {
 			let msg = "";
 
-			if (this._profileService.isProfileImageChanged(this.model) && !this.cancelBtnPressed)
+			let _model = this._profileService.getModel(this.userId);
+			
+			if (this._profileService.isProfileImageChanged(_model) && !this.cancelBtnPressed)
 				msg = "You changed your profile picture. Uploading it could take a long while. You got a minute (or ten)?";
 			else
 				msg = "Do you want to save your profile changes?";
@@ -103,7 +105,7 @@ export class ProfileEditPage {
 				message: msg,
 				buttons: [{
 					text: 'No', role: 'cancel', handler: () => {
-						if (this._profileService.isProfileImageChanged(this.model) && !this.isFromGallery()) {
+						if (this._profileService.isProfileImageChanged(_model) && !this.isFromGallery()) {
 							
 							let lastSlash = self.model["imageFileURI"].lastIndexOf('/');
 							let path = self.model["imageFileURI"].substring(0,lastSlash+1);
@@ -311,7 +313,7 @@ export class ProfileEditPage {
 	}
 
 	getModelAttr(key) {
-		return this.model[key];
+		return this._profileService.getModel(this.userId)[key];
 	}
 
 	isFromGallery() {
@@ -358,7 +360,7 @@ export class ProfileEditPage {
 		return await modal.present();
 	}
 
-	onThumbnailClick($event) {
+	onThumbnailImageClick($event) {
 		let self = this;
 		let model = this._profileService.getModel(this.userId);
 

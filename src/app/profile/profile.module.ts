@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 
+import { ChoosePhotoSourceModule } from '../common/choose-photo-source/choose-photo-source.module'
 import { EasyahCommonModule } from '../common/easyah-common.module';
 import { EasyahHeader } from '../common/easyah-header/easyah-header';
 
@@ -32,11 +33,11 @@ import { IonicImageLoader } from 'ionic-image-loader';
     ,EasyahCommonModule
   	,ProfileRoutingModule
     ,IonicImageLoader
+    ,ChoosePhotoSourceModule
   ]
   ,declarations: [
   	ProfilePage
   	,ProfileEditPage
-    ,ChoosePhotoSourcePage
   ]
   ,providers: [
     ContactInfoVisibilityService

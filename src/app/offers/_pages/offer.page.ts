@@ -32,7 +32,7 @@ import { environment } from '../../../_environments/environment';
 
 export class OfferPage {
 
-	model = undefined;
+	// model = undefined;
 	offerId = undefined;
 	
 	thumbnailUrl = undefined;
@@ -63,52 +63,28 @@ export class OfferPage {
 	ngOnInit() {
 		let self = this;
 
-		let initFunc = (model) => {
-
-			self._offerMetadataService.init();
-			self._offerMetadataService.getMetadataValue(model, self._constants.FUNCTION_KEY_OFFER_IS_REQUESTABLE).then((bool) => { 
-				self._isRequestBtnVisible = bool;
-			});
-
-			self.requestMsgs = self._offerDetailService.getOfferDetailMessages(model);
-		}
-
 		self._route.params.subscribe((params) => {
+			self.offerId = params['offerId'];
+
 			// initialize the thumbnail url param
 			let photoType = "offer";
-			// let objId = model["id"];
-			self.thumbnailUrl = environment.apiUrl + "/api/resource/" + photoType + "/" + params['offerId']
+			self.thumbnailUrl = environment.apiUrl + "/api/resource/" + photoType + "/" + self.offerId
 			
 			self._offerModelService.init();
+			self._offerMetadataService.init();
+			self._offerMetadataService.getMetadataValue(
+				self._offerModelService.get(self.offerId), 
+				self._constants.FUNCTION_KEY_OFFER_IS_REQUESTABLE)
+					.then((bool) => { 
+						self._isRequestBtnVisible = bool;
+					});
 
-			// initialize the model
-			if (params['offerId'] && params['offerId'] !== 'new')
-			{
-				console.log("Got an offerId param: " + params['offerId'])
-
-				self._offerModelService.get(params['offerId']).then((model) => {
-					self.setModel(Object.assign({}, model));
-
-					console.log("Got, and are initing the offer model: ")
-					console.log(model)
-
-					initFunc(self.model);
-				})
-			} else {
-				console.log("This is a NEW offer!")
-
-				self.model = self._offerModelService.getDefaultModel();
-				initFunc(self.model);
-			}
+			self.requestMsgs = self._offerDetailService.getOfferDetailMessages(self._offerModelService.get(self.offerId));
 		})
 	}
 
-	setModel(m) {
-		this.model = m;
-	}
-
 	getModel() {
-		return this.model || {};
+		return this._offerModelService.get(this.offerId);
 	}
 
 	isRequestMessageAvailable() {
@@ -150,65 +126,57 @@ export class OfferPage {
 	getRequiredPointsQuantityString() {
 		let rtn = undefined;
 
-		if (this.model) {
-			rtn = this.model["requiredPointsQuantity"] + " point";
+		let _model = this._offerModelService.get(this.offerId);
 
-			if (this.model["requiredPointsQuantity"] > 1)
-				rtn += "s";
-		} 
+		rtn = _model["requiredPointsQuantity"] + " point";
+
+		if (_model["requiredPointsQuantity"] > 1)
+			rtn += "s";
 
 		return rtn;
 	}
 
 	getRequiredRecommendationUserObjects() {
-		let rtn = undefined;
-
-		if (this.model) {
-			if (this.requiredUserObjectsLoadedCount === this.model["requiredUserRecommendations"].length) {
-				rtn = [];
-
-				this.model["requiredUserRecommendations"].forEach((req) => {
-					rtn.push(req["userObj"]);
-				})
-			}
-		}
-
-		return rtn;
+		return this._offerModelService.getRequiredRecommendationUserObjects(this.offerId);
 	}
 
 	hasStatistics() {
-		let rtn = this.model && (
-					(this.model["fulfillment_dates"] !== undefined && this.model["fulfillment_dates"].length > 0) ||
-					(this.model["num_of_complaints"] !== undefined && this.model["num_of_complaints"] > 0) ||
-					(this.model["total_points_earned"] != undefined && this.model["total_points_earned"] > 0)
-				);
+		let _model = this._offerModelService.get(this.offerId);
+
+		let rtn = 	(_model["fulfillment_dates"] !== undefined && _model["fulfillment_dates"].length > 0) ||
+					(_model["num_of_complaints"] !== undefined && _model["num_of_complaints"] > 0) ||
+					(_model["total_points_earned"] != undefined && _model["total_points_earned"] > 0);
 
 		return rtn;
 	}
 
 	getFirstFulfilledText() {
-		if (this.model && this.model["fulfillment_dates"] !== undefined && this.model["fulfillment_dates"].length > 0) 
-			return "First fullfilled " + Moment(this.model["fulfillment_dates"][0]).fromNow();
+		let _model = this._offerModelService.get(this.offerId);
+		if (_model["fulfillment_dates"] !== undefined && _model["fulfillment_dates"].length > 0) 
+			return "First fullfilled " + Moment(_model["fulfillment_dates"][0]).fromNow();
 		else
 			return "Never been fulfilled.";
 	}
 
 	getNumberOfComplaints() {
-		if (this.model && this.model["num_of_complaints"] !== undefined) 
-			return this.model["num_of_complaints"] + " complaints.";
+		let _model = this._offerModelService.get(this.offerId);
+		if (_model["num_of_complaints"] !== undefined) 
+			return _model["num_of_complaints"] + " complaints.";
 		else
 			return "No complaints about this offer.";
 	}
 
 	getTotalPointsEarned() {
-		if (this.model && this.model["total_points_earned"] !== undefined) 
-			return "Earned " + this.model["total_points_earned"] + " points over its lifetime.";
+		let _model = this._offerModelService.get(this.offerId);
+		if (_model["total_points_earned"] !== undefined) 
+			return "Earned " + _model["total_points_earned"] + " points over its lifetime.";
 		else
 			return "No points earned yet.";
 	}
 
 	isDeleteBtnVisible() {
-		return this.model && (this.model["userId"] === this._userService.getCurrentUser()["id"]);
+		let _model = this._offerModelService.get(this.offerId);
+		return _model["userId"] === this._userService.getCurrentUser()["id"];
 	}
 
 	isRequestBtnVisible() {
@@ -217,9 +185,9 @@ export class OfferPage {
 
 	onDeleteBtnTap(evt) {
 		let self = this;
-		self.presentModal(DeleteOfferPage, self.model, {
+		self.presentModal(DeleteOfferPage, self._offerModelService.get(this.offerId), {
 			propsObj: {
-				offer: this.model
+				offer: this._offerModelService.get(this.offerId)
 			}, 
 			callbackFunc: 
 				(data) => { 
@@ -249,7 +217,7 @@ export class OfferPage {
 	}
 
 	onRequestBtnTap(evt) {
-		this._router.navigate(['/offers/' + this.model["id"] + '/request']);
+		this._router.navigate(['/offers/' + this.offerId + '/request']);
 	}
 
 	onGoBackBtnTap(evt) {
@@ -257,15 +225,17 @@ export class OfferPage {
 	}
 
 	areRecommendationsRequired(offer) {
-		return (this.model && this.model["requiredUserRecommendations"] && this.model["requiredUserRecommendations"].length > 0);
+		let _model = this._offerModelService.get(this.offerId);
+		return (_model["requiredUserRecommendations"] && _model["requiredUserRecommendations"].length > 0);
 	}
 
 	isCurrentUsersOffer() {
-		return this.model && this.model["userId"] === this._userService.getCurrentUser()["id"];
+		let _model = this._offerModelService.get(this.offerId)
+		return _model["userId"] && _model["userId"] === this._userService.getCurrentUser()["id"];
 	}
 
 	onEditOfferBtnClick() {
-		this._router.navigate(['/offers/' + this.model["id"] + '/edit']);
+		this._router.navigate(['/offers/' + this.offerId + '/edit']);
 	}
 
 	getThumbnailImage() {

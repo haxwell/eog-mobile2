@@ -16,23 +16,23 @@
 		<ion-row>
 			<ion-item lines="none">
 				<ion-label color="primary" position="stacked">Title: </ion-label>
-				<ion-input type="text" placeholder="Teach a skill..." (ionChange)="handleTitleChange($event)" [disabled]="!isModelTitleEditable()" [(ngModel)]="model.title" #ctrl="ngModel" required></ion-input>
+				<ion-input type="text" placeholder="Teach a skill..." (ionChange)="handleTitleChange($event)" [disabled]="!isModelTitleEditable()" [value]="getModelAttr('title')" required></ion-input>
 			</ion-item>
 		</ion-row>
 		<ion-row>
 			<ion-col col-2>
 				<ion-label color="primary" position="stacked">Quantity </ion-label>
-				<ion-input id="offerQuantity" type="number" (ionChange)="handleQuantityChange($event)" [disabled]="!isModelQuantityEditable()" [(ngModel)]="model.quantity" #ctrl="ngModel" required></ion-input>
+				<ion-input id="offerQuantity" type="number" (ionChange)="handleQuantityChange($event)" [disabled]="!isModelQuantityEditable()" [value]="getModelAttr('quantity')" required></ion-input>
 			</ion-col>
 			<ion-col>
 				<ion-label color="primary" position="stacked">units: </ion-label>
-				<ion-input id="offerQuantityDesc" type="text" maxlength="50" placeholder="Offered units" (ionChange)="handleQuantityDescriptionChange($event)" [disabled]="!isModelQuantityDescEditable()" [(ngModel)]="model.quantityDescription" #ctrl="ngModel" required></ion-input>
+				<ion-input id="offerQuantityDesc" type="text" maxlength="50" placeholder="Offered units" (ionChange)="handleQuantityDescriptionChange($event)" [disabled]="!isModelQuantityDescEditable()" [value]="getModelAttr('quantityDescription')" required></ion-input>
 			</ion-col>
 		</ion-row>
 		<ion-row>
 			<ion-item class="oneHundredPercentWidth" lines="none">
 				<ion-label color="primary" position="stacked">Description: </ion-label>
-				<ion-textarea rows="5" placeholder="I have many moons experience in XYZ and I will teach..." (ionChange)="handleDescriptionChange($event)" [disabled]="!isModelDescriptionEditable()" [(ngModel)]="model.description" #ctrl="ngModel" required></ion-textarea>
+				<ion-textarea rows="5" placeholder="I have many moons experience in XYZ and I will teach..." (ionChange)="handleDescriptionChange($event)" [disabled]="!isModelDescriptionEditable()" [value]="getModelAttr('description')"  required></ion-textarea>
 			</ion-item>
 		</ion-row>
 		<ion-row>

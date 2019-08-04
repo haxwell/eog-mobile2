@@ -10,6 +10,7 @@ import { OfferRoutingModule } from './offer-routing.module';
 import { EasyahCommonModule } from '../common/easyah-common.module';
 import { EasyahHeader } from '../common/easyah-header/easyah-header'
 import { TutorialModule } from '../tutorials/tutorial.module'
+import { ChoosePhotoSourceModule } from '../common/choose-photo-source/choose-photo-source.module'
 
 import { OfferPage } from './_pages/offer.page';
 import { OfferEditPage } from './_pages/offer-edit.page';
@@ -30,6 +31,7 @@ import { OfferCollectionService } from '../../app/_services/offer-collection.ser
   	CommonModule,
   	OfferRoutingModule
     ,EasyahCommonModule
+    ,ChoosePhotoSourceModule
     ,RouterModule
     ,FormsModule
     ,HttpModule
@@ -45,7 +47,6 @@ import { OfferCollectionService } from '../../app/_services/offer-collection.ser
     // ,OutgoingRequestMadeTutorialPage
     ,RulePage
     ,KeywordEntryPage
-    ,ChoosePhotoSourcePage
   ]
   ,providers: [
     OfferCollectionService

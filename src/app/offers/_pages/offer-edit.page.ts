@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
 import { File } from '@ionic-native/file/ngx'
+import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 import { Events } from '@ionic/angular';
 
@@ -31,7 +32,8 @@ import { environment } from '../../../_environments/environment';
 
 export class OfferEditPage {
 
-	model = {};
+	// model = {};
+
 	offerId = undefined;
 	callback = undefined;
 	new = false;
@@ -54,12 +56,16 @@ export class OfferEditPage {
 				private _eventSubscriberService: EventSubscriberService,
 				private _constants: Constants,
 				private _file: File,
-				private _events: Events) {
+				private _events: Events,
+				private _webview: WebView) {
 
 	}
 
 	ngOnInit() {
 		let self = this;
+
+		self.setDirty(false);
+
 		self._route.params.subscribe((params) => {
 
 			self.permitOnlyEditsToPoints = false;
@@ -72,35 +78,27 @@ export class OfferEditPage {
 
 				self._offerModelService.init();
 				
-				self._offerModelService.get(self.offerId).then((model) => {
+				self._requestsService.getIncomingRequestsForCurrentUser().then((data: Array<Object>) => {
+					let reqsForThisOffer = data.filter((obj) => { return obj["offer"]["id"] === self.offerId; });
+					reqsForThisOffer = reqsForThisOffer.filter((obj) => { return obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED_AND_HIDDEN && obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED; })
 
-					console.log("abt to check for incoming reqs on this offer...")
-					self.setDirty(false);
+					if (reqsForThisOffer !== undefined && reqsForThisOffer.length > 0) {
+						// this offer has outstanding requests (pending and/or in-progress)
+						//  the user can only change the picture, and number of points required
 
-					self._requestsService.getIncomingRequestsForCurrentUser().then((data: Array<Object>) => {
-						let reqsForThisOffer = data.filter((obj) => { return obj["offer"]["id"] === model["id"]; });
-						reqsForThisOffer = reqsForThisOffer.filter((obj) => { return obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED_AND_HIDDEN && obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED; })
+						self.permitOnlyEditsToPoints = true;
 
-						console.log("Got incoming reqs......6")
+						self._alertService.show({
+						      header: 'Just FYI',
+						      message: "This offer has requests that are pending or in-progress.<br/><br/>You will only be able to edit the picture, and the number of points that it requires.<br/><br/>Edits to points will only apply to future requests.",
+						      buttons: [{
+						        text: 'OK',
+						        handler: () => {
 
-						if (reqsForThisOffer !== undefined && reqsForThisOffer.length > 0) {
-							// this offer has outstanding requests (pending and/or in-progress)
-							//  the user can only change the picture, and number of points required
-
-							self.permitOnlyEditsToPoints = true;
-
-							self._alertService.show({
-							      header: 'Just FYI',
-							      message: "This offer has requests that are pending or in-progress.<br/><br/>You will only be able to edit the picture, and the number of points that it requires.<br/><br/>Edits to points will only apply to future requests.",
-							      buttons: [{
-							        text: 'OK',
-							        handler: () => {
-
-							        }
-								}]
-							})
-						}
-					})
+						        }
+							}]
+						})
+					}
 				})
 			} else {
 				console.log("editing new offer");
@@ -190,24 +188,37 @@ export class OfferEditPage {
 		return this._router.url.endsWith("/new");
 	}
 
-	handleDescriptionChange(evt) {
+	setChangedAttr(key, value) {
+		let rtn = false;
+
 		let model = this._offerModelService.get(this.offerId);
-		this.setDirty(evt.srcElement.value !== model["description"]);
+		if (model[key] !== value) {
+			model[key] = value;
+			this.setDirty(true);
+			rtn = true;
+		}
+
+		return rtn;
+	}
+
+	handleDescriptionChange(evt) {
+		this.setChangedAttr("description", evt.detail.value);
 	}
 
 	handleTitleChange(evt) {
-		let model = this._offerModelService.get(this.offerId);
-		this.setDirty(evt.srcElement.value !== model["title"]);
+		this.setChangedAttr("title", evt.detail.value);
 	}
 
 	handleQuantityChange(evt) {
-		let model = this._offerModelService.get(this.offerId);
-		this.setDirty(evt.srcElement.value !== model["quantity"]);
+		this.setChangedAttr("quantity", evt.detail.value);
 	}
 
 	handleQuantityDescriptionChange(evt) {
-		let model = this._offerModelService.get(this.offerId);
-		this.setDirty(evt.srcElement.value !== model["quantityDescription"]);
+		this.setChangedAttr("quantityDescription", evt.detail.value);
+	}
+
+	getModelAttr(key) {
+		return this._offerModelService.get(this.offerId)[key];
 	}
 
 	isModelTitleEditable() {
@@ -269,7 +280,7 @@ export class OfferEditPage {
 			self.setDirty(false);
 			self._loadingService.dismiss();
 
-			self._pictureService.reset(self._constants.PHOTO_TYPE_PROFILE, _model["id"]);
+			self._pictureService.reset(self._constants.PHOTO_TYPE_OFFER, _model["id"]);
 
 			if (shouldCallNavCtrlPop)
 				self._location.back();
@@ -380,7 +391,27 @@ export class OfferEditPage {
 		return (model["requiredUserRecommendations"] && model["requiredUserRecommendations"].length > 0);
 	}
 
+	isFromGallery() {
+		return this._offerModelService.get(this.offerId)["imageFileSource"] == 'gallery';
+	}
+
+	isDirectFilepathToImageSet() {
+		return this._offerModelService.get(this.offerId)["imageFileURI"] !== undefined;
+	}
+
 	getThumbnailImage() {
+		let rtn = undefined;
+
+		if (this.isDirectFilepathToImageSet()) {
+			rtn = this._webview.convertFileSrc(this._offerModelService.get(this.offerId)["imageFileURI"]);
+		} else {
+			rtn = this.getEnvironmentAPIURLForThisOffer();
+		}
+
+		return rtn;
+	}
+
+	getEnvironmentAPIURLForThisOffer() {
 		let photoType = "offer";
 		let objId = this.offerId;
 		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
@@ -394,8 +425,6 @@ export class OfferEditPage {
 		let self = this;
 		let _model = this._offerModelService.get(this.offerId);
 
-		console.log("CLICK1!!!!")
-
 		self.presentModal(ChoosePhotoSourcePage, { },
 			{
 				propsObj: {
@@ -404,12 +433,10 @@ export class OfferEditPage {
 					fileSource: _model["imageFileSource"]
 					},
 				callbackFunc: (uriAndSource) => {
-
-					if (uriAndSource === undefined) {
-						uriAndSource = {};
-					}
-
 					if (uriAndSource !== undefined) {
+
+						let _model = this._offerModelService.get(this.offerId);
+
 						if (_model["imageFileURI"] !== undefined && _model["imageFileSource"] == 'camera') {
 							let lastSlash = _model["imageFileURI"].lastIndexOf('/');
 							let path = _model["imageFileURI"].substring(0,lastSlash+1);
@@ -423,7 +450,7 @@ export class OfferEditPage {
 
 								_model["imageFileURI"] = uriAndSource["imageFileURI"];
 								_model["imageFileSource"] = uriAndSource["imageFileSource"];
-								_model["imageOrientation"] = uriAndSource["exif"]["Orientation"];
+								//_model["imageOrientation"] = uriAndSource["exif"]["Orientation"];
 
 								self.setDirty(true);						
 							})
@@ -434,7 +461,7 @@ export class OfferEditPage {
 
 							_model["imageFileURI"] = uriAndSource["imageFileURI"];
 							_model["imageFileSource"] = uriAndSource["imageFileSource"];
-							_model["imageOrientation"] = uriAndSource["exif"]["Orientation"];
+							//_model["imageOrientation"] = uriAndSource["exif"]["Orientation"];
 
 							self.setDirty(true);
 						}
