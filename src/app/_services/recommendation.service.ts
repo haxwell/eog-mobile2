@@ -77,13 +77,15 @@ export class RecommendationService {
 			this.getInitializationPromiseObject().then(() => {
 				let count = 0;
 
+				let coll = _offer["requiredUserRecommendations"] || [];
+
 				self.getIncomingRecommendations().then((incomingRecommendations: Array<Object>) => {
-					_offer["requiredUserRecommendations"].map((obj) => {
+					coll.map((obj) => {
 						if (incomingRecommendations.some((obj2) => { return obj2["escrowedRequestId"] === null && (obj2["providingUserId"] === obj["requiredRecommendUserId"] || _userId === obj["requiredRecommendUserId"]); }))
 							count++;
 					});
 
-					resolve((count === _offer["requiredUserRecommendations"].length));							
+					resolve((count === coll.length));
 				});
 			});
 		})

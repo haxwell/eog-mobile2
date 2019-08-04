@@ -238,14 +238,19 @@ export class OfferEditPage {
 	}
 
 	offerHasNoKeywords() {
-		let model = this._offerModelService.get(this.offerId);
-		return model["keywords"] === undefined || model["keywords"].length === 0;
+		let _model = this._offerModelService.get(this.offerId);
+		return _model["keywords"] === undefined || _model["keywords"].length === 0;
+	}
+
+	getKeywords() {
+		let _model = this._offerModelService.get(this.offerId);
+		return _model['keywords'];
 	}
 
 	getOfferOwnerName() {
-		let model = this._offerModelService.get(this.offerId);
+		let _model = this._offerModelService.get(this.offerId);
 
-		return model["directionallyOppositeUser"] !== undefined ? model["directionallyOppositeUser"]["realname"] : "";
+		return _model["directionallyOppositeUser"] !== undefined ? _model["directionallyOppositeUser"]["realname"] : "";
 	}
 
 	isSaveBtnEnabled() {

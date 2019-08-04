@@ -80,7 +80,7 @@
 				</span>
 			</ion-item>
 			<ion-item *ngIf="!offerHasNoKeywords()">
-				<span *ngFor="let item of model.keywords">
+				<span *ngFor="let item of getKeywords()">
 					<span class="blockItem" (press)="onIndividualKeywordPress()">{{item.text}}</span>
 				</span>
 			</ion-item>
