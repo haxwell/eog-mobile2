@@ -35,7 +35,6 @@ export class OfferPage {
 	// model = undefined;
 	offerId = undefined;
 	
-	thumbnailUrl = undefined;
 	requestMsgs = undefined;
 	_isRequestBtnVisible = undefined;
 	callback = undefined; // TODO: necessary?
@@ -66,10 +65,6 @@ export class OfferPage {
 		self._route.params.subscribe((params) => {
 			self.offerId = params['offerId'];
 
-			// initialize the thumbnail url param
-			let photoType = "offer";
-			self.thumbnailUrl = environment.apiUrl + "/api/resource/" + photoType + "/" + self.offerId
-			
 			self._offerModelService.init();
 			self._offerMetadataService.init();
 			self._offerMetadataService.getMetadataValue(
@@ -81,6 +76,10 @@ export class OfferPage {
 
 			self.requestMsgs = self._offerDetailService.getOfferDetailMessages(self._offerModelService.get(self.offerId));
 		})
+	}
+
+	ionViewWillEnter() {
+		this._offerModelService.bumpTheThumbnailCounter();
 	}
 
 	getModel() {
@@ -239,6 +238,6 @@ export class OfferPage {
 	}
 
 	getThumbnailImage() {
-		return this.thumbnailUrl;
+		return this._offerModelService.getThumbnailImagePath(this.offerId);
 	}
 }

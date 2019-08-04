@@ -319,4 +319,14 @@ export class OfferModelService {
 	isOfferImageChanged(model) {
 		return model["imageFileURI_OriginalValue"] != model["imageFileURI"];
 	}
+
+	_counter = 0;
+	bumpTheThumbnailCounter() {
+		this._counter++;
+	}
+
+	getThumbnailImagePath(offerId) {
+		return environment.apiUrl + "/api/resource/offer/" + offerId + '/sendAnew/' + this._counter; 
+	}	
+
 }

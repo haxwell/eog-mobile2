@@ -108,6 +108,10 @@ export class OfferEditPage {
 		})
 	}
 
+	ionViewWillEnter() {
+		this._offerModelService.bumpTheThumbnailCounter();
+	}
+
 	onCancelBtnTap(evt) {
 		let self = this;
 		if (!this.isDirty()) {
