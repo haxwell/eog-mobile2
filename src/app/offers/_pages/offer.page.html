@@ -38,82 +38,88 @@
 		</ion-row>
 
 		<ion-row>
-			<ion-item lines="none">
-				<span class="displayOfferSectionHeader">Keywords</span>
-			</ion-item>
-		</ion-row>			
-		<ion-row>
-			<ion-item>
-				<span *ngFor="let item of getModel()['keywords']">
-					<span class="blockItem" >{{item.text}}</span>
-				</span>
-			</ion-item>
+			<ion-card [ngStyle]="{'width':'100%'}">
+				<ion-card-header>
+					<div class="pointsSectionDescription">
+						<h4>Keywords</h4>
+					</div>
+				</ion-card-header>
+				<ion-card-content>
+					<span *ngFor="let item of getModel()['keywords']">
+						<span class="blockItem" >{{item.text}}</span>
+					</span>
+				</ion-card-content>
+			</ion-card>
 		</ion-row>
 		
 		<ion-row>
-			<ion-item lines="none">
-				<span class="displayOfferSectionHeader">Requirements</span>
-			</ion-item>
-		</ion-row>			
-		<ion-row>
-			<ion-item>
-				<span class="pointsSpan">{{ getRequiredPointsQuantityString() }}</span>
-				<users-line-item *ngFor="let user of getRequiredRecommendationUserObjects()" [item]="user" [clickthru]="false"></users-line-item>
-			</ion-item>
+			<ion-card [ngStyle]="{'width':'100%'}">
+				<ion-card-header>
+					<div class="pointsSectionDescription">
+						<h4>Requirements</h4>
+					</div>
+				</ion-card-header>
+				<ion-card-content>
+					<ion-item>
+						<span class="pointsSpan">{{ getRequiredPointsQuantityString() }}</span>
+					</ion-item>
+					<ion-item *ngFor="let user of getRequiredRecommendationUserObjects()">
+						<users-line-item [item]="user" [clickthru]="false"></users-line-item>
+					</ion-item>
+				</ion-card-content>
+			</ion-card>
 		</ion-row>
 
 		<ion-row>
-			<ion-item lines="none">
-				<!-- TODO: This should be a 'more' link that disappears when clicked, revealing the details, and then 
-					reappers when the details are clicked, showing the 'more' link again. -->
-				<span class="displayOfferSectionHeader">Statistics</span>
-			</ion-item>
-		</ion-row>			
-		<ion-row>
-			<ion-item>
-				<span *ngIf="hasStatistics()">
-					<span>{{getFirstFulfilledText()}}<br/></span>
-					<span>{{getTotalPointsEarned()}}<br/></span>
-					<span>{{getNumberOfComplaints()}}<br/></span>
-				</span>
-				<span *ngIf="!hasStatistics()">
-					<span>This offer is new! It doesn't have statistics yet.<br/></span>
-				</span>
-			</ion-item>		
+			<ion-card [ngStyle]="{'width':'100%'}">
+				<ion-card-header>
+					<div class="pointsSectionDescription">
+						<h4>Statistics</h4>
+					</div>
+				</ion-card-header>
+				<ion-card-content>
+					<ion-item>
+						<span *ngIf="hasStatistics()">
+							<span>{{getFirstFulfilledText()}}<br/></span>
+							<span>{{getTotalPointsEarned()}}<br/></span>
+							<span>{{getNumberOfComplaints()}}<br/></span>
+						</span>
+						<span *ngIf="!hasStatistics()">
+							<span>This offer is new! It doesn't have statistics yet.<br/></span>
+						</span>
+					</ion-item>		
+				</ion-card-content>
+			</ion-card>
 		</ion-row>
 
 		<ion-row *ngIf="isRequestMessageAvailable()">
-			<ion-item lines="none">
-				<div>
-					<span class="displayOfferSectionHeader">Messages</span>
-				</div>
-			</ion-item>
-			<br/>
-			<ion-item lines="none">
-				<span *ngFor="let item of getStillMoreTimeLeftMessages()" class="redColorMsg" >
-					{{item.msg}}<br/>
-				</span>
-			</ion-item>
-			<ion-item lines="none">
-				<span *ngFor="let item of getAlreadyRequestedRequestMessages()" class="redColorMsg" >
-					{{item.msg}}<br/>
-				</span>
-			</ion-item>
-			<ion-item lines="none">
-				<span *ngFor="let item of getPointsRequestMessages()" class="redColorMsg" >
-					You need {{item.msg}}.<br/>
-				</span>
-			</ion-item>
-			<ion-item lines="none">
-				<span *ngIf="isRecommendationsRequestMessageAvailable()">
-					You need recommendations from:
-						<ul>
-							<li *ngFor="let item of getRecommendationsRequestMessages()" class="redColorMsg" >
-								{{item.msg}}<br/>
-							</li>
-						</ul>
-				</span>
-			</ion-item>
+			<ion-card [ngStyle]="{'width':'100%'}">
+				<ion-card-header>
+					<div class="pointsSectionDescription">
+						<h4>Messages</h4>
+					</div>
+				</ion-card-header>
+				<ion-card-content>
+					<span *ngFor="let item of getStillMoreTimeLeftMessages()" class="redColorMsg" >
+						{{item.msg}}<br/>
+					</span>
+
+					<span *ngFor="let item of getAlreadyRequestedRequestMessages()" class="redColorMsg" >
+						{{item.msg}}<br/>
+					</span>
+					<span *ngFor="let item of getPointsRequestMessages()" class="redColorMsg" >
+						You need {{item.msg}}.<br/>
+					</span>
+					<span *ngIf="isRecommendationsRequestMessageAvailable()">
+						You need recommendations from:
+							<ul>
+								<li *ngFor="let item of getRecommendationsRequestMessages()" class="redColorMsg" >
+									{{item.msg}}<br/>
+								</li>
+							</ul>
+					</span>
+				</ion-card-content>
+			</ion-card>
 		</ion-row>
 		
 		<p></p>
