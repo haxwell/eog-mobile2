@@ -193,6 +193,10 @@ export class ProfileService {
   		return list.join('&');
 	}
 
+	
+	// THIS IS USED OUTSIDE OF THE NORMAL MODEL FUNCTIONALITY OF THIS SERVICE.
+	//  It can be abstracted elsewhere.
+
 	_counter = 0;
 	bumpTheThumbnailCounter() {
 		this._counter++;

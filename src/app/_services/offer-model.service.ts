@@ -49,6 +49,23 @@ export class OfferModelService {
 		return rtn;
 	}
 
+	waitingPromise(offerId) {
+		let self = this;
+		return new Promise((resolve, reject) => {
+
+			function to() {
+				setTimeout(() => {
+					if (self.modelCache[offerId] !== undefined && self.modelCache[offerId]['directionallyOppositeUser'])
+						resolve(self.modelCache[offerId]);
+					else
+						to();
+				}, 600);
+			}
+
+			to();
+		})
+	}
+
 	get(offerId) {
 		let self = this;
 
@@ -125,18 +142,26 @@ export class OfferModelService {
 		return self.modelCache[offerId];
 	}
 
+	hasRequiredRecommendationUserObjects(offerId) {
+		let _model = this.get(offerId);
+		return (_model["requiredUserRecommendations"] && _model["requiredUserRecommendations"].length > 0 && _model["requiredUserRecommendations"].length === this.requiredUserObjectsLoadedCount);
+	}
+
 	getRequiredRecommendationUserObjects(offerId) {
 		let rtn = undefined;
 
 		let _model = this.get(offerId);
 
-		if (_model["requiredUserRecommendations"] && _model["requiredUserRecommendations"].length === this.requiredUserObjectsLoadedCount) {
+		if (_model["requiredUserRecommendations"] && _model["requiredUserRecommendations"].length > 0 && _model["requiredUserRecommendations"].length === this.requiredUserObjectsLoadedCount) {
 			rtn = [];
 
 			_model["requiredUserRecommendations"].forEach((req) => {
 				rtn.push(req["userObj"]);
 			})
 		}
+
+		console.log("11111111111")
+		console.log(rtn)
 
 		return rtn;
 	}	

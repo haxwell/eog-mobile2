@@ -58,7 +58,7 @@
 		<ion-row>
 			<ion-item>
 				<span class="pointsSpan">{{ getRequiredPointsQuantityString() }}</span>
-				<users-line-item *ngFor="let user of getRequiredRecommendationUserObjects()" item="user" clickthru="false"></users-line-item>
+				<users-line-item *ngFor="let user of getRequiredRecommendationUserObjects()" [item]="user" [clickthru]="false"></users-line-item>
 			</ion-item>
 		</ion-row>
 

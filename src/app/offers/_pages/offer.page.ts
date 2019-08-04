@@ -35,7 +35,8 @@ export class OfferPage {
 	// model = undefined;
 	offerId = undefined;
 	
-	requestMsgs = undefined;
+	requestMsgs = [];
+
 	_isRequestBtnVisible = undefined;
 	callback = undefined; // TODO: necessary?
 	requiredUserObjectsLoadedCount = 0; 
@@ -74,7 +75,9 @@ export class OfferPage {
 						self._isRequestBtnVisible = bool;
 					});
 
-			self.requestMsgs = self._offerDetailService.getOfferDetailMessages(self._offerModelService.get(self.offerId));
+			self._offerModelService.waitingPromise(self.offerId).then((offer) => {
+				self.requestMsgs = self._offerDetailService.getOfferDetailMessages(offer);
+			})
 		})
 	}
 
@@ -133,6 +136,10 @@ export class OfferPage {
 			rtn += "s";
 
 		return rtn;
+	}
+
+	hasRequiredRecommendationUserObjects() {
+		return this._offerModelService.hasRequiredRecommendationUserObjects(this.offerId);
 	}
 
 	getRequiredRecommendationUserObjects() {

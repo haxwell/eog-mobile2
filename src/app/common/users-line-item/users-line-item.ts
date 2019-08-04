@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Events } from '@ionic/angular';
 
-import { PictureService } from '../../_services/picture.service'
+import { ProfileService } from '../../_services/profile.service'
 
 import { Constants } from '../../../_constants/constants'
 import { environment } from '../../../_environments/environment';
@@ -24,7 +24,7 @@ export class UsersLineItem {
 	constructor(private _location: Location,
 				private _route: ActivatedRoute,
 				private _router: Router,
-				private _pictureService: PictureService,
+				private _profileService: ProfileService,
 				private _constants : Constants,
                 _events: Events) {
 
