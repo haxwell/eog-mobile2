@@ -144,7 +144,7 @@ export class OfferModelService {
 
 	hasRequiredRecommendationUserObjects(offerId) {
 		let _model = this.get(offerId);
-		return (_model["requiredUserRecommendations"] && _model["requiredUserRecommendations"].length > 0 && _model["requiredUserRecommendations"].length === this.requiredUserObjectsLoadedCount);
+		return (_model["requiredUserRecommendations"] && _model["requiredUserRecommendations"].length > 0);
 	}
 
 	getRequiredRecommendationUserObjects(offerId) {
@@ -152,16 +152,13 @@ export class OfferModelService {
 
 		let _model = this.get(offerId);
 
-		if (_model["requiredUserRecommendations"] && _model["requiredUserRecommendations"].length > 0 && _model["requiredUserRecommendations"].length === this.requiredUserObjectsLoadedCount) {
+		if (_model["requiredUserRecommendations"] && _model["requiredUserRecommendations"].length > 0) {
 			rtn = [];
 
 			_model["requiredUserRecommendations"].forEach((req) => {
 				rtn.push(req["userObj"]);
 			})
 		}
-
-		console.log("11111111111")
-		console.log(rtn)
 
 		return rtn;
 	}	

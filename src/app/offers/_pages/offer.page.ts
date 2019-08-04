@@ -68,15 +68,16 @@ export class OfferPage {
 
 			self._offerModelService.init();
 			self._offerMetadataService.init();
-			self._offerMetadataService.getMetadataValue(
-				self._offerModelService.get(self.offerId), 
-				self._constants.FUNCTION_KEY_OFFER_IS_REQUESTABLE)
-					.then((bool) => { 
-						self._isRequestBtnVisible = bool;
-					});
 
 			self._offerModelService.waitingPromise(self.offerId).then((offer) => {
 				self.requestMsgs = self._offerDetailService.getOfferDetailMessages(offer);
+
+				self._offerMetadataService.getMetadataValue(offer, self._constants.FUNCTION_KEY_OFFER_IS_REQUESTABLE)
+					.then((bool) => { 
+						console.log("isRequestBtnVisible ==> " + bool)
+						self._isRequestBtnVisible = bool;
+					});
+
 			})
 		})
 	}
