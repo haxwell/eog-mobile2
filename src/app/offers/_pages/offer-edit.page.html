@@ -36,73 +36,69 @@
 			</ion-item>
 		</ion-row>
 		<ion-row>
-			<span class="displayOfferSectionHeader">
-				Rules
-				<div >
-					<ion-item lines="none">
-						<ion-button (click)="onNewRuleBtnTap($event)">
-							<ion-icon name="add"></ion-icon>
-						</ion-button>
-					</ion-item>
-				</div>
-			</span>
-
-			<ion-item>
-				<span *ngIf="getRequiredPointsQuantity() === 0">
-					Rules describe who can request this offer from you. Set some points!
-				</span>
-				<span *ngIf="getRequiredPointsQuantity() > 0">
-					<i>This offer requires {{getRequiredPointsQuantityString()}}</i>
-					<span *ngIf="areRecommendationsRequired()">
-						<i> and the following recommendations: </i><br/>
-						<span class="blockItem" *ngFor="let rec of getRequiredUserRecommendations()">
-							{{rec.userObj.realname}}<br/>
+			<ion-card [ngStyle]="{'width':'100%'}">
+				<ion-card-header>
+					<div class="pointsSectionDescription">
+						<h4>Rules</h4>
+					</div>
+				</ion-card-header>
+				<ion-card-content>
+					<ion-button (click)="onNewRuleBtnTap($event)" [ngStyle]="{'width':'100%'}">
+						ADD
+					</ion-button>
+					<span *ngIf="getRequiredPointsQuantity() === 0">
+						Rules describe who can request this offer from you. Set some points!
+					</span>
+					<span *ngIf="getRequiredPointsQuantity() > 0">
+						<i>This offer requires {{getRequiredPointsQuantityString()}}</i>
+						<span *ngIf="areRecommendationsRequired()">
+							<i> and the following recommendations: </i><br/>
+							<span class="blockItem" *ngFor="let rec of getRequiredUserRecommendations()">
+								{{rec.userObj.realname}}<br/>
+							</span>
 						</span>
 					</span>
-				</span>
-			</ion-item>
+				</ion-card-content>
+			</ion-card>
 		</ion-row>
-
 		<ion-row>
-			<span class="displayOfferSectionHeader">
-				Keywords
-				<div >
-					<ion-item lines="none">
-						<ion-button (click)="onAddKeywordBtnTap($event)">
-							<ion-icon name="add"></ion-icon>
-						</ion-button>
-					</ion-item>
-				</div>
-			</span>
-			<ion-item *ngIf="offerHasNoKeywords()">
-				<span >
-					Keywords are descriptive words and phrases. Add some that describe this Offer!
-				</span>
-			</ion-item>
-			<ion-item *ngIf="!offerHasNoKeywords()">
-				<span *ngFor="let item of getKeywords()">
-					<span class="blockItem" (press)="onIndividualKeywordPress()">{{item.text}}</span>
-				</span>
-			</ion-item>
+			<ion-card [ngStyle]="{'width':'100%'}">
+				<ion-card-header>
+					<div class="pointsSectionDescription">
+						<h4>Keywords</h4>
+					</div>
+				</ion-card-header>
+				<ion-card-content>
+					<ion-button (click)="onAddKeywordBtnTap($event)" [ngStyle]="{'width':'100%'}">
+						ADD
+					</ion-button>
+					<span *ngIf="offerHasNoKeywords()">
+						Keywords are descriptive words and phrases. Add some that describe this Offer!
+					</span>
+					<span *ngFor="let item of getKeywords()">
+						<span class="blockItem" (press)="onIndividualKeywordPress()">{{item.text}}</span>
+					</span>
+
+				</ion-card-content>
+			</ion-card>
 		</ion-row>
-
 		<ion-row>
-			<span class="displayOfferSectionHeader">
-				Image (optional)
-				<div >
-					<ion-item lines="none">
-						<ion-button (click)="onThumbnailClick($event)">
-							<ion-icon name="add"></ion-icon>
-						</ion-button>
-					</ion-item>
-				</div>
-			</span>
-			<ion-item>
-				<div class="centered avatar">
-					<img class="avatar-in-a-list" [src]="getThumbnailImage()" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)"/>
-				</div>
-			</ion-item>
-		</ion-row>	
+			<ion-card [ngStyle]="{'width':'100%'}">
+				<ion-card-header>
+					<div class="pointsSectionDescription">
+						<h4>Image (optional)</h4>
+					</div>
+				</ion-card-header>
+				<ion-card-content>
+					<ion-button (click)="onThumbnailClick($event)" [ngStyle]="{'width':'100%'}">
+						ADD
+					</ion-button>
+					<div *ngIf="offerHasAnAssociatedImage()" class="centered avatar">
+						<img class="avatar-in-a-list" [src]="getThumbnailImage()" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)"/>
+					</div>
+				</ion-card-content>
+			</ion-card>
+		</ion-row>
 
 		<ion-row>
 			<ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap(true)">Save</ion-button>

@@ -539,4 +539,9 @@ export class OfferEditPage {
 			]
 		});
 	}
+
+	offerHasAnAssociatedImage() {
+		let model = this._offerModelService.get(this.offerId);
+		return model['hasAnAssociatedImage'] === true;
+	}
 }
