@@ -73,7 +73,12 @@ export class OfferModelService {
 			return { };
 
 		if (self.modelCache[offerId] === undefined) {
-			return self.initModel(offerId, self.modelCache[offerId]);
+			if (offerId === -1) {
+				self.modelCache[offerId] = self.getDefaultModel();
+				return self.modelCache[offerId];
+			} else {
+				return self.initModel(offerId, self.modelCache[offerId]);
+			}
 		} else {
 			return self.modelCache[offerId];
 		}

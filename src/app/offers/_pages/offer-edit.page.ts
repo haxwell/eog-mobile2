@@ -32,8 +32,6 @@ import { environment } from '../../../_environments/environment';
 
 export class OfferEditPage {
 
-	// model = {};
-
 	offerId = undefined;
 	callback = undefined;
 	new = false;
@@ -103,7 +101,7 @@ export class OfferEditPage {
 			} else {
 				console.log("editing new offer");
 				this.new = true;
-				// self.model = self._offerModelService.getDefaultModel();
+				self.offerId = -1;
 			}
 		})
 	}
@@ -333,19 +331,20 @@ export class OfferEditPage {
 
 	onNewRuleBtnTap(evt) {
 		let self = this;
-		let _model = this._offerModelService.get(this.offerId);
 
-		self.presentModal(RulePage, _model, {
+		self.presentModal(RulePage, self._offerModelService.get(self.offerId), {
 			propsObj: {
-				permitOnlyEditsToPoints: this.permitOnlyEditsToPoints
+				permitOnlyEditsToPoints: self.permitOnlyEditsToPoints
 			},
 			callbackFunc: 
 				(data) => {
 					if (data) {
+						let _model = self._offerModelService.get(this.offerId);
+
 						_model["requiredPointsQuantity"] = data["requiredPointsQuantity"];
 						_model["requiredUserRecommendations"] = data["requiredUserRecommendations"];
 
-						this.setDirty(true);
+						self.setDirty(true);
 					}
 				}
 		});

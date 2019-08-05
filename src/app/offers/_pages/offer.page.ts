@@ -32,7 +32,6 @@ import { environment } from '../../../_environments/environment';
 
 export class OfferPage {
 
-	// model = undefined;
 	offerId = undefined;
 	
 	requestMsgs = [];
