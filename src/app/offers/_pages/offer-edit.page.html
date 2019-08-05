@@ -46,6 +46,7 @@
 					<ion-button (click)="onNewRuleBtnTap($event)" [ngStyle]="{'width':'100%'}">
 						ADD
 					</ion-button>
+					<br/>
 					<span *ngIf="getRequiredPointsQuantity() === 0">
 						Rules describe who can request this offer from you. Set some points!
 					</span>
@@ -72,6 +73,7 @@
 					<ion-button (click)="onAddKeywordBtnTap($event)" [ngStyle]="{'width':'100%'}">
 						ADD
 					</ion-button>
+					<br/>
 					<span *ngIf="offerHasNoKeywords()">
 						Keywords are descriptive words and phrases. Add some that describe this Offer!
 					</span>
