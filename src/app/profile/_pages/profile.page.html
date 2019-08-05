@@ -2,8 +2,11 @@
 	<easyah-header></easyah-header>
 	<br/>
 	<ion-row >
-		<div class="centered page-header-row">
+		<div class="centered page-header-row" *ngIf="isCurrentUsersProfile()">
 			<h1 class="centered">Your Profile<br/></h1>
+		</div>
+		<div class="centered page-header-row" *ngIf="!isCurrentUsersProfile()">
+			<h1 class="centered">View A Profile<br/></h1>
 		</div>
 	</ion-row>
 </ion-header>
