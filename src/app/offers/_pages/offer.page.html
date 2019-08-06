@@ -9,7 +9,7 @@
 		<ion-row>
 			<div class="offerPageButtonHeader">
 				<ion-item lines="none">
-					<ion-button (click)="onGoBackBtnTap($event)">Go Back</ion-button>
+					<ion-button slot="start" (click)="onGoBackBtnTap($event)">Go Back</ion-button>
 					<ion-button slot="end" *ngIf="isCurrentUsersOffer()" (click)="onEditOfferBtnClick($event)">
 						Edit
 					</ion-button>
@@ -60,10 +60,10 @@
 					</div>
 				</ion-card-header>
 				<ion-card-content>
-					<ion-item>
+					<ion-item lines="none">
 						<span class="pointsSpan">{{ getRequiredPointsQuantityString() }}</span>
 					</ion-item>
-					<ion-item *ngFor="let user of getRequiredRecommendationUserObjects()">
+					<ion-item lines="none" *ngFor="let user of getRequiredRecommendationUserObjects()">
 						<users-line-item [item]="user" [clickthru]="false"></users-line-item>
 					</ion-item>
 				</ion-card-content>
@@ -78,7 +78,7 @@
 					</div>
 				</ion-card-header>
 				<ion-card-content>
-					<ion-item>
+					<ion-item lines="none">
 						<span *ngIf="hasStatistics()">
 							<span>{{getFirstFulfilledText()}}<br/></span>
 							<span>{{getTotalPointsEarned()}}<br/></span>
