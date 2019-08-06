@@ -26,7 +26,6 @@ import { CancelRequestPage } from './cancel-request.page'
 export class RequestsIncomingView {
 
 	model = undefined;
-	dirty = false;
 	theOtherUser = undefined;
 
 	slideOpts = {
@@ -103,7 +102,6 @@ export class RequestsIncomingView {
 		}).then(() => {
 			this._requestsService.getIncomingRequestsForCurrentUser().then((data: Array<Object>) => {
 				self.model = data;
-				self.dirty = false;
 				self._loadingService.dismiss();
 			});
 		})
