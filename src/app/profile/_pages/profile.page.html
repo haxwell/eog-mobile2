@@ -83,13 +83,15 @@
 	</ion-row>
 
 	<br/>
-	<!-- <ion-row *ngIf="!isCurrentUsersProfile()"> -->
+
 	<ion-row>
-		<div class="wide centered">
-			<ion-list>
-				<div class="sectionHeader">
-					Profile Info
+		<ion-card [ngStyle]="{'width':'100%'}">
+			<ion-card-header>
+				<div class="pointsSectionDescription">
+					<h4>Profile Info</h4>
 				</div>
+			</ion-card-header>
+			<ion-card-content>
 				<table>
 					<tr>
 						<td class="ptsTdElement">
@@ -103,32 +105,34 @@
 						</td>
 					</tr>
 				</table>	
-			</ion-list>
-		</div>
+			</ion-card-content>
+		</ion-card>
 	</ion-row>
 
 	<ion-row *ngIf="isCurrentUsersProfile()">
-		<div class="wide centered">
-			<ion-list>
-				<div class="sectionHeader">
-					Communication Settings
+		<ion-card [ngStyle]="{'width':'100%'}">
+			<ion-card-header>
+				<div class="pointsSectionDescription">
+					<h4>Communication Settings</h4>
 				</div>
-				<br/>
+			</ion-card-header>
+			<ion-card-content>
 				When you accept an offer, the other user can see your [ {{getContactInfoVisibilityDisplayString()}} ].
-			</ion-list>
-		</div>
+			</ion-card-content>
+		</ion-card>
 	</ion-row>
 
 	<ion-row *ngIf="isCurrentUsersProfile()">
-		<div class="wide centered">
-			<ion-list>
-				<div class="sectionHeader">
-					Location Settings
+		<ion-card [ngStyle]="{'width':'100%'}">
+			<ion-card-header>
+				<div class="pointsSectionDescription">
+					<h4>Location Settings</h4>
 				</div>
-				<br/>
+			</ion-card-header>
+			<ion-card-content>
 				Your location is in, or near, [ {{getLocationDisplayString()}} ].
-			</ion-list>
-		</div>
+			</ion-card-content>
+		</ion-card>
 	</ion-row>
 
 </ion-content>
