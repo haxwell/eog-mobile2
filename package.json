@@ -46,8 +46,6 @@
     "core-js": "^2.5.4",
     "exif-js": "^2.3.0",
     "hammerjs": "^2.0.8",
-    "i": "^0.3.6",
-    "ionic-image-loader": "file:../../../ionic-image-loader/dist/ionic-image-loader",
     "ionic-plugin-keyboard": "^2.2.1",
     "moment": "^2.24.0",
     "phonegap-plugin-multidex": "^1.0.0",
