@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { AbstractTutorialPage } from '../abstract-tutorial.page'
 
 import { UserService } from '../../../app/_services/user.service';
-import { TutorialService } from '../../../app/_services/tutorial.service';
 
 @Component({
   selector: 'page-tutorial',
@@ -15,8 +14,7 @@ export class TutorialBasicConceptsPage extends AbstractTutorialPage {
 	
 	showThisTutorialNextTime = true;
 
-	constructor(private _userService: UserService,
-				private _tutorialService: TutorialService) {
+	constructor(private _userService: UserService) {
 		super();
 	}
 
