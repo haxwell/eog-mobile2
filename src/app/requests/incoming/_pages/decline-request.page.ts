@@ -8,8 +8,6 @@ import { DeclineReasonCodeService } from '../../../../app/_services/declined-rea
 
 import { environment } from '../../../../_environments/environment';
 
-import { switchMap } from 'rxjs/operators';
-
 @Component({
   selector: 'page-requests-incoming-decline',
   templateUrl: 'decline-request.page.html',

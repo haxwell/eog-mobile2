@@ -18,9 +18,8 @@ import { UserService } from '../../../app/_services/user.service'
 
 import { ProfileEditPage } from './profile-edit.page'
 
-import * as EXIF from 'exif-js';
+// import * as EXIF from 'exif-js';
 import * as Moment from 'moment';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'page-profile',
@@ -185,12 +184,12 @@ export class ProfilePage {
 		return this._pictureService.getOrientationCSS(this);
 	}
 
-	loaded(evt) {
+	/* loaded(evt) {
 		let self = this;
 		EXIF.getData(evt.target, function() {
 			self.imageOrientation = EXIF.getTag(this, "Orientation");
 		});
-	}
+	} */
 
 	getAllTimePointCount() {
 		let val = this._profileService.getModel(this.userId)["allTimePointCount"];

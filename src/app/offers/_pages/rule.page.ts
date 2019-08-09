@@ -2,8 +2,6 @@ import { Component, Input } from '@angular/core';
 
 import { SearchService } from '../../../app/_services/search.service';
 
-import { switchMap } from 'rxjs/operators';
-
 @Component({
   selector: 'page-offer-edit-rule',
   templateUrl: 'rule.page.html'

@@ -8,8 +8,6 @@ import { environment } from '../../../../_environments/environment';
 
 import { Constants } from '../../../../_constants/constants';
 
-import { switchMap } from 'rxjs/operators';
-
 @Component({
   selector: 'page-requests-incoming-complete',
   templateUrl: 'complete-request.page.html'

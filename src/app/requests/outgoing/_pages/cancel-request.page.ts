@@ -4,8 +4,6 @@ import { Events } from '@ionic/angular';
 
 import { RequestsService } 	from '../../../../app/_services/requests.service';
 
-import { switchMap } from 'rxjs/operators';
-
 @Component({
   selector: 'page-requests-outgoing-cancel',
   templateUrl: 'cancel-request.page.html'

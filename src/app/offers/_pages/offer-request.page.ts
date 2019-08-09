@@ -13,8 +13,6 @@ import { UserPreferencesService } 	from '../../../app/_services/user-preferences
 
 import { OutgoingRequestMadeTutorialPage } from '../../../app/tutorials/tutorial-outgoing-request-made/outgoing-request-made-tutorial.page'
 
-import { switchMap } from 'rxjs/operators';
-
 @Component({
   selector: 'page-search-request',
   templateUrl: 'offer-request.page.html',

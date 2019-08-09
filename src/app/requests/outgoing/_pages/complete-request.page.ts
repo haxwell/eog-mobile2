@@ -4,8 +4,6 @@ import { RequestsService } 	from '../../../../app/_services/requests.service';
 
 import { Constants } from '../../../../_constants/constants';
 
-import { switchMap } from 'rxjs/operators';
-
 @Component({
   selector: 'page-requests-outgoing-complete',
   templateUrl: 'complete-request.page.html'

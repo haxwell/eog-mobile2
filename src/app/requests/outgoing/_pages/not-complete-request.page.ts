@@ -2,8 +2,6 @@ import { Component, Input } from '@angular/core';
 
 import { RequestsService } 	from '../../../../app/_services/requests.service';
 
-import { switchMap } from 'rxjs/operators';
-
 @Component({
   selector: 'page-requests-outgoing-not-complete',
   templateUrl: 'not-complete-request.page.html'
