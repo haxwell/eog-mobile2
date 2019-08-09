@@ -20,8 +20,12 @@ export class EasyahHeader {
 	}
 
 	onMenuBtnClick(evt) {
-		this._menuCtrl.enable(true, "main");
-		this._menuCtrl.open("main");
+		this._menuCtrl.enable(true, "main").then((data) => {
+			console.log("YO! We're in th eheader on menubtnclick handler!")
+			this._menuCtrl.open("main").then((b) => {
+				console.log("ghjghjghj " + b)
+			});
+		});
 	}
 
 	onSearchBtnTap(evt) {
