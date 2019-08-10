@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpHeaders } from '@angular/common/http';
+import { Events } from '@ionic/angular'
 
 import { Platform, MenuController } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -18,9 +19,10 @@ import { UnseenChangesIndicatorService } from './_services/unseen-changes-indica
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-
   exitFunction = undefined;
   isAndroidFunction = undefined;
+
+  menuOptions = [ ];
 
   constructor(private _location: Location,
     private _router: Router,
@@ -34,6 +36,7 @@ export class AppComponent {
     private _alertService: AlertService,
     private _profileService: ProfileService,
     private _uciService: UnseenChangesIndicatorService,
+    private _events: Events
   ) {
     this.initializeApp();
   }
@@ -48,11 +51,19 @@ export class AppComponent {
       return this.platform.is('android');
     }
 
+    let self = this
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
 
       this.statusBar.styleDefault();
+
+      self._events.subscribe('app:login', (currentUser) => {
+        console.log("app component got app:login event")
+        self.setMenuOptions(currentUser['id']);
+
+        console.log(self.menuOptions);
+      })
     });
   }
 
@@ -198,4 +209,54 @@ export class AppComponent {
     return this._uciService.areNotificationUnseenChanges();
   }
 
+  setMenuOptions(userId) {
+
+    this.menuOptions = [
+      {
+        title: 'Home',
+        url: '/home',
+        icon: 'home'
+      },
+      {
+        title: 'People Asked You',
+        url: '/requests/incoming',
+        icon: 'list'
+      },
+      {
+        title: 'You Asked People',
+        url: '/requests/outgoing',
+        icon: 'home'
+      },
+      {
+        title: 'About You',
+        url: '/profile/' + userId,
+        icon: 'home'
+      },
+      {
+        title: 'Your Offers',
+        url: '/offers',
+        icon: 'home'
+      },
+      {
+        title: 'Your Recommendations',
+        url: '/recommendations/incoming',
+        icon: 'home'
+      },
+      {
+        title: 'Your Keywords',
+        url: '/keywords',
+        icon: 'home'
+      },
+      {
+        title: 'Notifications',
+        url: '/notifications',
+        icon: 'home'
+      },
+      {
+        title: 'About Easyah',
+        url: '/about-easyah',
+        icon: 'home'
+      }
+      ]
+  }
 }

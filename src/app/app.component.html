@@ -1,27 +1,47 @@
 
 <ion-app>
-  <ion-menu side="start" contentId="menuContent" menuId="main" *ngIf="isMenuCoolToShow()" (ionWillOpen)="handleMenuWillOpenEvent()">
-    <ion-content id="menuContent">
-      <ion-list>
-            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('HomePage')}" (click)="onHomeClicked()">Home</ion-button>
-            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('RequestsIncomingView')}" (click)="onPeopleAskedYouClicked()">People asked you... <ion-icon [hidden]="!areIncomingUnseenChanges()" name="bulb"></ion-icon></ion-button>
-            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('RequestsOutgoingView')}" (click)="onYouAskedPeopleClicked()">You asked people... <ion-icon [hidden]="!areOutgoingUnseenChanges()" name="bulb"></ion-icon></ion-button>
+  <ion-split-pane>
+   <ion-menu menuId="main" type="overlay" (ionWillOpen)="handleMenuWillOpenEvent()"> 
+    <!-- ion-menu side="start" contentId="menuContent" menuId="main" *ngIf="isMenuCoolToShow()" (ionWillOpen)="handleMenuWillOpenEvent()" -->
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content id="menuContent">
+        <ion-list>
+          <ion-menu-toggle auto-hide="false" *ngFor="let mo of menuOptions">
+            <ion-item [routerDirection]="'root'" [routerLink]="[mo.url]">
+              <ion-icon slot="start" [name]="mo.icon"></ion-icon>
+              <ion-label>
+                {{mo.title}}
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
 
-            <!-- Empty menu item, for spacing -->
-            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('ProfilePage')}" (click)="onShowProfile()"></ion-button>
+          <!--
+              <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('HomePage')}" (click)="onHomeClicked()">Home</ion-button>
+              <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('RequestsIncomingView')}" (click)="onPeopleAskedYouClicked()">People asked you... <ion-icon [hidden]="!areIncomingUnseenChanges()" name="bulb"></ion-icon></ion-button>
+              <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('RequestsOutgoingView')}" (click)="onYouAskedPeopleClicked()">You asked people... <ion-icon [hidden]="!areOutgoingUnseenChanges()" name="bulb"></ion-icon></ion-button>
+-->
+              <!-- Empty menu item, for spacing -->
+   <!--           <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('ProfilePage')}" (click)="onShowProfile()"></ion-button>
 
-            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('ProfilePage')}" (click)="onShowProfile()">About You</ion-button>
-            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('OfferListPage')}" (click)="onYourOffersClicked()">Your Offers</ion-button>
-            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('RecommendationListPage')}" (click)="onYourRecommendationsClicked()">Your Recommendations</ion-button>
-            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('KeywordListPage')}" (click)="onYourKeywordsClicked()">Your Keywords</ion-button>
-            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('NotificationListPage')}" (click)="onYourNotificationsClicked()">Notifications <ion-icon [hidden]="!areNotificationUnseenChanges()" name="bulb"></ion-icon></ion-button>
+              <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('ProfilePage')}" (click)="onShowProfile()">About You</ion-button>
+              <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('OfferListPage')}" (click)="onYourOffersClicked()">Your Offers</ion-button>
+              <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('RecommendationListPage')}" (click)="onYourRecommendationsClicked()">Your Recommendations</ion-button>
+              <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('KeywordListPage')}" (click)="onYourKeywordsClicked()">Your Keywords</ion-button>
+              <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('NotificationListPage')}" (click)="onYourNotificationsClicked()">Notifications <ion-icon [hidden]="!areNotificationUnseenChanges()" name="bulb"></ion-icon></ion-button>
 
-            <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('AboutEasyahPage')}" (click)="onAboutEasyahClicked()">About Easyah </ion-button>
+              <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('AboutEasyahPage')}" (click)="onAboutEasyahClicked()">About Easyah </ion-button>
 
-            <ion-button class="mainMenuBtn" expand="full" fill="clear" [hidden]="!isLogoutBtnVisible()" (click)="onLogoutBtnClick()">Log Out</ion-button>
-        </ion-list>
-      </ion-content>
-  </ion-menu>
+              <ion-button class="mainMenuBtn" expand="full" fill="clear" [hidden]="!isLogoutBtnVisible()" (click)="onLogoutBtnClick()">Log Out</ion-button>
+            -->
 
-  <ion-router-outlet main></ion-router-outlet>
+          </ion-list>
+        </ion-content>
+    </ion-menu>
+
+    <ion-router-outlet main></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>
