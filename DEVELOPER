@@ -1,4 +1,10 @@
 *******************************
+   O U R  S T A C K  I N F O
+*******************************
+
+SMS services provided by Plivo.
+
+*******************************
    A N D R O I D
 *******************************
 
@@ -40,6 +46,8 @@ UNIT TESTS
 
 BUILDING XCODE RELEASE
 ------
+ionic cordova resources                 # generate the splash screen image, among others
 ionic cordova build --release ios       # build ./platforms/ios/Easyah.xcworkspace which can be imported to XCode to build AppStore binary
+
 
 CDVPlugin.h missing - https://stackoverflow.com/questions/10714600/cdvplugin-h-file-not-found-in-cordova-as-component-cleaver
