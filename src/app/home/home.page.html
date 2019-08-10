@@ -61,7 +61,7 @@
 			</ion-col -->
 		</ion-row>
 		<ion-row>
-			<ion-card>
+			<ion-card [ngStyle]="{'width':'100%'}">
 				<ion-card-header>
 					<div class="pointsSectionDescription">
 						<h4>Offers Recently Created By Others</h4>
@@ -70,6 +70,16 @@
 				<ion-card-content>
 					<other-peoples-offer-list [offers]="getMostRecentlyCreatedOffers()">
 					</other-peoples-offer-list>
+				</ion-card-content>
+			</ion-card>
+		</ion-row>
+
+		<ion-row>
+			<ion-card [ngStyle]="{'width':'100%'}">
+				<ion-card-content>
+					<ion-button (click)="onCreateOfferBtnClicked($event)" [ngStyle]="{'width':'100%'}">
+						Create Your Own Offer
+					</ion-button>
 				</ion-card-content>
 			</ion-card>
 		</ion-row>

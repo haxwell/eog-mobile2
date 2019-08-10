@@ -131,4 +131,8 @@ export class HomePage {
     onThumbnailImageClick() {
         this._router.navigate(['/profile/' + this._userService.getCurrentUser()["id"]]);
     }
+
+    onCreateOfferBtnClicked() {
+        this._router.navigate(['/offers/new'])
+    }
 }

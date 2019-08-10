@@ -51,7 +51,7 @@
 						Rules describe who can request this offer from you. Set some points!
 					</span>
 					<span *ngIf="getRequiredPointsQuantity() > 0">
-						<i>This offer requires {{getRequiredPointsQuantityString()}}</i>
+						<i>This offer will require {{getRequiredPointsQuantityString()}}</i>
 						<span *ngIf="areRecommendationsRequired()">
 							<i> and the following recommendations: </i><br/>
 							<span class="blockItem" *ngFor="let rec of getRequiredUserRecommendations()">
@@ -102,6 +102,7 @@
 			</ion-card>
 		</ion-row>
 
+		<br/>
 		<ion-row>
 			<ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap(true)">Save</ion-button>
 			<ion-button (click)="onCancelBtnTap()">Cancel</ion-button>

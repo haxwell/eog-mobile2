@@ -119,14 +119,14 @@ export class OfferEditPage {
 			this._eventSubscriberService.subscribe("ios-edit-offer-exit", (data) => {
 				data["clearDirtyFunc"]();
 				self.clearIOSExitEventSubscriptions();
-				self._location.back();
+				self._router.navigate(['/offers']); 
 			});
 
 			this._eventSubscriberService.subscribe("ios-edit-offer-save-then-exit", (data) => {
 				self.onSaveBtnTap(false);
 				data["clearDirtyFunc"]();
 				self.clearIOSExitEventSubscriptions();
-				self._location.back();
+				self._router.navigate(['/offers']); 
 			});
 
 			this._eventSubscriberService.subscribe("ios-confirm-exit-on-edit-offer", (data) => {
@@ -289,8 +289,9 @@ export class OfferEditPage {
 
 			self._pictureService.reset(self._constants.PHOTO_TYPE_OFFER, _model["id"]);
 
-			if (shouldCallNavCtrlPop)
-				self._location.back();
+			if (shouldCallNavCtrlPop) {
+				self._router.navigate(['/offers']); 
+			}
 
 		}).catch((err) => {
 			console.log("Error calling offerModelService::save()")
