@@ -20,26 +20,22 @@
 		</table>
 	</ion-item>
 
-	<ion-list *ngIf="!userHasNoNotifications()">
-		<!-- span>Swipe left to clear a notification.<br/><br/></span -->
+	<div *ngIf="!userHasNoNotifications()">
 		<ion-item-group *ngFor="let item of getNotifications()">
 			<ion-item-sliding  [class]="getTrack(item)" >
-				<ion-item>
-					<div class="centered noAvatar-wrapper">
-						<img class="noAvatar" [src]="getDOUserProfileImageFilepath(item['oppUserId'])"/>
-					</div>
+				<ion-item class="notif-item">
+					<img class="notif-img" [src]="getDOUserProfileImageFilepath(item['oppUserId'])"/>
 
-					<span >
+					<div class="notif-ion-item-content-div">
 						<span class="howLongAgo">{{item.howLongAgo}}</span><span class="notificationMsg">{{item.message}}</span>
-					</span>
+					</div>
 				</ion-item>
 				<ion-item-options side="start">
 					<ion-item-option (click)="onClearIndividualNotification(item)">Clear</ion-item-option>
 				</ion-item-options>
-
 			</ion-item-sliding>
 		</ion-item-group>
-	</ion-list>
+	</div>
 
 </ion-content>
 
