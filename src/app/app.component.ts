@@ -220,42 +220,42 @@ export class AppComponent {
       {
         title: 'People Asked You',
         url: '/requests/incoming',
-        icon: 'list'
+        icon: 'arrow-round-forward'
       },
       {
         title: 'You Asked People',
         url: '/requests/outgoing',
-        icon: 'home'
+        icon: 'arrow-round-back'
       },
       {
         title: 'About You',
         url: '/profile/' + userId,
-        icon: 'home'
+        icon: 'body'
       },
       {
         title: 'Your Offers',
         url: '/offers',
-        icon: 'home'
+        icon: 'heart-half'
       },
       {
         title: 'Your Recommendations',
         url: '/recommendations/incoming',
-        icon: 'home'
+        icon: 'ribbon'
       },
       {
         title: 'Your Keywords',
         url: '/keywords',
-        icon: 'home'
+        icon: 'git-commit'
       },
       {
         title: 'Notifications',
         url: '/notifications',
-        icon: 'home'
+        icon: 'flash'
       },
       {
         title: 'About Easyah',
         url: '/about-easyah',
-        icon: 'home'
+        icon: 'help-circle-outline'
       }
       ]
   }
