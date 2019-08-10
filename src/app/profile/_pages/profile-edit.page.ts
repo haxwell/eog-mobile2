@@ -519,6 +519,8 @@ export class ProfileEditPage {
 			})
 
 		}).catch((error) => {
+			self._loadingService.dismiss();
+
 			self._alertService.show({
 				header: 'Hmmm..',
 				message: "Easyah could not read your device's location. Wanna just tell us where you are?",
@@ -534,7 +536,7 @@ export class ProfileEditPage {
     			buttons: [{
       				text: 'Grr. No.',
       				handler: (data) => {
-      					self._loadingService.dismiss();
+      					// self._loadingService.dismiss();
       				}
     			}, {
       				text: 'Here I am!',
@@ -553,7 +555,7 @@ export class ProfileEditPage {
 									buttons: [
 										{
 											text: 'OK', role: 'cancel', handler: () => {
-												self._loadingService.dismiss();
+												// self._loadingService.dismiss();
 											}
 										}
 									]
@@ -566,7 +568,7 @@ export class ProfileEditPage {
 									buttons: [
 										{
 											text: 'OK', role: 'cancel', handler: () => {
-												self._loadingService.dismiss();
+												// self._loadingService.dismiss();
 											}
 										}
 									]
