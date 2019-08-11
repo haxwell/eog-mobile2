@@ -75,13 +75,6 @@
 			</ion-row>		
 	</ion-grid>
 
-	<ion-row *ngIf="!isCurrentUsersProfile()">
-		<div class="centered">
-			<ion-button [disabled]="!isSendPointBtnAvailable()" (click)="onSendPointBtnTap($event)">Send Point</ion-button>
-			<ion-button [disabled]="!isSendRecommendBtnAvailable()" (click)="onSendRecommendationBtnTap($event)">Send Recommendation</ion-button>
-		</div>
-	</ion-row>
-
 	<br/>
 
 	<ion-row>
@@ -107,6 +100,38 @@
 				</table>	
 			</ion-card-content>
 		</ion-card>
+	</ion-row>
+
+	<ion-row *ngIf="!isCurrentUsersProfile()">
+		<ion-card [ngStyle]="{'width':'100%'}">
+			<ion-card-content *ngIf="isSendPointBtnAvailable()">
+				Sending a point says, Thanks! You can send many points over time.
+
+				<ion-button (click)="onSendPointBtnTap($event)">Send Point</ion-button>
+			</ion-card-content>
+			<ion-card-content *ngIf="!isSendPointBtnAvailable()">
+				Sending a point says, Thanks! You can send a point about once a week.
+
+				<ion-button [disabled]="true" (click)="onSendPointBtnTap($event)">Send Point</ion-button>
+			</ion-card-content>
+		</ion-card>
+
+	</ion-row>
+
+	<ion-row *ngIf="!isCurrentUsersProfile()">
+		<ion-card [ngStyle]="{'width':'100%'}">
+			<ion-card-content *ngIf="isSendRecommendBtnAvailable()">
+				Sending a recommendation is like giving your stamp of approval. Others can see it, and be more confident in the person you are recommending.
+
+				<ion-button (click)="onSendRecommendationBtnTap($event)">Send Recommendation</ion-button>
+			</ion-card-content>
+			<ion-card-content *ngIf="!isSendRecommendBtnAvailable()">
+				Sending a recommendation is giving your stamp of approval. You have already sent one to this person. They must use it before you can send another.
+				
+				<ion-button [disabled]="true" (click)="onSendRecommendationBtnTap($event)">Send Recommendation</ion-button>
+			</ion-card-content>
+		</ion-card>
+
 	</ion-row>
 
 	<ion-row *ngIf="isCurrentUsersProfile()">
