@@ -6,7 +6,7 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content no-bounce>
+<ion-content fullscreen no-bounce>
 	<ion-slides data-test="outgoing-request-made-tutorial-modal" pager="true" (ionSlideWillChange)="onSlideChangeStart($event)">
 		<ion-slide>
 			<table>
@@ -23,7 +23,7 @@
 					<ion-label>Show This Tutorial Next Time</ion-label>
 				</tr>
 				<tr>				
-					<br/>
+					<br/><br/>
 
 					<ion-button icon-end large clear (click)="dismissTutorial()">
 						Continue
