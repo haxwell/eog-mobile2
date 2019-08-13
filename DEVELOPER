@@ -4,6 +4,8 @@
 
 SMS services provided by Plivo.
 
+- When setting up a new server, use https://help.ubuntu.com/community/EmailAlerts to set up the ability to send an email.
+
 *******************************
    A N D R O I D
 *******************************
