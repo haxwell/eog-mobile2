@@ -22,7 +22,7 @@ import {Observable} from 'rxjs/Observable';
 	To implement, a service should extend this class. The extending class should initialize this class with
 	the functions that provide the metadata it uses. To do this, in the init() method, call addMetadataCalculationFunction(functionKey, func).
 
-	Then, to get a metadata value, call getMetadata(domainObject, functionKey).
+	Then, to get a metadata value, call getMetadataValue(domainObject, functionKey).
 */
 
 export class DomainObjectMetadataService {
