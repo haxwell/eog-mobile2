@@ -68,14 +68,14 @@ export class OfferEditPage {
 
 			self.permitOnlyEditsToPoints = false;
 
+			self._offerModelService.init();				
+
 			if (params["offerId"] && params["offerId"] !== 'new') {
 
 				self.offerId = params["offerId"];
 
 				console.log("editing existing offer");
 
-				self._offerModelService.init();
-				
 				self._requestsService.getIncomingRequestsForCurrentUser().then((data: Array<Object>) => {
 					let reqsForThisOffer = data.filter((obj) => { return obj["offer"]["id"] === self.offerId; });
 					reqsForThisOffer = reqsForThisOffer.filter((obj) => { return obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED_AND_HIDDEN && obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED; })
@@ -108,6 +108,7 @@ export class OfferEditPage {
 
 	ionViewWillEnter() {
 		this._offerModelService.bumpTheThumbnailCounter();
+		this.ngOnInit();
 	}
 
 	onCancelBtnTap(evt) {
