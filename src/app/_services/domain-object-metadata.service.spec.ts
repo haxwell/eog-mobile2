@@ -146,6 +146,8 @@ describe('DomainObjectMetadata Service', () => {
     expect(offer).not.toBe(undefined);
     expect(offer instanceof Promise).toBe(true);
 
+    spy.calls.reset();
+
     offer = service.getMetadataValue(domainObject2, functionKey);
     expect(spy).toHaveBeenCalled();
     expect(offer).not.toBe(undefined);

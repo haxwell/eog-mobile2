@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { HttpHeaders } from '@angular/common/http';
 import { Events } from '@ionic/angular'
 
 import { Platform, MenuController } from '@ionic/angular';

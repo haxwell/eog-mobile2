@@ -41,7 +41,7 @@ describe('FunctionPromise Service', () => {
     expect(offer).toBe(undefined);
   })
 
-  it('calls our given function as expected considering the cache expiration time passing', () => {
+  it('calls our given function as expected considering the cache expiration time passing', (done) => {
     let service = component.getService();
 
     let resultKey = "resultKey";
@@ -51,28 +51,31 @@ describe('FunctionPromise Service', () => {
     let count = 0;
     let func = { func: (data) => { return "response " + count++; } };
 
-    spyOn(func, "func").and.callThrough();
-    expect(func.func).not.toHaveBeenCalled();
+    const funcSpy = spyOn(func, "func").and.callThrough();
+    expect(funcSpy).not.toHaveBeenCalled();
     service.setFreshnessFactorInMillis(1500); // one point five seconds
 
-    service.initFunc(funcKey, func.func);
-      expect(func.func).not.toHaveBeenCalled();
+    service.initFunc(funcKey, funcSpy);
+      expect(funcSpy).not.toHaveBeenCalled();
 
     let response = service.get(resultKey, funcKey, data);
-      expect(func.func).toHaveBeenCalled();
+      expect(funcSpy).toHaveBeenCalled();
       expect(response).toEqual("response 0");
+
+    funcSpy.calls.reset();
 
     setTimeout(() => {
       let response = service.get(resultKey, funcKey, data);
-        expect(func.func).not.toHaveBeenCalled();
+        expect(funcSpy).not.toHaveBeenCalled();
         expect(response).toEqual("response 0");
     }, 750);
 
     setTimeout(() => {
-      service.get(resultKey, funcKey, data);
-        expect(func.func).toHaveBeenCalled();
+      response = service.get(resultKey, funcKey, data);
+        expect(funcSpy).toHaveBeenCalled();
         expect(response).toEqual("response 1");
-    }, 3000);
+        done();
+    }, 2075);
   })
 
 });

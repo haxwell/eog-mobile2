@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File, FileEntry } from '@ionic-native/file/ngx'
 
-import { WebView } from '@ionic-native/ionic-webview/ngx';
+//import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 import { ApiService } from './api.service'
 import { UserService } from './user.service'
@@ -28,7 +28,7 @@ export class PictureService {
 				private _apiService: ApiService,
 				private _userService: UserService,
 				private _constants: Constants,
-				private _webview: WebView,
+//				private _webview: WebView,
 				private transfer: FileTransfer,
 				private file: File) {
 
