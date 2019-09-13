@@ -132,7 +132,7 @@ export class OfferModelService {
 			});
 		});
 
-		// call the init function
+		// call the function
 		let fpsPromise = self._functionPromiseService.get(offerId, offerId+"offerFuncKey", offerId);
 			
 		fpsPromise.then((model) => {
