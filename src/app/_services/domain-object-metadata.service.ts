@@ -4,7 +4,7 @@ import { UserService } from './user.service';
 
 import { Constants } from '../../_constants/constants'
 
-import 'rxjs/add/operator/map'; 
+import 'rxjs/add/operator/map'; // TODO: necessary?
 import 'rxjs/add/observable/of';
 import {Observable} from 'rxjs/Observable';
 
