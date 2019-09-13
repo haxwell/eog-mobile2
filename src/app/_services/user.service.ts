@@ -40,6 +40,9 @@ export class UserService {
 		let self = this;
 		let rtn = undefined;
 
+		if (!userId)
+			return new Promise((resolve, reject) => { resolve(self.getCurrentUser()); });
+
 		if (self.users[userId] === undefined || force) {
 			self.users[userId] = null;
 			rtn = new Promise((resolve, reject) => {

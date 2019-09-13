@@ -90,10 +90,10 @@
 						<td class="ptsTdElement">
 							<span class="displayBlock">{{getAllTimePointCount()}}</span> All Time Points
 						</td>
-						<td class="ptsTdElement">
+						<td *ngIf="getSuccessfulRequestPercentage() > 0" class="ptsTdElement">
 							<span class="displayBlock">{{getSuccessfulRequestPercentageAsString()}}</span> Successful Request %
 						</td>
-						<td class="ptsTdElement">
+						<td *ngIf="isUserHadAtLeastOneDisputedRequest()" class="ptsTdElement">
 							<span class="displayBlock">{{getHowLongAgoForMostRecentDisputedRequest()}}</span> Most Recent Dispute
 						</td>
 					</tr>

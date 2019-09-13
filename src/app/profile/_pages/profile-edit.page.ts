@@ -9,6 +9,7 @@ import { Constants } from '../../../_constants/constants'
 import { LoadingService } from '../../../app/_services/loading.service'
 import { AlertService } from '../../../app/_services/alert.service'
 import { ProfileService } from '../../../app/_services/profile.service'
+import { ProfileModelService } from '../../../app/_services/profile-model.service'
 import { PictureService } from '../../../app/_services/picture.service'
 import { GeolocationService } from '../../../app/_services/geolocation.service'
 import { UserService } from '../../../app/_services/user.service'
@@ -51,6 +52,7 @@ export class ProfileEditPage {
 				private _route: ActivatedRoute,
   				private _router: Router,				
 				private _profileService: ProfileService,
+				private _profileModelService: ProfileModelService,
 				private _pictureService: PictureService,
 				private _userService: UserService,
 				private _userMetadataService: UserMetadataService,
@@ -95,7 +97,7 @@ export class ProfileEditPage {
 
 			let _model = this._profileService.getModel(this.userId);
 			
-			if (this._profileService.isProfileImageChanged(_model) && !this.cancelBtnPressed)
+			if (this._profileModelService.isProfileImageChanged(_model) && !this.cancelBtnPressed)
 				msg = "You changed your profile picture. Uploading it could take a long while. You got a minute (or ten)?";
 			else
 				msg = "Do you want to save your profile changes?";
@@ -105,7 +107,7 @@ export class ProfileEditPage {
 				message: msg,
 				buttons: [{
 					text: 'No', role: 'cancel', handler: () => {
-						if (this._profileService.isProfileImageChanged(_model) && !this.isFromGallery()) {
+						if (this._profileModelService.isProfileImageChanged(_model) && !this.isFromGallery()) {
 							
 							let lastSlash = self.model["imageFileURI"].lastIndexOf('/');
 							let path = self.model["imageFileURI"].substring(0,lastSlash+1);
@@ -167,7 +169,7 @@ export class ProfileEditPage {
 		}
 
 		self._loadingService.show({
-			message: this._profileService.isProfileImageChanged(presave_model) ?
+			message: this._profileModelService.isProfileImageChanged(presave_model) ?
 					'Please wait... Uploading as fast as your data connection will allow..' :
 					'Please wait...'
 		})

@@ -12,6 +12,7 @@ import { GeolocationService } from '../../../app/_services/geolocation.service'
 import { PictureService } from '../../../app/_services/picture.service'
 import { PointsService } from '../../../app/_services/points.service'
 import { ProfileService } from '../../../app/_services/profile.service'
+import { ProfileModelService } from '../../../app/_services/profile-model.service'
 import { RecommendationService } from '../../../app/_services/recommendation.service'
 import { UserMetadataService } from '../../../app/_services/user-metadata.service'
 import { UserService } from '../../../app/_services/user.service'
@@ -51,6 +52,7 @@ export class ProfilePage {
 				private _alertService: AlertService,
 				private _userService: UserService,
 				private _profileService: ProfileService,
+				private _profileModelService: ProfileModelService,
 				private _userMetadataService: UserMetadataService,
 				private _recommendationService: RecommendationService,
 				private _geolocationService: GeolocationService,
@@ -103,11 +105,11 @@ export class ProfilePage {
 	}
 
 	isCurrentUserAllowedToSeeEmailInfo() {
-		return this._profileService.getModel(this.userId)["currentUserCanSeeEmailInfo"];
+		return this._profileModelService.get(this.userId)["currentUserCanSeeEmailInfo"];
 	}
 
 	isCurrentUserAllowedToSeePhoneInfo() {
-		return this._profileService.getModel(this.userId)["currentUserCanSeePhoneInfo"];
+		return this._profileModelService.get(this.userId)["currentUserCanSeePhoneInfo"];
 	}
 
 	onSendRecommendationBtnTap() {
@@ -133,7 +135,7 @@ export class ProfilePage {
 	}
 
 	getSocialMediaURL(name) {
-		return this._profileService.getModel(this.userId)[name+"Url"] || "";
+		return this._profileModelService.get(this.userId)[name+"Url"] || "";
 	}
 
 	onEditProfileBtnClick() {
@@ -154,16 +156,16 @@ export class ProfilePage {
 	}
 
 	getModelAttr(key) {
-		let model = this._profileService.getModel(this.userId) || {};
+		let model = this._profileModelService.get(this.userId) || {};
 		return model[key];
 	}
 
 	isFromGallery() {
-		return this._profileService.getModel(this.userId)["imageFileSource"] == 'gallery';
+		return this._profileModelService.get(this.userId)["imageFileSource"] == 'gallery';
 	}
 
 	isDirectFilepathToImageSet() {
-		return this._profileService.getModel(this.userId)["imageFileURI"] !== undefined;
+		return this._profileModelService.get(this.userId)["imageFileURI"] !== undefined;
 	}
 
 /*
@@ -192,17 +194,29 @@ export class ProfilePage {
 	} */
 
 	getAllTimePointCount() {
-		let val = this._profileService.getModel(this.userId)["allTimePointCount"];
+		let val = this._profileModelService.get(this.userId)["allTimePointCount"];
 		if (val === undefined) 
 			return 0;
 		else
 			return val;
 	}
 
+	getSuccessfulRequestPercentage() {
+		let drc = this._profileModelService.get(this.userId)["disputedRequestCount"]
+		let arc = this._profileModelService.get(this.userId)["archivedRequestCount"]
+
+		if (drc === undefined || arc === undefined || arc === 0)
+			return 0
+		else if (drc === 0)
+			return 100
+		else
+			return (100 - ((drc / arc) * 100))
+	}
+
 	getSuccessfulRequestPercentageAsString() {
 		
-		let drc = this._profileService.getModel(this.userId)["disputedRequestCount"];
-		let arc = this._profileService.getModel(this.userId)["archivedRequestCount"];
+		let drc = this._profileModelService.get(this.userId)["disputedRequestCount"];
+		let arc = this._profileModelService.get(this.userId)["archivedRequestCount"];
 
 		if (drc === undefined || arc === undefined || arc === 0)
 			return "--";
@@ -212,8 +226,12 @@ export class ProfilePage {
 			return "" + (100 - ((drc / arc) * 100)) + "%";
 	}
 
+	isUserHadAtLeastOneDisputedRequest() {
+		return this._profileModelService.get(this.userId)["mostRecentDisputedRequestTimestamp"] !== undefined;
+	}
+
 	getHowLongAgoForMostRecentDisputedRequest() {
-		let val = this._profileService.getModel(this.userId)["mostRecentDisputedRequestTimestamp"]
+		let val = this._profileModelService.get(this.userId)["mostRecentDisputedRequestTimestamp"]
 		if (val === undefined)
 			return "None!";
 		else
@@ -231,7 +249,7 @@ export class ProfilePage {
 
 	getLocationDisplayString() {
 		if (this.locationDisplayString === undefined) {
-			let model = this._profileService.getModel(this.userId);
+			let model = this._profileModelService.get(this.userId);
 
 			if (model["latitude"] && model["longitude"]) {
 				this.locationDisplayString = null;
