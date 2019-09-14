@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { ModalController } from '@ionic/angular';
 
@@ -55,7 +56,8 @@ export class OfferEditPage {
 				private _constants: Constants,
 				private _file: File,
 				private _events: Events,
-				private _webview: WebView) {
+				private _webview: WebView,
+				private _domSanitizer: DomSanitizer) {
 
 	}
 
@@ -272,6 +274,9 @@ export class OfferEditPage {
 		let self = this;
 		let presave_model = this._offerModelService.get(this.offerId);
 
+		console.log("111112")
+		console.log(presave_model)
+
 		self._loadingService.show({
 			message: this._offerModelService.isOfferImageChanged(presave_model) ?
 					'Please wait... Uploading as fast as your data connection will allow..' :
@@ -413,7 +418,10 @@ export class OfferEditPage {
 		let rtn = undefined;
 
 		if (this.isDirectFilepathToImageSet()) {
-			rtn = this._webview.convertFileSrc(this._offerModelService.get(this.offerId)["imageFileURI"]);
+			let unsanitized = this._webview.convertFileSrc(this._offerModelService.get(this.offerId)["imageFileURI"]);
+			let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
+			
+			rtn = sanitized;
 		} else {
 			rtn = this.getEnvironmentAPIURLForThisOffer();
 		}

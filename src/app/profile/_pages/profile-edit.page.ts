@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { ModalController } from '@ionic/angular';
 
@@ -60,7 +61,8 @@ export class ProfileEditPage {
 				private _geolocationService: GeolocationService,
 				private _constants: Constants,
 				private _file: File,
-				private _webview: WebView) {
+				private _webview: WebView,
+				private _domSanitizer: DomSanitizer) {
 
 	}
 
@@ -330,7 +332,10 @@ export class ProfileEditPage {
 		let rtn = undefined;
 
 		if (this.isDirectFilepathToImageSet()) {
-			rtn = this._webview.convertFileSrc(this._profileService.getModel(this.userId)["imageFileURI"]);
+			let unsanitized = this._webview.convertFileSrc(this._profileService.getModel(this.userId)["imageFileURI"]);
+			let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
+
+			rtn = sanitized;
 		} else {
 			rtn = this.getEnvironmentAPIURLForThisProfile();
 		}
