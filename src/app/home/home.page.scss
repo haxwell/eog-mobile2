@@ -6,23 +6,8 @@ h2 {
 	padding-top: .45em;
 }
 
-#header-logo-image {
-	height: 1.75em;
-}
-
-#login-logo-img {
-	display: block;
-	margin: 0 auto;
-}
-
-.homeAvatar-wrapper {
-	@extend .avatar-in-a-list-wrapper-div;
-}
-
-.homeAvatar {
-	@extend .avatar-in-a-list;
-	width: 7em;
-	height: 5.5em;
+#logo-with-words-img {
+	width: 80%;
 }
 
 .ptsTdElement {
