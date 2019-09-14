@@ -123,13 +123,15 @@
 		</ion-row>
 		
 		<p></p>
-		
-		<ion-row>
-			<ion-button [hidden]="!isDeleteBtnVisible()" color="danger" (click)="onDeleteBtnTap($event)">Delete</ion-button>			
-			<ion-button [hidden]="!isRequestBtnVisible()" (click)="onRequestBtnTap($event)">Request</ion-button>
+		<ion-row *ngIf="isRequestBtnVisible() || isDeleteBtnVisible()">
+			<ion-card [ngStyle]="{'width':'100%'}">
+				<ion-card-content>
+					<ion-button [hidden]="!isRequestBtnVisible()" (click)="onRequestBtnTap($event)" [ngStyle]="{'width':'100%'}">Request</ion-button>
+					<ion-button [hidden]="!isDeleteBtnVisible()" color="danger" (click)="onDeleteBtnTap($event)" [ngStyle]="{'width':'100%'}">Delete</ion-button>			
+				</ion-card-content>
+			</ion-card>
 		</ion-row>
 
 		<p></p>
-
 	</ion-grid>
 </ion-content>
