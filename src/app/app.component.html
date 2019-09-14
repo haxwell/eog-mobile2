@@ -18,30 +18,10 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-
-          <!--
-              <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('HomePage')}" (click)="onHomeClicked()">Home</ion-button>
-              <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('RequestsIncomingView')}" (click)="onPeopleAskedYouClicked()">People asked you... <ion-icon [hidden]="!areIncomingUnseenChanges()" name="bulb"></ion-icon></ion-button>
-              <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('RequestsOutgoingView')}" (click)="onYouAskedPeopleClicked()">You asked people... <ion-icon [hidden]="!areOutgoingUnseenChanges()" name="bulb"></ion-icon></ion-button>
--->
-              <!-- Empty menu item, for spacing -->
-   <!--           <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('ProfilePage')}" (click)="onShowProfile()"></ion-button>
-
-              <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('ProfilePage')}" (click)="onShowProfile()">About You</ion-button>
-              <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('OfferListPage')}" (click)="onYourOffersClicked()">Your Offers</ion-button>
-              <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('RecommendationListPage')}" (click)="onYourRecommendationsClicked()">Your Recommendations</ion-button>
-              <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('KeywordListPage')}" (click)="onYourKeywordsClicked()">Your Keywords</ion-button>
-              <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('NotificationListPage')}" (click)="onYourNotificationsClicked()">Notifications <ion-icon [hidden]="!areNotificationUnseenChanges()" name="bulb"></ion-icon></ion-button>
-
-              <ion-button class="mainMenuBtn" expand="full" fill="clear" [ngStyle]="{'background-color':getSelectedColor('AboutEasyahPage')}" (click)="onAboutEasyahClicked()">About Easyah </ion-button>
-
-              <ion-button class="mainMenuBtn" expand="full" fill="clear" [hidden]="!isLogoutBtnVisible()" (click)="onLogoutBtnClick()">Log Out</ion-button>
-            -->
-
-          </ion-list>
-        </ion-content>
+        </ion-list>
+      </ion-content>
     </ion-menu>
 
-    <ion-router-outlet main></ion-router-outlet>
+    <ion-router-outlet main [swipeGesture]="false"></ion-router-outlet>
   </ion-split-pane>
 </ion-app>
