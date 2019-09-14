@@ -287,13 +287,19 @@ export class OfferModelService {
 			.subscribe((resp) => {
 				let newModel = resp;
 
+				console.log("22222")
+				console.log(newModel)
+
+				console.log("33333")
+				console.log(model)
+
 				let func = () => {
 					self._events.publish("offer:saved", newModel)
 					resolve(newModel);
 				}
 
 				if (self.isOfferImageChanged(model)) {
-					self._pictureService.save(this._constants.PHOTO_TYPE_OFFER, model["id"], model["imageFileURI"]).then((data) => {
+					self._pictureService.save(this._constants.PHOTO_TYPE_OFFER, newModel["id"], model["imageFileURI"]).then((data) => {
 						func();
 					}, (err) => {
 						reject(err);
