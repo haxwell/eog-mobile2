@@ -7,7 +7,6 @@ import { ModalController } from '@ionic/angular';
 import { OfferEditPage } from './offer-edit.page'
 import { OfferRequestPage } from './offer-request.page'
 import { DeleteOfferPage } from './delete-offer.page'
-import { OutgoingRequestMadeTutorialPage } from '../../../app/tutorials/tutorial-outgoing-request-made/outgoing-request-made-tutorial.page'
 
 import { AlertService } from '../../../app/_services/alert.service';
 import { OfferModelService } from '../../../app/_services/offer-model.service';
