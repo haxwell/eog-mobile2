@@ -13,7 +13,7 @@
 				<ion-card>
 					<ion-card-content>
 						<div id="forImgOverlapDiv">
-							<img [src]="getThumbnailImage()" (click)="onThumbnailImageClick($evt)" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)"/>
+							<img [src]="getThumbnailImage()" [class]="getAvatarCSSClassString()" (click)="onThumbnailImageClick($evt)" (press)="onThumbnailPress($event)"/>
 						</div>
 					</ion-card-content>
 				</ion-card>

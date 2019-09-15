@@ -468,7 +468,7 @@ export class OfferEditPage {
 
 								_model["imageFileURI"] = uriAndSource["imageFileURI"];
 								_model["imageFileSource"] = uriAndSource["imageFileSource"];
-								//_model["imageOrientation"] = uriAndSource["exif"]["Orientation"];
+								_model["imageOrientation"] = uriAndSource["exif"]["Orientation"];
 
 								self.setDirty(true);						
 							})
@@ -479,7 +479,7 @@ export class OfferEditPage {
 
 							_model["imageFileURI"] = uriAndSource["imageFileURI"];
 							_model["imageFileSource"] = uriAndSource["imageFileSource"];
-							//_model["imageOrientation"] = uriAndSource["exif"]["Orientation"];
+							_model["imageOrientation"] = uriAndSource["exif"]["Orientation"];
 
 							self.setDirty(true);
 						}

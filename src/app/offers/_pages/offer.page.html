@@ -19,10 +19,14 @@
 
 
 		<ion-row>
-			<div class="centered card">
-				<img height="275px" [src]="getThumbnailImage()"/>
-			</div>
-		</ion-row>	
+			<ion-card>
+				<ion-card-content>
+					<div id="forImgOverlapDiv">
+						<img [src]="getThumbnailImage()" [class]="getAvatarCSSClassString()" (click)="onThumbnailImageClick($evt)" (press)="onThumbnailPress($event)"/>
+					</div>
+				</ion-card-content>
+			</ion-card>
+		</ion-row>
 
 		<ion-row>
 			<h1 id="displayOfferTitle">{{ getModel()["title"] }}</h1>
@@ -108,10 +112,10 @@
 						{{item.msg}}<br/>
 					</span>
 					<span *ngFor="let item of getPointsRequestMessages()" class="redColorMsg" >
-						You need {{item.msg}}.<br/>
+						To request this offer, you need {{item.msg}}.<br/>
 					</span>
 					<span *ngIf="isRecommendationsRequestMessageAvailable()">
-						You need recommendations from:
+						To request this offer, you need recommendations from:
 							<ul>
 								<li *ngFor="let item of getRecommendationsRequestMessages()" class="redColorMsg" >
 									{{item.msg}}<br/>

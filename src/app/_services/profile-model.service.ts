@@ -116,9 +116,6 @@ export class ProfileModelService  {
 			this._apiService.get(url).subscribe((data) => {
 				let obj = data;
 
-				console.log("11111")
-				console.log(data)
-				
 				model["allTimePointCount"] = obj["allTimePointCount"];
 				model["description"] = obj["description"];
 

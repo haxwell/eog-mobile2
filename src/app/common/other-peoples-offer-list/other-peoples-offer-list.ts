@@ -148,6 +148,11 @@ export class OtherPeoplesOfferList {
 	}
 
 	onViewOffer(_offer) {
-      this._router.navigate(['/offers/' + _offer["id"]])
+		this._router.navigate(['/offers/' + _offer["id"]])
+	}
+
+	getAvatarCSSClassString(offer) {
+		let rtn = this._pictureService.getOrientationCSS(offer);
+		return rtn;
 	}
 }

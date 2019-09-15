@@ -116,7 +116,16 @@ export class OfferListPage {
 		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
 	}
 
+	// count = 0;
 	getAvatarCSSClassString(offer) {
-        return this._pictureService.getOrientationCSS(offer);
+        let rtn = this._pictureService.getOrientationCSS(offer);
+
+		// if (++this.count % 10 === 0) {
+		// 	this.count = 0
+		// 	console.log("***** getAvatarCSSCLassString returning " + rtn);
+		// 	console.log(offer["imageOrientation"]);
+		// }
+
+		return rtn;
 	}
 }

@@ -101,7 +101,7 @@ export class OfferPage {
 		return this.requestMsgs !== undefined && this.requestMsgs.some((obj) => { return obj["type"] === "points"});
 	}
 
-	isRecommendationsRequestMessageAvailable() {
+ 	isRecommendationsRequestMessageAvailable() {
 		return this.requestMsgs !== undefined && this.requestMsgs.some((obj) => { return obj["type"] === "reqd"});
 	}
 
@@ -246,5 +246,19 @@ export class OfferPage {
 
 	getThumbnailImage() {
 		return this._offerModelService.getThumbnailImagePath(this.offerId);
+	}
+
+	// count = 0;
+	getAvatarCSSClassString() {
+		let _model = this._offerModelService.get(this.offerId)
+        let rtn = this._pictureService.getOrientationCSS(_model);
+
+		// if (++this.count % 10 === 0) {
+		// 	this.count = 0
+		// 	console.log("***** getAvatarCSSCLassString returning " + rtn);
+		// 	console.log(_model["imageOrientation"]);
+		// }
+
+		return rtn;
 	}
 }

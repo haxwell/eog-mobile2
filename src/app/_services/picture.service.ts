@@ -21,7 +21,7 @@ export class PictureService {
 
 	_functionPromiseService = new FunctionPromiseService();
 	mostProbablePhotoPath = {};
-	platformName = undefined;
+	isPlatformAndroid = undefined;
 
 	constructor(private _platform: Platform,
 				private _http: HttpClient,
@@ -36,6 +36,8 @@ export class PictureService {
 
 	init() {
 
+		this.isPlatformAndroid = this._platform.is('android')
+
 		// Why do we do this? Why not just define and call a function?
 
 		// because this gives us a framework, to call the method, and reuse the promise from it.
@@ -48,7 +50,6 @@ export class PictureService {
 		//  by Angular; only once when the button is pushed.
 
 		let self = this;
-		
 
 		// THE PURPOSE of this function is to get the most up to date profile picture for a given ID.
 		//
@@ -63,14 +64,16 @@ export class PictureService {
 
 			let rtn = new Promise((resolve, reject) => 
 			{ 
-				if (document.URL.startsWith('http')) {
-					resolve(undefined);
-				} else { // if not running on desktop (https://forum.ionicframework.com/t/how-to-determine-if-browser-or-app/89149/10)
-
-					if (!photoPath)
-						resolve(undefined);
+				// if (document.URL.startsWith('http')) {
+				// 	console.log("dddddddddd")
+				// 	resolve(undefined);
+				// //} else {
+				 // if not running on desktop (https://forum.ionicframework.com/t/how-to-determine-if-browser-or-app/89149/10)
 
 					if (!objId)
+						resolve(undefined);
+
+					if (!photoPath)
 						resolve(undefined);
 
 					if (photoType != self._constants.PHOTO_TYPE_PROFILE && photoType != self._constants.PHOTO_TYPE_OFFER)
@@ -84,11 +87,13 @@ export class PictureService {
 				    let url = environment.apiUrl + "/api/resource/" + photoType + "/" + objId + "/isFound";
 				    self._apiService.get(url).subscribe((pictureAPITimestamp: number) => {
 
+				    	console.log(photoType + " " + objId + " pictureAPITimestamp = " + pictureAPITimestamp)
+
 						if (pictureAPITimestamp * 1 > 0) { // meaning, this file exists on the API
 
 							// now we need the timestamp of the file on this local device we're running on...
 							self.file.checkFile(path, filename).then((fileExists) => {
-								
+
 								var millis: number = +localStorage.getItem(path+filename);
 								if (millis < pictureAPITimestamp) {
 									//download the api picture
@@ -121,7 +126,6 @@ export class PictureService {
 								fileTransfer.download(url, path + filename).then((entry) => {
 									var millis = new Date().getTime();
 									localStorage.setItem(path+filename, ''+millis);
-
 								    resolve(path + filename);
 						  		}, (err) => {
 						    		// handle error
@@ -132,14 +136,13 @@ export class PictureService {
 							})
 
 						} else { // meaning the file does not exist on the API
-
 							// then we need to check locally is there a file.
 							self.file.checkFile(path, filename).then((isFileExists) => {
 								if (isFileExists) {
 
 									// we need to remove this file. A file that does not exist on the server is stale. 
 									self.file.removeFile(path, filename).then((promiseResult) => {
-
+										
 									})
 
 									// there's no photo, so we can resolve undefined.
@@ -160,7 +163,8 @@ export class PictureService {
 						console.log(err);
 						resolve(undefined);
 					})
-				} //here
+				
+				//} //here
 			});
 
 			return rtn;
@@ -279,7 +283,7 @@ export class PictureService {
 
 		let rtn = "";
 
-		if (obj && this._platform.is('android')) {
+		if (obj && this.isPlatformAndroid) {
 			if (obj["imageOrientation"] === 8)
 				 rtn = "rotate90Counterclockwise";
 			else if (obj["imageOrientation"] === 3)

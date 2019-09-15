@@ -226,7 +226,6 @@ export class OfferModelService {
 					let numPiecesOfMetadata = 4;
 
 					if (++count > (numPiecesOfMetadata - 1)) {
-						console.log("Got all FOUR!")
 						resolve(offer);
 					}
 				}
@@ -256,7 +255,6 @@ export class OfferModelService {
 		let self = this;
 
 		return new Promise((resolve, reject) => {
-
 			self._pictureService.get(self._constants.PHOTO_TYPE_OFFER, offer["id"]).then((filename) => {
 				offer["imageFileSource"] = 'eog';
 				offer["imageFileURI"] = filename;
@@ -286,12 +284,6 @@ export class OfferModelService {
 			this._apiService.post(url, data)
 			.subscribe((resp) => {
 				let newModel = resp;
-
-				console.log("22222")
-				console.log(newModel)
-
-				console.log("33333")
-				console.log(model)
 
 				let func = () => {
 					self._events.publish("offer:saved", newModel)

@@ -1,3 +1,7 @@
+#forImgOverlapDiv {
+	height: 160px;
+}
+
 .redColorMsg {
 	color: red;
 	display: contents;
@@ -11,8 +15,8 @@
 }
 
 .card {
+    width: 88%;
     height: 100%;
-    width: 100%;
     overflow: hidden;
 }
 
@@ -23,11 +27,6 @@
 	margin-left: .25em;
 	margin-right: .25em;
 	margin-bottom: .5em;
-}
-
-.fore-div {
-	background-color: white;
-	position: absolute;
 }
 
 .displayOfferSectionHeader {
