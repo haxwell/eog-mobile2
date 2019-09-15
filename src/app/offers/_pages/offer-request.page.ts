@@ -103,7 +103,9 @@ export class OfferRequestPage {
 
 
 /**
-		WILO.. The COntinue button on the tutorial is covered by the little circles at the bottome of the tutorial. Also, clicking the Go Back button leaves you in a state where you can press Save again. It should either not allow it, or act as if the user pressed Continue.
+		WILO.. The COntinue button on the tutorial is covered by the little circles at the bottome of the tutorial. 
+		Also, clicking the Go Back button leaves you in a state where you can press Save again. It should either not
+		 allow it, or act as if the user pressed Continue.
 
 		Also, for
 */
@@ -115,24 +117,15 @@ export class OfferRequestPage {
 
 
 		self._requestsService.saveNew(self._offerModelService.get(self.offerId), this.message).then((data) => {
-			console.log("ATTEMPT TO CREATE A NEW REEQUEST JUST RETURNED!");
-			console.log(data);
 			if (data !== undefined) {
 				if (self.showTutorialAfterOutgoingRequestMade) {
-					console.log("show tutorial was true!")
 					self._loadingService.dismiss();
-					self.presentModal(OutgoingRequestMadeTutorialPage, { }, { 
-						callbackFunc: (data) => {
-							console.log("33333333333")
-							self._location.back();
-						}});
+					self.presentTutorial(OutgoingRequestMadeTutorialPage);
 				} else {
-					console.log("222222222222222222");
 					self._loadingService.dismiss();
 					self._location.back();
 				}
 			} else {
-				console.log("1111111111111111");
 				self._loadingService.dismiss();
 				self._location.back();
 			}
@@ -165,22 +158,20 @@ export class OfferRequestPage {
 		this.message = evt.srcElement.value;
 	}
 
-	async presentModal(_component, _model, props) {
-		let self = this;
-		let modal = undefined;
-		let options = { 
-			component: _component, 
-			componentProps: {
-				model: _model, 
-				props: props.propsObj,  
-				callbackFunc: (data) => { 
-					props.callbackFunc(data); modal.dismiss(); 
-				}
-			}
-		};
+    async presentTutorial(_component) {
+        let self = this;
+        let _tutorialModal = undefined;
+        let options = { 
+            component: _component, 
+            componentProps: {
+                func: () => {
+                    _tutorialModal.dismiss();
+                }
+            }
+        };
 
-		modal = await this._modalCtrl.create(options)
-		return await modal.present();
-	}
+        _tutorialModal = await this._modalCtrl.create(options)
 
+        return await _tutorialModal.present();
+    }
 }
