@@ -1,5 +1,4 @@
 <ion-header>
-
 	<easyah-header></easyah-header>
 </ion-header>
 
@@ -17,9 +16,8 @@
 			</div>
 		</ion-row>
 
-
 		<ion-row>
-			<ion-card>
+			<ion-card class="centered">
 				<ion-card-content>
 					<div id="forImgOverlapDiv">
 						<img [src]="getThumbnailImage()" [class]="getAvatarCSSClassString()" (click)="onThumbnailImageClick($evt)" (press)="onThumbnailPress($event)"/>
