@@ -58,42 +58,14 @@ export class ProfileModelService  {
 			this.modelTransformingServiceHasBeenInitd = true;
 		}
 
-		if (self.modelCache[userId] === undefined) {
-			self.modelCache[userId] = self.getDefaultModel(userId);
-
-			if (userId === -1) {
-				return self.modelCache[userId];
-			} else {
-				return self.initModel(self.modelCache[userId]);
-			}
-		} else {
-			return self.modelCache[userId];
-		}
-	}
-
-	initModel(model) {
-		let self = this;
-		let userId = model['userId'];
-
-		self._pictureService.reset(this._constants.PHOTO_TYPE_PROFILE, userId);
-		
 		self._functionPromiseService.initFunc(userId+"profileFuncKey", () => {
 			return new Promise((resolve, reject) => {
 				self._modelTransformingService.reset();
-				resolve(self._modelTransformingService.transform(model));
+				resolve(self._modelTransformingService.transform(self.getDefaultModel(userId)));
 			});
 		});
 
-		let fpsPromise = self._functionPromiseService.get(userId, userId+"profileFuncKey", userId);
-
-		fpsPromise.then((_model) => {
-			self.modelCache[userId] = _model
-		});
-
-		if (!self.modelCache[userId])
-			self.modelCache[userId] = model;
-
-		return self.modelCache[userId];
+		return self._functionPromiseService.get(userId+"ProfileModel", userId+"profileFuncKey", { });
 	}
 
 	initTransformer() {
