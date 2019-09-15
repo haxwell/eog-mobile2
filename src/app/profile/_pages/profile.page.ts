@@ -156,8 +156,7 @@ export class ProfilePage {
 	}
 
 	getModelAttr(key) {
-		let model = this._profileModelService.get(this.userId) || {};
-		return model[key];
+		return this._profileModelService.get(this.userId)[key];
 	}
 
 	isFromGallery() {
@@ -167,12 +166,6 @@ export class ProfilePage {
 	isDirectFilepathToImageSet() {
 		return this._profileModelService.get(this.userId)["imageFileURI"] !== undefined;
 	}
-
-/*
-	isThumbnailImageVisible() {
-		return this.imageOrientation !== undefined;
-	}
-*/
 
 	getThumbnailImage() {
 		return this._profileService.getThumbnailImagePath(this.userId);
@@ -185,13 +178,6 @@ export class ProfilePage {
 	getAvatarCSSClassString() {
 		return this._pictureService.getOrientationCSS(this);
 	}
-
-	/* loaded(evt) {
-		let self = this;
-		EXIF.getData(evt.target, function() {
-			self.imageOrientation = EXIF.getTag(this, "Orientation");
-		});
-	} */
 
 	getAllTimePointCount() {
 		let val = this._profileModelService.get(this.userId)["allTimePointCount"];
