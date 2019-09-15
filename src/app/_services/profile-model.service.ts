@@ -43,8 +43,8 @@ export class ProfileModelService  {
 		this.modelTransformingServiceHasBeenInitd = false;
 	}
 
-	getDefaultModel() {
-		return { };
+	getDefaultModel(userId?) {
+		return {userId: userId};
 	}
 
 	get(userId) { 
@@ -54,54 +54,56 @@ export class ProfileModelService  {
 			userId = self._userService.getCurrentUser()['id'];
 
 		if (!this.modelTransformingServiceHasBeenInitd) {
-			this.initTransformer(userId);
+			this.initTransformer();
 			this.modelTransformingServiceHasBeenInitd = true;
 		}
 
 		if (self.modelCache[userId] === undefined) {
-			self.modelCache[userId] = self.getDefaultModel();
+			self.modelCache[userId] = self.getDefaultModel(userId);
 
 			if (userId === -1) {
 				return self.modelCache[userId];
 			} else {
-				return self.initModel(userId, self.modelCache[userId]);
+				return self.initModel(self.modelCache[userId]);
 			}
 		} else {
 			return self.modelCache[userId];
 		}
 	}
 
-	initModel(userId: number, model) {
+	initModel(model) {
 		let self = this;
+		let userId = model['userId'];
 
 		self._pictureService.reset(this._constants.PHOTO_TYPE_PROFILE, userId);
 		
 		self._functionPromiseService.initFunc(userId+"profileFuncKey", () => {
 			return new Promise((resolve, reject) => {
+				self._modelTransformingService.reset();
 				resolve(self._modelTransformingService.transform(model));
 			});
 		});
 
 		let fpsPromise = self._functionPromiseService.get(userId, userId+"profileFuncKey", userId);
 
-		fpsPromise.then((model) => {
-			self.modelCache[userId] = model
+		fpsPromise.then((_model) => {
+			self.modelCache[userId] = _model
 		});
 
 		if (!self.modelCache[userId])
-			self.modelCache[userId] = { };
+			self.modelCache[userId] = model;
 
 		return self.modelCache[userId];
 	}
 
-	initTransformer(userId) {
+	initTransformer() {
 		this._modelTransformingService.addTransformer((model, done) => {
 			model["points"] = {"total" : 0, "available": 0};
 			done();
 		})
 
 		this._modelTransformingService.addTransformer((model, done) => {
-			this._userService.getUser(userId, true /* force an API call */).then((userObj) => {
+			this._userService.getUser(model['userId'], true /* force an API call */).then((userObj) => {
 				model["realname"] = userObj["realname"];
 				model["phone"] = userObj["phone"];
 				model["email"] = userObj["email"];
@@ -112,7 +114,7 @@ export class ProfileModelService  {
 		})
 
 		this._modelTransformingService.addTransformer((model, done) => {
-			let url = environment.apiUrl + "/api/user/" + userId + "/profile";
+			let url = environment.apiUrl + "/api/user/" + model['userId'] + "/profile";
 			this._apiService.get(url).subscribe((data) => {
 				let obj = data;
 
@@ -135,7 +137,7 @@ export class ProfileModelService  {
 
 		this._modelTransformingService.addTransformer((model, done) => {
 			if (model["imageFileURI"] === undefined) {
-				this._pictureService.get(this._constants.PHOTO_TYPE_PROFILE, userId).then((filename) => {
+				this._pictureService.get(this._constants.PHOTO_TYPE_PROFILE, model['userId']).then((filename) => {
 					model["imageFileSource"] = 'eog';
 					model["imageFileURI"] = filename;
 					model["imageFileURI_OriginalValue"] = filename;
@@ -157,18 +159,18 @@ export class ProfileModelService  {
 
 		this._modelTransformingService.addTransformer((model, done) => {
 			let currentUser = this._userService.getCurrentUser();
-			if (currentUser["id"] === userId) {
+			if (currentUser["id"] === model['userId']) {
 				model["currentUserCanSeeEmailInfo"] = true;
 				model["currentUserCanSeePhoneInfo"] = true;
 			}
 			else {
 				let self = this;
-				let url = environment.apiUrl + "/api/user/" + userId + "/requests/inprogress/user/" + currentUser["id"];
+				let url = environment.apiUrl + "/api/user/" + model['userId'] + "/requests/inprogress/user/" + currentUser["id"];
 				self._apiService.get(url).subscribe((offersObj: any[]) => {
 					var b = offersObj.length > 0;
 					
 					if (b) {
-						self._contactInfoVisibilityService.getContactInfoVisibilityId(userId).then((visId) => {
+						self._contactInfoVisibilityService.getContactInfoVisibilityId(model['userId']).then((visId) => {
 							model["currentUserCanSeeEmailInfo"] = self._contactInfoVisibilityService.isEmailAllowed(visId);
 							model["currentUserCanSeePhoneInfo"] = self._contactInfoVisibilityService.isPhoneAllowed(visId);
 						})

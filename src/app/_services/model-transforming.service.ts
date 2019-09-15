@@ -20,17 +20,21 @@ export class ModelTransformingService {
 	*/
 
 	transformers = [];
+	transformPromise = undefined;
 	activeCount = 0;
 
 	constructor() {
 
 	}
 
+	reset() {
+		this.transformPromise = undefined;
+	}
+
 	addTransformer(func) {
 		this.transformers.push(func);
 	}
 
-	transformPromise = undefined;
 	transform(model) {
 
 		let self = this;
