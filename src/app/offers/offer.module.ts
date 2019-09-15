@@ -17,7 +17,6 @@ import { OfferEditPage } from './_pages/offer-edit.page';
 import { OfferListPage } from './_pages/offer-list/offer-list.page';
 import { DeleteOfferPage } from './_pages/delete-offer.page'
 import { OfferRequestPage } from './_pages/offer-request.page'
-// import { OutgoingRequestMadeTutorialPage } from './_pages/outgoing-request-made-tutorial.page'
 import { RulePage } from './_pages/rule.page'
 import { KeywordEntryPage } from '../common/keyword.entry/keyword.entry'
 import { ChoosePhotoSourcePage } from '../common/choose-photo-source/choose-photo-source'
@@ -44,7 +43,6 @@ import { OfferCollectionService } from '../../app/_services/offer-collection.ser
   	,OfferEditPage
     ,DeleteOfferPage
     ,OfferRequestPage
-    // ,OutgoingRequestMadeTutorialPage
     ,RulePage
     ,KeywordEntryPage
   ]
