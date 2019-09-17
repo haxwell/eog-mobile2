@@ -115,14 +115,14 @@ export class ProfilePage {
 	onSendRecommendationBtnTap() {
 		let self = this;
 		self._recommendationService.sendARecommendationToAUser(this.userId).then((data) => {
-			self.setCurrentUserCanSendRecommendationToProfileUser();
+			this._currentUserCanSendRecommendationToProfileUser = false;
 		})
 	}
 
 	onSendPointBtnTap() {
 		let self = this;
 		self._pointsService.sendAPointToAUser(this.userId).then((data) => {
-			self.setCurrentUserCanSendPointToProfileUser();
+			this._currentUserCanSendPointToProfileUser = false;
 		});
 	}
 

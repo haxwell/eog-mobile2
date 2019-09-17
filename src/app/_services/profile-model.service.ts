@@ -44,11 +44,12 @@ export class ProfileModelService  {
 	}
 
 	getDefaultModel(userId?) {
-		return {userId: userId};
+		return { model: {userId: userId}, timestamp: new Date().getTime() };
 	}
 
 	get(userId) { 
 		let self = this;
+		let modelTTL = 10 * 1000; // ten seconds
 
 		if (!userId)
 			userId = self._userService.getCurrentUser()['id'];
@@ -61,17 +62,70 @@ export class ProfileModelService  {
 		self._functionPromiseService.initFunc(userId+"profileFuncKey", () => {
 			return new Promise((resolve, reject) => {
 				self._modelTransformingService.reset();
-				resolve(self._modelTransformingService.transform(self.getDefaultModel(userId)));
-			});
-		});
+                resolve(self._modelTransformingService.transform(self.getDefaultModel(userId)));
+            })
+        })
 
-		return self._functionPromiseService.get(userId+"ProfileModel", userId+"profileFuncKey", { });
+		if (self.modelCache[userId] !== undefined) {
+			let now = new Date().getTime();
+
+			if (self.modelCache[userId]['timestamp'] && self.modelCache[userId]['timestamp'] + modelTTL < now) {
+				self.modelCache[userId] = undefined;
+			}
+		}
+
+		if (self.modelCache[userId] === undefined) {
+			self.modelCache[userId] = self.getDefaultModel(userId);
+
+			if (userId === -1) {
+				return self.modelCache[userId]['model'];
+			} else {
+				return self.initModel(self.modelCache[userId]['model']);
+			}
+		} else {
+			return self.modelCache[userId]['model'];
+		}
+	}
+
+	isInitting = false;
+	initModel(model) {
+		let self = this;
+		let userId = model['userId'];
+		
+		if (!self.isInitting) {
+			self.isInitting = true
+
+			self._pictureService.reset(this._constants.PHOTO_TYPE_PROFILE, userId);
+			
+			self._functionPromiseService.initFunc(userId+"profileFuncKey", () => {
+				return new Promise((resolve, reject) => {
+					self._modelTransformingService.reset();
+					resolve(self._modelTransformingService.transform(model));
+				});
+			});
+
+			let fpsPromise = self._functionPromiseService.get(userId, userId+"profileFuncKey", userId);
+
+			fpsPromise.then((_model) => {
+				self.modelCache[userId] = {model: _model, timestamp: new Date().getTime()}
+				self.isInitting = false;
+			});
+
+			if (!self.modelCache[userId]) {
+				self.modelCache[userId]['model'] = model;
+				self.modelCache[userId]['timestamp'] = new Date().getTime();
+			}
+		}
+
+		return self.modelCache[userId]['model'];
 	}
 
 	initTransformer() {
+		this._modelTransformingService.clearAllTransformers();
+
 		this._modelTransformingService.addTransformer((model, done) => {
 			model["points"] = {"total" : 0, "available": 0};
-			done();
+			done("initialize points object");
 		})
 
 		this._modelTransformingService.addTransformer((model, done) => {
@@ -81,7 +135,7 @@ export class ProfileModelService  {
 				model["email"] = userObj["email"];
 				model["latitude"] = userObj["latitude"];
 				model["longitude"] = userObj["longitude"];
-				done();
+				done("userModel");
 			});
 		})
 
@@ -99,11 +153,11 @@ export class ProfileModelService  {
 				model["archivedRequestCount"] = obj["archivedRequestCount"];
 				model["disputedRequestCount"] = obj["disputedRequestCount"];
 				model["mostRecentDisputedRequestTimestamp"] = obj["mostRecentDisputedRequestTimestamp"] || undefined;
-				done();
+				done("profileAttributes");
 			}, (err) => {
 				console.log("ProfileService ERROR");
 				console.log(JSON.stringify(err));
-				done();
+				done("profileAttributes");
 			});
 		})
 
@@ -113,20 +167,39 @@ export class ProfileModelService  {
 					model["imageFileSource"] = 'eog';
 					model["imageFileURI"] = filename;
 					model["imageFileURI_OriginalValue"] = filename;
+					done("pictureService");
 				})
-	  		} 
+	  		} else {
+	  			done("pictureService");
+	  		}
 		});
 
 		this._modelTransformingService.addTransformer((model, done) => {
-			this._pointsService.getCurrentAvailableUserPoints().then((pts) => {
-				model["points"]["available"] = pts;
-			});
+			let currentUser = this._userService.getCurrentUser();
+
+			if (model['userId'] === currentUser['id']) {
+				this._pointsService.getCurrentAvailableUserPoints().then((pts) => {
+					model["points"]["available"] = pts;
+					done("pointsService currAvail");
+				});
+			} else {
+				done("pointsService currAvail");
+			}
+
 		});
 
 		this._modelTransformingService.addTransformer((model, done) => {
-			this._pointsService.getCurrentUserPointsAsSum().then((pts) => {
-				model["points"]["total"] = pts;
-			});
+			let currentUser = this._userService.getCurrentUser();
+
+			if (model['userId'] === currentUser['id']) {
+				console.log("^^^ about to call getCurrentUserPointsAsSum transformer function")
+				this._pointsService.getCurrentUserPointsAsSum().then((pts) => {
+					model["points"]["total"] = pts;
+					done("pointsService pointsAssum");
+				});
+			} else {
+				done("pointsService pointsAssum");
+			}
 		});
 
 		this._modelTransformingService.addTransformer((model, done) => {
@@ -134,6 +207,7 @@ export class ProfileModelService  {
 			if (currentUser["id"] === model['userId']) {
 				model["currentUserCanSeeEmailInfo"] = true;
 				model["currentUserCanSeePhoneInfo"] = true;
+				done("view contactinfo");
 			}
 			else {
 				let self = this;
@@ -145,11 +219,16 @@ export class ProfileModelService  {
 						self._contactInfoVisibilityService.getContactInfoVisibilityId(model['userId']).then((visId) => {
 							model["currentUserCanSeeEmailInfo"] = self._contactInfoVisibilityService.isEmailAllowed(visId);
 							model["currentUserCanSeePhoneInfo"] = self._contactInfoVisibilityService.isPhoneAllowed(visId);
+							done("view contactinfo");
 						})
+					} else {
+						done("view contactinfo");
 					}
+
 				}, (err) => {
 					console.log("ProfileService ContactInfoVisibility ERROR");
 					console.log(JSON.stringify(err));
+					done("view contactinfo");
 				});
 			}
 		});
@@ -157,6 +236,7 @@ export class ProfileModelService  {
 		this._modelTransformingService.addTransformer((model, done) => {
 			this._recommendationService.getOutgoingRecommendations().then((obj) => {
 				model["outgoingRecommendations"] = obj;
+				done("outgoingRecommend");
 			});
 		});
 	}

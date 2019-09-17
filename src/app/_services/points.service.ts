@@ -18,17 +18,26 @@ export class PointsService {
 
 	}
 
-	currentAvailableUserPointsPromise = undefined;
-	currentUserPointsAsSumPromise = undefined;
+	currentAvailableUserPointsPromiseObj = undefined;
+	currentUserPointsAsSumPromiseObj = undefined;
 
 	init() {
-		this.currentUserPointsAsSumPromise = undefined;
-		this.currentAvailableUserPointsPromise = undefined;
+		this.currentUserPointsAsSumPromiseObj = undefined;
+		this.currentAvailableUserPointsPromiseObj = undefined;
 	}
 
 	getCurrentAvailableUserPoints() {
-		if (this.currentAvailableUserPointsPromise === undefined)
-			this.currentAvailableUserPointsPromise = new Promise((resolve, reject) => {
+		let TTL = 10 * 1000;
+		let now = new Date().getTime();
+
+		if (this.currentAvailableUserPointsPromiseObj && this.currentAvailableUserPointsPromiseObj['timestamp'] + TTL < now) {
+			this.currentAvailableUserPointsPromiseObj = undefined;
+		}
+
+		if (this.currentAvailableUserPointsPromiseObj === undefined)
+			this.currentAvailableUserPointsPromiseObj = {promise: undefined, timestamp: new Date().getTime()};
+
+			this.currentAvailableUserPointsPromiseObj['promise'] = new Promise((resolve, reject) => {
 				let user = this._userService.getCurrentUser();
 				if (user) {
 					let url = environment.apiUrl + "/api/user/" + user["id"] + "/points";
@@ -53,12 +62,26 @@ export class PointsService {
 				}
 			});
 
-		return this.currentAvailableUserPointsPromise;
+		return this.currentAvailableUserPointsPromiseObj['promise'];
 	}
 
 	getCurrentUserPointsAsSum() {
-		if (this.currentUserPointsAsSumPromise === undefined) 
-			this.currentUserPointsAsSumPromise = new Promise((resolve, reject) => {
+		let TTL = 10 * 1000;
+		let now = new Date().getTime();
+
+		console.log("*** in getCurrentUserPointsAsSum, the promise is " + (this.currentUserPointsAsSumPromiseObj ? "NOT" : "") + " undefined.");
+
+		if (this.currentUserPointsAsSumPromiseObj)
+			console.log("*** in getCurrentUserPointsAsSum, the promise is " + (this.currentUserPointsAsSumPromiseObj['timestamp'] + TTL < now ? "" : "NOT") + " expired.");
+
+		if (this.currentUserPointsAsSumPromiseObj && this.currentUserPointsAsSumPromiseObj['timestamp'] + TTL < now) {
+			this.currentUserPointsAsSumPromiseObj = undefined;
+		}
+
+		if (this.currentUserPointsAsSumPromiseObj === undefined) 
+			this.currentUserPointsAsSumPromiseObj = {promise: null, timestamp: new Date().getTime()}
+
+			this.currentUserPointsAsSumPromiseObj['promise'] = new Promise((resolve, reject) => {
 				let user = this._userService.getCurrentUser();
 				if (user) {
 					let url = environment.apiUrl + "/api/user/" + user["id"] + "/points";
@@ -83,10 +106,11 @@ export class PointsService {
 				}
 			});
 
-		return this.currentUserPointsAsSumPromise;
+		return this.currentUserPointsAsSumPromiseObj['promise'];
 	}
 
 	sendAPointToAUser(receivingUserId: number) {
+		console.log("** in pointsService sendAPointToAUser()")
 		let self = this;
 		return new Promise((resolve, reject) => {
 			let user = self._userService.getCurrentUser();
@@ -95,6 +119,7 @@ export class PointsService {
 				let data = "sendingUserId=" + user["id"] + "&quantity=1";
 				self._apiService.post(url, data)
 				.subscribe((obj) => {
+					console.log("** about to throw event --> points:sent")
 					self._events.publish("points:sent", {receivingUserId: receivingUserId});
 					resolve(obj);
 				}, (err) => {

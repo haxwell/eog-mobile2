@@ -13,7 +13,10 @@ export class ModelTransformingService {
 		outside of their perview being present in the model.
 
 		Add a transformer func like 
-			(model) => { // call an api. set the results in the model }
+			(model, done) => { 
+				// call an api. set the results in the model 
+				// call done() to finish the transformation func
+			}
 
 		then call transform(), passing in your model, to fire all the 
 		transformers off.
@@ -29,17 +32,26 @@ export class ModelTransformingService {
 
 	reset() {
 		this.transformPromise = undefined;
+		console.log("model transforming service promise has been reset. expect calls to transformer functions.")
 	}
 
 	addTransformer(func) {
 		this.transformers.push(func);
 	}
 
+	clearAllTransformers() {
+		this.transformers = [];
+	}
+
 	transform(model) {
 
 		let self = this;
 
+		console.log("beginning TRANSFORM on model")
+
 		if (!self.transformPromise) {
+
+			console.log("model transform promise was not yet set, so now beginning to iterate through all the transformers")
 
 			self.transformPromise = new Promise((resolve, reject) => {
 				if (self.transformers.length === 0)
@@ -48,7 +60,7 @@ export class ModelTransformingService {
 				self.transformers.forEach((f) => {
 					self.activeCount++
 					setTimeout(() => {
-						f(model, () => { --self.activeCount; if (!self.activeCount) resolve(model); })
+						f(model, (id) => { --self.activeCount; console.log(id.toUpperCase() + " is done."); console.log(self.activeCount + " transformers remaining"); if (!self.activeCount) resolve(model); })
 					}, 275);
 				})
 			})

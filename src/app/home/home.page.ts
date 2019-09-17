@@ -5,7 +5,7 @@ import { ModalController } from '@ionic/angular';
 
 import { TutorialService } from '../../app/_services/tutorial.service'
 import { UserService } from '../../app/_services/user.service'
-import { PointsService } from '../../app/_services/points.service'
+// import { PointsService } from '../../app/_services/points.service'
 import { ProfileService } from '../../app/_services/profile.service'
 
 import { HomeService } from './_services/home.service'
@@ -30,7 +30,7 @@ export class HomePage {
                 ,private _homeService: HomeService
                 ,private _tutorialService: TutorialService
                 ,private _userService: UserService
-                ,private _pointsService: PointsService
+                // ,private _pointsService: PointsService
                 ,private _profileService: ProfileService                
     ) {
 
@@ -45,22 +45,22 @@ export class HomePage {
         });
 
         ///////
-        this.totalPoints = '-';
-        this.availablePoints = '-';
+        // this.totalPoints = '-';
+        // this.availablePoints = '-';
 
-        this._pointsService.init();
+        // this._pointsService.init();
 
-        var user = this._userService.getCurrentUser();
-        if (user) 
-            this._profileService.init(user["id"]);
+        // var user = this._userService.getCurrentUser();
+        // if (user) 
+        //     this._profileService.init(user["id"]);
 
-        this._pointsService.getCurrentAvailableUserPoints().then((caPoints) => {
-            this.availablePoints = caPoints;
-        });
+        // this._pointsService.getCurrentAvailableUserPoints().then((caPoints) => {
+        //     this.availablePoints = caPoints;
+        // });
 
-        this._pointsService.getCurrentUserPointsAsSum().then((sumPoints) => {
-            this.totalPoints = sumPoints;
-        });
+        // this._pointsService.getCurrentUserPointsAsSum().then((sumPoints) => {
+        //     this.totalPoints = sumPoints;
+        // });
     }
 
     ionViewWillEnter() {
@@ -87,22 +87,27 @@ export class HomePage {
     }
 
     getTotalPoints() {
-        return this.totalPoints;
+        let rtn = this._profileService.getModel()["points"] && this._profileService.getModel()["points"]["total"]
+        return rtn;
     }
 
+    // WILO.. trying to get points working.. the scenario is admin sends user2 a point, and user2's UI should update beautifully.
+
     getAvailablePoints() {
-        return this.availablePoints;
+        return this._profileService.getModel()["points"] && this._profileService.getModel()["points"]["available"]
     }
 
     getAllTimePointsCount() {
-        var user = this._userService.getCurrentUser();
-        
-        if (user) {
-            var pts = this._profileService.getModel(user["id"])["allTimePointCount"]
-            return pts;
-        } else {
-            return 0;
-        }
+        return this._profileService.getModel()["allTimePointCount"]
+
+        // var user = this._userService.getCurrentUser();
+
+        // if (user) {
+        //     var pts = this._profileService.getModel(user["id"])["allTimePointCount"]
+        //     return pts;
+        // } else {
+        //     return 0;
+        // }
     }
 
     getMostRecentlyCreatedOffers() {

@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 
 import { EasyahHeader } from './easyah-header/easyah-header';
 import { ProfileHeader } from './profile-header/profile-header';
-import { ProfilePoints } from './profile-points/profile-points';
 import { UsersLineItem } from './users-line-item/users-line-item';
 import { OtherPeoplesOfferList } from './other-peoples-offer-list/other-peoples-offer-list';
 
@@ -24,7 +23,6 @@ import { DeclineReasonCodeService } from '../_services/declined-reason-codes.ser
   ,declarations: [
   	EasyahHeader
     ,ProfileHeader
-    ,ProfilePoints
     ,UsersLineItem
   	,OtherPeoplesOfferList
   ]
@@ -40,7 +38,6 @@ import { DeclineReasonCodeService } from '../_services/declined-reason-codes.ser
   ,exports: [
   	EasyahHeader
     ,ProfileHeader
-    ,ProfilePoints
     ,UsersLineItem
     ,OtherPeoplesOfferList
   ]

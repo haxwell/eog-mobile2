@@ -83,20 +83,46 @@ export class PictureService {
 					let path = photoPath.substring(0,lastSlash+1);
 					let filename = photoPath.substring(lastSlash+1);
 
+					console.log("&&&& In ProfilePicture Get... ");
+					console.log(data)
+
 					// check the API, it returns the timestamp of the file it has. Client checks
 				    let url = environment.apiUrl + "/api/resource/" + photoType + "/" + objId + "/isFound";
 				    self._apiService.get(url).subscribe((pictureAPITimestamp: number) => {
 
-				    	console.log(photoType + " " + objId + " pictureAPITimestamp = " + pictureAPITimestamp)
+				    	console.log(photoType + " " + objId + " FOUND it's API timestamp = " + pictureAPITimestamp)
 
 						if (pictureAPITimestamp * 1 > 0) { // meaning, this file exists on the API
 
 							// now we need the timestamp of the file on this local device we're running on...
-							self.file.checkFile(path, filename).then((fileExists) => {
+							let checkFile = self.file.checkFile(path, filename);
 
-								var millis: number = +localStorage.getItem(path+filename);
-								if (millis < pictureAPITimestamp) {
-									//download the api picture
+							if (checkFile) {
+								checkFile.then((fileExists) => {
+									var millis: number = +localStorage.getItem(path+filename);
+									if (millis < pictureAPITimestamp) {
+										//download the api picture
+
+										url = environment.apiUrl + "/api/resource/" + photoType + "/" + objId;
+										const fileTransfer: FileTransferObject = self.transfer.create();
+
+										fileTransfer.download(url, path + filename).then((entry) => {
+											var millis = new Date().getTime();
+											localStorage.setItem(path+filename, ''+millis);
+
+										    resolve(path + filename);
+								  		}, (err) => {
+								    		// handle error
+								    		console.log("Error downloading file, url = " + url + ", path+filename = " + (path+filename))
+								    		console.log(JSON.stringify(err))
+								    		resolve(undefined);
+								  		});
+
+									} else {
+										resolve(path+filename);
+									}
+								}).catch(e => {
+									// call to checkfile failed.. the file likely does not exist.. regardless try downloading it from the server.
 
 									url = environment.apiUrl + "/api/resource/" + photoType + "/" + objId;
 									const fileTransfer: FileTransferObject = self.transfer.create();
@@ -104,7 +130,6 @@ export class PictureService {
 									fileTransfer.download(url, path + filename).then((entry) => {
 										var millis = new Date().getTime();
 										localStorage.setItem(path+filename, ''+millis);
-
 									    resolve(path + filename);
 							  		}, (err) => {
 							    		// handle error
@@ -112,50 +137,37 @@ export class PictureService {
 							    		console.log(JSON.stringify(err))
 							    		resolve(undefined);
 							  		});
-
-								} else {
-									resolve(path+filename);
-								}
-
-							}).catch(e => {
-								// call to checkfile failed.. the file likely does not exist.. regardless try downloading it from the server.
-
-								url = environment.apiUrl + "/api/resource/" + photoType + "/" + objId;
-								const fileTransfer: FileTransferObject = self.transfer.create();
-
-								fileTransfer.download(url, path + filename).then((entry) => {
-									var millis = new Date().getTime();
-									localStorage.setItem(path+filename, ''+millis);
-								    resolve(path + filename);
-						  		}, (err) => {
-						    		// handle error
-						    		console.log("Error downloading file, url = " + url + ", path+filename = " + (path+filename))
-						    		console.log(JSON.stringify(err))
-						    		resolve(undefined);
-						  		});
-							})
+								})
+							} else {
+								resolve(undefined)
+							}
 
 						} else { // meaning the file does not exist on the API
 							// then we need to check locally is there a file.
-							self.file.checkFile(path, filename).then((isFileExists) => {
-								if (isFileExists) {
+							let checkFile = self.file.checkFile(path, filename)
+							if (checkFile) {
+								checkFile.then((isFileExists) => {
+									if (isFileExists) {
 
-									// we need to remove this file. A file that does not exist on the server is stale. 
-									self.file.removeFile(path, filename).then((promiseResult) => {
-										
-									})
+										// we need to remove this file. A file that does not exist on the server is stale. 
+										self.file.removeFile(path, filename).then((promiseResult) => {
+											
+										})
 
-									// there's no photo, so we can resolve undefined.
-									resolve(undefined);
-								} 
-							}).catch(err => { 
-								if (err["code"] !== 1 || err["message"] !== "NOT_FOUND_ERR") {
-									console.log("Error checking if exists file: " + path + ", " + filename)
-									console.log(JSON.stringify(err))
-								}
+										// there's no photo, so we can resolve undefined.
+										resolve(undefined);
+									} 
+								}).catch(err => { 
+									if (err["code"] !== 1 || err["message"] !== "NOT_FOUND_ERR") {
+										console.log("Error checking if exists file: " + path + ", " + filename)
+										console.log(JSON.stringify(err))
+									}
 
+									resolve(undefined)
+								})
+							} else {
 								resolve(undefined)
-							})
+							}
 						}
 
 					}, (err) => 	{ 

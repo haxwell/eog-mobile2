@@ -5,7 +5,6 @@ import { Constants } from '../../_constants/constants';
 
 import { UserService } from './user.service';
 import { ApiService } from './api.service';
-import { PointsService } from './points.service';
 import { PictureService } from './picture.service';
 import { ProfileModelService } from './profile-model.service';
 import { RecommendationService } from './recommendation.service';
@@ -23,7 +22,6 @@ export class ProfileService {
 
 	constructor(private _apiService: ApiService, 
 				private _userService: UserService, 
-				private _pointsService: PointsService,
 				private _profileModelService: ProfileModelService,
 				private _recommendationService: RecommendationService,
 				private _pictureService: PictureService,
@@ -35,7 +33,7 @@ export class ProfileService {
 				}
 
 	init(userId:number) {
-
+		return this._profileModelService.init();
 	}
 
 	getModel(userId?: number) {

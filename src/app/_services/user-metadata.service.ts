@@ -51,6 +51,7 @@ export class UserMetadataService extends DomainObjectMetadataService {
 		self.addMetadataCalculationFunction(
 			self._constants.FUNCTION_KEY_CAN_SEND_POINT_TO_USER, 
 			(userId: number) => {
+				console.log("^^ in usermetadata function CAN_SEND_POINT_TO_USER")
 				return new Promise((resolve, reject) => {
 					this._pointsService.isCurrentUserAbleToSendAPointTo(userId).then((bool) => {
 						resolve(bool);

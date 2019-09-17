@@ -109,7 +109,8 @@ export class WebsocketService {
 
 			this.handleRecommendationReceived(data); 
 		} else if (data["points"] !== undefined) {
-
+			console.log("******")
+			console.log(data)
 			data["points"]["directionallyOppositeUser"] = Object.assign({}, data["directionallyOppositeUser"]);
 			delete data["directionallyOppositeUser"];
 
