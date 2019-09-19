@@ -92,8 +92,7 @@ export class PointsService {
 						let sum = 0;
 						rtn.forEach(
 							(obj) => { 
-								if (obj["escrowedRequestId"] === null) 
-									sum += obj["quantity"];
+								sum += obj["quantity"];
 							}
 						);
 
