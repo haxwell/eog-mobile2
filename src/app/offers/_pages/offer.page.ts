@@ -148,16 +148,16 @@ export class OfferPage {
 	hasStatistics() {
 		let _model = this._offerModelService.get(this.offerId);
 
-		let rtn = 	(_model["fulfillment_dates"] !== undefined && _model["fulfillment_dates"].length > 0) ||
-					(_model["num_of_complaints"] !== undefined && _model["num_of_complaints"] > 0) ||
-					(_model["total_points_earned"] != undefined && _model["total_points_earned"] > 0);
+		let rtn = 	(_model["fulfillment_dates"] && _model["fulfillment_dates"].length > 0) ||
+					(_model["num_of_complaints"] && _model["num_of_complaints"] > 0) ||
+					(_model["total_points_earned"] && _model["total_points_earned"] > 0);
 
 		return rtn;
 	}
 
 	getFirstFulfilledText() {
 		let _model = this._offerModelService.get(this.offerId);
-		if (_model["fulfillment_dates"] !== undefined && _model["fulfillment_dates"].length > 0) 
+		if (_model["fulfillment_dates"] && _model["fulfillment_dates"].length > 0) 
 			return "First fullfilled " + Moment(_model["fulfillment_dates"][0]).fromNow();
 		else
 			return "Never been fulfilled.";
@@ -165,7 +165,7 @@ export class OfferPage {
 
 	getNumberOfComplaints() {
 		let _model = this._offerModelService.get(this.offerId);
-		if (_model["num_of_complaints"] !== undefined) 
+		if (_model["num_of_complaints"]) 
 			return _model["num_of_complaints"] + " complaints.";
 		else
 			return "No complaints about this offer.";
@@ -173,7 +173,7 @@ export class OfferPage {
 
 	getTotalPointsEarned() {
 		let _model = this._offerModelService.get(this.offerId);
-		if (_model["total_points_earned"] !== undefined) 
+		if (_model["total_points_earned"]) 
 			return "Earned " + _model["total_points_earned"] + " points over its lifetime.";
 		else
 			return "No points earned yet.";

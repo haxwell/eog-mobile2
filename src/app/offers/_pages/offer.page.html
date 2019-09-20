@@ -84,7 +84,7 @@
 						<span *ngIf="hasStatistics()">
 							<span>{{getFirstFulfilledText()}}<br/></span>
 							<span>{{getTotalPointsEarned()}}<br/></span>
-							<span>{{getNumberOfComplaints()}}<br/></span>
+							<span *ngIf="getNumberOfComplaints() > 0">{{getNumberOfComplaints()}}<br/></span>
 						</span>
 						<span *ngIf="!hasStatistics()">
 							<span>This offer is new! It doesn't have statistics yet.<br/></span>
