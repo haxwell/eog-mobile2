@@ -32,7 +32,6 @@ export class ModelTransformingService {
 
 	reset() {
 		this.transformPromise = undefined;
-		console.log("model transforming service promise has been reset. expect calls to transformer functions.")
 	}
 
 	addTransformer(func) {
@@ -46,12 +45,7 @@ export class ModelTransformingService {
 	transform(model) {
 
 		let self = this;
-
-		console.log("beginning TRANSFORM on model")
-
 		if (!self.transformPromise) {
-
-			console.log("model transform promise was not yet set, so now beginning to iterate through all the transformers")
 
 			self.transformPromise = new Promise((resolve, reject) => {
 				if (self.transformers.length === 0)
@@ -60,7 +54,7 @@ export class ModelTransformingService {
 				self.transformers.forEach((f) => {
 					self.activeCount++
 					setTimeout(() => {
-						f(model, (id) => { --self.activeCount; console.log(id.toUpperCase() + " is done."); console.log(self.activeCount + " transformers remaining"); if (!self.activeCount) resolve(model); })
+						f(model, (transformerName) => { --self.activeCount; if (!self.activeCount) resolve(model); })
 					}, 275);
 				})
 			})

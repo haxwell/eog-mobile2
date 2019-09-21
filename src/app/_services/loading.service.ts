@@ -20,7 +20,6 @@ export class LoadingService {
 	    if (onDidDismissFunc)
 	    	await this.loading[this.counter].onDidDismiss(onDidDismissFunc);
 
-	    console.log("calling to display loading spinner (" + this.counter + ")")
 	    return await this.loading[this.counter].present();
 	}
 

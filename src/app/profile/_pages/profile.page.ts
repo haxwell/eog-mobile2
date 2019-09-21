@@ -180,11 +180,7 @@ export class ProfilePage {
 	}
 
 	getAllTimePointCount() {
-		let val = this._profileModelService.get(this.userId)["allTimePointCount"];
-		if (val === undefined) 
-			return 0;
-		else
-			return val;
+		return this._profileModelService.get(this.userId)["allTimePointCount"];
 	}
 
 	getSuccessfulRequestPercentage() {
