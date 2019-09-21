@@ -13,13 +13,13 @@ cp src/_environments/environment.prod.ts src/_environments/environment.ts
 ionic cordova build --release android
 
 2.
-jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore easyah-release-key.keystore /home/jjames/src/learning_ionic/eog-mobile.new/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk alias_name
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore easyah-release-key.keystore platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk alias_name
 
 ** The easyah-release-key.keystore file is stored outside of the git repo.
 ** Note Password for keystore is the one you've used for a long time in Keepass.
 
 3.
-rm easyah.apk --force && zipalign -v 4 /home/jjames/src/learning_ionic/eog-mobile.new/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk easyah.apk
+rm easyah.apk --force && zipalign -v 4 platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk easyah.apk
 
 ** this removes the easyah.apk built the last time this was run (it may not exist... thats okay) and then runs zipalign, an android apk tool.
 
