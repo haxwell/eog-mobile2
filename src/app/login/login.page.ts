@@ -213,7 +213,7 @@ export class LoginPage {
                                   
                                   self._alertService.show({
                                     header: 'Arggh!',
-                                    message: "Something bad happened on the server. We hate when that happens. Please email us at info@easyah.io and let us know.",
+                                    message: "Something bad happened on the server. We hate when that happens. Please email us at info@easyah.com and let us know.",
                                     buttons: [{
                                       text: 'OK',
                                       handler: () => {
@@ -292,7 +292,7 @@ export class LoginPage {
                           }, (err) => {
                               self._alertService.show({
                                 header: 'Arggh!',
-                                message: "Something bad happened on the server. We hate when that happens. Please email us at info@easyah.io and let us know.",
+                                message: "Something bad happened on the server. We hate when that happens. Please email us at info@easyah.com and let us know.",
                                 buttons: [{
                                   text: 'OK',
                                   handler: () => {
@@ -346,7 +346,7 @@ export class LoginPage {
                                             }, (err) => {
                                                 self._alertService.show({
                                                   header: 'Arggh!',
-                                                  message: "Something bad happened on the server. We hate when that happens. Please email us at info@easyah.io and let us know.",                                      
+                                                  message: "Something bad happened on the server. We hate when that happens. Please email us at info@easyah.com and let us know.",                                      
                                                   buttons: [{
                                                     text: 'OK',
                                                     handler: () => {
