@@ -208,7 +208,7 @@ export class RequestsOutgoingView {
 	}
 
 	getAvatarCSSClassString(offer) {
-		return this._pictureService.getOrientationCSS(offer);
+		return this._pictureService.getOrientationCSS(offer, " avatar-in-a-list ");
 	}
 
 	hasRequestMessage(req) {

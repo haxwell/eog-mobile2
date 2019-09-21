@@ -8,23 +8,22 @@
 
 <ion-content padding>
 	<ion-label>You are about to indicate that you are NOT satisfied with a request someone did for you.</ion-label>
-	<ion-label>If you ARE satisfied, click Cancel below.</ion-label>
+	<br/><br/>
 	<ion-label [ngStyle]="{'font-weight':'bold'}">{{model.offer.title}}</ion-label>
+	<br/><br/>
 	
 	<ion-label>
-		Easyah is meant to bring folks together. We realize sometimes, to say the least, that's not meant to be.
+		Easyah is meant to bring folks together. Sometimes, to say the least, that's not meant to be.
 		Still, communication is the key. Take some time to reach out to the other user, and see if this can be 
 		worked out to everyone's satisfaction. <br/><br/>
 
 		If you still now want to mark this incomplete, the other user will have the chance to weigh in one final
 		time. If they still want to mark their side complete, then this request will be closed, and they will 
-		receive half of the points you've put up.<br/><br/>For quality assurance and training purposes, this li'l mishap may
-		be written to a database, so really try to work this out!
+		receive half of the points you've put up.<br/><br/>
 	</ion-label>
 
 	<ion-row>
-		<ion-label>If you really want to mark this request incomplete,</ion-label>
-		<ion-label>type the word incomplete in the text box.</ion-label>
+		<ion-label>If you really want to mark this request incomplete, type the word incomplete in the text box.</ion-label>
 		<br/>
 		<ion-input type="text" placeholder="type incomplete here..." [(ngModel)]="confirmationString" #ctrl="ngModel" (keyup.enter)="onSaveBtnTap($event)" required></ion-input>
 	</ion-row>

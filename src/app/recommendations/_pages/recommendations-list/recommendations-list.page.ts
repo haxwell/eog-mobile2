@@ -98,4 +98,8 @@ export class RecommendationsListPage {
 	onViewUser(item) {
 		this._router.navigate(['/profile/' + item["userInfo"]["id"]])
 	}
+
+	getAvatarCSSClassString(item) {
+		return this._pictureService.getOrientationCSS(item, " avatar-in-a-list ");
+	}	
 }

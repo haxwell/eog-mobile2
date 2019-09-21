@@ -436,7 +436,7 @@ export class OfferEditPage {
 	}
 
 	getAvatarCSSClassString() {
-		return this._pictureService.getOrientationCSS(this._offerModelService.get(this.offerId), "editOfferImage");
+		return this._pictureService.getOrientationCSS(this._offerModelService.get(this.offerId), " avatar-in-a-list editOfferImage");
 	}
 
 	onThumbnailClick($event) {

@@ -96,7 +96,7 @@
 						ADD
 					</ion-button>
 					<div *ngIf="offerHasAnAssociatedImage()" class="centered avatar">
-						<img class="avatar-in-a-list" [src]="getThumbnailImage()" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)"/>
+						<img [class]="getAvatarCSSClassString()" [src]="getThumbnailImage()" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)"/>
 					</div>
 				</ion-card-content>
 			</ion-card>
