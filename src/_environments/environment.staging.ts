@@ -1,6 +1,6 @@
 
 export const domainInfo = {
-  domain: '104.236.210.35', // staging  
+  domain: '157.245.165.216', // staging  
   port: '8080'
 };
 
