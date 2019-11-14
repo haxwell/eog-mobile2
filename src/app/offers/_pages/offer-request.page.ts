@@ -98,15 +98,6 @@ export class OfferRequestPage {
 
 		self._loadingService.show({message: "Please wait..."});
 
-
-/**
-		WILO.. The COntinue button on the tutorial is covered by the little circles at the bottome of the tutorial. 
-		Also, clicking the Go Back button leaves you in a state where you can press Save again. It should either not
-		 allow it, or act as if the user pressed Continue.
-
-		Also, for
-*/
-
 		self._requestsService.saveNew(self._offerModelService.get(self.offerId), this.message).then((data) => {
 			if (data !== undefined) {
 				if (self.showTutorialAfterOutgoingRequestMade) {
