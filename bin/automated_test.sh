@@ -16,7 +16,7 @@ cd /home/quizki/src/eog-mobile
     echo Subject: $HAX_APP_NAME $HAX_APP_ENVIRONMENT test results
     echo
     echo $(date)
-    npx cypress run  --spec "cypress/integration/create-user-spec.js" 
+    npx cypress run  --spec "cypress/integration/*.spec.js" 
 } | ssmtp -vvv haxwell@gmail.com
 
 
