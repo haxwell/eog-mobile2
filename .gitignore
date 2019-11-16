@@ -2,6 +2,7 @@
 # http://git-scm.com/docs/gitignore
 
 cypress.json
+cypress/videos/
 
 *~
 *.sw[mnpcod]
