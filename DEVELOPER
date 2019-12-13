@@ -6,6 +6,12 @@ SMS services provided by Plivo.
 
 - When setting up a new server, use https://help.ubuntu.com/community/EmailAlerts to set up the ability to send an email.
 
+- When setting up a new local environment, you may get errors talkin' bout 
+        No installed build tools found. Please install the Android build tools version 19.1.0 or higher.
+
+    In that case, be sure $ANDROID_HOME is pointing to the correct dir. At press time that was ~/Android/Sdk. You may need to use the Android Studio IDE to do the installing. 
+
+
 *******************************
    A N D R O I D
 *******************************
