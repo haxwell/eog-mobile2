@@ -7,7 +7,7 @@ Be sure
 - versions have been upped from the last time you did this.. (see #6)
 
 0.
-cp src/_environments/environment.prod.ts src/_environments/environment.ts
+cp src/_environments/environment.prod.js src/_environments/environment.js
 
 1.
 ionic cordova build --release android
