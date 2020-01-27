@@ -71,6 +71,17 @@ export class OtherPeoplesOfferList {
 		return rtn;
 	}
 
+	getOfferListTitleTrimmedForViewportLength(offer) {
+		let rtn = offer.title;
+
+		if (window.innerWidth < 768 && offer.title.length > 32)
+			rtn = offer.title.substring(0, 28) + '... ';
+		else
+			rtn = offer.title;
+
+		return rtn;
+	}
+
 	getListOfOffers() {
 		return this.offers;
 	}
