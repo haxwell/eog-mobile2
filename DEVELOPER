@@ -1,3 +1,6 @@
+
+If you're coming back to develop this project after some time away, be sure that your angular version installed locally, and the version in this file are (hopefully) the same, but at least compatible. Otherwise, madness and weird error conditions will ensue.
+
 *******************************
    O U R  S T A C K  I N F O
 *******************************

@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { NotificationsRoutingModule } from './notifications-routing.module';
 
@@ -20,7 +20,7 @@ import { NotificationsListPage } from './_pages/notifications-list/notifications
     ,EasyahCommonModule
     ,RouterModule
     ,FormsModule
-    ,HttpModule
+    ,HttpClientModule
   ]
   ,declarations: [
     NotificationsListPage

@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { HomeRoutingModule } from './home-routing.module';
 
@@ -22,7 +22,7 @@ import { HomePage } from './home.page';
     IonicModule,
     CommonModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     EasyahCommonModule,
     HomeRoutingModule,
     TutorialModule,

@@ -2,7 +2,7 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { RequestsOutgoingRoutingModule } from './requests-outgoing-routing.module';
 
@@ -23,7 +23,7 @@ import { RequestsService } from '../../../app/_services/requests.service';
     IonicModule
     ,CommonModule
     ,FormsModule
-    ,HttpModule
+    ,HttpClientModule
     ,EasyahCommonModule
     ,RequestsOutgoingRoutingModule
   ]

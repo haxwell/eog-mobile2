@@ -9,7 +9,7 @@ import { CreateAccountPage } from './_pages/create-account.page';
 import { NewAccountTutorialPage } from './_pages/new-account-tutorial.page';
 
 
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { ApiService } from '../_services/api.service';
 // import { UserService } from '../_services/user.service';
@@ -23,7 +23,7 @@ import { LoginRoutingModule } from './login-routing.module';
     IonicModule,
     CommonModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     LoginRoutingModule,
     RouterModule.forChild([{ path: '', component: LoginPage }])
   ]
