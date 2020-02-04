@@ -3,11 +3,12 @@ Releasing a version of Easyah for testing
 
 Be sure 
 - you have deployed to the phone and done basic testing BEFORE building this APK. If not, and it breaks, as its want to do, you'll just have to do it anyway, so...
+- be sure you are on the right branch, and that changes from all platforms (ios, android) are in the repo.
 - all changes you want in this version are committed in both the API and the Client.
 - versions have been upped from the last time you did this.. (see #6)
 
 0.
-cp src/_environments/environment.prod.ts src/_environments/environment.ts
+cp src/_environments/environment.prod.js src/_environments/environment.js
 
 1.
 ionic cordova build --release android

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class GeolocationService {
 	// TODO: Conceal this better.
 	API_KEY = "AIzaSyCUQEnW_Z6Oz3Y5_nYY98sR90pKyYbbdkI";
 
-	constructor(private _http: Http,
+	constructor(private _http: HttpClient,
 				private _geolocation: Geolocation) {
 
 	}

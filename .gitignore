@@ -2,6 +2,7 @@
 # http://git-scm.com/docs/gitignore
 
 cypress.json
+cypress/videos/
 
 *~
 *.sw[mnpcod]
@@ -39,5 +40,6 @@ UserInterfaceState.xcuserstate
 easyah-release-key.keystore
 easyah.apk
 src/_environments/environment.ts
+src/_environments/environment.js
 
 .attach_*

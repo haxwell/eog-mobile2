@@ -91,8 +91,6 @@ export class HomePage {
         return rtn;
     }
 
-    // WILO.. trying to get points working.. the scenario is admin sends user2 a point, and user2's UI should update beautifully.
-
     getAvailablePoints() {
         return this._profileService.getModel()["points"] && this._profileService.getModel()["points"]["available"]
     }
