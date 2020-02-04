@@ -1,0 +1,9 @@
+
+
+
+
+Next bug to address on iPhone..
+
+you go to the profile, edit, and click Set Your Location.. it spins, and then the popup to request manual entry appears under, inaccesibly under, the loading Please Wait spinner.
+
+Also, there was an issue where the profile showed 0 points, even though the home page showed 5. If we can't read the API for whatever reason, we should show -- there instead
