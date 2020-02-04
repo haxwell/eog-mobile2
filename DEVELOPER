@@ -14,6 +14,10 @@ SMS services provided by Plivo.
 
     In that case, be sure $ANDROID_HOME is pointing to the correct dir. At press time that was ~/Android/Sdk. You may need to use the Android Studio IDE to do the installing. 
 
+    If you need to accept licenses, try:
+
+        /home/johnathan/Android/Sdk/tools/bin/sdkmanager --licenses
+
 - To run Cypress tets:
 
     npx cypress run  --spec "cypress/integration/*.spec.js"
