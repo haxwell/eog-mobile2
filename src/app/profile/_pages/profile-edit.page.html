@@ -3,8 +3,8 @@
 		<ion-row>
 			<ion-col>
 				<span class="centered">
-					<ion-button (click)="onCancelBtnTap($event)">Cancel</ion-button>
-					<ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap($event)">Save</ion-button>
+					<ion-button (click)="onCancelBtnTap()">Cancel</ion-button>
+					<ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap()">Save</ion-button>
 				</span>
 			</ion-col>
 		</ion-row>
@@ -13,7 +13,7 @@
 				<ion-card>
 					<ion-card-content>
 						<div id="forImgOverlapDiv">
-							<img [src]="getThumbnailImage()" [class]="getAvatarCSSClassString()" (click)="onThumbnailImageClick($evt)" (press)="onThumbnailPress($event)"/>
+							<img [src]="getThumbnailImage()" [class]="getAvatarCSSClassString()" (click)="onThumbnailImageClick()" (press)="onThumbnailPress()"/>
 						</div>
 					</ion-card-content>
 				</ion-card>
@@ -68,8 +68,8 @@
 		<ion-row>
 			<ion-col>
 				<span class="centered">
-					<ion-button (click)="onCancelBtnTap($event)">Cancel</ion-button>
-					<ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap($event)">Save</ion-button>
+					<ion-button (click)="onCancelBtnTap()">Cancel</ion-button>
+					<ion-button [disabled]="!isSaveBtnEnabled()" (click)="onSaveBtnTap()">Save</ion-button>
 				</span>
 			</ion-col>
 		</ion-row>

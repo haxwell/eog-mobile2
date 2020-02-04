@@ -113,7 +113,7 @@ export class OfferEditPage {
 		this.ngOnInit();
 	}
 
-	onCancelBtnTap(evt) {
+	onCancelBtnTap() {
 		let self = this;
 		if (!this.isDirty()) {
 			self._location.back();

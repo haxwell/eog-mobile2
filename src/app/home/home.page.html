@@ -12,7 +12,7 @@
 			<ion-card class="centered">
 				<ion-card-content>
 					<div id="forImgOverlapDiv">
-						<img [src]="getThumbnailImage()" (click)="onThumbnailImageClick($evt)" />
+						<img [src]="getThumbnailImage()" (click)="onThumbnailImageClick()" />
 					</div>
 					<div class="home-profile-info-content-div">
 						<table>
@@ -73,7 +73,7 @@
 		<ion-row>
 			<ion-card [ngStyle]="{'width':'100%'}">
 				<ion-card-content>
-					<ion-button (click)="onCreateOfferBtnClicked($event)" [ngStyle]="{'width':'100%'}">
+					<ion-button (click)="onCreateOfferBtnClicked()" [ngStyle]="{'width':'100%'}">
 						Create Your Own Offer
 					</ion-button>
 				</ion-card-content>

@@ -26,8 +26,8 @@
 	<ion-label>Enter new keywords. Separate multiple keywords,with,commas (for example).</ion-label>
 
 	<ion-row>
-		<ion-input type="text" placeholder="..type..words..press..add" (ionChange)="onAddKeywordFieldChange($event)" [value]="getAddKeywordFieldValue()" (keyup.enter)="onAddBtnTap($event)" required></ion-input>
-		<ion-button [disabled]="!isAddBtnEnabled()" (click)="onAddBtnTap($event)">Add</ion-button>
+		<ion-input type="text" placeholder="..type..words..press..add" (ionChange)="onAddKeywordFieldChange($event)" [value]="getAddKeywordFieldValue()" (keyup.enter)="onAddBtnTap()" required></ion-input>
+		<ion-button [disabled]="!isAddBtnEnabled()" (click)="onAddBtnTap()">Add</ion-button>
 	</ion-row>
 
 	<ion-row>

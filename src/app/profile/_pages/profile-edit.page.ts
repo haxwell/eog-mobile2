@@ -367,7 +367,7 @@ export class ProfileEditPage {
 		return await modal.present();
 	}
 
-	onThumbnailImageClick($event) {
+	onThumbnailImageClick() {
 		let self = this;
 		let model = this._profileService.getModel(this.userId);
 
@@ -416,7 +416,7 @@ export class ProfileEditPage {
 			});
 	}
 
-	onThumbnailPress($event) {
+	onThumbnailPress() {
 		this._alertService.show({
 			header: 'Delete Photo?',
 			message: 'Do you want to DELETE your profile picture?',
