@@ -5,6 +5,11 @@ If you're coming back to develop this project after some time away, be sure that
    O U R  S T A C K  I N F O
 *******************************
 
+Ionic v5.4.16 with...
+    Angular 8.3.25
+    Node 12.14.1
+    NPM 6.13.4
+
 SMS services provided by Plivo.
 
 - When setting up a new server, use https://help.ubuntu.com/community/EmailAlerts to set up the ability to send an email.
