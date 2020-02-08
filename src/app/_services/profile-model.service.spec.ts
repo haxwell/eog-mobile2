@@ -6,7 +6,7 @@ import { File } from '@ionic-native/file/ngx'
 
 import { ProfileModelServiceComponent } from './profile-model.service.component'
 import { ProfileModelService } from './profile-model.service';
-import { FunctionPromiseService } from './function-promise.service';
+import { FunctionPromiseService } from 'savvato-javascript-services';
 import { PictureService } from './picture.service';
 
 import { Constants } from '../../_constants/constants';

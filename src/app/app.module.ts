@@ -19,6 +19,8 @@ import { Events, IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { SavvatoJavascriptServicesModule } from 'savvato-javascript-services'
+
 import { EasyahCommonModule } from './common/easyah-common.module'
 
 import { Constants } from '../_constants/constants'
@@ -27,7 +29,7 @@ import { AlertService } from './_services/alert.service'; // Can be pushed down?
 import { UserService } from './_services/user.service'; 
 import { LoadingService } from './_services/loading.service'; 
 import { ApiService } from './_services/api.service'; 
-import { FunctionPromiseService } from './_services/function-promise.service';
+// import { FunctionPromiseService } from './_services/function-promise.service';
 import { AuthService } from './_services/auth.service';
 import { PictureService } from './_services/picture.service';
 
@@ -52,6 +54,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
     HttpClientModule
 
     ,EasyahCommonModule
+    ,SavvatoJavascriptServicesModule.forRoot()    
   ],
 
   providers: [
@@ -70,7 +73,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
     ,AlertService
     ,ApiService
     ,AuthService
-    ,FunctionPromiseService
+    // ,FunctionPromiseService
     ,LoadingService
     ,PictureService
     ,UserService

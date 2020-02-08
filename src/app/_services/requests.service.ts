@@ -5,7 +5,7 @@ import { UserService } from './user.service';
 import { ApiService } from './api.service';
 import { DeclineReasonCodeService } from './declined-reason-codes.service';
 import { OfferModelService } from './offer-model.service';
-import { FunctionPromiseService } from './function-promise.service';
+import { FunctionPromiseService } from 'savvato-javascript-services';
 
 import { environment } from '../../_environments/environment';
 
