@@ -107,6 +107,16 @@ export class ProfileModelService  {
 			let fpsPromise = self._functionPromiseService.get(userId, userId+"profileFuncKey", userId);
 
 			fpsPromise.then((_model) => {
+				console.log("INIT PROFILE MODEL " + userId + " has COMPLETED", _model)
+
+				// want to know when this is initializing, because the problem seems to be that the model, when sent to the 
+				// save method, has not been initialized.. it has all teh fieldnames, but not the values, all undefined. So,
+				// if we've completed, what do we look like here?
+
+				// so, this comes back, way after the model is being used, so we need this to complete first. I am thinking 
+				//  of using the savvato-javascript-services version of FPS, and waiting until the call returns before returning any results.
+				//  Slow the first time, faster afterwards.. not that great if there's only one time.. but hey.. baby steps.
+
 				self.modelCache[userId] = {model: _model, timestamp: new Date().getTime()}
 				self.isInitting = false;
 			});
@@ -258,6 +268,8 @@ export class ProfileModelService  {
 		
 		let data = this.JSON_to_UrlEncoded(tmp, undefined, undefined);
 
+		console.log("save profileModelService data", data, "save profileModelService model", model  )
+
 		let self = this;
 		return new Promise((resolve, reject) => {
 			let url = environment.apiUrl + "/api/profiles";
@@ -290,9 +302,14 @@ export class ProfileModelService  {
 	JSON_to_UrlEncoded(element,key,list){
   		var list = list || [];
   		if(typeof(element)=='object'){
-    		for (var idx in element)
-      			this.JSON_to_UrlEncoded(element[idx],key?key+'['+idx+']':idx,list);
+  			console.log('111')
+    		for (var idx in element) {
+    			console.log('222', element, idx)
+    			this.JSON_to_UrlEncoded(element[idx],key?key+'['+idx+']':idx,list);
+    		} 
+      			
   		} else {
+  			console.log('333', element)
     		list.push(key+'='+encodeURIComponent(element));
   		}
   		
