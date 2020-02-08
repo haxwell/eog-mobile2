@@ -104,7 +104,7 @@ export class ProfileModelService  {
 				});
 			});
 
-			let fpsPromise = self._functionPromiseService.get(userId, userId+"profileFuncKey", userId);
+			let fpsPromise = self._functionPromiseService.waitAndGet(userId, userId+"profileFuncKey", userId);
 
 			fpsPromise.then((_model) => {
 				console.log("INIT PROFILE MODEL " + userId + " has COMPLETED", _model)

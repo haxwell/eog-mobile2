@@ -51,12 +51,20 @@ export class HomeService {
 		this._pictureService.init(); // this probably should be happening in response to an event.. Log-in, for instance.
 	}
 
+	mostRecentlyCreatedOffersPromise = undefined;
 	getMostRecentlyCreatedOffers() {
 		let self = this;
 		if (!self.isMostRecentlyCreatedOffersFuncInitialized)
 			self.init();
 
 		let data = {userId: self._userService.getCurrentUser()['id'], count: 3};
-		return self._functionPromiseService.get(data['userId']+"mrcp", self._constants.FUNCTION_KEY_MOST_RECENTLY_CREATED_OFFERS_GET, data);
+
+		if (this.mostRecentlyCreatedOffersPromise === undefined) {
+			this.mostRecentlyCreatedOffersPromise = new Promise((resolve, reject) => {
+				resolve(self._functionPromiseService.waitAndGet(data['userId']+"mrcp", self._constants.FUNCTION_KEY_MOST_RECENTLY_CREATED_OFFERS_GET, data))
+			});
+		}
+
+		return this.mostRecentlyCreatedOffersPromise;
 	}
 }
