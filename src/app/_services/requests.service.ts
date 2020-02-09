@@ -143,7 +143,7 @@ export class RequestsService {
 
 		let data = {userId: self._userService.getCurrentUser()['id'], direction: direction};
 		self._functionPromiseService.reset(data['userId']+direction);
-		return self._functionPromiseService.get(data['userId']+direction, self._constants.FUNCTION_KEY_REQUESTS_BY_USER_AND_DIRECTION_GET, data);
+		return self._functionPromiseService.waitAndGet(data['userId']+direction, self._constants.FUNCTION_KEY_REQUESTS_BY_USER_AND_DIRECTION_GET, data);
 	}
 
 	getById(requestId) {
