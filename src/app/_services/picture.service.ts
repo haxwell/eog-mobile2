@@ -83,14 +83,11 @@ export class PictureService {
 					let path = photoPath.substring(0,lastSlash+1);
 					let filename = photoPath.substring(lastSlash+1);
 
-					console.log("&&&& In ProfilePicture Get... ");
-					console.log(data)
-
 					// check the API, it returns the timestamp of the file it has. Client checks
 				    let url = environment.apiUrl + "/api/resource/" + photoType + "/" + objId + "/isFound";
 				    self._apiService.get(url).subscribe((pictureAPITimestamp: number) => {
 
-				    	console.log(photoType + " " + objId + " FOUND it's API timestamp = " + pictureAPITimestamp)
+				    	// console.log(photoType + " " + objId + " FOUND it's API timestamp = " + pictureAPITimestamp)
 
 						if (pictureAPITimestamp * 1 > 0) { // meaning, this file exists on the API
 
