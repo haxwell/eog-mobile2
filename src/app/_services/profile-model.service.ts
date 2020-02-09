@@ -62,7 +62,7 @@ export class ProfileModelService  {
 		self._functionPromiseService.initFunc(userId+"profileFuncKey", () => {
 			return new Promise((resolve, reject) => {
 				self._modelTransformingService.reset();
-                resolve(self._modelTransformingService.transform(self.getDefaultModel(userId)));
+                resolve(self._modelTransformingService.transform(self.getDefaultModel(userId)['model']));
             })
         })
 
