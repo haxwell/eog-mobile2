@@ -44,6 +44,8 @@ export class ModelTransformingService {
 
 	transform(model) {
 
+		console.log("MODEL TRANSFORMING SERVICE begin. model = ", JSON.stringify(model));
+
 		let self = this;
 		if (!self.transformPromise) {
 
@@ -54,7 +56,7 @@ export class ModelTransformingService {
 				self.transformers.forEach((f) => {
 					self.activeCount++
 					setTimeout(() => {
-						f(model, (transformerName) => { --self.activeCount; if (!self.activeCount) resolve(model); })
+						f(model, (transformerName) => { --self.activeCount; console.log("^^ transformer '"+transformerName+"' completed. model = ", JSON.stringify(model)); if (!self.activeCount) resolve(model); })
 					}, 275);
 				})
 			})
