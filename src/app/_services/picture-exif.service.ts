@@ -57,7 +57,7 @@ export class PictureEXIFService {
 		if (!this.isInitialized)
 			this.init();
 
-		return this._functionPromiseService.get(photoPath, this._constants.FUNCTION_KEY_EXIF_METADATA_GET, photoPath);
+		return this._functionPromiseService.waitAndGet(photoPath, this._constants.FUNCTION_KEY_EXIF_METADATA_GET, photoPath);
 	}
 
 }

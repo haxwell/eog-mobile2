@@ -149,7 +149,7 @@ export class RequestsService {
 	getById(requestId) {
 		let self = this;
 		let data = {userId: self._userService.getCurrentUser()['id'], requestId: requestId};
-		return self._functionPromiseService.get(data['userId']+"REQUESTID", self._constants.FUNCTION_KEY_REQUESTS_BY_ID, data);
+		return self._functionPromiseService.waitAndGet(data['userId']+"REQUESTID", self._constants.FUNCTION_KEY_REQUESTS_BY_ID, data);
 	}
 
 	// hack

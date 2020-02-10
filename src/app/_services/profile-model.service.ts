@@ -173,10 +173,10 @@ export class ProfileModelService  {
 
 		this._modelTransformingService.addTransformer((model, done) => {
 			if (model["imageFileURI"] === undefined) {
-				this._pictureService.get(this._constants.PHOTO_TYPE_PROFILE, model['userId']).then((filename) => {
+				this._pictureService.get(this._constants.PHOTO_TYPE_PROFILE, model['userId']).then((obj) => {
 					model["imageFileSource"] = 'eog';
-					model["imageFileURI"] = filename;
-					model["imageFileURI_OriginalValue"] = filename;
+					model["imageFileURI"] = obj['path'];
+					model["imageFileURI_OriginalValue"] = obj['path'];
 					done("pictureService");
 				})
 	  		} else {
@@ -202,7 +202,6 @@ export class ProfileModelService  {
 			let currentUser = this._userService.getCurrentUser();
 
 			if (model['userId'] === currentUser['id']) {
-				console.log("^^^ about to call getCurrentUserPointsAsSum transformer function")
 				this._pointsService.getCurrentUserPointsAsSum().then((pts) => {
 					model["points"]["total"] = pts;
 					done("pointsService pointsAssum");
