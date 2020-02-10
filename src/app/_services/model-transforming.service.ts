@@ -32,6 +32,7 @@ export class ModelTransformingService {
 
 	reset() {
 		this.transformPromise = undefined;
+		this.activeCount = 0;
 	}
 
 	addTransformer(func) {
@@ -40,6 +41,7 @@ export class ModelTransformingService {
 
 	clearAllTransformers() {
 		this.transformers = [];
+		// reset(); ?
 	}
 
 	transform(model) {
@@ -54,7 +56,8 @@ export class ModelTransformingService {
 				self.transformers.forEach((f) => {
 					self.activeCount++
 					setTimeout(() => {
-						f(model, (transformerName) => { --self.activeCount; if (!self.activeCount) resolve(model); })
+						f(model, (transformerName) => { --self.activeCount; if (self.activeCount === 0) { resolve(model); }	});
+
 					}, 275);
 				})
 			})
