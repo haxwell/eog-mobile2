@@ -62,7 +62,7 @@ export class PictureService {
 			let photoType = data["photoType"];
 			let photoPath = data["path"];
 
-			let rtn = new Promise((resolve, reject) => 
+			return new Promise((resolve, reject) => 
 			{ 
 				// if (document.URL.startsWith('http')) {
 				// 	console.log("dddddddddd")
@@ -71,13 +71,13 @@ export class PictureService {
 				 // if not running on desktop (https://forum.ionicframework.com/t/how-to-determine-if-browser-or-app/89149/10)
 
 					if (!objId)
-						resolve(undefined);
+						resolve({'path': undefined});
 
 					if (!photoPath)
-						resolve(undefined);
+						resolve({'path': undefined});
 
 					if (photoType != self._constants.PHOTO_TYPE_PROFILE && photoType != self._constants.PHOTO_TYPE_OFFER)
-						resolve(undefined);
+						resolve({'path': undefined});
 
 					let lastSlash = photoPath.lastIndexOf('/');
 					let path = photoPath.substring(0,lastSlash+1);
@@ -107,12 +107,12 @@ export class PictureService {
 											var millis = new Date().getTime();
 											localStorage.setItem(path+filename, ''+millis);
 
-										    resolve(path + filename);
+										    resolve({'path': path + filename});
 								  		}, (err) => {
 								    		// handle error
 								    		console.log("Error downloading file, url = " + url + ", path+filename = " + (path+filename))
 								    		console.log(JSON.stringify(err))
-								    		resolve(undefined);
+								    		resolve({'path': undefined});
 								  		});
 
 									} else {
@@ -127,20 +127,21 @@ export class PictureService {
 									fileTransfer.download(url, path + filename).then((entry) => {
 										var millis = new Date().getTime();
 										localStorage.setItem(path+filename, ''+millis);
-									    resolve(path + filename);
+									    resolve({'path': path + filename});
 							  		}, (err) => {
 							    		// handle error
 							    		console.log("Error downloading file, url = " + url + ", path+filename = " + (path+filename))
 							    		console.log(JSON.stringify(err))
-							    		resolve(undefined);
+							    		resolve({'path': undefined})
 							  		});
 								})
 							} else {
-								resolve(undefined)
+								resolve({'path': undefined})
 							}
 
 						} else { // meaning the file does not exist on the API
 							// then we need to check locally is there a file.
+
 							let checkFile = self.file.checkFile(path, filename)
 							if (checkFile) {
 								checkFile.then((isFileExists) => {
@@ -152,7 +153,7 @@ export class PictureService {
 										})
 
 										// there's no photo, so we can resolve undefined.
-										resolve(undefined);
+										resolve({'path': undefined})
 									} 
 								}).catch(err => { 
 									if (err["code"] !== 1 || err["message"] !== "NOT_FOUND_ERR") {
@@ -160,23 +161,21 @@ export class PictureService {
 										console.log(JSON.stringify(err))
 									}
 
-									resolve(undefined)
+									resolve({'path': undefined})
 								})
 							} else {
-								resolve(undefined)
+								resolve({'path': undefined})
 							}
 						}
 
 					}, (err) => 	{ 
 						console.log("ERROR #photo-rxp9r");
 						console.log(err);
-						resolve(undefined);
+						resolve({'path': undefined})
 					})
 				
 				//} //here
 			});
-
-			return rtn;
 		});	
 	}
 
@@ -186,12 +185,7 @@ export class PictureService {
 
 	get(photoType, objId) {
 		let data = {photoType: photoType, objId: objId, path: this.getMostProbablePhotoPath(photoType, objId)}
-		
-		return new Promise((resolve, reject) => {
-			this._functionPromiseService.waitAndGet(photoType+objId, this._constants.FUNCTION_KEY_PROFILE_PICTURE_GET, data).then((path) => {
-				resolve(path);
-			});
-		});
+		return this._functionPromiseService.waitAndGet(photoType+objId, this._constants.FUNCTION_KEY_PROFILE_PICTURE_GET, data);
 	}
 
 	delete(photoType, objId) {
