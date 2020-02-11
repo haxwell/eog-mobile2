@@ -36,8 +36,8 @@ export class ProfileService {
 		return this._profileModelService.init();
 	}
 
-	getModel(userId?: number) {
-		return this._profileModelService.get(userId);
+	getModel(userId?: number, forceWaitUntilCompleteHydration?: boolean) {
+		return this._profileModelService.get(userId, forceWaitUntilCompleteHydration);
 	}
 
 	save(model) {

@@ -43,13 +43,12 @@ export class ProfileModelService  {
 		this.modelTransformingServiceHasBeenInitd = false;
 	}
 
-	getDefaultModel(userId?) {
-		return { model: {userId: userId}, timestamp: new Date().getTime() };
-	}
-
-	get(userId) { 
+	//
+	// This method is designed to return the entire completed model, or nothing at all.
+	//	except for when it sometimes returns a promise, that returns the completed model.
+	//
+	get(userId, forceWaitUntilCompleteHydration?) { 
 		let self = this;
-		let modelTTL = 10 * 1000; // ten seconds
 
 		if (!userId)
 			userId = self._userService.getCurrentUser()['id'];
@@ -62,72 +61,16 @@ export class ProfileModelService  {
 		self._functionPromiseService.initFunc(userId+"profileFuncKey", () => {
 			return new Promise((resolve, reject) => {
 				self._modelTransformingService.reset();
-                resolve(self._modelTransformingService.transform(self.getDefaultModel(userId)['model']));
+                self._modelTransformingService.transform({userId: userId}).then((model) => {
+                	resolve(model);
+                });
             })
         })
 
-		if (self.modelCache[userId] !== undefined) {
-			let now = new Date().getTime();
-
-			if (self.modelCache[userId]['timestamp'] && self.modelCache[userId]['timestamp'] + modelTTL < now) {
-				self.modelCache[userId] = undefined;
-			}
-		}
-
-		if (self.modelCache[userId] === undefined) {
-			self.modelCache[userId] = self.getDefaultModel(userId);
-
-			if (userId === -1) {
-				return self.modelCache[userId]['model'];
-			} else {
-				return self.initModel(self.modelCache[userId]['model']);
-			}
-		} else {
-			return self.modelCache[userId]['model'];
-		}
-	}
-
-	isInitting = false;
-	initModel(model) {
-		let self = this;
-		let userId = model['userId'];
-		
-		if (!self.isInitting) {
-			self.isInitting = true
-
-			self._pictureService.reset(this._constants.PHOTO_TYPE_PROFILE, userId);
-			
-			self._functionPromiseService.initFunc(userId+"profileFuncKey", () => {
-				return new Promise((resolve, reject) => {
-					self._modelTransformingService.reset();
-					resolve(self._modelTransformingService.transform(model));
-				});
-			});
-
-			let fpsPromise = self._functionPromiseService.waitAndGet(userId, userId+"profileFuncKey", userId);
-
-			fpsPromise.then((_model) => {
-				console.log("INIT PROFILE MODEL " + userId + " has COMPLETED", _model)
-
-				// want to know when this is initializing, because the problem seems to be that the model, when sent to the 
-				// save method, has not been initialized.. it has all teh fieldnames, but not the values, all undefined. So,
-				// if we've completed, what do we look like here?
-
-				// so, this comes back, way after the model is being used, so we need this to complete first. I am thinking 
-				//  of using the savvato-javascript-services version of FPS, and waiting until the call returns before returning any results.
-				//  Slow the first time, faster afterwards.. not that great if there's only one time.. but hey.. baby steps.
-
-				self.modelCache[userId] = {model: _model, timestamp: new Date().getTime()}
-				self.isInitting = false;
-			});
-
-			if (!self.modelCache[userId]) {
-				self.modelCache[userId]['model'] = model;
-				self.modelCache[userId]['timestamp'] = new Date().getTime();
-			}
-		}
-
-		return self.modelCache[userId]['model'];
+        if (forceWaitUntilCompleteHydration === true)
+        	return self._functionPromiseService.waitAndGet(userId+"profileFuncKey", userId+"profileFuncKey", { });
+        else 
+        	return self._functionPromiseService.get(userId+"profileFuncKey", userId+"profileFuncKey", { }) || { };
 	}
 
 	initTransformer() {
