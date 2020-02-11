@@ -3,7 +3,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 
 import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { RouterTestingModule } from '@angular/router/testing';
 

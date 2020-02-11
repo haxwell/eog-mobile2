@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { Events } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 // import { HomePage } from '../home/home';
 // import { CreateAccountPage } from './_pages/create.account'
