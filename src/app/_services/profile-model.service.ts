@@ -3,7 +3,7 @@ import { Events } from '@ionic/angular';
 
 import { ApiService } from './api.service';
 import { ContactInfoVisibilityService } from './contact-info-visibility.service'
-import { FunctionPromiseService } from './function-promise.service';
+import { FunctionPromiseService } from 'savvato-javascript-services';
 import { UserService } from './user.service';
 import { PictureService } from './picture.service';
 import { PointsService } from './points.service';
@@ -43,13 +43,12 @@ export class ProfileModelService  {
 		this.modelTransformingServiceHasBeenInitd = false;
 	}
 
-	getDefaultModel(userId?) {
-		return { model: {userId: userId}, timestamp: new Date().getTime() };
-	}
-
-	get(userId) { 
+	//
+	// This method is designed to return the entire completed model, or nothing at all.
+	//	except for when it sometimes returns a promise, that returns the completed model.
+	//
+	get(userId, forceWaitUntilCompleteHydration?) { 
 		let self = this;
-		let modelTTL = 10 * 1000; // ten seconds
 
 		if (!userId)
 			userId = self._userService.getCurrentUser()['id'];
@@ -62,62 +61,16 @@ export class ProfileModelService  {
 		self._functionPromiseService.initFunc(userId+"profileFuncKey", () => {
 			return new Promise((resolve, reject) => {
 				self._modelTransformingService.reset();
-                resolve(self._modelTransformingService.transform(self.getDefaultModel(userId)));
+                self._modelTransformingService.transform({userId: userId}).then((model) => {
+                	resolve(model);
+                });
             })
         })
 
-		if (self.modelCache[userId] !== undefined) {
-			let now = new Date().getTime();
-
-			if (self.modelCache[userId]['timestamp'] && self.modelCache[userId]['timestamp'] + modelTTL < now) {
-				self.modelCache[userId] = undefined;
-			}
-		}
-
-		if (self.modelCache[userId] === undefined) {
-			self.modelCache[userId] = self.getDefaultModel(userId);
-
-			if (userId === -1) {
-				return self.modelCache[userId]['model'];
-			} else {
-				return self.initModel(self.modelCache[userId]['model']);
-			}
-		} else {
-			return self.modelCache[userId]['model'];
-		}
-	}
-
-	isInitting = false;
-	initModel(model) {
-		let self = this;
-		let userId = model['userId'];
-		
-		if (!self.isInitting) {
-			self.isInitting = true
-
-			self._pictureService.reset(this._constants.PHOTO_TYPE_PROFILE, userId);
-			
-			self._functionPromiseService.initFunc(userId+"profileFuncKey", () => {
-				return new Promise((resolve, reject) => {
-					self._modelTransformingService.reset();
-					resolve(self._modelTransformingService.transform(model));
-				});
-			});
-
-			let fpsPromise = self._functionPromiseService.get(userId, userId+"profileFuncKey", userId);
-
-			fpsPromise.then((_model) => {
-				self.modelCache[userId] = {model: _model, timestamp: new Date().getTime()}
-				self.isInitting = false;
-			});
-
-			if (!self.modelCache[userId]) {
-				self.modelCache[userId]['model'] = model;
-				self.modelCache[userId]['timestamp'] = new Date().getTime();
-			}
-		}
-
-		return self.modelCache[userId]['model'];
+        if (forceWaitUntilCompleteHydration === true)
+        	return self._functionPromiseService.waitAndGet(userId+"profileFuncKey", userId+"profileFuncKey", { });
+        else 
+        	return self._functionPromiseService.get(userId+"profileFuncKey", userId+"profileFuncKey", { }) || { };
 	}
 
 	initTransformer() {
@@ -163,10 +116,10 @@ export class ProfileModelService  {
 
 		this._modelTransformingService.addTransformer((model, done) => {
 			if (model["imageFileURI"] === undefined) {
-				this._pictureService.get(this._constants.PHOTO_TYPE_PROFILE, model['userId']).then((filename) => {
+				this._pictureService.get(this._constants.PHOTO_TYPE_PROFILE, model['userId']).then((obj) => {
 					model["imageFileSource"] = 'eog';
-					model["imageFileURI"] = filename;
-					model["imageFileURI_OriginalValue"] = filename;
+					model["imageFileURI"] = obj['path'];
+					model["imageFileURI_OriginalValue"] = obj['path'];
 					done("pictureService");
 				})
 	  		} else {
@@ -192,7 +145,6 @@ export class ProfileModelService  {
 			let currentUser = this._userService.getCurrentUser();
 
 			if (model['userId'] === currentUser['id']) {
-				console.log("^^^ about to call getCurrentUserPointsAsSum transformer function")
 				this._pointsService.getCurrentUserPointsAsSum().then((pts) => {
 					model["points"]["total"] = pts;
 					done("pointsService pointsAssum");
@@ -258,6 +210,8 @@ export class ProfileModelService  {
 		
 		let data = this.JSON_to_UrlEncoded(tmp, undefined, undefined);
 
+		console.log("save profileModelService data", data, "save profileModelService model", model  )
+
 		let self = this;
 		return new Promise((resolve, reject) => {
 			let url = environment.apiUrl + "/api/profiles";
@@ -290,9 +244,14 @@ export class ProfileModelService  {
 	JSON_to_UrlEncoded(element,key,list){
   		var list = list || [];
   		if(typeof(element)=='object'){
-    		for (var idx in element)
-      			this.JSON_to_UrlEncoded(element[idx],key?key+'['+idx+']':idx,list);
+  			console.log('111')
+    		for (var idx in element) {
+    			console.log('222', element, idx)
+    			this.JSON_to_UrlEncoded(element[idx],key?key+'['+idx+']':idx,list);
+    		} 
+      			
   		} else {
+  			console.log('333', element)
     		list.push(key+'='+encodeURIComponent(element));
   		}
   		

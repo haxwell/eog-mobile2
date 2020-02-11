@@ -39,7 +39,6 @@ export class ProfileHeader {
 	}
 
 	onThumbnailPress($event) {
-		console.log("^^^^ on ProfileHeaderClick                  ****  * * * * * * *");
 		this._router.navigate(['/profile/' + this._userService.getCurrentUser()["id"]]);
 	}
 

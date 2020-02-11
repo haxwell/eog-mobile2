@@ -4,7 +4,7 @@ import { UserService } from '../../_services/user.service';
 import { ApiService } from '../../_services/api.service';
 import { PictureService } from '../../_services/picture.service';
 import { OfferModelService } from '../../_services/offer-model.service';
-import { FunctionPromiseService } from '../../_services/function-promise.service';
+import { FunctionPromiseService } from 'savvato-javascript-services';
 
 import { environment } from '../../../_environments/environment';
 import { Constants } from '../../../_constants/constants';
@@ -57,6 +57,6 @@ export class HomeService {
 			self.init();
 
 		let data = {userId: self._userService.getCurrentUser()['id'], count: 3};
-		return self._functionPromiseService.get(data['userId']+"mrcp", self._constants.FUNCTION_KEY_MOST_RECENTLY_CREATED_OFFERS_GET, data);
+		return self._functionPromiseService.waitAndGet(data['userId']+"mrcp", self._constants.FUNCTION_KEY_MOST_RECENTLY_CREATED_OFFERS_GET, data);
 	}
 }

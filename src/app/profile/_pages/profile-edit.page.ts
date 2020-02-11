@@ -163,47 +163,48 @@ export class ProfileEditPage {
 
 	onSaveBtnTap() {
 		let self = this;
-		let presave_model = this._profileService.getModel(this.userId);
+		this._profileService.getModel(this.userId, true /* force complete model hydration */).then((presave_model) => {
+			if (self.verifyPhoneOnSave) {
+				self.verifyPhone(presave_model["phone"]);
+				return;
+			}
 
-		if (this.verifyPhoneOnSave) {
-			this.verifyPhone(presave_model["phone"]);
-			return;
-		}
+			self._loadingService.show({
+				message: this._profileModelService.isProfileImageChanged(presave_model) ?
+						'Please wait... Uploading as fast as your data connection will allow..' :
+						'Please wait...'
+			})
 
-		self._loadingService.show({
-			message: this._profileModelService.isProfileImageChanged(presave_model) ?
-					'Please wait... Uploading as fast as your data connection will allow..' :
-					'Please wait...'
-		})
+			self._contactInfoVisibilityService.saveContactInfoVisibilityByUserId(self.userId, self.contactInfoVisibilityId);
 
-		self._contactInfoVisibilityService.saveContactInfoVisibilityByUserId(self.userId, self.contactInfoVisibilityId);
+			console.log("Here is the PRE-SAVE model")
+			console.log(presave_model);
 
-		console.log("Here is the PRE-SAVE model")
-		console.log(presave_model);
+			self._profileService.save(presave_model).then(() => {
+					self.setDirty(false);
+					
+					let _model = self._profileService.getModel(self.userId);
 
-		this._profileService.save(presave_model).then(() => {
-				self.setDirty(false);
-				
-				let _model = self._profileService.getModel(self.userId);
+					self._loadingService.dismiss();
 
-				self._loadingService.dismiss();
+					if (!self.isExiting)
+						self._location.back();
 
-				if (!self.isExiting)
-					self._location.back();
+				}, (err) => {
+	            	self._alertService.show({
+		                header: 'Arggh!',
+		                message: "Something bad happened on the server. We hate when that happens. Please email us at info@easyah.com and let us know.",
+		                buttons: [{
+		                  text: 'OK',
+		                  handler: () => {
+		                    self._loadingService.dismiss();
+		                  }
+		                }]
+		              })
+	            }
+			)
+		});
 
-			}, (err) => {
-            	self._alertService.show({
-	                header: 'Arggh!',
-	                message: "Something bad happened on the server. We hate when that happens. Please email us at info@easyah.com and let us know.",
-	                buttons: [{
-	                  text: 'OK',
-	                  handler: () => {
-	                    self._loadingService.dismiss();
-	                  }
-	                }]
-	              })
-            }
-		)
 	}
 
 	verifyPhone(phoneNumber) {

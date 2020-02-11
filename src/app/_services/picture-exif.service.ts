@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { File } from '@ionic-native/file/ngx'
 
 import { Constants } from '../../_constants/constants'
-import { FunctionPromiseService } from './function-promise.service'
+import { FunctionPromiseService } from 'savvato-javascript-services'
 
 import * as EXIF from 'exif-js';
 
@@ -57,7 +57,7 @@ export class PictureEXIFService {
 		if (!this.isInitialized)
 			this.init();
 
-		return this._functionPromiseService.get(photoPath, this._constants.FUNCTION_KEY_EXIF_METADATA_GET, photoPath);
+		return this._functionPromiseService.waitAndGet(photoPath, this._constants.FUNCTION_KEY_EXIF_METADATA_GET, photoPath);
 	}
 
 }

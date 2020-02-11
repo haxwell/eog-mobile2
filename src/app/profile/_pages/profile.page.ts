@@ -89,8 +89,6 @@ export class ProfilePage {
 			})
 
 			self.locationDisplayString = undefined;
-			
-			console.log("*** completed profile page ngOnInit");
 		});
 	}
 

@@ -5,7 +5,7 @@ import { UserService } from './user.service';
 import { ApiService } from './api.service';
 import { PictureService } from './picture.service';
 import { PictureEXIFService } from './picture-exif.service';
-import { FunctionPromiseService } from './function-promise.service'
+import { FunctionPromiseService } from 'savvato-javascript-services'
 
 import { Constants } from '../../_constants/constants';
 import { environment } from '../../_environments/environment';
@@ -133,7 +133,7 @@ export class OfferModelService {
 		});
 
 		// call the function
-		let fpsPromise = self._functionPromiseService.get(offerId, offerId+"offerFuncKey", offerId);
+		let fpsPromise = self._functionPromiseService.waitAndGet(offerId, offerId+"offerFuncKey", offerId);
 			
 		fpsPromise.then((model) => {
 			self.setOfferMetadata(model).then((finalModel) => {
@@ -230,15 +230,15 @@ export class OfferModelService {
 					}
 				}
 
-				self._functionPromiseService.get(offer["id"]+"fulfillment-dates", "fulfillment-dates", offer).then(() => {
+				self._functionPromiseService.waitAndGet(offer["id"]+"fulfillment-dates", "fulfillment-dates", offer).then(() => {
 					func(offer);
 				})
 
-				self._functionPromiseService.get(offer["id"]+"complaint-count", "complaint-count", offer).then(() => {
+				self._functionPromiseService.waitAndGet(offer["id"]+"complaint-count", "complaint-count", offer).then(() => {
 					func(offer);
 				})
 
-				self._functionPromiseService.get(offer["id"]+"total-points-earned", "total-points-earned", offer).then(() => {
+				self._functionPromiseService.waitAndGet(offer["id"]+"total-points-earned", "total-points-earned", offer).then(() => {
 					func(offer);
 				})
 
@@ -255,13 +255,13 @@ export class OfferModelService {
 		let self = this;
 
 		return new Promise((resolve, reject) => {
-			self._pictureService.get(self._constants.PHOTO_TYPE_OFFER, offer["id"]).then((filename) => {
+			self._pictureService.get(self._constants.PHOTO_TYPE_OFFER, offer["id"]).then((obj) => {
 				offer["imageFileSource"] = 'eog';
-				offer["imageFileURI"] = filename;
-				offer["imageFileURI_OriginalValue"] = filename;
+				offer["imageFileURI"] = obj['path'];
+				offer["imageFileURI_OriginalValue"] = obj['path'];
 
-				if (filename) {
-					self._pictureEXIFService.getEXIFMetadata(filename).then((exifMetadata) => {
+				if (obj['path']) {
+					self._pictureEXIFService.getEXIFMetadata(obj['path']).then((exifMetadata) => {
 						offer["imageOrientation"] = exifMetadata["Orientation"];
 						resolve(offer);
 					})

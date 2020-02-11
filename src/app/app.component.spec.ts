@@ -12,7 +12,7 @@ import { File } from '@ionic-native/file/ngx'
 
 import { AppComponent } from './app.component';
 
-import { FunctionPromiseService } from './_services/function-promise.service';
+import { FunctionPromiseService } from 'savvato-javascript-services';
 import { PictureService } from './_services/picture.service';
 
 import { Constants } from '../_constants/constants';
