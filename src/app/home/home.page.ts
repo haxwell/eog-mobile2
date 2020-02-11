@@ -43,24 +43,6 @@ export class HomePage {
         self._homeService.getMostRecentlyCreatedOffers().then((data) => {
             self.mostRecentlyCreatedOffers = data;
         });
-
-        ///////
-        // this.totalPoints = '-';
-        // this.availablePoints = '-';
-
-        // this._pointsService.init();
-
-        // var user = this._userService.getCurrentUser();
-        // if (user) 
-        //     this._profileService.init(user["id"]);
-
-        // this._pointsService.getCurrentAvailableUserPoints().then((caPoints) => {
-        //     this.availablePoints = caPoints;
-        // });
-
-        // this._pointsService.getCurrentUserPointsAsSum().then((sumPoints) => {
-        //     this.totalPoints = sumPoints;
-        // });
     }
 
     ionViewWillEnter() {
@@ -97,15 +79,6 @@ export class HomePage {
 
     getAllTimePointsCount() {
         return this._profileService.getModel()["allTimePointCount"]
-
-        // var user = this._userService.getCurrentUser();
-
-        // if (user) {
-        //     var pts = this._profileService.getModel(user["id"])["allTimePointCount"]
-        //     return pts;
-        // } else {
-        //     return 0;
-        // }
     }
 
     getMostRecentlyCreatedOffers() {
@@ -120,8 +93,6 @@ export class HomePage {
             componentProps: {
                 func: () => {
                     _tutorialModal.dismiss();
-                    // self.thisModal().dismiss();
-                    // self.parentCallbackFunc();
                 }
             }
         };
