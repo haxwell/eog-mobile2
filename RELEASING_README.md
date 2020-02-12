@@ -48,7 +48,7 @@ If you're reading this, we'll assume you just pulled a clean clone. Be sure you 
 Create the environment.ts file: cp src/_environments/environment.staging.ts src/_environments/environment.ts
 
 Run 'npm install'
-Run 'ionic cordova build ios --release'
+Run 'ionic cordova build ios --prod --aot --minifyjs --minifycss --optimizejs'
 
 (You may get an error about GoogleToolboxForMac not being found, etc. Go to the i`./platforms/ios` dir and run `pod install`. The run `ionic cordova build ios --release` again.)
 
