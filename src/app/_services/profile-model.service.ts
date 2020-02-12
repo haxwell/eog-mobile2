@@ -3,12 +3,15 @@ import { Events } from '@ionic/angular';
 
 import { ApiService } from './api.service';
 import { ContactInfoVisibilityService } from './contact-info-visibility.service'
+
 import { FunctionPromiseService } from 'savvato-javascript-services';
+import { ModelTransformingService } from 'savvato-javascript-services'
+
 import { UserService } from './user.service';
 import { PictureService } from './picture.service';
 import { PointsService } from './points.service';
 import { RecommendationService } from './recommendation.service';
-import { ModelTransformingService } from './model-transforming.service'
+
 
 import { Constants } from '../../_constants/constants'
 
