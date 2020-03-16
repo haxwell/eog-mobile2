@@ -4,8 +4,8 @@ import { Events } from '@ionic/angular';
 import { ApiService } from './api.service';
 import { ContactInfoVisibilityService } from './contact-info-visibility.service'
 
-import { FunctionPromiseService } from 'savvato-javascript-services';
-import { ModelTransformingService } from 'savvato-javascript-services'
+import { FunctionPromiseService } from '@savvato-software/savvato-javascript-services';
+import { ModelTransformingService } from '@savvato-software/savvato-javascript-services'
 
 import { UserService } from './user.service';
 import { PictureService } from './picture.service';

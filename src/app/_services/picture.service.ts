@@ -10,7 +10,7 @@ import { File, FileEntry } from '@ionic-native/file/ngx'
 
 import { ApiService } from './api.service'
 import { UserService } from './user.service'
-import { FunctionPromiseService } from 'savvato-javascript-services';
+import { FunctionPromiseService } from '@savvato-software/savvato-javascript-services';
 
 import { Constants } from '../../_constants/constants';
 

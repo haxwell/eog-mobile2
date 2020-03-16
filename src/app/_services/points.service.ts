@@ -4,7 +4,7 @@ import { Events } from '@ionic/angular';
 
 import { UserService } from './user.service';
 import { ApiService } from './api.service';
-import { FunctionPromiseService } from 'savvato-javascript-services';
+import { FunctionPromiseService } from '@savvato-software/savvato-javascript-services';
 
 import { environment } from '../../_environments/environment';
 

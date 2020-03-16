@@ -4,7 +4,7 @@ import { UserService } from '../../_services/user.service';
 import { ApiService } from '../../_services/api.service';
 import { PictureService } from '../../_services/picture.service';
 import { OfferModelService } from '../../_services/offer-model.service';
-import { FunctionPromiseService } from 'savvato-javascript-services';
+import { FunctionPromiseService } from '@savvato-software/savvato-javascript-services';
 
 import { environment } from '../../../_environments/environment';
 import { Constants } from '../../../_constants/constants';

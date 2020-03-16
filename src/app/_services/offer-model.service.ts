@@ -5,7 +5,7 @@ import { UserService } from './user.service';
 import { ApiService } from './api.service';
 import { PictureService } from './picture.service';
 import { PictureEXIFService } from './picture-exif.service';
-import { FunctionPromiseService } from 'savvato-javascript-services'
+import { FunctionPromiseService } from '@savvato-software/savvato-javascript-services'
 
 import { Constants } from '../../_constants/constants';
 import { environment } from '../../_environments/environment';

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { File } from '@ionic-native/file/ngx'
 
 import { Constants } from '../../_constants/constants'
-import { FunctionPromiseService } from 'savvato-javascript-services'
+import { FunctionPromiseService } from '@savvato-software/savvato-javascript-services'
 
 import * as EXIF from 'exif-js';
 

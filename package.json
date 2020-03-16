@@ -54,7 +54,7 @@
     "phonegap-plugin-push": "^2.2.3",
     "rxjs": "~6.3.3",
     "rxjs-compat": "~6.3.3",
-    "savvato-javascript-services": "file:../savvato/src/angular/savvato-javascript-services/dist/savvato-javascript-services",
+    "@savvato-software/savvato-javascript-services": "0.0.6",
     "snapdragon-node": "^3.0.0",
     "sockjs": "^0.3.19",
     "stompjs": "^2.3.3",
