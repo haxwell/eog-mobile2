@@ -19,7 +19,7 @@ import { Events, IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { SavvatoJavascriptServicesModule } from 'savvato-javascript-services'
+import { SavvatoJavascriptServicesModule } from '@savvato-software/savvato-javascript-services'
 
 import { EasyahCommonModule } from './common/easyah-common.module'
 
