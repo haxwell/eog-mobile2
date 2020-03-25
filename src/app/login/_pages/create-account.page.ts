@@ -142,6 +142,18 @@ export class CreateAccountPage {
 				})
 			}
 		})
+		.catch((err) => {
+			self._alertService.show({
+				header: 'Aargh',
+				message: "We got an error. Please email info@easyah.com about it. Our bad :(",
+				buttons: [
+					{
+						text: 'Shucks.', role: 'cancel', handler: () => {
+							// do nothing
+						},
+					}]
+		        });
+		})
 	}
 
 
