@@ -58,13 +58,7 @@ export class KeywordsListPage {
 			if (data) {
 				self.setDirty(true);
 				self.model["keywords"] = data;
-				self.model["keywords"].sort((a, b) => { 
-					let aText = a.text.toLowerCase(); 
-					let bText = b.text.toLowerCase(); 
-					if (aText > bText) return 1; 
-					else if (aText < bText) return -1; 
-					else return 0; 
-				});
+				self.model["keywords"].sort((a, b) => { return a.text.toLowerCase().localeCompare(b.text.toLowerCase); })	
 			}
 		})})
 	}
