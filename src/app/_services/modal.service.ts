@@ -22,7 +22,7 @@ export class ModalService {
 
 	    this.cache[aComponent] = await this._modalCtrl.create(options)
 	    
-	    if (obj.onDidDismissFunc)
+	    if (obj && obj.onDidDismissFunc)
 	    	await this.cache[aComponent].onDidDismiss(obj["onDidDismissFunc"]);
 
 	    return await this.cache[aComponent].present();
