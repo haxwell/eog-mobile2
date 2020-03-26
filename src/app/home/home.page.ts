@@ -5,7 +5,6 @@ import { ModalController } from '@ionic/angular';
 
 import { TutorialService } from '../../app/_services/tutorial.service'
 import { UserService } from '../../app/_services/user.service'
-// import { PointsService } from '../../app/_services/points.service'
 import { ProfileService } from '../../app/_services/profile.service'
 
 import { HomeService } from './_services/home.service'
@@ -30,7 +29,6 @@ export class HomePage {
                 ,private _homeService: HomeService
                 ,private _tutorialService: TutorialService
                 ,private _userService: UserService
-                // ,private _pointsService: PointsService
                 ,private _profileService: ProfileService                
     ) {
 
@@ -50,7 +48,7 @@ export class HomePage {
         if (self.showTutorialPromise !== undefined && self._tutorialService.getTutorialEasyahIntroPageHasBeenShown() !== true) {
             self.showTutorialPromise.then((b) => {
                 if (b === true) {
-                    self.presentTutorial();
+                    self._tutorialService.presentTutorial(TutorialEasyahIntroPage);
                 }
             });
         }
@@ -83,23 +81,6 @@ export class HomePage {
 
     getMostRecentlyCreatedOffers() {
         return this.mostRecentlyCreatedOffers;
-    }
-
-    async presentTutorial() {
-        let self = this;
-        let _tutorialModal = undefined;
-        let options = { 
-            component: TutorialEasyahIntroPage, 
-            componentProps: {
-                func: () => {
-                    _tutorialModal.dismiss();
-                }
-            }
-        };
-
-        _tutorialModal = await this._modalCtrl.create(options)
-
-        return await _tutorialModal.present();
     }
 
     onThumbnailImageClick() {
