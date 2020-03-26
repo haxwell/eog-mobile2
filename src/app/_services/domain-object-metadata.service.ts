@@ -13,7 +13,7 @@ import {Observable} from 'rxjs/Observable';
 })
 
 /*
-	Provides metadata about a domain object, as it relates to another domain object, in this case, a user.
+	Provides metadata about a domain object, as it relates to another domain object, for example, a user.
 
 	Metadata is provided by a function, which is associated with a unique key. When a call is made for that
 	bit of metadata in association with a given domain object, the function is called, and its return value
