@@ -38,7 +38,7 @@ export class CreateAccountPage {
 		this.createAccountForm = this.formBuilder.group({
 		  realname: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
 		  email: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+[.]+[a-zA-Z0-9-.]+$')]), asyncValidators: [this.emailValidator()], updateOn: "blur"}),
-		  phone: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.maxLength(10), Validators.minLength(10)]), asyncValidators: [this.phoneValidator()], updateOn: "blur"}),
+		  phone: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern('^[0-9]*')]), asyncValidators: [this.phoneValidator()], updateOn: "blur"}),
 		  username: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.pattern('[a-zA-Z0-9]*')]), asyncValidators: [this.usernameValidator()], updateOn: "blur"}),
 		  password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
 		  referringUsername: ['']

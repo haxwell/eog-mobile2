@@ -33,7 +33,7 @@
 	            Phone Number is required
 	        </span>
 	        <span class="text-danger"
-	            *ngIf="(createAccountFormControl.phone.touched || submitted) && (createAccountFormControl.phone.errors?.minlength || createAccountFormControl.phone.errors?.maxlength)">
+	            *ngIf="(createAccountFormControl.phone.touched || submitted) && (createAccountFormControl.phone.errors?.minlength || createAccountFormControl.phone.errors?.maxlength || createAccountFormControl.phone.errors?.pattern)">
 	            Phone Number should be 10 digits long
 	        </span>
 	        <span class="text-danger"
