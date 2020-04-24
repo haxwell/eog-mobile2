@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Validators, ValidationErrors, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -42,6 +43,8 @@ export class OfferEditPage {
 	
 	permitOnlyEditsToPoints = undefined;
 
+	offerEditForm: FormGroup;
+
 	constructor(private _location: Location,
 				private _router: Router,
 				private _route: ActivatedRoute,
@@ -57,7 +60,8 @@ export class OfferEditPage {
 				private _file: File,
 				private _events: Events,
 				private _webview: WebView,
-				private _domSanitizer: DomSanitizer) {
+				private _domSanitizer: DomSanitizer,
+				private formBuilder: FormBuilder) {
 
 	}
 
@@ -106,6 +110,18 @@ export class OfferEditPage {
 				self.offerId = -1;
 			}
 		})
+
+		self.offerEditForm = self.formBuilder.group({
+			title: ['', Validators.required],
+			quantity: ['', Validators.required],
+			units: ['', Validators.required],
+			description: ['', Validators.required]
+		});
+
+	}
+
+	get offerEditFormControl() {
+		return this.offerEditForm.controls;
 	}
 
 	ionViewWillEnter() {
@@ -259,16 +275,27 @@ export class OfferEditPage {
 	}
 
 	isSaveBtnEnabled() {
+		let oefc = this.offerEditFormControl;
 		let model = this._offerModelService.get(this.offerId);
 
 		return this.isDirty() && 
-			(model["requiredPointsQuantity"] !== undefined && model["requiredPointsQuantity"] > 0) &&
-			model["keywords"].length > 0 &&
-			model["title"].length > 0 &&
-			model["description"].length > 0 &&
-			(model["quantity"] !== undefined && model["quantity"] > 0) &&
-			model["quantityDescription"].length > 0;
+				!oefc.title.errors &&
+				!oefc.quantity.errors &&
+				!oefc.units.errors &&
+				!oefc.description.errors &&
+				model["keywords"].length > 0 &&
+				(model["requiredPointsQuantity"] !== undefined && model["requiredPointsQuantity"] > 0);
 	}
+
+
+	// 	return this.isDirty() && 
+	// 		(model["requiredPointsQuantity"] !== undefined && model["requiredPointsQuantity"] > 0) &&
+	// 		model["keywords"].length > 0 &&
+	// 		model["title"].length > 0 &&
+	// 		model["description"].length > 0 &&
+	// 		(model["quantity"] !== undefined && model["quantity"] > 0) &&
+	// 		model["quantityDescription"].length > 0;
+	// }
 
 	onSaveBtnTap(shouldCallNavCtrlPop) {
 		let self = this;

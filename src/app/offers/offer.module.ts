@@ -2,7 +2,7 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { OfferRoutingModule } from './offer-routing.module';
@@ -33,6 +33,7 @@ import { OfferCollectionService } from '../../app/_services/offer-collection.ser
     ,ChoosePhotoSourceModule
     ,RouterModule
     ,FormsModule
+    ,ReactiveFormsModule
     ,HttpClientModule
     ,TutorialModule
   ]
