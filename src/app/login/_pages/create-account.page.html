@@ -8,44 +8,99 @@
 
 <ion-content padding>
 
-	<ion-grid>
-		<ion-row>
-			<ion-label>Let's create you an account, so you can get in on the goodness!</ion-label>
-			<br/>
-		</ion-row>		
-		<ion-row>
-			<ion-col>
-				<ion-item>
-					<ion-label color="primary" position="stacked">Real Name (that your mother gave you)</ion-label>
-					<ion-input data-test="name-input" (ionChange)="onRealNameChange($event)" [value]="getModelAttr('realname')" required></ion-input>
-				</ion-item>
-				<ion-item>
-					<ion-label color="primary" position="stacked">Phone Number</ion-label>
-					<ion-input data-test="phone-number-input" type="number" (ionChange)="onPhoneChange($event)" [value]="getModelAttr('phone')" required></ion-input>
-				</ion-item>
-				<ion-item>
-					<ion-label color="primary" position="stacked">Email Address</ion-label>
-					<ion-input data-test="email-input" (ionChange)="onEmailChange($event)" [value]="getModelAttr('email')" required></ion-input>
-				</ion-item>
-				<ion-item>
-					<ion-label color="primary" position="stacked">Choose your Username (no spaces!)</ion-label>	
-					<ion-input data-test="username-input" (ionChange)="onNameChange($event)" [value]="getModelAttr('name')" required></ion-input>
-				</ion-item>
-				<ion-item>
-					<ion-label color="primary" position="stacked">Password (at least six chars long)</ion-label>
-					<ion-input data-test="password-input" type="password" (ionChange)="onPasswordChange($event)" [value]="getModelAttr('password')" required></ion-input>
-				</ion-item>
-				<ion-item>
-					<ion-label color="primary" position="stacked">Did someone refer you? What's their username? (Optional)</ion-label>
-					<ion-input data-test="referring-user-input" (ionChange)="onReferringUsernameChange($event)" [value]="getReferringUsername()" required></ion-input>
-				</ion-item>
-				<br/>
-				<ion-row>
-					<ion-button data-test="create-account-cancel-button" (click)="onCancelBtnTap($event)">Cancel</ion-button>
-					<ion-button data-test="create-account-save-button" [disabled]="!isSaveBtnEnabled()" (click)="onOKBtnTap($event)">OK</ion-button>
-				</ion-row>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+	<ion-label>Let's create an account, so you can get in on the goodness!</ion-label>
+	<br/><br/>
+
+	<form [formGroup]="createAccountForm"  (ngSubmit)="onOKBtnTap($event)">
+		<ion-item>
+			<ion-label position="floating" color="primary">Real Name (that your mother gave you)</ion-label>
+			<ion-input data-cy="realname-input" type="text" formControlName="realname" (ionInput)="onRealNameChange($event)" [value]="getModelAttr('realname')"></ion-input>
+	        <span class="text-danger"
+	            *ngIf="(createAccountFormControl.realname.touched || submitted) && createAccountFormControl.realname.errors?.required">
+	            Real Name is required
+	        </span>
+	        <span class="text-danger"
+	            *ngIf="(createAccountFormControl.realname.touched || submitted) && createAccountFormControl.realname.errors?.minlength">
+	            Real Name must be at least 3 characters
+	        </span>
+		</ion-item>
+
+		<ion-item>
+			<ion-label position="floating" color="primary">Phone (10 digits, no symbols)</ion-label>
+			<ion-input data-cy="phone-input" type="tel" formControlName="phone" (ionInput)="onPhoneChange($event)" [value]="getModelAttr('phone')" placeholder="5555555555"></ion-input>
+	        <span class="text-danger"
+	            *ngIf="(createAccountFormControl.phone.touched || submitted) && createAccountFormControl.phone.errors?.required">
+	            Phone Number is required
+	        </span>
+	        <span class="text-danger"
+	            *ngIf="(createAccountFormControl.phone.touched || submitted) && (createAccountFormControl.phone.errors?.minlength || createAccountFormControl.phone.errors?.maxlength)">
+	            Phone Number should be 10 digits long
+	        </span>
+	        <span class="text-danger"
+	            *ngIf="(createAccountFormControl.phone.touched || submitted) && createAccountFormControl.phone.errors?.phoneNumberNotAvailable">
+	            This phone number is already in use
+	        </span>
+		</ion-item>
+
+		<ion-item>
+			<ion-label position="floating" color="primary">Email</ion-label>
+			<ion-input email data-cy="email-input" type="text" formControlName="email" (ionInput)="onEmailChange($event)" [value]="getModelAttr('email')"></ion-input>
+	        <span class="text-danger"
+	            *ngIf="(createAccountFormControl.email.touched || submitted) && createAccountFormControl.email.errors?.required">
+	            Email is required
+	        </span>
+	        <span class="text-danger"
+		        *ngIf="createAccountFormControl.email.touched && createAccountFormControl.email.errors?.pattern">
+		        Enter a valid email address
+	        </span>
+	        <span class="text-danger"
+		        *ngIf="createAccountFormControl.email.touched && createAccountFormControl.email.errors?.emailAddressNotAvailable">
+		        This email address is already in use
+	        </span>
+		</ion-item>
+
+		<ion-item>
+			<ion-label position="floating" color="primary">Choose your username</ion-label>
+			<ion-input data-cy="username-input" type="text" formControlName="username" (ionInput)="onUserNameChange($event)" [value]="getModelAttr('name')"></ion-input>
+	        <span class="text-danger"
+	            *ngIf="(createAccountFormControl.username.touched || submitted) && createAccountFormControl.username.errors?.required">
+	            User Name is required
+	        </span>
+	        <span class="text-danger"
+	            *ngIf="(createAccountFormControl.username.touched || submitted) && createAccountFormControl.username.errors?.minlength">
+	            Username requires at least 3 chars
+	        </span>
+	        <span class="text-danger"
+	            *ngIf="(createAccountFormControl.username.touched || submitted) && createAccountFormControl.username.errors?.pattern">
+	            Only use letters and numbers, please!
+	        </span>
+	        <span class="text-danger"
+	            *ngIf="(createAccountFormControl.username.touched || submitted) && createAccountFormControl.username.errors?.userNameNotAvailable">
+	            This username is already in use
+	        </span>
+		</ion-item>
+
+		<ion-item>
+			<ion-label position="floating" color="primary">Password (at least six chars)</ion-label>
+			<ion-input data-cy="password-input" type="password" formControlName="password" (ionInput)="onPasswordChange($event)" [value]="getModelAttr('password')"></ion-input>
+	        <span class="text-danger"
+	            *ngIf="(createAccountFormControl.password.touched || submitted) && createAccountFormControl.password.errors?.required">
+	            Password is required
+	        </span>
+	        <span class="text-danger"
+	            *ngIf="createAccountFormControl.password.touched && createAccountFormControl.password.errors?.minlength">
+	            Password should have at least 6 characters
+	        </span>
+		</ion-item>
+
+		<ion-item>
+			<ion-label position="floating" color="primary" class="ion-text-wrap">Did someone refer you? What's their username? (Optional)</ion-label>
+			<ion-input data-cy="referring-username-input" type="text" formControlName="referringUsername" (ionInput)="onReferringUsernameChange($event)" [value]="getReferringUsername()"></ion-input>
+		</ion-item>
+
+		<br/><br/>
+		<ion-button class="" (click)="onCancelBtnTap()">Cancel</ion-button>
+		<ion-button data-cy="submit" class="submit-btn" type="submit" [disabled]="!isSaveBtnEnabled()">Sign Me Up!</ion-button>
+	</form>
 
 </ion-content>

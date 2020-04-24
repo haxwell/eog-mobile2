@@ -2,7 +2,7 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LoginPage } from './login.page';
 import { CreateAccountPage } from './_pages/create-account.page';
@@ -23,6 +23,7 @@ import { LoginRoutingModule } from './login-routing.module';
     IonicModule,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     LoginRoutingModule,
     RouterModule.forChild([{ path: '', component: LoginPage }])

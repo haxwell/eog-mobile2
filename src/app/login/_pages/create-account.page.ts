@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
+import { Validators, ValidationErrors, AsyncValidatorFn, FormBuilder, FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { Location } from '@angular/common';
 
 import { AlertService } from '../../../app/_services/alert.service';
 import { ModalService } from '../../../app/_services/modal.service';
 import { UserService } from '../../../app/_services/user.service';
+
+import { FunctionPromiseService } from '@savvato-software/savvato-javascript-services'
 
 import { NewAccountTutorialPage } from './new-account-tutorial.page'
 
@@ -20,15 +23,91 @@ export class CreateAccountPage {
 
 	tutorialModal = undefined;
 
+  	createAccountForm: FormGroup;
+
 	constructor(private _location: Location,
 				private _alertService: AlertService,
 				private _modalService: ModalService,
-				private _userService: UserService) {
+				private _userService: UserService,
+				private _functionPromiseService: FunctionPromiseService,
+				private formBuilder: FormBuilder) {
 
 	}
 
 	ngOnInit() {
+		this.createAccountForm = this.formBuilder.group({
+		  realname: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+		  email: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+[.]+[a-zA-Z0-9-.]+$')]), asyncValidators: [this.emailValidator()], updateOn: "blur"}),
+		  phone: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.maxLength(10), Validators.minLength(10)]), asyncValidators: [this.phoneValidator()], updateOn: "blur"}),
+		  username: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.pattern('[a-zA-Z0-9]*')]), asyncValidators: [this.usernameValidator()], updateOn: "blur"}),
+		  password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+		  referringUsername: ['']
+		});
 
+		let self = this;
+		this._functionPromiseService.initFunc("isUsernameAvailable", (data) => {
+			return new Promise((resolve, reject) => {
+				self._userService.isUsernameAvailable(data['username']).then((data) => {
+					console.log("FPS isUsernameAvailable func, resolving ", data);
+					resolve({isUsernameAvailable: data});
+				})
+			})
+		})
+
+		this._functionPromiseService.initFunc("isPhoneNumberAvailable", (data) => {
+			return new Promise((resolve, reject) => {
+				self._userService.isPhoneNumberAvailable(data['phonenumber']).then((data) => {
+					resolve({isPhoneNumberAvailable: data});
+				})
+			})
+		})
+
+		this._functionPromiseService.initFunc("isEmailAddressAvailable", (data) => {
+			return new Promise((resolve, reject) => {
+				self._userService.isEmailAddressAvailable(data['emailaddress']).then((data) => {
+					console.log("FPS isEmailAddrAvailable func, resolving ", data);
+					resolve({isEmailAddressAvailable: data});
+				})
+			})
+		})
+	}
+
+	get createAccountFormControl() {
+		return this.createAccountForm.controls;
+	}
+
+	usernameValidator(): AsyncValidatorFn {
+		let self = this;
+  		return (control: AbstractControl): Promise<ValidationErrors | null>  => {
+			return new Promise((resolve, reject) => {
+				self._functionPromiseService.waitAndGet("isUsernameAvailable-"+control.value, "isUsernameAvailable", {username: control.value}).then((rtn) => {
+					resolve(rtn['isUsernameAvailable'] === true ? null : { userNameNotAvailable: true });
+				})
+			});
+		};
+	}
+
+	phoneValidator(): AsyncValidatorFn {
+		let self = this;
+  		return (control: AbstractControl): Promise<ValidationErrors | null>  => {
+			return new Promise((resolve, reject) => {
+				if (control.value.length !== 10) { console.log("short number"); resolve(null); }
+				self._functionPromiseService.waitAndGet("isPhoneNumberAvailable-"+control.value, "isPhoneNumberAvailable", {phonenumber: control.value}).then((rtn) => {
+					resolve(rtn['isPhoneNumberAvailable'] === true ? null : { phoneNumberNotAvailable: true });
+				})
+			});
+		};
+	}
+
+	emailValidator(): AsyncValidatorFn {
+		let self = this;
+  		return (control: AbstractControl): Promise<ValidationErrors | null>  => {
+			return new Promise((resolve, reject) => {
+				self._functionPromiseService.waitAndGet("isEmailAddressAvailable-"+control.value, "isEmailAddressAvailable", {emailaddress: control.value}).then((rtn) => {
+					resolve(rtn['isEmailAddressAvailable'] === true ? null : { emailAddressNotAvailable: true });
+				})
+			});
+		};
 	}
 
 	ionViewWillEnter() {
@@ -45,7 +124,7 @@ export class CreateAccountPage {
 		this.setChangedAttr("realname", event.currentTarget.value);
 	}
 
-	onNameChange(event) {
+	onUserNameChange(event) {
 		this.setChangedAttr("name", event.currentTarget.value);
 	}
 
@@ -73,87 +152,69 @@ export class CreateAccountPage {
 		return this.user[key];
 	}
 
-	isValidEmail(email) {
-    	let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    	return re.test(email);
-	}
-
 	isSaveBtnEnabled() {
-		return 	this.user["email"].length > 5 && 
-				this.user["realname"].length > 2 && 
-				this.user["name"].length > 2 && 
-				this.user["password"].length > 5 &&
-				this.user["phone"].length === 10 &&
-				this.isValidEmail(this.user["email"]);
+		let cafc = this.createAccountFormControl;
+		
+		return 	!cafc.realname.errors && 
+				!cafc.email.errors &&
+				!cafc.phone.errors &&
+				!cafc.username.errors &&
+				!cafc.password.errors;
 	}
 
 	onOKBtnTap(evt) {
 		let self = this;
 
-		if (this.user["name"].lastIndexOf(' ') > -1) {
-			self._alertService.show({
-				header: 'Doh!',
-				message: "Usernames cannot have spaces in them.",
-				buttons: [
-					{
-						text: 'OK', role: 'cancel', handler: () => {
-							// do nothing
-						}
+		if (self.isSaveBtnEnabled()) {
+			self._userService.isUserInformationUnique(self.user).then((userInfo) => {
+				if (userInfo == true) {
+					if (!self.codeAlreadySent) {
+						self._alertService.show({
+							header: 'Ready for a text?',
+							message: "We're gonna send a text to your phone at " + self.user["phone"] + ". Okay?",
+							buttons: [
+								{
+									text: 'No', role: 'cancel', handler: () => {
+										// do nothing
+									},
+								}, {
+									text: 'Yes', handler: () => {
+				           				self._userService.sendCodeToPhoneNumber(self.user["phone"]);
+					            		self.codeAlreadySent = true;
+					            		self.onOKBtnTap2(evt);
+					            	}, cssClass: 'e2e-sendCodeToPhoneNumberBtn'
+					            }]
+					        });
+					} else {
+						self.onOKBtnTap2(evt);
 					}
-				]
-			})
-
-			return;			
-		}
-
-		self._userService.isUserInformationUnique(self.user).then((userInfo) => {
-			if (userInfo == true) {
-				if (!self.codeAlreadySent) {
+				} else {
 					self._alertService.show({
-						header: 'Ready for a text?',
-						message: "We're gonna send a text to your phone at " + self.user["phone"] + ". Okay?",
+						header: 'Doh!',
+						message: "Sorry, that " + userInfo + " is already taken :(",
 						buttons: [
 							{
-								text: 'No', role: 'cancel', handler: () => {
+								text: 'OK', role: 'cancel', handler: () => {
 									// do nothing
-								},
-							}, {
-								text: 'Yes', handler: () => {
-			           				self._userService.sendCodeToPhoneNumber(self.user["phone"]);
-				            		self.codeAlreadySent = true;
-				            		self.onOKBtnTap2(evt);
-				            	}, cssClass: 'e2e-sendCodeToPhoneNumberBtn'
-				            }]
-				        });
-				} else {
-					self.onOKBtnTap2(evt);
+								}
+							}
+						]
+					})
 				}
-			} else {
+			})
+			.catch((err) => {
 				self._alertService.show({
-					header: 'Doh!',
-					message: "Sorry, that " + userInfo + " is already taken :(",
+					header: 'Aargh',
+					message: "We got an error. Please email info@easyah.com about it. Our bad :(",
 					buttons: [
 						{
-							text: 'OK', role: 'cancel', handler: () => {
+							text: 'Shucks.', role: 'cancel', handler: () => {
 								// do nothing
-							}
-						}
-					]
-				})
-			}
-		})
-		.catch((err) => {
-			self._alertService.show({
-				header: 'Aargh',
-				message: "We got an error. Please email info@easyah.com about it. Our bad :(",
-				buttons: [
-					{
-						text: 'Shucks.', role: 'cancel', handler: () => {
-							// do nothing
-						},
-					}]
-		        });
-		})
+							},
+						}]
+			        });
+			})
+		}
 	}
 
 
@@ -221,7 +282,6 @@ export class CreateAccountPage {
 	        }
 	      }]
         });
-
 	}
 
 	onCancelBtnTap(evt) {
