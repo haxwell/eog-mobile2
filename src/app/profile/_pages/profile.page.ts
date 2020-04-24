@@ -112,15 +112,43 @@ export class ProfilePage {
 
 	onSendRecommendationBtnTap() {
 		let self = this;
+
 		self._recommendationService.sendARecommendationToAUser(this.userId).then((data) => {
-			this._currentUserCanSendRecommendationToProfileUser = false;
-		})
+			self._currentUserCanSendRecommendationToProfileUser = false;
+
+			self._userService.getUser(self.userId).then((user) => {
+				self._alertService.show({
+					header: 'Sweet!',
+					message: "You just sent a recommendation to " + user["name"] + ".<br/><br/>They must use this recommendation, by requesting an offer that requires it, before you can send another one.",
+					buttons: [{
+						text: 'OK',
+						handler: () => {
+
+						}
+					}]
+				})
+			})
+		});
 	}
 
 	onSendPointBtnTap() {
 		let self = this;
-		self._pointsService.sendAPointToAUser(this.userId).then((data) => {
-			this._currentUserCanSendPointToProfileUser = false;
+
+		self._pointsService.sendAPointToAUser(self.userId).then((data) => {
+			self._currentUserCanSendPointToProfileUser = false;
+
+			self._userService.getUser(self.userId).then((user) => {
+				self._alertService.show({
+					header: 'Sweet!',
+					message: "You just sent a point to " + user["name"] + ".<br/><br/>You can send another one in about a week.",
+					buttons: [{
+						text: 'OK',
+						handler: () => {
+
+						}
+					}]
+				})
+			})
 		});
 	}
 
