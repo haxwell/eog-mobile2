@@ -21,22 +21,18 @@ export class PictureService {
 
 	_functionPromiseService = new FunctionPromiseService();
 	mostProbablePhotoPath = {};
-	isPlatformAndroid = undefined;
 
 	constructor(private _platform: Platform,
 				private _http: HttpClient,
 				private _apiService: ApiService,
 				private _userService: UserService,
 				private _constants: Constants,
-//				private _webview: WebView,
 				private transfer: FileTransfer,
 				private file: File) {
 
 	}
 
 	init() {
-
-		this.isPlatformAndroid = this._platform.is('android')
 
 		// Why do we do this? Why not just define and call a function?
 
@@ -64,11 +60,6 @@ export class PictureService {
 
 			return new Promise((resolve, reject) => 
 			{ 
-				// if (document.URL.startsWith('http')) {
-				// 	console.log("dddddddddd")
-				// 	resolve(undefined);
-				// //} else {
-				 // if not running on desktop (https://forum.ionicframework.com/t/how-to-determine-if-browser-or-app/89149/10)
 
 					if (!objId)
 						resolve({'path': undefined});
@@ -174,7 +165,6 @@ export class PictureService {
 						resolve({'path': undefined})
 					})
 				
-				//} //here
 			});
 		});	
 	}
@@ -208,7 +198,6 @@ export class PictureService {
 				console.log("@@@ PictureService is about to upload a file....")
 				const fileTransfer: FileTransferObject = this.transfer.create();
 
-				// filename = this._webview.convertFileSrc(filename);
 				let currentUser = this._userService.getCurrentUser();
 
 				let options: FileUploadOptions = {
@@ -286,7 +275,7 @@ export class PictureService {
 
 		let rtn = "";
 
-		if (obj && this.isPlatformAndroid) {
+		if (obj && this._platform.is('android')) {
 			if (obj["imageOrientation"] === 8)
 				 rtn = "rotate90Counterclockwise";
 			else if (obj["imageOrientation"] === 3)

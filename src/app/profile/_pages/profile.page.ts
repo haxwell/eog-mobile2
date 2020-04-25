@@ -202,7 +202,10 @@ export class ProfilePage {
 	}
 
 	getAvatarCSSClassString() {
-		return this._pictureService.getOrientationCSS(this);
+        let _model = this._profileService.getModel();
+        let rtn = this._pictureService.getOrientationCSS(_model);
+
+        return rtn;
 	}
 
 	getAllTimePointCount() {

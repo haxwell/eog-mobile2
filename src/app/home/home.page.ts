@@ -6,6 +6,7 @@ import { ModalController } from '@ionic/angular';
 import { TutorialService } from '../../app/_services/tutorial.service'
 import { UserService } from '../../app/_services/user.service'
 import { ProfileService } from '../../app/_services/profile.service'
+import { PictureService } from '../../app/_services/picture.service'
 
 import { HomeService } from './_services/home.service'
 
@@ -30,6 +31,7 @@ export class HomePage {
                 ,private _tutorialService: TutorialService
                 ,private _userService: UserService
                 ,private _profileService: ProfileService                
+                ,private _pictureService: PictureService
     ) {
 
     }
@@ -56,6 +58,13 @@ export class HomePage {
 
     getThumbnailImage() {
         return this._profileService.getThumbnailImagePath();
+    }
+
+    getAvatarCSSClassString() {
+        let _model = this._profileService.getModel();
+        let rtn = this._pictureService.getOrientationCSS(_model);
+
+        return rtn;
     }
 
     getUserName() {

@@ -50,14 +50,22 @@ ion-card img {
 	width: 100%;
 }
 
-.home-profile-info-content-div {
+.profile-info-content-div {
     width: 88%;
     height: 100%;
     color: white;
     text-shadow: 2px 2px 4px #000000;
     padding-left: 7px;
+    text-align: left;
+    position: absolute;
+    top: 7em;
 }
 
 .homeUserName {
 	font-size: 27px;
 }
+
+#profileImgCard {
+	position: relative;	
+}
+

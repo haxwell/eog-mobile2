@@ -24,12 +24,12 @@
 			</ion-row>
 			<br/>
 			<ion-row>
-				<ion-card>
+				<ion-card id="profileImgCard" class="centered">
 					<ion-card-content>
 						<div id="forImgOverlapDiv">
-							<img [src]="getThumbnailImage()"/>
+							<img [src]="getThumbnailImage()" [class]="getAvatarCSSClassString()"/>
 						</div>
-						<div class="home-profile-info-content-div">
+						<div class="profile-info-content-div">
 							<table>
 								<tr>
 									<div class="homeUserName">

@@ -9,10 +9,10 @@
 			<img id="logo-with-words-img" class="centered" src="assets/img/logo-full.jpg">
 		</ion-row>
 		<ion-row>
-			<ion-card class="centered">
+			<ion-card id="homeProfileImgCard" class="centered">
 				<ion-card-content>
 					<div id="forImgOverlapDiv">
-						<img [src]="getThumbnailImage()" (click)="onThumbnailImageClick()" />
+						<img [src]="getThumbnailImage()" [class]="getAvatarCSSClassString()" (click)="onThumbnailImageClick()" />
 					</div>
 					<div class="home-profile-info-content-div">
 						<table>

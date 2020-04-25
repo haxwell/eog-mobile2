@@ -9,6 +9,7 @@ import { ModelTransformingService } from '@savvato-software/savvato-javascript-s
 
 import { UserService } from './user.service';
 import { PictureService } from './picture.service';
+import { PictureEXIFService } from './picture-exif.service';
 import { PointsService } from './points.service';
 import { RecommendationService } from './recommendation.service';
 
@@ -31,6 +32,7 @@ export class ProfileModelService  {
 				private _functionPromiseService: FunctionPromiseService,
 				private _userService: UserService,
 				private _pictureService: PictureService,
+				private _pictureEXIFService: PictureEXIFService,
 				private _pointsService: PointsService,
 				private _recommendationService: RecommendationService,
 				private _modelTransformingService: ModelTransformingService,
@@ -123,7 +125,15 @@ export class ProfileModelService  {
 					model["imageFileSource"] = 'eog';
 					model["imageFileURI"] = obj['path'];
 					model["imageFileURI_OriginalValue"] = obj['path'];
-					done("pictureService");
+
+					if (obj['path']) {
+						this._pictureEXIFService.getEXIFMetadata(obj['path']).then((exifMetadata) => {
+							model["imageOrientation"] = exifMetadata["Orientation"];
+							done("pictureService");
+						})
+					} else {
+						done("pictureService");
+					}
 				})
 	  		} else {
 	  			done("pictureService");

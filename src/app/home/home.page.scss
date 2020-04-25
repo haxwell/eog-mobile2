@@ -36,8 +36,15 @@ ion-card img {
     text-shadow: 2px 2px 4px #000000;
     padding-left: 7px;
     text-align: left;
+    position: absolute;
+    top: 7em;
 }
 
 .homeUserName {
 	font-size: 27px;
 }
+
+#homeProfileImgCard {
+	position: relative;	
+}
+
