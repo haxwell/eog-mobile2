@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 
 import { AlertService } from '../../../app/_services/alert.service';
 import { ModalService } from '../../../app/_services/modal.service';
+import { LoadingService } from '../../../app/_services/loading.service';
 import { UserService } from '../../../app/_services/user.service';
 
 import { FunctionPromiseService } from '@savvato-software/savvato-javascript-services'
@@ -28,6 +29,7 @@ export class CreateAccountPage {
 	constructor(private _location: Location,
 				private _alertService: AlertService,
 				private _modalService: ModalService,
+				private _loadingService: LoadingService,
 				private _userService: UserService,
 				private _functionPromiseService: FunctionPromiseService,
 				private formBuilder: FormBuilder) {
@@ -243,44 +245,49 @@ export class CreateAccountPage {
 	        handler: (data) => {
 	            if (data.code !== undefined && data.code.length > 0) {
 
-	            	self._userService.isAValidSMSChallengeCode(self.user["phone"], data.code).then((b) => {
-	            		if (b) {
-							if (self.referringUsername !== undefined && self.referringUsername.length > 0)
-								self.user["referringUsername"] = self.referringUsername;
-							else
-								delete self.user["referringUsername"];
+	            	self._userService.isAValidSMSChallengeCode(self.user["phone"], data.code).then((isValidSMSCC) => {
+	            		self._loadingService.show({message: "...creating your account..."}).then(() => {
+		            		if (isValidSMSCC) {
+								if (self.referringUsername !== undefined && self.referringUsername.length > 0)
+									self.user["referringUsername"] = self.referringUsername;
+								else
+									delete self.user["referringUsername"];
 
-							self._userService.save(self.user, data.code).then(() => {
+								self._userService.save(self.user, data.code).then(() => {
+									self._loadingService.dismiss().then(() => {
 
-								self._alertService.show({
-		            				header: 'Alright!',
-		            				message: "Account Created.<br/>user: " + self.user["name"] + "<br/>pw: ..." + self.user["password"].substring(self.user["password"].length - 5) + "<br/><br/>Click OK to sign in.",
-		            				buttons: [{
-		            					text: 'OK',
-		            					cssClass: 'e2e-account-successfully-created-btn',
-		            					handler: () => {
-											self.codeAlreadySent = false;
-											self._location.back();
-		            					}
-		            				}]
-		            			})
-							});
-	            		} else {
-	            			self._alertService.show({
-	            				header: 'Aargh...',
-	            				message: "That wasn't a valid code.......",
-	            				buttons: [{
-	            					text: 'Grr.',
-	            					handler: () => {
+										self._alertService.show({
+				            				header: 'Alright!',
+				            				message: "Account Created.<br/>user: " + self.user["name"] + "<br/>pw: ..." + self.user["password"].substring(self.user["password"].length - 5) + "<br/><br/>Click OK to sign in.",
+				            				buttons: [{
+				            					text: 'OK',
+				            					cssClass: 'e2e-account-successfully-created-btn',
+				            					handler: () => {
+													self.codeAlreadySent = false;
 
-	            					}
-	            				}]
-	            			})
-	            		}
-	            	})
+													self._location.back();
+				            					}
+				            				}]
+				            			})
+									})
+								});
+	            			}
+	            		})})
+            		} else {
+            			self._alertService.show({
+            				header: 'Aargh...',
+            				message: "That wasn't a valid code.......",
+            				buttons: [{
+            					text: 'Grr.',
+            					handler: () => {
+
+            					}
+            				}]
+            			})
+            		}
 	            }
 	        }
-	      }]
+	      ]
         });
 	}
 
