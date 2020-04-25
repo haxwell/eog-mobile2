@@ -94,13 +94,11 @@
 		</ion-item>
 
 		<ion-item>
-			<ion-label position="floating" color="primary" class="ion-text-wrap">Did someone refer you? What's their username? (Optional)</ion-label>
+			<ion-label position="floating" color="primary">Username who referred you? (Optional)</ion-label>
 			<ion-input data-cy="referring-username-input" type="text" formControlName="referringUsername" (ionInput)="onReferringUsernameChange($event)" [value]="getReferringUsername()"></ion-input>
 		</ion-item>
-
-		<br/><br/>
-		<ion-button class="" (click)="onCancelBtnTap()">Cancel</ion-button>
-		<ion-button data-cy="submit" class="submit-btn" type="submit" [disabled]="!isSaveBtnEnabled()">Sign Me Up!</ion-button>
 	</form>
-
+	<br/><br/>
+	<ion-button class="" (click)="onCancelBtnTap()">Cancel</ion-button>
+	<ion-button data-cy="submit" [disabled]="!isSaveBtnEnabled()" (click)="onOKBtnTap($event)">Sign Me Up!</ion-button>
 </ion-content>
