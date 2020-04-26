@@ -16,11 +16,11 @@
 			<ion-label position="floating" color="primary">Real Name (that your mother gave you)</ion-label>
 			<ion-input data-cy="realname-input" type="text" formControlName="realname" (ionInput)="onRealNameChange($event)" [value]="getModelAttr('realname')"></ion-input>
 	        <span class="text-danger"
-	            *ngIf="(createAccountFormControl.realname.touched || submitted) && createAccountFormControl.realname.errors?.required">
+	            *ngIf="(createAccountFormControl.realname.touched ) && createAccountFormControl.realname.errors?.required">
 	            Real Name is required
 	        </span>
 	        <span class="text-danger"
-	            *ngIf="(createAccountFormControl.realname.touched || submitted) && createAccountFormControl.realname.errors?.minlength">
+	            *ngIf="(createAccountFormControl.realname.touched ) && createAccountFormControl.realname.errors?.minlength">
 	            Real Name must be at least 3 characters
 	        </span>
 		</ion-item>
@@ -29,15 +29,15 @@
 			<ion-label position="floating" color="primary">Phone (10 digits, no symbols)</ion-label>
 			<ion-input data-cy="phone-input" type="tel" formControlName="phone" (ionInput)="onPhoneChange($event)" [value]="getModelAttr('phone')" placeholder="5555555555"></ion-input>
 	        <span class="text-danger"
-	            *ngIf="(createAccountFormControl.phone.touched || submitted) && createAccountFormControl.phone.errors?.required">
+	            *ngIf="(createAccountFormControl.phone.touched ) && createAccountFormControl.phone.errors?.required">
 	            Phone Number is required
 	        </span>
 	        <span class="text-danger"
-	            *ngIf="(createAccountFormControl.phone.touched || submitted) && (createAccountFormControl.phone.errors?.minlength || createAccountFormControl.phone.errors?.maxlength || createAccountFormControl.phone.errors?.pattern)">
+	            *ngIf="(createAccountFormControl.phone.touched ) && (createAccountFormControl.phone.errors?.minlength || createAccountFormControl.phone.errors?.maxlength || createAccountFormControl.phone.errors?.pattern)">
 	            Phone Number should be 10 digits long
 	        </span>
 	        <span class="text-danger"
-	            *ngIf="(createAccountFormControl.phone.touched || submitted) && createAccountFormControl.phone.errors?.phoneNumberNotAvailable">
+	            *ngIf="(createAccountFormControl.phone.touched ) && createAccountFormControl.phone.errors?.phoneNumberNotAvailable">
 	            This phone number is already in use
 	        </span>
 		</ion-item>
@@ -46,7 +46,7 @@
 			<ion-label position="floating" color="primary">Email</ion-label>
 			<ion-input email data-cy="email-input" type="text" formControlName="email" (ionInput)="onEmailChange($event)" [value]="getModelAttr('email')"></ion-input>
 	        <span class="text-danger"
-	            *ngIf="(createAccountFormControl.email.touched || submitted) && createAccountFormControl.email.errors?.required">
+	            *ngIf="(createAccountFormControl.email.touched ) && createAccountFormControl.email.errors?.required">
 	            Email is required
 	        </span>
 	        <span class="text-danger"
@@ -63,19 +63,19 @@
 			<ion-label position="floating" color="primary">Choose your username</ion-label>
 			<ion-input data-cy="username-input" type="text" formControlName="username" (ionInput)="onUserNameChange($event)" [value]="getModelAttr('name')"></ion-input>
 	        <span class="text-danger"
-	            *ngIf="(createAccountFormControl.username.touched || submitted) && createAccountFormControl.username.errors?.required">
+	            *ngIf="(createAccountFormControl.username.touched ) && createAccountFormControl.username.errors?.required">
 	            User Name is required
 	        </span>
 	        <span class="text-danger"
-	            *ngIf="(createAccountFormControl.username.touched || submitted) && createAccountFormControl.username.errors?.minlength">
+	            *ngIf="(createAccountFormControl.username.touched ) && createAccountFormControl.username.errors?.minlength">
 	            Username requires at least 3 chars
 	        </span>
 	        <span class="text-danger"
-	            *ngIf="(createAccountFormControl.username.touched || submitted) && createAccountFormControl.username.errors?.pattern">
+	            *ngIf="(createAccountFormControl.username.touched ) && createAccountFormControl.username.errors?.pattern">
 	            Only use letters and numbers, please!
 	        </span>
 	        <span class="text-danger"
-	            *ngIf="(createAccountFormControl.username.touched || submitted) && createAccountFormControl.username.errors?.userNameNotAvailable">
+	            *ngIf="(createAccountFormControl.username.touched ) && createAccountFormControl.username.errors?.userNameNotAvailable">
 	            This username is already in use
 	        </span>
 		</ion-item>
@@ -84,7 +84,7 @@
 			<ion-label position="floating" color="primary">Password (at least six chars)</ion-label>
 			<ion-input data-cy="password-input" type="password" formControlName="password" (ionInput)="onPasswordChange($event)" [value]="getModelAttr('password')"></ion-input>
 	        <span class="text-danger"
-	            *ngIf="(createAccountFormControl.password.touched || submitted) && createAccountFormControl.password.errors?.required">
+	            *ngIf="(createAccountFormControl.password.touched ) && createAccountFormControl.password.errors?.required">
 	            Password is required
 	        </span>
 	        <span class="text-danger"
