@@ -78,9 +78,8 @@ export class PictureService {
 				    let url = environment.apiUrl + "/api/resource/" + photoType + "/" + objId + "/isFound";
 				    self._apiService.get(url).subscribe((pictureAPITimestamp: number) => {
 
-				    	// console.log(photoType + " " + objId + " FOUND it's API timestamp = " + pictureAPITimestamp)
-
 						if (pictureAPITimestamp * 1 > 0) { // meaning, this file exists on the API
+				    		// console.log(photoType + " " + objId + " FOUND it's API timestamp = " + pictureAPITimestamp)
 
 							// now we need the timestamp of the file on this local device we're running on...
 							let checkFile = self.file.checkFile(path, filename);
@@ -107,7 +106,9 @@ export class PictureService {
 								  		});
 
 									} else {
-										resolve(path+filename);
+										// file exists locally, and is newer than the version on the API. 
+										//  keep it, and resolve with the path and filename of our local, still-fresh, file.
+										resolve({'path': path + filename});
 									}
 								}).catch(e => {
 									// call to checkfile failed.. the file likely does not exist.. regardless try downloading it from the server.
