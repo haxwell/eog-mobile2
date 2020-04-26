@@ -1,15 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Events } from '@ionic/angular';
-
-import { Constants } from '../../_constants/constants';
 
 import { UserService } from './user.service';
-import { ApiService } from './api.service';
-import { PictureService } from './picture.service';
 import { ProfileModelService } from './profile-model.service';
-import { RecommendationService } from './recommendation.service';
-import { UserPreferencesService } from './user-preferences.service';
-import { ContactInfoVisibilityService } from './contact-info-visibility.service';
 
 import { environment } from '../../_environments/environment';
 
@@ -20,15 +12,8 @@ export class ProfileService {
 
 	modelCache = {};
 
-	constructor(private _apiService: ApiService, 
-				private _userService: UserService, 
-				private _profileModelService: ProfileModelService,
-				private _recommendationService: RecommendationService,
-				private _pictureService: PictureService,
-				private _userPreferencesService: UserPreferencesService,
-				private _contactInfoVisibilityService: ContactInfoVisibilityService,
-				private _constants : Constants,
-				private _events: Events) {
+	constructor(private _userService: UserService, 
+				private _profileModelService: ProfileModelService) {
 
 				}
 
@@ -58,5 +43,4 @@ export class ProfileService {
 
 		return environment.apiUrl + "/api/resource/profile/" + userId + '/sendAnew/' + this._counter; 
 	}	
-
 }
