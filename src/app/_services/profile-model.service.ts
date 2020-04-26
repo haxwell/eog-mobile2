@@ -23,7 +23,6 @@ import { environment } from '../../_environments/environment';
 })
 export class ProfileModelService  {
 
-	modelCache = { };
 	modelTransformingServiceHasBeenInitd = false;
 
 	constructor(private _constants: Constants,
@@ -41,7 +40,6 @@ export class ProfileModelService  {
 	}
 
 	init() {
-		this.modelCache = { };
 		this._recommendationService.init();
 		this._pointsService.init();
 
@@ -66,6 +64,10 @@ export class ProfileModelService  {
 		self._functionPromiseService.initFunc(userId+"profileFuncKey", () => {
 			return new Promise((resolve, reject) => {
 				self._modelTransformingService.reset();
+
+				// THIS IS WHERE THE PROFILE MODEL COMES FROM.
+				//  we start with a pretty much empty model ({userId: userId}),	
+				//  and then we run the transformers over it, to build it up into something grand.
                 self._modelTransformingService.transform({userId: userId}).then((model) => {
                 	resolve(model);
                 });
