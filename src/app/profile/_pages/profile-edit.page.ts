@@ -12,6 +12,7 @@ import { AlertService } from '../../../app/_services/alert.service'
 import { ProfileService } from '../../../app/_services/profile.service'
 import { ProfileModelService } from '../../../app/_services/profile-model.service'
 import { PictureService } from '../../../app/_services/picture.service'
+import { PictureEXIFService } from '../../../app/_services/picture-exif.service'
 import { GeolocationService } from '../../../app/_services/geolocation.service'
 import { UserService } from '../../../app/_services/user.service'
 import { UserMetadataService } from '../../../app/_services/user-metadata.service'
@@ -55,6 +56,7 @@ export class ProfileEditPage {
 				private _profileService: ProfileService,
 				private _profileModelService: ProfileModelService,
 				private _pictureService: PictureService,
+				private _pictureEXIFService: PictureEXIFService,
 				private _userService: UserService,
 				private _userMetadataService: UserMetadataService,
 				private _contactInfoVisibilityService: ContactInfoVisibilityService,
@@ -397,6 +399,10 @@ export class ProfileEditPage {
 								model["imageFileURI"] = uriAndSource["imageFileURI"];
 								model["imageFileSource"] = uriAndSource["imageFileSource"];
 
+								self._pictureEXIFService.getEXIFMetadata(model["imageFileURI"]).then((exifMetadata) => {
+									model["imageOrientation"] = exifMetadata["Orientation"];
+								})
+
 								//self._events.publish('profile:changedProfileImage', model["imageFileURI"]);
 								self.setDirty(true);						
 							})
@@ -408,6 +414,10 @@ export class ProfileEditPage {
 
 							model["imageFileURI"] = uriAndSource["imageFileURI"];
 							model["imageFileSource"] = uriAndSource["imageFileSource"];
+
+							self._pictureEXIFService.getEXIFMetadata(model["imageFileURI"]).then((exifMetadata) => {
+								model["imageOrientation"] = exifMetadata["Orientation"];
+							})
 
 							//self._events.publish('profile:changedProfileImage', model["imageFileURI"]);
 							self.setDirty(true);
@@ -435,6 +445,7 @@ export class ProfileEditPage {
 
 							model["imageFileURI"] = undefined;
 							model["imageFileSource"] = undefined;
+							model["imageOrientation"] = undefined;
 
 							self._pictureService.setMostProbablePhotoPath(self._constants.PHOTO_TYPE_PROFILE, self.userId, model["imageFileURI"]);
 						}
@@ -486,7 +497,7 @@ export class ProfileEditPage {
 	}
 
 	getAvatarCSSClassString() {
-		return this._pictureService.getOrientationCSS(this);
+		return this._pictureService.getOrientationCSS(this._profileService.getModel(this.userId));
 	}
 
 	loaded(evt) {
