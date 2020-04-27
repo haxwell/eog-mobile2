@@ -287,16 +287,6 @@ export class OfferEditPage {
 				(model["requiredPointsQuantity"] !== undefined && model["requiredPointsQuantity"] > 0);
 	}
 
-
-	// 	return this.isDirty() && 
-	// 		(model["requiredPointsQuantity"] !== undefined && model["requiredPointsQuantity"] > 0) &&
-	// 		model["keywords"].length > 0 &&
-	// 		model["title"].length > 0 &&
-	// 		model["description"].length > 0 &&
-	// 		(model["quantity"] !== undefined && model["quantity"] > 0) &&
-	// 		model["quantityDescription"].length > 0;
-	// }
-
 	onSaveBtnTap(shouldCallNavCtrlPop) {
 		let self = this;
 		let presave_model = this._offerModelService.get(this.offerId);
