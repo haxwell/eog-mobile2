@@ -6,7 +6,7 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="ion-padding">
 	<ion-label>You are about to request that someone do their offer for you.</ion-label><br/><br/>
 	<ion-label><b>{{getTitle()}}</b></ion-label><br/><br/>
 	<ion-label *ngIf="!getRequiredUserRecommendations()">This will require {{getRequiredPointsQuantityString()}} from you.</ion-label>
