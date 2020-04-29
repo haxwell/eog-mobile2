@@ -25,7 +25,7 @@
 
 	<ion-list *ngIf="getPendingRequests()">
 		<ion-item-divider sticky>
-			<ion-label text-wrap>
+			<ion-label class="ion-text-wrap">
 				Waiting for you to accept, or decline
 			</ion-label>
 		</ion-item-divider>
@@ -69,7 +69,7 @@
 	</ion-list>
 	<ion-list *ngIf="getAcceptedRequests()">
 		<ion-item-divider sticky>
-			<ion-label text-wrap>
+			<ion-label class="ion-text-wrap">
 				You Accepted, You put these In-Progress
 			</ion-label>
 		</ion-item-divider>
@@ -114,7 +114,7 @@
 	</ion-list>
 	<ion-list *ngIf="getDeclinedRequests()">
 		<ion-item-divider sticky>
-			<ion-label text-wrap>
+			<ion-label class="ion-text-wrap">
 				You Declined
 			</ion-label>
 		</ion-item-divider>
@@ -161,7 +161,7 @@
 	</ion-list>
 	<ion-list *ngIf="getCompletedPendingApprovalRequests()">
 		<ion-item-divider sticky>
-			<ion-label text-wrap>
+			<ion-label class="ion-text-wrap">
 				You Marked These Completed. Awaiting the other side's confirmation.
 			</ion-label>
 		</ion-item-divider>
@@ -202,7 +202,7 @@
 	</ion-list>
 	<ion-list *ngIf="getDisputedCompletedRequests()">
 		<ion-item-divider sticky>
-			<ion-label text-wrap>
+			<ion-label class="ion-text-wrap">
 				There is a dispute with these
 			</ion-label>
 		</ion-item-divider>

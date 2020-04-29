@@ -44,7 +44,7 @@
 		</ion-row>
 		<ion-row>
 			<ion-item>
-				<ion-label text-wrap>When you accept another user's request, that user can see your contact info. What should they see?</ion-label>
+				<ion-label class="ion-text-wrap">When you accept another user's request, that user can see your contact info. What should they see?</ion-label>
 			</ion-item>				
 			<ion-item>
 				<ion-select id="contactInfoVisibilitySelect" [(ngModel)]="contactInfoVisibilityId" (ionChange)="setDirty(true)">
@@ -58,7 +58,7 @@
 		</ion-row>
 		<ion-row>
 			<ion-item>
-				<ion-label text-wrap>Press this button to read your device's location.</ion-label>
+				<ion-label class="ion-text-wrap">Press this button to read your device's location.</ion-label>
 			</ion-item>				
 			<ion-item>
 				<ion-button ion-button [disabled]="!isSetCurrentLocationBtnAvailable()" (click)="onSetCurrentLocationAsOfficialLocation($event)">Set Your Location</ion-button>
