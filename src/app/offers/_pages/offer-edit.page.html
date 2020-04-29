@@ -39,7 +39,7 @@
 		</ion-card-header>
 		<ion-card-content>
 			<ion-button (click)="onNewRuleBtnTap($event)" [ngStyle]="{'width':'100%'}">
-				ADD
+				RULES
 			</ion-button>
 			<br/>
 			<span *ngIf="getRequiredPointsQuantity() === 0">
@@ -64,7 +64,7 @@
 		</ion-card-header>
 		<ion-card-content>
 			<ion-button (click)="onAddKeywordBtnTap($event)" [ngStyle]="{'width':'100%'}">
-				ADD
+				KEYWORDS
 			</ion-button>
 			<br/>
 			<span *ngIf="offerHasNoKeywords()">
@@ -84,7 +84,7 @@
 		</ion-card-header>
 		<ion-card-content>
 			<ion-button (click)="onThumbnailClick($event)" [ngStyle]="{'width':'100%'}">
-				ADD
+				IMAGE
 			</ion-button>
 			<div *ngIf="offerHasAnAssociatedImage()" class="centered avatar">
 				<img [class]="getAvatarCSSClassString()" [src]="getThumbnailImage()" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)"/>
