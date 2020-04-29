@@ -22,11 +22,15 @@
 		receive half of the points you've put up.<br/><br/>
 	</ion-label>
 
-	<ion-row>
-		<ion-label>If you really want to mark this request incomplete, type the word incomplete in the text box.</ion-label>
-		<br/>
-		<ion-input type="text" placeholder="type incomplete here..." [(ngModel)]="confirmationString" #ctrl="ngModel" (keyup.enter)="onSaveBtnTap($event)" required></ion-input>
+	<ion-row *ngIf="!isSaveBtnEnabled()" class="completedBtnRow">
+		<ion-label>If you truly disagree, and feel that this request has not been completed, tap the Incomplete! button seven times.</ion-label><br/>
+		<ion-button (click)="onIncompleteBtnTap($event)">Incomplete!</ion-button>
 	</ion-row>
+	<ion-row *ngIf="isSaveBtnEnabled()">
+		<ion-label>You tapped the button seven times. Click YES! to mark this request incomplete.</ion-label><br/>
+		<ion-button [disabled]="true">Incomplete!</ion-button>
+	</ion-row>
+	<br/>
 
 	<ion-row>
 		<ion-button (click)="onCancelBtnTap($event)">Sorry, no.. Cancel</ion-button>

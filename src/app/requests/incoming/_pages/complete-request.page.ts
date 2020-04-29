@@ -20,9 +20,10 @@ export class CompleteRequestPage {
 	@Input() thisModal: any;
 	@Input() parentCallbackFunc: any;
 
-	confirmationString = '';
 	requestAgainDelayCodes = undefined;
 	selectedRequestAgainDelayId = undefined;
+
+	doneBtnTapCount = 0;
 	
 	constructor(private _modalCtrl: ModalController,
 				private _requestsService: RequestsService,
@@ -45,7 +46,7 @@ export class CompleteRequestPage {
 	}
 
 	isSaveBtnEnabled() {
-		return this.confirmationString.toLowerCase() === 'complete';
+		return this.doneBtnTapCount >= 7;
 	}
 
 	isRequestInDispute() {
@@ -54,6 +55,10 @@ export class CompleteRequestPage {
 
 	getSelectedRequestAgainDelayId() {
 		return this.selectedRequestAgainDelayId;
+	}
+
+	onDoneBtnTap(evt) {
+		this.doneBtnTapCount++;
 	}
 
 	onSaveBtnTap(evt) {

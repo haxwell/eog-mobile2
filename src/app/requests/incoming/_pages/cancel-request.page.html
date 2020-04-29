@@ -7,15 +7,20 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-	<ion-label>You are about to CANCEL a request that you committed to doing.</ion-label>
-	<ion-label>This will be included in your history, and will be public!</ion-label>
+	<ion-label>You are about to CANCEL a request that you committed to doing. </ion-label>
+	<ion-label>This will show in your public history!</ion-label>
 	<hr/>
 	<ion-label><b>{{model.title}}</b></ion-label>
 
-	<ion-row>
-		<ion-label>Type the word cancel, and then press the YES! button if you're sure.</ion-label>
-		<ion-input type="text" placeholder="type cancel here..." [(ngModel)]="confirmationString" #ctrl="ngModel" (keyup.enter)="onSaveBtnTap($event)" required></ion-input>
+	<ion-row *ngIf="!isSaveBtnEnabled()" class="completedBtnRow">
+		<ion-label>If you're sure that this request should be cancelled, tap the Done! button seven times.</ion-label><br/>
+		<ion-button (click)="onDoneBtnTap($event)">Done!</ion-button>
 	</ion-row>
+	<ion-row *ngIf="isSaveBtnEnabled()">
+		<ion-label>You tapped the button seven times. Click YES! to save this cancelled request.</ion-label><br/>
+		<ion-button [disabled]="true">Done!</ion-button>
+	</ion-row>
+	<br/>
 
 	<ion-row>
 		<ion-button (click)="onCancelBtnTap($event)">Sorry, no.. Cancel</ion-button>

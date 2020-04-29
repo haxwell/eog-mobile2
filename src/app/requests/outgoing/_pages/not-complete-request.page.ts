@@ -5,6 +5,7 @@ import { RequestsService } 	from '../../../../app/_services/requests.service';
 @Component({
   selector: 'page-requests-outgoing-not-complete',
   templateUrl: 'not-complete-request.page.html'
+  ,styleUrls: ['./not-complete-request.page.scss']  
 })
 
 export class NotCompleteOutgoingRequestPage {
@@ -13,7 +14,7 @@ export class NotCompleteOutgoingRequestPage {
 	@Input() thisModal: any;
 	@Input() parentCallbackFunc: any;
 	
-	confirmationString = undefined;
+	incompleteBtnTapCount = 0;
 
 	constructor(private _requestsService: RequestsService) {
 
@@ -24,7 +25,11 @@ export class NotCompleteOutgoingRequestPage {
 	}
 
 	isSaveBtnEnabled() {
-		return this.confirmationString && this.confirmationString.toLowerCase() === 'incomplete';
+		return this.incompleteBtnTapCount >= 7;
+	}
+
+	onIncompleteBtnTap(evt) {
+		this.incompleteBtnTapCount++;
 	}
 
 	onSaveBtnTap(evt) {

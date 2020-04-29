@@ -7,6 +7,7 @@ import { RequestsService } 	from '../../../../app/_services/requests.service';
 @Component({
   selector: 'page-requests-outgoing-cancel',
   templateUrl: 'cancel-request.page.html'
+  ,styleUrls: ['./cancel-request.page.scss']  
 })
 export class CancelOutgoingRequestPage {
 
@@ -16,8 +17,8 @@ export class CancelOutgoingRequestPage {
 
 	REQUEST_STATUS_ACCEPTED = 3;
 
-	confirmationString = '';
-	
+	doneBtnTapCount = 0;
+
 	constructor(private _requestsService: RequestsService,
 				private _events : Events) {
 
@@ -28,7 +29,11 @@ export class CancelOutgoingRequestPage {
 	}
 
 	isSaveBtnEnabled() {
-		return !this.isRequestAccepted() || (this.isRequestAccepted() && this.confirmationString.toLowerCase() === 'cancel');
+		return !this.isRequestAccepted() || (this.isRequestAccepted() && this.doneBtnTapCount >=7);
+	}
+
+	onDoneBtnTap(evt) {
+		this.doneBtnTapCount++;
 	}
 
 	isRequestAccepted() {

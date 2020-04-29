@@ -7,6 +7,7 @@ import { RequestsService } 	from '../../../../app/_services/requests.service';
 @Component({
   selector: 'page-requests-incoming-cancel',
   templateUrl: 'cancel-request.page.html'
+  ,styleUrls: ['./cancel-request.page.scss']
 })
 
 export class CancelRequestPage {
@@ -15,7 +16,7 @@ export class CancelRequestPage {
 	@Input() thisModal: any;
 	@Input() parentCallbackFunc: any;
 
-	confirmationString = '';
+	doneBtnTapCount = 0;
 	
 	constructor(private _modalCtrl: ModalController,
 				private _requestsService: RequestsService) {
@@ -27,7 +28,11 @@ export class CancelRequestPage {
 	}
 
 	isSaveBtnEnabled() {
-		return this.confirmationString.toLowerCase() === 'cancel';
+		return this.doneBtnTapCount >= 7;
+	}
+
+	onDoneBtnTap(evt) {
+		this.doneBtnTapCount++;
 	}
 
 	onSaveBtnTap(evt) {

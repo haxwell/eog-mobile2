@@ -22,11 +22,15 @@
 		<ion-label>Are you sure?</ion-label>
 	</div>
 
-	<ion-row>
-		<ion-label>Type the word complete, and then press the YES! button if you're sure.</ion-label><br/>
-		<ion-input type="text" placeholder="type complete here..." [(ngModel)]="confirmationString" #ctrl="ngModel" (keyup.enter)="onSaveBtnTap($event)" required></ion-input>
+	<ion-row *ngIf="!isSaveBtnEnabled()" class="completedBtnRow">
+		<ion-label>If you're sure that you've completed this request, tap the Done! button seven times.</ion-label><br/>
+		<ion-button (click)="onDoneBtnTap($event)">Done!</ion-button>
 	</ion-row>
-
+	<ion-row *ngIf="isSaveBtnEnabled()">
+		<ion-label>You tapped the button seven times. Click YES! to save this completed request.</ion-label><br/>
+		<ion-button [disabled]="true">Done!</ion-button>
+	</ion-row>
+	<br/>
 	<ion-row>
 		<br/>
 		<ion-label>How much time should pass before this user can request this offer again?</ion-label>
