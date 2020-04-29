@@ -89,6 +89,27 @@ export class RequestsOutgoingView {
 		});
 	}
 
+	getOfferPriceInfoString(offer) {
+		let pointStr = "point";
+
+		if (offer.requiredPointsQuantity > 1)
+			pointStr = "points";
+
+		let recStr = "recommendation";
+
+		if (offer.requiredUserRecommendations.length > 1) {
+			recStr = "recommendations";
+		}
+
+		let rtn = offer.requiredPointsQuantity + " " + pointStr;
+
+		if (offer.requiredUserRecommendations.length > 0) {
+			rtn += " and " + offer.requiredUserRecommendations.length + " " + recStr;
+		}
+
+		return rtn;
+	}
+
 	isRequestModelEmpty() {
 		let rtn = this.model === undefined || this.model.length === 0;
 
@@ -212,7 +233,7 @@ export class RequestsOutgoingView {
 	}
 
 	hasRequestMessage(req) {
-		return (req["requestMessage"] !== undefined && req["requestMessage"] !== null);
+		return (req["requestMessage"] !== undefined && req["requestMessage"] !== null && req["requestMessage"].length > 0);
 	}
 
 	getRequestMessage(req) {
