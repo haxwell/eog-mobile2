@@ -38,6 +38,9 @@ export class HomePage {
 
     ngOnInit() {
         let self = this;
+
+        self._profileService.getModel();
+
         self.showTutorialPromise = self._tutorialService.getShowTutorialOnLogin();
 
         self._homeService.getMostRecentlyCreatedOffers().then((data) => {
