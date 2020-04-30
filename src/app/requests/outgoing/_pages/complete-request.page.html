@@ -8,11 +8,11 @@
 
 <ion-content class="ion-padding">
 		<div *ngIf="!isRequestInDispute()">
-			<ion-label>You are about to indicate that you are satisfied with a request someone did for you. </ion-label>
-			<ion-label>If you are not satisfied, click Cancel below. Then, slide the request to the left, and click the Disapprove button.</ion-label>
+			<ion-label>You are about to indicate that your request of someone's offer has been satisfactorily fulfilled.</ion-label>
 		</div>
+		<br/>
 		<div *ngIf="isRequestInDispute()">
-			<ion-label>This resolution of this request had been in dispute. You are about to indicate that it has been resolved, and you are sufficiently satisfied with how it turned out.</ion-label>
+			<ion-label>This resolution of this request had been in dispute. You are about to indicate that it has been resolved, and that you are sufficiently satisfied with how it turned out.</ion-label>
 			<ion-label>If that is not the case, click Cancel below.</ion-label>
 		</div>
 
