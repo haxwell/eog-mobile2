@@ -1,15 +1,15 @@
 import { Component, Input } from '@angular/core';
 
-import { AbstractTutorialPage } from '../abstract-tutorial.page'
+import { AbstractTutorialPage } from '../abstract-tutorial-page/abstract-tutorial.page'
 
-import { UserPreferencesService } 	from '../../../app/_services/user-preferences.service';
+import { UserPreferencesService } 	from '../../../../app/_services/user-preferences.service';
 
 @Component({
   selector: 'page-tutorial-accept-request',
-  templateUrl: 'accept-request.tutorial.html'
-  ,styleUrls: ['./accept-request.tutorial.scss', '../tutorial.module.scss']
+  templateUrl: './tutorial-accept-request.page.html'
+  ,styleUrls: ['./tutorial-accept-request.page.scss', '../_scss/tutorial.page.scss']
 })
-export class AcceptRequestTutorialPage extends AbstractTutorialPage {
+export class TutorialAcceptRequestPage extends AbstractTutorialPage {
 
 	@Input() func: any;
 	

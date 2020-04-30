@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TutorialsListPageModule } from './tutorials-list/tutorials-list.module';
 import { TutorialEasyahIntroPageModule } from './tutorial-easyah-intro/tutorial-easyah-intro.module';
 import { TutorialBasicConceptsPageModule } from './tutorial-basic-concepts/tutorial-basic-concepts.module';
+import { TutorialAcceptRequestPageModule } from './tutorial-accept-request/tutorial-accept-request.module';
 
 import { TutorialService } from './_services/tutorial.service'
 
@@ -14,6 +15,7 @@ import { TutorialService } from './_services/tutorial.service'
     ,TutorialsListPageModule
     ,TutorialEasyahIntroPageModule
     ,TutorialBasicConceptsPageModule
+    ,TutorialAcceptRequestPageModule
   ]
   ,providers: [
   	TutorialService

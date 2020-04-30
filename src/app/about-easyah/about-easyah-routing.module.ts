@@ -19,6 +19,10 @@ const routes: Routes = [
     loadChildren: () => import('./tutorials/tutorials-list/tutorials-list.module').then( m => m.TutorialsListPageModule)
   },
   // {
+  //   path: 'tutorial-accept-request',
+  //   loadChildren: () => import('./tutorials/tutorial-accept-request/tutorial-accept-request.module').then( m => m.TutorialAcceptRequestPageModule)
+  // },
+  // {
   //   path: 'tutorial-basic-concepts',
   //   loadChildren: () => import('./tutorials/tutorial-basic-concepts/tutorial-basic-concepts.module').then( m => m.TutorialBasicConceptsPageModule)
   // }

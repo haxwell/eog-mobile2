@@ -8,7 +8,7 @@ import { TutorialService } from '../_services/tutorial.service';
 
 import { TutorialEasyahIntroPage } from '../tutorial-easyah-intro/tutorial-easyah-intro.page'
 import { TutorialBasicConceptsPage } from '../tutorial-basic-concepts/tutorial-basic-concepts.page'
-import { AcceptRequestTutorialPage } from '../../../../app/tutorials/tutorial-accept-request/accept-request.tutorial';
+import { TutorialAcceptRequestPage } from '../tutorial-accept-request/tutorial-accept-request.page'
 import { OutgoingRequestMadeTutorialPage } from '../../../../app/tutorials/tutorial-outgoing-request-made/outgoing-request-made-tutorial.page';
 
 @Component({
@@ -37,7 +37,7 @@ export class TutorialsListPage {
     }
 
     onIncomingTutorialBtnTap() {
-    	this.presentTutorial(AcceptRequestTutorialPage);
+    	this._tutorialService.presentTutorial(TutorialAcceptRequestPage);
     }
 
     onBasicConceptsTutorialBtnTap() {
