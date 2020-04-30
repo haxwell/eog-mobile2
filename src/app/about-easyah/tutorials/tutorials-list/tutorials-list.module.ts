@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { EasyahHeaderModule } from '../../../easyah-header/easyah-header.module';
 import { TutorialEasyahIntroPageModule } from '../tutorial-easyah-intro/tutorial-easyah-intro.module';
+import { TutorialBasicConceptsPageModule } from '../tutorial-basic-concepts/tutorial-basic-concepts.module';
 
 import { TutorialsListPageRoutingModule } from './tutorials-list-routing.module';
 
@@ -18,6 +19,7 @@ import { TutorialsListPage } from './tutorials-list.page';
     IonicModule,
     EasyahHeaderModule,
     TutorialEasyahIntroPageModule,
+    TutorialBasicConceptsPageModule,
     TutorialsListPageRoutingModule
   ]
   ,declarations: [TutorialsListPage]

@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { AbstractTutorialPage } from '../abstract-tutorial.page'
+import { AbstractTutorialPage } from '../abstract-tutorial-page/abstract-tutorial.page'
 
-import { UserService } from '../../../app/_services/user.service';
+import { UserService } from '../../../../app/_services/user.service';
 
 @Component({
   selector: 'page-tutorial',
-  templateUrl: 'tutorial-basic-concepts.html'
-  ,styleUrls: ['./tutorial-basic-concepts.scss', '../tutorial.module.scss']  
+  templateUrl: 'tutorial-basic-concepts.page.html'
+  ,styleUrls: ['./tutorial-basic-concepts.page.scss', '../_scss/tutorial.page.scss']  
 })
 export class TutorialBasicConceptsPage extends AbstractTutorialPage {
 

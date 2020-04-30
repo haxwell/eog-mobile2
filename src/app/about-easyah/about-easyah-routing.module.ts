@@ -17,7 +17,11 @@ const routes: Routes = [
   {
     path: 'tutorials-list',
     loadChildren: () => import('./tutorials/tutorials-list/tutorials-list.module').then( m => m.TutorialsListPageModule)
-  }
+  },
+  // {
+  //   path: 'tutorial-basic-concepts',
+  //   loadChildren: () => import('./tutorials/tutorial-basic-concepts/tutorial-basic-concepts.module').then( m => m.TutorialBasicConceptsPageModule)
+  // }
   //, {
   //   path: 'tutorial-easyah-intro',
   //   loadChildren: () => import('./tutorials/tutorial-easyah-intro/tutorial-easyah-intro.module').then( m => m.TutorialEasyahIntroPageModule)

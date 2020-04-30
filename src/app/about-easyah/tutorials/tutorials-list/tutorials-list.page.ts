@@ -7,7 +7,7 @@ import { ModalController } from '@ionic/angular';
 import { TutorialService } from '../_services/tutorial.service';
 
 import { TutorialEasyahIntroPage } from '../tutorial-easyah-intro/tutorial-easyah-intro.page'
-import { TutorialBasicConceptsPage } from '../../../../app/tutorials/tutorial-basic-concepts/tutorial-basic-concepts'
+import { TutorialBasicConceptsPage } from '../tutorial-basic-concepts/tutorial-basic-concepts.page'
 import { AcceptRequestTutorialPage } from '../../../../app/tutorials/tutorial-accept-request/accept-request.tutorial';
 import { OutgoingRequestMadeTutorialPage } from '../../../../app/tutorials/tutorial-outgoing-request-made/outgoing-request-made-tutorial.page';
 
@@ -41,7 +41,7 @@ export class TutorialsListPage {
     }
 
     onBasicConceptsTutorialBtnTap() {
-        this.presentTutorial(TutorialBasicConceptsPage);
+        this._tutorialService.presentTutorial(TutorialBasicConceptsPage);
     }
 
     onWelcomeTutorialBtnTap() {
