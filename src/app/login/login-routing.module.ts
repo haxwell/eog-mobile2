@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: '', 					component: LoginPage }
   ,{ path: 'create-account',	component: CreateAccountPage }
 ];
+
 @NgModule({
   imports: [
     RouterModule.forChild(routes)

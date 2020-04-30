@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 
 import { OfferRoutingModule } from './offer-routing.module';
 
@@ -34,7 +33,6 @@ import { OfferCollectionService } from '../../app/_services/offer-collection.ser
     ,RouterModule
     ,FormsModule
     ,ReactiveFormsModule
-    ,HttpClientModule
     ,TutorialModule
   ]
   ,declarations: [

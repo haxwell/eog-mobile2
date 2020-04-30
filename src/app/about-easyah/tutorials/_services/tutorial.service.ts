@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { ModalController } from '@ionic/angular';
 
-import { UserService } from './user.service';
-import { ApiService } from './api.service';
+import { UserService } from '../../../_services/user.service';
+import { ApiService } from '../../../_services/api.service';
 
-import { environment } from '../../_environments/environment';
+import { environment } from '../../../../_environments/environment';
 
 @Injectable({
 	providedIn: 'root'

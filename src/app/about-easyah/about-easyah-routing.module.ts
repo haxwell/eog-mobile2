@@ -1,22 +1,31 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, Routes, RouterModule } from '@angular/router';
 
 import { CanActivateRouteGuard } from '../../app/_routeguards/can-activate.routeguard'
 
-import { AboutEasyahPage } from './_pages/about-easyah.page';
-import { PrivacyPolicyPage } from './_pages/privacy-policy.page';
-import { TutorialsListPage } from './_pages/tutorials-list.page';
-
+import { AboutEasyahPage } from './about-easyah.page';
 
 const routes: Routes = [
-  { path: '', 							component: AboutEasyahPage,				canActivate: [CanActivateRouteGuard] }
-  ,{ path: 'privacy-policy', 			component: PrivacyPolicyPage,			canActivate: [CanActivateRouteGuard] }
-  ,{ path: 'tutorials-list', 			component: TutorialsListPage,			canActivate: [CanActivateRouteGuard] }
+  {
+    path: '',
+    component: AboutEasyahPage
+  },
+  {
+    path: 'privacy-policy',
+    loadChildren: () => import('./privacy-policy/privacy-policy.module').then( m => m.PrivacyPolicyPageModule)
+  },
+  {
+    path: 'tutorials-list',
+    loadChildren: () => import('./tutorials/tutorials-list/tutorials-list.module').then( m => m.TutorialsListPageModule)
+  }
+  //, {
+  //   path: 'tutorial-easyah-intro',
+  //   loadChildren: () => import('./tutorials/tutorial-easyah-intro/tutorial-easyah-intro.module').then( m => m.TutorialEasyahIntroPageModule)
+  // }
 ];
+
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes)
-  ],
-  exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class AboutEasyahRoutingModule {}
+export class AboutEasyahPageRoutingModule {}

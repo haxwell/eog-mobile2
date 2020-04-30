@@ -1,14 +1,14 @@
 import { Component, Input } from '@angular/core';
 
-import { AbstractTutorialPage } from '../abstract-tutorial.page'
+import { AbstractTutorialPage } from '../abstract-tutorial-page/abstract-tutorial.page'
 
-import { UserService } from '../../../app/_services/user.service';
-import { TutorialService } from '../../../app/_services/tutorial.service';
+import { UserService } from '../../../../app/_services/user.service';
+import { TutorialService } from '../_services/tutorial.service';
 
 @Component({
   selector: 'page-tutorial-easyah-intro',
-  templateUrl: 'tutorial-easyah-intro.html',
-  styleUrls: ['tutorial-easyah-intro.scss', '../tutorial.module.scss']  
+  templateUrl: './tutorial-easyah-intro.page.html',
+  styleUrls: ['./tutorial-easyah-intro.page.scss', '../_scss/tutorial.page.scss']  
 })
 export class TutorialEasyahIntroPage extends AbstractTutorialPage {
 

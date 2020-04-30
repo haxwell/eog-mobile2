@@ -9,8 +9,6 @@ import { CreateAccountPage } from './_pages/create-account.page';
 import { NewAccountTutorialPage } from './_pages/new-account-tutorial.page';
 
 
-import { HttpClientModule } from '@angular/common/http';
-
 import { ApiService } from '../_services/api.service';
 // import { UserService } from '../_services/user.service';
 import { GeolocationService } from '../_services/geolocation.service';
@@ -24,7 +22,6 @@ import { LoginRoutingModule } from './login-routing.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
     LoginRoutingModule,
     RouterModule.forChild([{ path: '', component: LoginPage }])
   ]

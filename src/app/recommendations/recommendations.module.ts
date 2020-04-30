@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 
 import { RecommendationsRoutingModule } from './recommendations-routing.module';
 
@@ -20,7 +19,6 @@ import { RecommendationsListPage } from './_pages/recommendations-list/recommend
     ,EasyahCommonModule
     ,RouterModule
     ,FormsModule
-    ,HttpClientModule
   ]
   ,declarations: [
     RecommendationsListPage

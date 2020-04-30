@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 
 // import { AbstractTutorialPage } from './abstract-tutorial.page'
 import { OutgoingRequestMadeTutorialPage } from './tutorial-outgoing-request-made/outgoing-request-made-tutorial.page'
-import { TutorialEasyahIntroPage } from './tutorial-easyah-intro/tutorial-easyah-intro'
+// import { TutorialEasyahIntroPage } from './tutorial-easyah-intro/tutorial-easyah-intro'
 import { AcceptRequestTutorialPage } from './tutorial-accept-request/accept-request.tutorial'
 import { TutorialBasicConceptsPage } from './tutorial-basic-concepts/tutorial-basic-concepts'
 
@@ -17,7 +17,7 @@ import { TutorialBasicConceptsPage } from './tutorial-basic-concepts/tutorial-ba
   ]
   ,declarations: [
     OutgoingRequestMadeTutorialPage
-    ,TutorialEasyahIntroPage
+    // ,TutorialEasyahIntroPage
     ,AcceptRequestTutorialPage
     ,TutorialBasicConceptsPage
   ]
@@ -26,7 +26,7 @@ import { TutorialBasicConceptsPage } from './tutorial-basic-concepts/tutorial-ba
   ],
   exports: [ 
     OutgoingRequestMadeTutorialPage
-    ,TutorialEasyahIntroPage
+    // ,TutorialEasyahIntroPage
     ,AcceptRequestTutorialPage
     ,TutorialBasicConceptsPage
   ]
@@ -35,7 +35,7 @@ import { TutorialBasicConceptsPage } from './tutorial-basic-concepts/tutorial-ba
   ]
   ,entryComponents: [
     OutgoingRequestMadeTutorialPage
-    ,TutorialEasyahIntroPage
+    // ,TutorialEasyahIntroPage
     ,AcceptRequestTutorialPage
     ,TutorialBasicConceptsPage
   ]

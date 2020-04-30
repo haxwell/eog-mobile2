@@ -1,0 +1,15 @@
+	<ion-toolbar id="easyahHeaderRow">
+		<ion-buttons slot="start">
+
+			<ion-button (click)="onMenuBtnClick($event)">
+				<ion-icon slot="start" name="menu" ></ion-icon>
+			</ion-button>
+
+			<ion-input class="searchQueryText" type="text" placeholder="Search for .... ?" (ionChange)="onSearchTextFieldChanged($event)" [value]="getSearchTextFieldValue()" (keyup.enter)="onSearchBtnTap($event)" required></ion-input>
+
+			<ion-button [disabled]="!isSearchBtnAvailable()" (click)="onSearchBtnTap($event)">
+				<ion-icon slot="end" name="search"></ion-icon>
+			</ion-button>
+
+		</ion-buttons>
+	</ion-toolbar>

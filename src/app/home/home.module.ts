@@ -3,15 +3,15 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 
 import { HomeRoutingModule } from './home-routing.module';
 
 import { EasyahCommonModule } from '../common/easyah-common.module'
 import { TutorialModule } from '../tutorials/tutorial.module'
+import { TutorialsModule } from '../about-easyah/tutorials/tutorials.module'
 
 import { ModalService } from '../_services/modal.service'
-import { TutorialService } from '../_services/tutorial.service'
+// import { TutorialService } from '../_services/tutorial.service'
 
 import { HomeService } from './_services/home.service'
 
@@ -22,10 +22,10 @@ import { HomePage } from './home.page';
     IonicModule,
     CommonModule,
     FormsModule,
-    HttpClientModule,
     EasyahCommonModule,
     HomeRoutingModule,
     TutorialModule,
+    TutorialsModule,
     RouterModule.forChild([{ path: '', component: HomePage }])
   ]
   ,declarations: [
@@ -33,7 +33,7 @@ import { HomePage } from './home.page';
   ]
   ,providers: [
     ModalService
-    ,TutorialService
+    // ,TutorialService
     ,HomeService
   ]
   ,exports: [

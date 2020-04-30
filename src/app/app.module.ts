@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { RouteReuseStrategy } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http'; // NOTE this only has to be included once, here, in this module. It's a service, not a component. Components need to be imported in each module that uses them. See https://medium.com/@cyrilletuzi/understanding-angular-modules-ngmodule-and-their-scopes-81e4ed6f7407
 
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -22,6 +22,7 @@ import { AppComponent } from './app.component';
 import { SavvatoJavascriptServicesModule } from '@savvato-software/savvato-javascript-services'
 
 import { EasyahCommonModule } from './common/easyah-common.module'
+import { TutorialsModule } from './about-easyah/tutorials/tutorials.module'
 
 import { Constants } from '../_constants/constants'
 
@@ -53,6 +54,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
     HttpClientModule
 
     ,EasyahCommonModule
+    ,TutorialsModule
     ,SavvatoJavascriptServicesModule.forRoot()    
   ],
 

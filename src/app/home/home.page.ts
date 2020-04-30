@@ -3,14 +3,14 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { ModalController } from '@ionic/angular';
 
-import { TutorialService } from '../../app/_services/tutorial.service'
+import { TutorialService } from '../../app/about-easyah/tutorials/_services/tutorial.service'
 import { UserService } from '../../app/_services/user.service'
 import { ProfileService } from '../../app/_services/profile.service'
 import { PictureService } from '../../app/_services/picture.service'
 
 import { HomeService } from './_services/home.service'
 
-import { TutorialEasyahIntroPage } from '../tutorials/tutorial-easyah-intro/tutorial-easyah-intro'
+import { TutorialEasyahIntroPage } from '../../app/about-easyah/tutorials/tutorial-easyah-intro/tutorial-easyah-intro.page'
 
 @Component({
     selector: 'page-home',

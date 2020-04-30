@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 
 import { KeywordsRoutingModule } from './keywords-routing.module';
 
@@ -20,7 +19,6 @@ import { KeywordsListPage } from './_pages/keywords-list/keywords-list.page';
     ,EasyahCommonModule
     ,RouterModule
     ,FormsModule
-    ,HttpClientModule
   ]
   ,declarations: [
     KeywordsListPage

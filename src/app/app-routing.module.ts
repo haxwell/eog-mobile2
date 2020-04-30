@@ -14,7 +14,10 @@ const routes: Routes = [
   ,{ path: 'keywords', 			            loadChildren: './../app/keywords/keywords.module#KeywordsPageModule',                canActivate: [CanActivateRouteGuard] }
   ,{ path: 'notifications', 			      loadChildren: './../app/notifications/notifications.module#NotificationsPageModule', 	         canActivate: [CanActivateRouteGuard] }
   ,{ path: 'recommendations/incoming',  loadChildren: './../app/recommendations/recommendations.module#RecommendationsPageModule',   canActivate: [CanActivateRouteGuard] }
-  ,{ path: 'about-easyah', 	  		      loadChildren: './../app/about-easyah/about-easyah.module#AboutEasyahPageModule', 	             canActivate: [CanActivateRouteGuard] }  
+  ,{
+    path: 'about-easyah',
+    loadChildren: () => import('./about-easyah/about-easyah.module').then( m => m.AboutEasyahPageModule)
+  }
 ];
 @NgModule({
   imports: [

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'page-privacy-policy',
@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 })
 export class PrivacyPolicyPage {
 
-    constructor(private _location: Location ) {
+    constructor(private _router: Router ) {
 
     }
 
@@ -16,7 +16,7 @@ export class PrivacyPolicyPage {
     }
 
     onGoBackBtnTap(event) {
-    	this._location.back();
+        this._router.navigate(['/about-easyah']);
     }
 
 }

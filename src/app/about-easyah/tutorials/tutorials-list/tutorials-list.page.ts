@@ -1,23 +1,25 @@
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';
+import { Router } from '@angular/router';
+// import { Location } from '@angular/common';
 
 import { ModalController } from '@ionic/angular';
-import { ModalService } from '../../../app/_services/modal.service';
+// import { ModalService } from '../../../../app/_services/modal.service';
+import { TutorialService } from '../_services/tutorial.service';
 
-import { TutorialBasicConceptsPage } from '../../../app/tutorials/tutorial-basic-concepts/tutorial-basic-concepts'
-import { TutorialEasyahIntroPage } from '../../../app/tutorials/tutorial-easyah-intro/tutorial-easyah-intro'
-import { AcceptRequestTutorialPage } from '../../../app/tutorials/tutorial-accept-request/accept-request.tutorial';
-import { OutgoingRequestMadeTutorialPage } from '../../../app/tutorials/tutorial-outgoing-request-made/outgoing-request-made-tutorial.page';
+import { TutorialEasyahIntroPage } from '../tutorial-easyah-intro/tutorial-easyah-intro.page'
+import { TutorialBasicConceptsPage } from '../../../../app/tutorials/tutorial-basic-concepts/tutorial-basic-concepts'
+import { AcceptRequestTutorialPage } from '../../../../app/tutorials/tutorial-accept-request/accept-request.tutorial';
+import { OutgoingRequestMadeTutorialPage } from '../../../../app/tutorials/tutorial-outgoing-request-made/outgoing-request-made-tutorial.page';
 
 @Component({
     selector: 'page-tutorials-list',
     templateUrl: './tutorials-list.page.html',
-    styleUrls: ['./about-easyah.page.scss']
+    styleUrls: ['./tutorials-list.page.scss']
 })
 export class TutorialsListPage {
 
-    constructor(private _location: Location,
-                private _modalService: ModalService,
+    constructor(private _router: Router,
+                private _tutorialService: TutorialService,
                 private _modalCtrl: ModalController ) {
 
     }
@@ -27,7 +29,7 @@ export class TutorialsListPage {
     }
 
     onGoBackBtnTap(event) {
-    	this._location.back();
+    	this._router.navigate(['/about-easyah']);
     }
 
     onOutgoingTutorialBtnTap() {
@@ -43,7 +45,7 @@ export class TutorialsListPage {
     }
 
     onWelcomeTutorialBtnTap() {
-        this.presentTutorial(TutorialEasyahIntroPage);
+        this._tutorialService.presentTutorial(TutorialEasyahIntroPage);
     }
 
     async presentTutorial(_component) {

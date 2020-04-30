@@ -3,7 +3,6 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 
 import { RequestsIncomingPageModule } from './incoming/requests-incoming.module';
 import { RequestsOutgoingPageModule } from './outgoing/requests-outgoing.module';
@@ -14,7 +13,6 @@ import { RequestsOutgoingPageModule } from './outgoing/requests-outgoing.module'
     //,RouterModule.forChild([ ])
     ,CommonModule
     ,FormsModule
-    ,HttpClientModule
 
     ,RequestsIncomingPageModule
     ,RequestsOutgoingPageModule

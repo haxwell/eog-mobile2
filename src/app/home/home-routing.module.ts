@@ -6,8 +6,9 @@ import { CanActivateRouteGuard } from '../../app/_routeguards/can-activate.route
 import { HomePage } from './home.page';
 
 const routes: Routes = [
- 
+	{ path: '', component: HomePage } 
 ];
+
 @NgModule({
   imports: [
     RouterModule.forChild(routes)
