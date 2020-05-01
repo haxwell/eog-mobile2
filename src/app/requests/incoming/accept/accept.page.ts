@@ -15,10 +15,6 @@ import { ModelService } from '../_services/model.service';
 })
 export class AcceptPage {
 
-	// @Input() model: any;
-	@Input() thisModal: any;
-	@Input() parentCallbackFunc: any;
-
 	model = undefined;
 
 	showTutorialAfterRequestAccepted = true;
@@ -53,14 +49,11 @@ export class AcceptPage {
 				self._presentTutorialService.presentTutorialAcceptRequest(() => self._router.navigate(['/requests/incoming']));
 			} else {
 				self._router.navigate(['/requests/incoming'])
-				// self.thisModal().dismiss();
-				// self.parentCallbackFunc();
 			}
 		})
 	}
 
 	onCancelBtnTap(evt) {
-		// this.thisModal().dismiss();
 		this._router.navigate(['/requests/incoming'])
 	}
 }
