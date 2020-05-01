@@ -16,7 +16,6 @@ import { Constants } from '../../../../_constants/constants'
 import { environment } from '../../../../_environments/environment';
 
 import { CompleteRequestPage } from './complete-request.page'
-import { CancelRequestPage } from './cancel-request.page'
 
 @Component({
   selector: 'requests-incoming-view',
@@ -277,7 +276,8 @@ export class RequestsIncomingView {
 	}
 
 	onCancelBtnTap(request) {
-		this.presentModal(CancelRequestPage, request);
+		this._modelService.setModel(request);
+		this._router.navigate(['/requests/incoming/cancel'])
 	}
 
 	onCompleteBtnTap(request) {

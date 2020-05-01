@@ -1,30 +1,31 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ModalController } from '@ionic/angular';
 
 import { RequestsService } 	from '../../../../app/_services/requests.service';
+import { ModelService } from '../_services/model.service';
 
 @Component({
   selector: 'page-requests-incoming-cancel',
-  templateUrl: 'cancel-request.page.html'
-  ,styleUrls: ['./cancel-request.page.scss']
+  templateUrl: 'cancel.page.html'
+  ,styleUrls: ['./cancel.page.scss']
 })
 
-export class CancelRequestPage {
+export class CancelPage {
 
-	@Input() model: any;
-	@Input() thisModal: any;
-	@Input() parentCallbackFunc: any;
-
+	model = undefined;
 	doneBtnTapCount = 0;
 	
-	constructor(private _modalCtrl: ModalController,
+	constructor(private _router: Router,
+				private _modalCtrl: ModalController,
+				private _modelService: ModelService,
 				private _requestsService: RequestsService) {
 
 	}
 
 	ngOnInit() {
-
+		this.model = this._modelService.getModel();
 	}
 
 	isSaveBtnEnabled() {
@@ -39,13 +40,12 @@ export class CancelRequestPage {
 		let self = this;
 		if (self.isSaveBtnEnabled()) {
 			self._requestsService.cancelIncomingRequest(self.model).then((obj) => {
-				self.thisModal().dismiss();
-				self.parentCallbackFunc();
+				self._router.navigate(['/requests/incoming'])
 			})
 		}
 	}
 
 	onCancelBtnTap(evt) {
-		this.thisModal().dismiss();
+		this._router.navigate(['/requests/incoming'])
 	}
 }

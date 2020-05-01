@@ -10,7 +10,6 @@ import { EasyahHeaderModule } from '../../easyah-header/easyah-header.module';
 
 import { RequestsIncomingView } from './_pages/requests-incoming.page';
 
-import { CancelRequestPage } from './_pages/cancel-request.page';
 import { CompleteRequestPage } from './_pages/complete-request.page';
 
 import { ModelService } from './_services/model.service';
@@ -28,8 +27,7 @@ import { RequestsService } from '../../../app/_services/requests.service';
     ,RequestsIncomingRoutingModule
   ]
   ,declarations: [
-  	CancelRequestPage
-  	,CompleteRequestPage
+  	CompleteRequestPage
     ,RequestsIncomingView
   ]
   ,providers: [

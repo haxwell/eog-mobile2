@@ -5,7 +5,6 @@ import { CanActivateRouteGuard } from '../../../app/_routeguards/can-activate.ro
 
 import { RequestsIncomingView } from './_pages/requests-incoming.page';
 
-import { CancelRequestPage } from './_pages/cancel-request.page';
 import { CompleteRequestPage } from './_pages/complete-request.page';
 
 const routes: Routes = [
@@ -18,8 +17,11 @@ const routes: Routes = [
     path: 'decline',
     loadChildren: () => import('./decline/decline.module').then( m => m.DeclinePageModule)
   }
-  ,{ path: 'cancel', 				component: CancelRequestPage,		canActivate: [CanActivateRouteGuard] }
-  ,{ path: 'complete', 			component: CompleteRequestPage,		canActivate: [CanActivateRouteGuard] }
+  ,{
+    path: 'cancel',
+    loadChildren: () => import('./cancel/cancel.module').then( m => m.CancelPageModule)
+  }
+  ,{ path: 'complete', 			component: CompleteRequestPage,		canActivate: [CanActivateRouteGuard] },
 ];
 @NgModule({
   imports: [
