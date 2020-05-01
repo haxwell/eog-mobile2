@@ -7,7 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { KeywordsRoutingModule } from './keywords-routing.module';
 
 import { EasyahCommonModule } from '../common/easyah-common.module';
-import { EasyahHeader } from '../common/easyah-header/easyah-header'
+import { EasyahHeaderModule } from '../easyah-header/easyah-header.module';
+// import { EasyahHeader } from '../common/easyah-header/easyah-header'
 
 import { KeywordsListPage } from './_pages/keywords-list/keywords-list.page';
 
@@ -17,6 +18,7 @@ import { KeywordsListPage } from './_pages/keywords-list/keywords-list.page';
   	CommonModule,
   	KeywordsRoutingModule
     ,EasyahCommonModule
+    ,EasyahHeaderModule
     ,RouterModule
     ,FormsModule
   ]
