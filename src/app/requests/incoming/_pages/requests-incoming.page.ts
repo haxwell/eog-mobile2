@@ -10,10 +10,11 @@ import { LoadingService } from '../../../../app/_services/loading.service'
 import { RequestsService } from '../../../../app/_services/requests.service'
 import { PictureService } from '../../../../app/_services/picture.service'
 
+import { ModelService } from '../_services/model.service';
+
 import { Constants } from '../../../../_constants/constants'
 import { environment } from '../../../../_environments/environment';
 
-import { AcceptRequestPage } from './accept-request.page'
 import { DeclineRequestPage } from './decline-request.page'
 import { CompleteRequestPage } from './complete-request.page'
 import { CancelRequestPage } from './cancel-request.page'
@@ -36,6 +37,7 @@ export class RequestsIncomingView {
 				private _route: ActivatedRoute,
   				private _router: Router,
 				private _modalCtrl: ModalController,
+				private _modelService: ModelService,
 				private _loadingService: LoadingService,
 				private _requestsService: RequestsService,
 				private _pictureService: PictureService,
@@ -266,7 +268,8 @@ export class RequestsIncomingView {
 	}
 
 	onAcceptBtnTap(request) {
-	 	this.presentModal(AcceptRequestPage, request);
+		this._modelService.setModel(request);
+		this._router.navigate(['/requests/incoming/accept'])
 	}
 
 	onDeclineBtnTap(request) {
