@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { RecommendationsRoutingModule } from './recommendations-routing.module';
 
 import { EasyahCommonModule } from '../common/easyah-common.module';
-import { EasyahHeader } from '../common/easyah-header/easyah-header'
+import { EasyahHeaderModule } from '../easyah-header/easyah-header.module'
 
 import { RecommendationsListPage } from './_pages/recommendations-list/recommendations-list.page';
 
@@ -17,6 +17,7 @@ import { RecommendationsListPage } from './_pages/recommendations-list/recommend
   	CommonModule,
   	RecommendationsRoutingModule
     ,EasyahCommonModule
+    ,EasyahHeaderModule
     ,RouterModule
     ,FormsModule
   ]
