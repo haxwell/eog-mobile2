@@ -27,7 +27,7 @@
 
 		<ion-item>
 			<ion-label position="floating" color="primary">Phone (10 digits, no symbols)</ion-label>
-			<ion-input data-cy="phone-input" type="tel" formControlName="phone" (ionInput)="onPhoneChange($event)" [value]="getModelAttr('phone')" placeholder="5555555555"></ion-input>
+			<ion-input data-cy="phone-input" type="tel" formControlName="phone" (ionInput)="onPhoneChange($event)" [value]="getModelAttr('phone')"></ion-input>
 	        <span class="text-danger"
 	            *ngIf="(createAccountFormControl.phone.touched || submitted) && createAccountFormControl.phone.errors?.required">
 	            Phone Number is required
