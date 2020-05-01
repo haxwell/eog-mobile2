@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { RequestsOutgoingRoutingModule } from './requests-outgoing-routing.module';
 
 import { EasyahCommonModule } from '../../common/easyah-common.module';
-import { EasyahHeader } from '../../common/easyah-header/easyah-header';
+import { EasyahHeaderModule } from '../../easyah-header/easyah-header.module';
 
 import { RequestsOutgoingView } from './_pages/requests-outgoing.page';
 
@@ -23,6 +23,7 @@ import { RequestsService } from '../../../app/_services/requests.service';
     ,CommonModule
     ,FormsModule
     ,EasyahCommonModule
+    ,EasyahHeaderModule
     ,RequestsOutgoingRoutingModule
   ]
   ,declarations: [
