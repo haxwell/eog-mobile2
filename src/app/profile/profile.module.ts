@@ -7,7 +7,7 @@ import { ProfileRoutingModule } from './profile-routing.module';
 
 import { ChoosePhotoSourceModule } from '../common/choose-photo-source/choose-photo-source.module'
 import { EasyahCommonModule } from '../common/easyah-common.module';
-import { EasyahHeader } from '../common/easyah-header/easyah-header';
+import { EasyahHeaderModule } from '../easyah-header/easyah-header.module';
 
 import { ProfilePage } from './_pages/profile.page';
 import { ProfileEditPage } from './_pages/profile-edit.page';
@@ -27,6 +27,7 @@ import { UserMetadataService } from '../../app/_services/user-metadata.service'
     ,CommonModule
     ,FormsModule
     ,EasyahCommonModule
+    ,EasyahHeaderModule
   	,ProfileRoutingModule
     ,ChoosePhotoSourceModule
   ]
