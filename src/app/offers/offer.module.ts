@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OfferRoutingModule } from './offer-routing.module';
 
 import { EasyahCommonModule } from '../common/easyah-common.module';
-import { EasyahHeader } from '../common/easyah-header/easyah-header'
+import { EasyahHeaderModule } from '../easyah-header/easyah-header.module';
 import { ChoosePhotoSourceModule } from '../common/choose-photo-source/choose-photo-source.module'
 
 import { OfferPage } from './_pages/offer.page';
@@ -28,6 +28,7 @@ import { OfferCollectionService } from '../../app/_services/offer-collection.ser
   	CommonModule,
   	OfferRoutingModule
     ,EasyahCommonModule
+    ,EasyahHeaderModule
     ,ChoosePhotoSourceModule
     ,RouterModule
     ,FormsModule
