@@ -35,23 +35,23 @@ export class PresentTutorialService {
         return await _tutorialModal.present();
     }
 
-    async presentTutorialNewAccount() {
-    	return this.presentTutorial(TutorialNewAccountPage);
+    async presentTutorialNewAccount(cb = null) {
+    	return this.presentTutorial(TutorialNewAccountPage, cb);
     }
 
-    async presentTutorialOutgoingRequestMade() {
-    	return this.presentTutorial(TutorialOutgoingRequestMadePage);
+    async presentTutorialOutgoingRequestMade(cb = null) {
+    	return this.presentTutorial(TutorialOutgoingRequestMadePage, cb);
     }
 
-    async presentTutorialEasyahIntro() {
-    	return this.presentTutorial(TutorialEasyahIntroPage);
+    async presentTutorialEasyahIntro(cb = null) {
+    	return this.presentTutorial(TutorialEasyahIntroPage, cb);
     }
 
-    async presentTutorialBasicConcepts() {
-    	return this.presentTutorial(TutorialBasicConceptsPage);
+    async presentTutorialBasicConcepts(cb = null) {
+    	return this.presentTutorial(TutorialBasicConceptsPage, cb);
     }
 
-    async presentTutorialAcceptRequest() {
-    	return this.presentTutorial(TutorialAcceptRequestPage);
+    async presentTutorialAcceptRequest(cb = null) {
+    	return this.presentTutorial(TutorialAcceptRequestPage, cb);
     }
 }
