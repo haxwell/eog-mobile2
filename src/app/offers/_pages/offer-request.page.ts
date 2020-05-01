@@ -104,14 +104,13 @@ export class OfferRequestPage {
 			if (data !== undefined) {
 				if (self.showTutorialAfterOutgoingRequestMade) {
 					self._loadingService.dismiss();
-					self._presentTutorialService.presentTutorialOutgoingRequestMade();
+					self._presentTutorialService.presentTutorialOutgoingRequestMade(() => self._router.navigate(['/requests/outgoing']));
 				} else {
-					self._loadingService.dismiss();
-					self._location.back();
+					self._router.navigate(['/requests/outgoing'])
 				}
 			} else {
 				self._loadingService.dismiss();
-				self._location.back();
+				self._router.navigate(['/requests/outgoing'])
 			}
 		}).catch((err) => {
 
@@ -123,7 +122,7 @@ export class OfferRequestPage {
               buttons: [{
                 text: 'Grr.',
                 handler: () => {
-                  self._location.back();
+                  	self._router.navigate(['/requests/outgoing'])
                 }
               }]
             })
@@ -141,22 +140,4 @@ export class OfferRequestPage {
 	onMessageChange(evt) {
 		this.message = evt.srcElement.value;
 	}
-
-    async presentTutorial(_component) {
-        let self = this;
-        let _tutorialModal = undefined;
-        let options = { 
-            component: _component, 
-            componentProps: {
-                func: () => {
-                	self._location.back();
-                    _tutorialModal.dismiss();
-                }
-            }
-        };
-
-        _tutorialModal = await this._modalCtrl.create(options)
-
-        return await _tutorialModal.present();
-    }
 }
