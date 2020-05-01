@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { NotificationsRoutingModule } from './notifications-routing.module';
 
 import { EasyahCommonModule } from '../common/easyah-common.module';
-import { EasyahHeader } from '../common/easyah-header/easyah-header'
+import { EasyahHeaderModule } from '../easyah-header/easyah-header.module';
 
 import { NotificationsListPage } from './_pages/notifications-list/notifications-list.page';
 
@@ -17,6 +17,7 @@ import { NotificationsListPage } from './_pages/notifications-list/notifications
   	CommonModule,
   	NotificationsRoutingModule
     ,EasyahCommonModule
+    ,EasyahHeaderModule
     ,RouterModule
     ,FormsModule
   ]
