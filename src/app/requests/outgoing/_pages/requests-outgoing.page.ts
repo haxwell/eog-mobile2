@@ -10,13 +10,14 @@ import { LoadingService } from '../../../../app/_services/loading.service'
 import { RequestsService } from '../../../../app/_services/requests.service'
 import { PictureService } from '../../../../app/_services/picture.service'
 
+import { ModelService } from '../_services/model.service';
+
 import { Constants } from '../../../../_constants/constants'
 import { environment } from '../../../../_environments/environment';
 
 import { PermanentlyDismissUnresolvedRequestPage } from './permanently-dismiss-unresolved-request.page'
 import { NotCompleteOutgoingRequestPage } from './not-complete-request.page'
 import { CompleteOutgoingRequestPage } from './complete-request.page'
-import { CancelOutgoingRequestPage } from './cancel-request.page'
 
 @Component({
   selector: 'requests-outgoing-view',
@@ -34,6 +35,7 @@ export class RequestsOutgoingView {
   				private _router: Router,
 				private _loadingService: LoadingService,
 				private _modalCtrl: ModalController,
+				private _modelService: ModelService,
 				private _requestsService: RequestsService,
 				private _pictureService: PictureService,
 				private _constants: Constants,
@@ -80,7 +82,7 @@ export class RequestsOutgoingView {
 		var self = this;
 
 		self._loadingService.show({
-			content: 'Please wait...'
+			message: 'Please wait...'
 		}).then(() => {
 			self._requestsService.getOutgoingRequestsForCurrentUser().then((data: Array<Object>) => {
 					self.model = data;
@@ -283,10 +285,8 @@ export class RequestsOutgoingView {
 	}
 
 	onCancelBtnTap(request) {
-		// let self = this;
-		// this._modalService.show(CancelOutgoingRequestPage);
-
-		this.presentModal(CancelOutgoingRequestPage, request);
+		this._modelService.setModel(request);
+		this._router.navigate(['/requests/outgoing/cancel']);
 	}
 
 	onAcknowledgeDeclinedRequestBtnTap(request) {

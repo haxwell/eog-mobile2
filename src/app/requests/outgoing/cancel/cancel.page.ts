@@ -1,31 +1,33 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Events } from '@ionic/angular';
 
 import { RequestsService } 	from '../../../../app/_services/requests.service';
+import { ModelService } from '../_services/model.service';
 
 @Component({
   selector: 'page-requests-outgoing-cancel',
-  templateUrl: 'cancel-request.page.html'
-  ,styleUrls: ['./cancel-request.page.scss']  
+  templateUrl: './cancel.page.html'
+  ,styleUrls: ['./cancel.page.scss']
 })
-export class CancelOutgoingRequestPage {
+export class CancelPage {
 
-	@Input() model: any;
-	@Input() thisModal: any;
-	@Input() parentCallbackFunc: any;
+	model = undefined;
 
 	REQUEST_STATUS_ACCEPTED = 3;
 
 	doneBtnTapCount = 0;
 
-	constructor(private _requestsService: RequestsService,
+	constructor(private _router: Router,
+				private _modelService: ModelService,
+				private _requestsService: RequestsService,
 				private _events : Events) {
 
 	}
 
 	ngOnInit() {
-
+		this.model = this._modelService.getModel();
 	}
 
 	isSaveBtnEnabled() {
@@ -51,12 +53,11 @@ export class CancelOutgoingRequestPage {
 
 			self._events.publish("request:outgoing:cancelled", {request: rtnObj});
 
-			self.thisModal().dismiss();
-			self.parentCallbackFunc();
+			this._router.navigate(['/requests/outgoing'])
 		})
 	}
 
 	onCancelBtnTap(evt) {
-		this.thisModal().dismiss();
+		this._router.navigate(['/requests/outgoing'])
 	}
 }
