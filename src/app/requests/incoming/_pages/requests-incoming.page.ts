@@ -15,8 +15,6 @@ import { ModelService } from '../_services/model.service';
 import { Constants } from '../../../../_constants/constants'
 import { environment } from '../../../../_environments/environment';
 
-import { CompleteRequestPage } from './complete-request.page'
-
 @Component({
   selector: 'requests-incoming-view',
   templateUrl: 'requests-incoming.page.html',
@@ -249,22 +247,6 @@ export class RequestsIncomingView {
 		this._router.navigate(['/offers/' + request.offer["id"]])
 	}
 
-	async presentModal(_component, request) {
-		let self = this;
-		let modal = undefined;
-		let options = { component: _component, componentProps: {model: request, thisModal: () => { return modal; }, 
-			parentCallbackFunc: 
-				() => { 
-					// modal.dismiss();
-					self.ngOnInit();
-				} 
-			}
-		};
-
-		modal = await this._modalCtrl.create(options)
-		return await modal.present();
-	}
-
 	onAcceptBtnTap(request) {
 		this._modelService.setModel(request);
 		this._router.navigate(['/requests/incoming/accept'])
@@ -281,7 +263,8 @@ export class RequestsIncomingView {
 	}
 
 	onCompleteBtnTap(request) {
-		this.presentModal(CompleteRequestPage, request);
+		this._modelService.setModel(request);
+		this._router.navigate(['/requests/incoming/complete'])
 	}
 
 	onHideRequestBtnTap(request) {

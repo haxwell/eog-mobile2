@@ -10,8 +10,6 @@ import { EasyahHeaderModule } from '../../easyah-header/easyah-header.module';
 
 import { RequestsIncomingView } from './_pages/requests-incoming.page';
 
-import { CompleteRequestPage } from './_pages/complete-request.page';
-
 import { ModelService } from './_services/model.service';
 
 // TODO is there anything outside of the requests module that uses requests service? If not move it into the module.
@@ -27,8 +25,7 @@ import { RequestsService } from '../../../app/_services/requests.service';
     ,RequestsIncomingRoutingModule
   ]
   ,declarations: [
-  	CompleteRequestPage
-    ,RequestsIncomingView
+    RequestsIncomingView
   ]
   ,providers: [
     RequestsService

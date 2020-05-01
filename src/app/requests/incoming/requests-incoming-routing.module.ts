@@ -5,10 +5,8 @@ import { CanActivateRouteGuard } from '../../../app/_routeguards/can-activate.ro
 
 import { RequestsIncomingView } from './_pages/requests-incoming.page';
 
-import { CompleteRequestPage } from './_pages/complete-request.page';
-
 const routes: Routes = [
-  { path: '',                 		component: RequestsIncomingView,   	canActivate: [CanActivateRouteGuard] }
+  { path: '', component: RequestsIncomingView,   	canActivate: [CanActivateRouteGuard] }
   ,{
     path: 'accept',
     loadChildren: () => import('./accept/accept.module').then( m => m.AcceptPageModule)
@@ -21,7 +19,10 @@ const routes: Routes = [
     path: 'cancel',
     loadChildren: () => import('./cancel/cancel.module').then( m => m.CancelPageModule)
   }
-  ,{ path: 'complete', 			component: CompleteRequestPage,		canActivate: [CanActivateRouteGuard] },
+  ,{
+    path: 'complete',
+    loadChildren: () => import('./complete/complete.module').then( m => m.CompletePageModule)
+  }
 ];
 @NgModule({
   imports: [
