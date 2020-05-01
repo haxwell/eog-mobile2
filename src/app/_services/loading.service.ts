@@ -20,7 +20,8 @@ export class LoadingService {
 	    if (onDidDismissFunc)
 	    	await this.loading[this.counter].onDidDismiss(onDidDismissFunc);
 
-	    return await this.loading[this.counter].present();
+	    if (this.loading[this.counter])
+			return await this.loading[this.counter].present();
 	}
 
 	async dismiss() {
