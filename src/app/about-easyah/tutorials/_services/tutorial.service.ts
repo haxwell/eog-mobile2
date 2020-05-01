@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { ModalController } from '@ionic/angular';
-
 import { UserService } from '../../../_services/user.service';
 import { ApiService } from '../../../_services/api.service';
 
@@ -13,7 +11,6 @@ import { environment } from '../../../../_environments/environment';
 export class TutorialService { 
 
 	constructor(private _apiService: ApiService,
-				private _modalCtrl: ModalController,
 				private _userService: UserService) {
 
 	}
@@ -31,25 +28,6 @@ export class TutorialService {
 	}
 	//
 	///////////
-
-    async presentTutorial(_component, cb = null) {
-        let self = this;
-        let _tutorialModal = undefined;
-        let options = { 
-            component: _component, 
-            componentProps: {
-                func: () => {
-                	if (cb) cb();
-                    _tutorialModal.dismiss();
-                }
-            }
-        };
-
-        _tutorialModal = await this._modalCtrl.create(options)
-
-        return await _tutorialModal.present();
-    }
-
 
 	getCurrentUserId() {
 		let cu = this._userService.getCurrentUser();

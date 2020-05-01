@@ -8,10 +8,10 @@ import { AlertService } 			from '../../../app/_services/alert.service';
 import { LoadingService } 			from '../../../app/_services/loading.service'
 import { RequestsService } 			from '../../../app/_services/requests.service';
 import { OfferModelService } 		from '../../../app/_services/offer-model.service'
+import { TutorialService }			from '../../../app/about-easyah/tutorials/_services/tutorial.service';
+import { PresentTutorialService }	from '../../../app/about-easyah/tutorials/_services/present-tutorial.service';
 import { UserService } 				from '../../../app/_services/user.service'
 import { UserPreferencesService } 	from '../../../app/_services/user-preferences.service'
-
-import { OutgoingRequestMadeTutorialPage } from '../../../app/tutorials/tutorial-outgoing-request-made/outgoing-request-made-tutorial.page'
 
 @Component({
   selector: 'page-search-request',
@@ -31,6 +31,8 @@ export class OfferRequestPage {
   				private _alertService: AlertService,
   				private _loadingService: LoadingService,
 				private _requestsService: RequestsService,
+				private _tutorialService: TutorialService,
+				private _presentTutorialService: PresentTutorialService,
 				private _userService: UserService,
 				private _offerModelService: OfferModelService,
 				private _userPreferencesService: UserPreferencesService,
@@ -102,7 +104,7 @@ export class OfferRequestPage {
 			if (data !== undefined) {
 				if (self.showTutorialAfterOutgoingRequestMade) {
 					self._loadingService.dismiss();
-					self.presentTutorial(OutgoingRequestMadeTutorialPage);
+					self._presentTutorialService.presentTutorialOutgoingRequestMade();
 				} else {
 					self._loadingService.dismiss();
 					self._location.back();

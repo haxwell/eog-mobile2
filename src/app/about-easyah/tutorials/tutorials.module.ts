@@ -7,6 +7,7 @@ import { TutorialBasicConceptsPageModule } from './tutorial-basic-concepts/tutor
 import { TutorialAcceptRequestPageModule } from './tutorial-accept-request/tutorial-accept-request.module';
 
 import { TutorialService } from './_services/tutorial.service'
+import { PresentTutorialService } from './_services/present-tutorial.service'
 
 @NgModule({
   declarations: [],
@@ -18,7 +19,8 @@ import { TutorialService } from './_services/tutorial.service'
     ,TutorialAcceptRequestPageModule
   ]
   ,providers: [
-  	TutorialService
+  	TutorialService,
+    PresentTutorialService
   ]
 })
 export class TutorialsModule { }

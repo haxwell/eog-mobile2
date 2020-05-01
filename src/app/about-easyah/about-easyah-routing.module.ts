@@ -19,6 +19,14 @@ const routes: Routes = [
     loadChildren: () => import('./tutorials/tutorials-list/tutorials-list.module').then( m => m.TutorialsListPageModule)
   },
   // {
+  //   path: 'tutorial-new-account',
+  //   loadChildren: () => import('./tutorials/tutorial-new-account/tutorial-new-account.module').then( m => m.TutorialNewAccountPageModule)
+  // },
+  // {
+  //   path: 'tutorial-outgoing-request-made',
+  //   loadChildren: () => import('./tutorials/tutorial-outgoing-request-made/tutorial-outgoing-request-made.module').then( m => m.TutorialOutgoingRequestMadePageModule)
+  // },
+  // {
   //   path: 'tutorial-accept-request',
   //   loadChildren: () => import('./tutorials/tutorial-accept-request/tutorial-accept-request.module').then( m => m.TutorialAcceptRequestPageModule)
   // },

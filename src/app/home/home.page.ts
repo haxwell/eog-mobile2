@@ -4,13 +4,13 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
 import { TutorialService } from '../../app/about-easyah/tutorials/_services/tutorial.service'
+
+import { PresentTutorialService } from '../../app/about-easyah/tutorials/_services/present-tutorial.service'
 import { UserService } from '../../app/_services/user.service'
 import { ProfileService } from '../../app/_services/profile.service'
 import { PictureService } from '../../app/_services/picture.service'
 
 import { HomeService } from './_services/home.service'
-
-import { TutorialEasyahIntroPage } from '../../app/about-easyah/tutorials/tutorial-easyah-intro/tutorial-easyah-intro.page'
 
 @Component({
     selector: 'page-home',
@@ -29,6 +29,7 @@ export class HomePage {
                 ,private _modalCtrl: ModalController 
                 ,private _homeService: HomeService
                 ,private _tutorialService: TutorialService
+                ,private _presentTutorialService: PresentTutorialService
                 ,private _userService: UserService
                 ,private _profileService: ProfileService                
                 ,private _pictureService: PictureService
@@ -53,7 +54,7 @@ export class HomePage {
         if (self.showTutorialPromise !== undefined && self._tutorialService.getTutorialEasyahIntroPageHasBeenShown() !== true) {
             self.showTutorialPromise.then((b) => {
                 if (b === true) {
-                    self._tutorialService.presentTutorial(TutorialEasyahIntroPage);
+                    self._presentTutorialService.presentTutorialEasyahIntro();
                 }
             });
         }

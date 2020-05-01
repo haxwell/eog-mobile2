@@ -7,11 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { HomeRoutingModule } from './home-routing.module';
 
 import { EasyahCommonModule } from '../common/easyah-common.module'
-import { TutorialModule } from '../tutorials/tutorial.module'
 import { TutorialsModule } from '../about-easyah/tutorials/tutorials.module'
 
 import { ModalService } from '../_services/modal.service'
-// import { TutorialService } from '../_services/tutorial.service'
 
 import { HomeService } from './_services/home.service'
 
@@ -24,7 +22,6 @@ import { HomePage } from './home.page';
     FormsModule,
     EasyahCommonModule,
     HomeRoutingModule,
-    TutorialModule,
     TutorialsModule,
     RouterModule.forChild([{ path: '', component: HomePage }])
   ]
@@ -33,7 +30,6 @@ import { HomePage } from './home.page';
   ]
   ,providers: [
     ModalService
-    // ,TutorialService
     ,HomeService
   ]
   ,exports: [

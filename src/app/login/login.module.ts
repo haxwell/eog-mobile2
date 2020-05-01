@@ -6,11 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LoginPage } from './login.page';
 import { CreateAccountPage } from './_pages/create-account.page';
-import { NewAccountTutorialPage } from './_pages/new-account-tutorial.page';
 
 
 import { ApiService } from '../_services/api.service';
-// import { UserService } from '../_services/user.service';
 import { GeolocationService } from '../_services/geolocation.service';
 import { ModalService } from '../_services/modal.service';
 
@@ -25,14 +23,11 @@ import { LoginRoutingModule } from './login-routing.module';
     LoginRoutingModule,
     RouterModule.forChild([{ path: '', component: LoginPage }])
   ]
-  ,declarations: [LoginPage, CreateAccountPage, NewAccountTutorialPage]
+  ,declarations: [LoginPage, CreateAccountPage ]
   ,providers: [
   	ApiService,
-  	// UserService,
     ModalService,
   	GeolocationService
-  ],
-  bootstrap: [ NewAccountTutorialPage ]
-  ,entryComponents: [ NewAccountTutorialPage ]
+  ]
 })
 export class LoginPageModule {}

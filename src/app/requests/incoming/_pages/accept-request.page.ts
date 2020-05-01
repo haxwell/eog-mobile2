@@ -1,11 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import { ModalController } from '@ionic/angular';
-
 import { RequestsService } 	from '../../../../app/_services/requests.service';
 import { UserPreferencesService } 	from '../../../../app/_services/user-preferences.service';
 
-import { AcceptRequestTutorialPage } from '../../../../app/tutorials/tutorial-accept-request/accept-request.tutorial';
+import { PresentTutorialService } from '../../../../app/about-easyah/tutorials/_services/present-tutorial.service';
 
 @Component({
   selector: 'page-requests-incoming-accept',
@@ -19,8 +17,8 @@ export class AcceptRequestPage {
 
 	showTutorialAfterRequestAccepted = true;
 	
-	constructor(private _modalCtrl: ModalController,
-				private _requestsService: RequestsService,
+	constructor(private _requestsService: RequestsService,
+				private _presentTutorialService: PresentTutorialService,
 				private _userPreferencesService: UserPreferencesService) {
 
 	}
@@ -37,31 +35,12 @@ export class AcceptRequestPage {
 		self._requestsService.acceptIncomingRequest(self.model).then((obj) => {
 
 			if (self.showTutorialAfterRequestAccepted) {
-				self.presentAcceptRequestTutorial();
+				self._presentTutorialService.presentTutorialAcceptRequest();
 			} else {
 				self.thisModal().dismiss();
 				self.parentCallbackFunc();
 			}
 		})
-	}
-
-	async presentAcceptRequestTutorial() {
-		let self = this;
-		let _tutorialModal = undefined;
-		let options = { 
-			component: AcceptRequestTutorialPage, 
-			componentProps: { 
-				func: () => {
-					_tutorialModal.dismiss();
-					self.thisModal().dismiss();
-					self.parentCallbackFunc();
-				}
-			}
-		};
-
-		_tutorialModal = await this._modalCtrl.create(options)
-
-		return await _tutorialModal.present();
 	}
 
 	onCancelBtnTap(evt) {

@@ -7,7 +7,6 @@ import { RequestsIncomingRoutingModule } from './requests-incoming-routing.modul
 
 import { EasyahCommonModule } from '../../common/easyah-common.module';
 import { EasyahHeader } from '../../common/easyah-header/easyah-header';
-import { TutorialModule } from '../../tutorials/tutorial.module'
 
 import { RequestsIncomingView } from './_pages/requests-incoming.page';
 
@@ -26,7 +25,6 @@ import { RequestsService } from '../../../app/_services/requests.service';
     ,FormsModule
     ,EasyahCommonModule
     ,RequestsIncomingRoutingModule
-    ,TutorialModule
   ]
   ,declarations: [
   	AcceptRequestPage

@@ -3,13 +3,11 @@ import { Validators, ValidationErrors, AsyncValidatorFn, FormBuilder, FormGroup,
 import { Location } from '@angular/common';
 
 import { AlertService } from '../../../app/_services/alert.service';
-import { ModalService } from '../../../app/_services/modal.service';
 import { LoadingService } from '../../../app/_services/loading.service';
+import { PresentTutorialService } from '../../../app/about-easyah/tutorials/_services/present-tutorial.service';
 import { UserService } from '../../../app/_services/user.service';
 
 import { FunctionPromiseService } from '@savvato-software/savvato-javascript-services'
-
-import { NewAccountTutorialPage } from './new-account-tutorial.page'
 
 @Component({
   selector: 'page-login-create-account',
@@ -28,7 +26,7 @@ export class CreateAccountPage {
 
 	constructor(private _location: Location,
 				private _alertService: AlertService,
-				private _modalService: ModalService,
+				private _presentTutorialService: PresentTutorialService,
 				private _loadingService: LoadingService,
 				private _userService: UserService,
 				private _functionPromiseService: FunctionPromiseService,
@@ -115,7 +113,7 @@ export class CreateAccountPage {
 	ionViewWillEnter() {
         let self = this;
 
-        this._modalService.show(NewAccountTutorialPage);
+        this._presentTutorialService.presentTutorialNewAccount();
     }
 
 	setChangedAttr(key, value) {
