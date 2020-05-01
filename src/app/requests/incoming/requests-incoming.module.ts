@@ -6,9 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { RequestsIncomingRoutingModule } from './requests-incoming-routing.module';
 
 import { EasyahCommonModule } from '../../common/easyah-common.module';
-import { EasyahHeaderModule } from '../../easyah-header/easyah-header.module';
-
-import { RequestsIncomingView } from './_pages/requests-incoming.page';
 
 import { ModelService } from './_services/model.service';
 
@@ -21,11 +18,10 @@ import { RequestsService } from '../../../app/_services/requests.service';
     ,CommonModule
     ,FormsModule
     ,EasyahCommonModule
-    ,EasyahHeaderModule
     ,RequestsIncomingRoutingModule
   ]
   ,declarations: [
-    RequestsIncomingView
+
   ]
   ,providers: [
     RequestsService

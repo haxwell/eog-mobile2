@@ -17,17 +17,17 @@ import { environment } from '../../../../_environments/environment';
 
 @Component({
   selector: 'requests-incoming-view',
-  templateUrl: 'requests-incoming.page.html',
-  styleUrls: ['./requests-incoming.page.scss']
+  templateUrl: './list.page.html',
+  styleUrls: ['./list.page.scss']
 })
-export class RequestsIncomingView {
+export class ListPage { // List of Incoming Offer Requests
 
 	model = undefined;
 	theOtherUser = undefined;
 
-	slideOpts = {
-		click: () => { console.log("Clicked!"); }
-	}
+	// slideOpts = {
+	// 	click: () => { console.log("Clicked!"); }
+	// }
 	
 	constructor(private _location: Location,
 				private _route: ActivatedRoute,
