@@ -1,30 +1,30 @@
 import { Component, Input } from '@angular/core';
-
-import { ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 import { RequestsService } 	from '../../../../app/_services/requests.service';
 import { ApiService } 	from '../../../../app/_services/api.service';
 import { DeclineReasonCodeService } from '../../../../app/_services/declined-reason-codes.service';
 
+import { ModelService }	from '../_services/model.service';
+
 import { environment } from '../../../../_environments/environment';
 
 @Component({
   selector: 'page-requests-incoming-decline',
-  templateUrl: 'decline-request.page.html',
-  styleUrls: ['./decline-request.page.scss']
+  templateUrl: './decline.page.html',
+  styleUrls: ['./decline.page.scss']
 })
-export class DeclineRequestPage {
+export class DeclinePage {
 
-	@Input() model: any;
-	@Input() thisModal: any;
-	@Input() parentCallbackFunc: any;
+	model = undefined;
 
 	declineReasonCodes = undefined;
 	selectedDeclineReasonId = undefined;
 	requestAgainDelayCodes = undefined;
 	selectedRequestAgainDelayId = undefined;
 
-	constructor(private _modalCtrl: ModalController,
+	constructor(private _router: Router, 
+				private _modelService: ModelService,
 				private _requestsService: RequestsService,
 				private _declinedReasonCodeService: DeclineReasonCodeService,
 				private _apiService: ApiService) {
@@ -33,6 +33,8 @@ export class DeclineRequestPage {
 
 	ngOnInit() {
 		let self = this;
+
+		self.model = self._modelService.getModel();
 
 		let url = environment.apiUrl + "/api/declineReasonCodes";
 		self._apiService.get(url).subscribe((data) => {
@@ -65,13 +67,12 @@ export class DeclineRequestPage {
 				let x = codes.filter((code) => { return code["id"] === obj["declinedReasonCode"]});
 				obj["declinedReasonCode"] = x[0];
 
-				self.thisModal().dismiss();
-				self.parentCallbackFunc();
+				self._router.navigate(['/requests/incoming'])
 			})
 		})
 	}
 
 	onCancelBtnTap(evt) {
-		this.thisModal().dismiss();
+		this._router.navigate(['/requests/incoming'])
 	}
 }

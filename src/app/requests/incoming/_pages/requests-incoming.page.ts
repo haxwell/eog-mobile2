@@ -15,7 +15,6 @@ import { ModelService } from '../_services/model.service';
 import { Constants } from '../../../../_constants/constants'
 import { environment } from '../../../../_environments/environment';
 
-import { DeclineRequestPage } from './decline-request.page'
 import { CompleteRequestPage } from './complete-request.page'
 import { CancelRequestPage } from './cancel-request.page'
 
@@ -273,7 +272,8 @@ export class RequestsIncomingView {
 	}
 
 	onDeclineBtnTap(request) {
-		this.presentModal(DeclineRequestPage, request);
+		this._modelService.setModel(request);
+		this._router.navigate(['/requests/incoming/decline'])
 	}
 
 	onCancelBtnTap(request) {

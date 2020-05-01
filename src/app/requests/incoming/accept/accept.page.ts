@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { RequestsService } 	from '../../../../app/_services/requests.service';
 import { UserPreferencesService } 	from '../../../../app/_services/user-preferences.service';
