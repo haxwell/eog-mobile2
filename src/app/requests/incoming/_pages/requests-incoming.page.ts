@@ -98,7 +98,7 @@ export class RequestsIncomingView {
 		var self = this;
 
 		self._loadingService.show({
-			content: 'Please wait...'
+			message: 'Please wait...'
 		}).then(() => {
 			this._requestsService.getIncomingRequestsForCurrentUser().then((data: Array<Object>) => {
 				self.model = data;
