@@ -2,7 +2,6 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { EasyahHeader } from './easyah-header/easyah-header';
 import { UsersLineItem } from './users-line-item/users-line-item';
 import { OtherPeoplesOfferList } from './other-peoples-offer-list/other-peoples-offer-list';
 
@@ -20,8 +19,7 @@ import { DeclineReasonCodeService } from '../_services/declined-reason-codes.ser
   	,IonicModule
   ]
   ,declarations: [
-  	EasyahHeader
-,UsersLineItem
+    UsersLineItem
   	,OtherPeoplesOfferList
   ]
   ,providers: [
@@ -34,8 +32,7 @@ import { DeclineReasonCodeService } from '../_services/declined-reason-codes.ser
     ,RecommendationService
   ]
   ,exports: [
-  	EasyahHeader
-    ,UsersLineItem
+    UsersLineItem
     ,OtherPeoplesOfferList
   ]
 })
