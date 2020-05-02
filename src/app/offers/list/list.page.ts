@@ -4,21 +4,21 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Events } from '@ionic/angular';
 
-import { PictureService } from '../../../../app/_services/picture.service'
+import { PictureService } from '../../../app/_services/picture.service'
 
-import { Constants } from '../../../../_constants/constants'
+import { Constants } from '../../../_constants/constants'
 
-import { OfferEditPage } from '../offer-edit.page'
-import { OfferPage } from '../offer.page'
+import { OfferEditPage } from '../_pages/offer-edit.page'
+import { OfferPage } from '../_pages/offer.page'
 
-import { OfferCollectionService } from '../../../../app/_services/offer-collection.service'
+import { OfferCollectionService } from '../../../app/_services/offer-collection.service'
 
-import { environment } from '../../../../_environments/environment';
+import { environment } from '../../../_environments/environment';
 
 @Component({
   selector: 'offer-list',
-  templateUrl: './offer-list.page.html',
-  styleUrls: ['./offer-list.page.scss']
+  templateUrl: './list.page.html',
+  styleUrls: ['./list.page.scss']
 })
 
 /**
@@ -26,7 +26,7 @@ import { environment } from '../../../../_environments/environment';
  * Displays a list of offers owned by the current user.
  *  
  */
-export class OfferListPage {
+export class ListPage {
 
 	model = {};
 	dirty = undefined;

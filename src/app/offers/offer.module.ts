@@ -12,7 +12,7 @@ import { ChoosePhotoSourceModule } from '../common/choose-photo-source/choose-ph
 
 import { OfferPage } from './_pages/offer.page';
 import { OfferEditPage } from './_pages/offer-edit.page';
-import { OfferListPage } from './_pages/offer-list/offer-list.page';
+// import { OfferListPage } from './_pages/offer-list/offer-list.page';
 import { DeleteOfferPage } from './_pages/delete-offer.page'
 import { OfferRequestPage } from './_pages/offer-request.page'
 import { RulePage } from './_pages/rule.page'
@@ -37,7 +37,7 @@ import { OfferCollectionService } from '../../app/_services/offer-collection.ser
   ,declarations: [
 
   	OfferPage
-    ,OfferListPage
+    // ,OfferListPage
   	,OfferEditPage
     ,DeleteOfferPage
     ,OfferRequestPage
