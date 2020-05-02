@@ -10,7 +10,6 @@ import { EasyahHeaderModule } from '../../easyah-header/easyah-header.module';
 
 import { RequestsOutgoingView } from './_pages/requests-outgoing.page';
 
-import { CompleteOutgoingRequestPage } from './_pages/complete-request.page';
 import { NotCompleteOutgoingRequestPage } from './_pages/not-complete-request.page';
 import { PermanentlyDismissUnresolvedRequestPage } from './_pages/permanently-dismiss-unresolved-request.page';
 
@@ -26,8 +25,7 @@ import { RequestsService } from '../../../app/_services/requests.service';
     ,RequestsOutgoingRoutingModule
   ]
   ,declarations: [
-  	CompleteOutgoingRequestPage
-  	,NotCompleteOutgoingRequestPage
+  	NotCompleteOutgoingRequestPage
   	,PermanentlyDismissUnresolvedRequestPage
   	,RequestsOutgoingView
   ]

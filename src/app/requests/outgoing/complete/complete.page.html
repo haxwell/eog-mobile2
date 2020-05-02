@@ -8,7 +8,7 @@
 
 <ion-content class="ion-padding">
 		<div *ngIf="!isRequestInDispute()">
-			<ion-label>You are about to indicate that your request of someone's offer has been satisfactorily fulfilled.</ion-label>
+			<ion-label>You are about to indicate that the request you sent has been satisfactorily fulfilled.</ion-label>
 		</div>
 		<br/>
 		<div *ngIf="isRequestInDispute()">
@@ -17,7 +17,7 @@
 		</div>
 
 		<br/>
-		<ion-label><b>{{model.title}}</b></ion-label>
+		<ion-label><b>{{model.offer.title}}</b></ion-label>
 		<hr/>
 
 	<ion-row>

@@ -17,7 +17,6 @@ import { environment } from '../../../../_environments/environment';
 
 import { PermanentlyDismissUnresolvedRequestPage } from './permanently-dismiss-unresolved-request.page'
 import { NotCompleteOutgoingRequestPage } from './not-complete-request.page'
-import { CompleteOutgoingRequestPage } from './complete-request.page'
 
 @Component({
   selector: 'requests-outgoing-view',
@@ -271,10 +270,8 @@ export class RequestsOutgoingView {
 	}
 
 	onCompleteOutgoingBtnTap(request) {
-		//let self = this;
-		//this._modalService.show(CompleteOutgoingRequestPage, {request: self.model, onDidDismissFunc: data => { self._events.publish('request:markedApprovedAfterCompletion'); }});
-
-		this.presentModal(CompleteOutgoingRequestPage, request);
+		this._modelService.setModel(request);
+		this._router.navigate(['/requests/outgoing/complete']);
 	}
 
 	onNotCompleteBtnTap(request) {

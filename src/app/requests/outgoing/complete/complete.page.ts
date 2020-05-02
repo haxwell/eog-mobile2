@@ -1,27 +1,29 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { RequestsService } 	from '../../../../app/_services/requests.service';
+import { ModelService } from '../_services/model.service';
 
 import { Constants } from '../../../../_constants/constants';
 
 @Component({
   selector: 'page-requests-outgoing-complete',
-  templateUrl: 'complete-request.page.html'
+  templateUrl: './complete.page.html'
 })
 
-export class CompleteOutgoingRequestPage {
+export class CompletePage {
 
-	@Input() model: any;
-	@Input() thisModal: any;
-	@Input() parentCallbackFunc: any;
+	model = undefined;
 
-	constructor(private _requestsService: RequestsService,
+	constructor(private _router: Router,
+				private _modelService: ModelService,
+				private _requestsService: RequestsService,
 				private _constants: Constants) {
 
 	}
 
 	ngOnInit() {
-
+		this.model = this._modelService.getModel();
 	}
 
 	isRequestInDispute() {
@@ -32,12 +34,11 @@ export class CompleteOutgoingRequestPage {
 	onSaveBtnTap(evt) {
 		let self = this;
 		this._requestsService.completeOutgoingRequest(this.model).then((obj) => {
-			self.thisModal().dismiss();
-			self.parentCallbackFunc();
+			self._router.navigate(['/requests/outgoing'])
 		})
 	}
 
 	onCancelBtnTap(evt) {
-		this.thisModal().dismiss();
+		this._router.navigate(['/requests/outgoing'])
 	}
 }
