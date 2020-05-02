@@ -8,8 +8,6 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./list/list.module').then( m => m.ListPageModule)
   }
-  // ,{ path: './not-complete', 		component: NotCompleteOutgoingRequestPage,			canActivate: [CanActivateRouteGuard] }
-  // ,{ path: './permanently-dismiss', component: PermanentlyDismissUnresolvedRequestPage,	canActivate: [CanActivateRouteGuard] },
   ,{
     path: 'cancel',
     loadChildren: () => import('./cancel/cancel.module').then( m => m.CancelPageModule)
@@ -17,6 +15,14 @@ const routes: Routes = [
   ,{
     path: 'complete',
     loadChildren: () => import('./complete/complete.module').then( m => m.CompletePageModule)
+  },
+  {
+    path: 'not-complete',
+    loadChildren: () => import('./not-complete/not-complete.module').then( m => m.NotCompletePageModule)
+  },
+  {
+    path: 'permanently-dismiss',
+    loadChildren: () => import('./permanently-dismiss/permanently-dismiss.module').then( m => m.PermanentlyDismissPageModule)
   }
 ];
 @NgModule({

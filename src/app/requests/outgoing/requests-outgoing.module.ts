@@ -7,9 +7,6 @@ import { RequestsOutgoingRoutingModule } from './requests-outgoing-routing.modul
 
 import { EasyahCommonModule } from '../../common/easyah-common.module';
 
-// import { NotCompleteOutgoingRequestPage } from './_pages/not-complete-request.page';
-// import { PermanentlyDismissUnresolvedRequestPage } from './_pages/permanently-dismiss-unresolved-request.page';
-
 import { RequestsService } from '../../../app/_services/requests.service';
 
 @NgModule({
@@ -21,8 +18,7 @@ import { RequestsService } from '../../../app/_services/requests.service';
     ,RequestsOutgoingRoutingModule
   ]
   ,declarations: [
-  	// NotCompleteOutgoingRequestPage
-  	// ,PermanentlyDismissUnresolvedRequestPage
+
   ]
   ,providers: [
     RequestsService
