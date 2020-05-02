@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { Events } from '@ionic/angular';
+
 import { RequestsService } 	from '../../../../app/_services/requests.service';
 import { ModelService } from '../_services/model.service';
 
@@ -18,6 +20,7 @@ export class CompletePage {
 	constructor(private _router: Router,
 				private _modelService: ModelService,
 				private _requestsService: RequestsService,
+				private _events: Events,
 				private _constants: Constants) {
 
 	}
@@ -34,6 +37,7 @@ export class CompletePage {
 	onSaveBtnTap(evt) {
 		let self = this;
 		this._requestsService.completeOutgoingRequest(this.model).then((obj) => {
+			self._events.publish('request:outgoing:completed', {request: obj});
 			self._router.navigate(['/requests/outgoing'])
 		})
 	}

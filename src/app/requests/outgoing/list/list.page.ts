@@ -15,16 +15,16 @@ import { ModelService } from '../_services/model.service';
 import { Constants } from '../../../../_constants/constants'
 import { environment } from '../../../../_environments/environment';
 
-import { PermanentlyDismissUnresolvedRequestPage } from './permanently-dismiss-unresolved-request.page'
-import { NotCompleteOutgoingRequestPage } from './not-complete-request.page'
+// import { PermanentlyDismissUnresolvedRequestPage } from './permanently-dismiss-unresolved-request.page'
+// import { NotCompleteOutgoingRequestPage } from './not-complete-request.page'
 
 @Component({
   selector: 'requests-outgoing-view',
-  templateUrl: 'requests-outgoing.page.html',
-  styleUrls: ['./requests-outgoing.page.scss']
+  templateUrl: './list.page.html',
+  styleUrls: ['./list.page.scss']
 })
 
-export class RequestsOutgoingView {
+export class ListPage { // List of Outgoing Offer Requests
 
 	model = undefined;
 	loading = undefined;
@@ -44,6 +44,7 @@ export class RequestsOutgoingView {
 		this._events.subscribe('request:accepted', () => { this.ngOnInit() });
 		this._events.subscribe('request:completed', () => { this.ngOnInit() });
 		this._events.subscribe('request:outgoing:cancelled', () => { this.ngOnInit() });
+		this._events.subscribe('request:outgoing:completed', () => { this.ngOnInit() });
 		this._events.subscribe('request:declined', () => { this.ngOnInit() });
 		this._events.subscribe('request:deleted', () => { this.ngOnInit() });
 		this._events.subscribe('request:inamicablyResolved', () => { this.ngOnInit() });
@@ -249,24 +250,26 @@ export class RequestsOutgoingView {
 		this._router.navigate(['/offers/' + request.offer["id"]]);
 	}
 
-	async presentModal(_component, request) {
-		let self = this;
-		let modal = undefined;
-		let options = { component: _component, componentProps: {model: request, thisModal: () => { return modal; }, 
-			parentCallbackFunc: 
-				() => { 
-					// modal.dismiss();
-					self.ngOnInit();
-				} 
-			}
-		};
+	// async presentModal(_component, request) {
+	// 	let self = this;
+	// 	let modal = undefined;
+	// 	let options = { component: _component, componentProps: {model: request, thisModal: () => { return modal; }, 
+	// 		parentCallbackFunc: 
+	// 			() => { 
+	// 				// modal.dismiss();
+	// 				self.ngOnInit();
+	// 			} 
+	// 		}
+	// 	};
 
-		modal = await this._modalCtrl.create(options)
-		return await modal.present();
-	}
+	// 	modal = await this._modalCtrl.create(options)
+	// 	return await modal.present();
+	// }
 
 	onPermanentlyDismissBtnTap(request) {
-		this.presentModal(PermanentlyDismissUnresolvedRequestPage, request);
+		// this.presentModal(PermanentlyDismissUnresolvedRequestPage, request);
+		this._modelService.setModel(request);
+		this._router.navigate(['/requests/outgoing/permanently-dismiss']);
 	}
 
 	onCompleteOutgoingBtnTap(request) {
@@ -278,7 +281,9 @@ export class RequestsOutgoingView {
 		// let self = this;
 		// this._modalService.show(NotCompleteOutgoingRequestPage);
 
-		this.presentModal(NotCompleteOutgoingRequestPage, request);	
+		// this.presentModal(NotCompleteOutgoingRequestPage, request);	
+		this._modelService.setModel(request);
+		this._router.navigate(['/requests/outgoing/not-complete']);
 	}
 
 	onCancelBtnTap(request) {
