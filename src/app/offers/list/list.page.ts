@@ -8,9 +8,6 @@ import { PictureService } from '../../../app/_services/picture.service'
 
 import { Constants } from '../../../_constants/constants'
 
-import { OfferEditPage } from '../_pages/offer-edit.page'
-import { OfferPage } from '../_pages/offer.page'
-
 import { OfferCollectionService } from '../../../app/_services/offer-collection.service'
 
 import { environment } from '../../../_environments/environment';

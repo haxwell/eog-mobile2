@@ -44,13 +44,13 @@
 			</div>
 		</ion-item>
 	</ion-list>
-	<ion-list *ngIf="!userHasAnActiveOffer()">
-		<ion-item>
-			The offers you create will appear here! 
+	<ion-row *ngIf="!userHasAnActiveOffer()">
+		<ion-item class="centered" lines="none">
+			<br/><br/><br/>You do not yet have any offers!<br/><br/>The offers you create will appear here! 
 		</ion-item>
-	</ion-list>
+	</ion-row>
 </ion-content>
-<ion-footer>
+<ion-footer *ngIf="userHasAnActiveOffer()">
 	<ion-row>
 		<span class="centered">Tap your offer to view, edit or delete!</span>
 	</ion-row>
