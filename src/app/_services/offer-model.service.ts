@@ -53,16 +53,22 @@ export class OfferModelService {
 		let self = this;
 		return new Promise((resolve, reject) => {
 
-			function to() {
+			function wait() {
 				setTimeout(() => {
-					if (self.modelCache[offerId] !== undefined && self.modelCache[offerId]['directionallyOppositeUser'])
+					if (self.modelCache[offerId] !== undefined && self.modelCache[offerId]['isFullyLoaded'])
 						resolve(self.modelCache[offerId]);
 					else
-						to();
+						wait();
 				}, 600);
 			}
 
-			to();
+			let rtn = self.get(offerId);
+
+			if (rtn && rtn['isFullyLoaded']) {
+				resolve(rtn);
+			} else {
+				wait();
+			}
 		})
 	}
 
@@ -91,8 +97,6 @@ export class OfferModelService {
 
 		self._functionPromiseService.initFunc(offerId+"offerFuncKey", () => {
 			return new Promise((resolve, reject) => {
-				console.log("Got in the offermodelservice offerFuncKey function!!")
-
 				let url = environment.apiUrl + "/api/offers/" + offerId; 
 				this._apiService.get(url)
 				.subscribe((offerObj) => {
@@ -137,6 +141,7 @@ export class OfferModelService {
 			
 		fpsPromise.then((model) => {
 			self.setOfferMetadata(model).then((finalModel) => {
+				finalModel['isFullyLoaded'] = true;
 				self.modelCache[offerId] = finalModel
 			});
 		});
