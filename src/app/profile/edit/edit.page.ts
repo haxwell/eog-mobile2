@@ -29,10 +29,10 @@ import * as EXIF from 'exif-js';
 
 @Component({
   selector: 'page-profile-edit',
-  templateUrl: 'profile-edit.page.html',
-  styleUrls: ['./profile-edit.page.scss']
+  templateUrl: './edit.page.html',
+  styleUrls: ['./edit.page.scss']
 })
-export class ProfileEditPage {
+export class EditPage {
 
 	model = undefined;
 	userId = undefined;
@@ -71,7 +71,8 @@ export class ProfileEditPage {
 	ngOnInit() {
 		let self = this;
 		self._route.params.subscribe((params) => {
-			self.userId = params['userId'] * 1;
+			self.userId = self._userService.getCurrentUser()['id'];
+
 			self.model = self._profileService.getModel(self.userId); 
 			self._userMetadataService.init();
 

@@ -3,12 +3,15 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 import { CanActivateRouteGuard } from '../../app/_routeguards/can-activate.routeguard'
 
-import { ProfilePage } from './_pages/profile.page';
-import { ProfileEditPage } from './_pages/profile-edit.page';
-
 const routes: Routes = [
-  { path: '', 			component: ProfilePage,			canActivate: [CanActivateRouteGuard] }
-  ,{ path: 'edit', 		component: ProfileEditPage,		canActivate: [CanActivateRouteGuard] }
+  {
+    path: '',
+    loadChildren: () => import('./detail/detail.module').then( m => m.DetailPageModule)
+  },
+  {
+    path: 'edit',
+    loadChildren: () => import('./edit/edit.module').then( m => m.EditPageModule)
+  }
 ];
 @NgModule({
   imports: [

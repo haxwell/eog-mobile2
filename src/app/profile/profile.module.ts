@@ -5,14 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 
-import { ChoosePhotoSourceModule } from '../common/choose-photo-source/choose-photo-source.module'
 import { EasyahCommonModule } from '../common/easyah-common.module';
-import { EasyahHeaderModule } from '../easyah-header/easyah-header.module';
-
-import { ProfilePage } from './_pages/profile.page';
-import { ProfileEditPage } from './_pages/profile-edit.page';
-
-import { ChoosePhotoSourcePage } from '../common/choose-photo-source/choose-photo-source';
 
 import { ContactInfoVisibilityService } from '../../app/_services/contact-info-visibility.service'
 import { GeolocationService } from '../../app/_services/geolocation.service'
@@ -27,13 +20,10 @@ import { UserMetadataService } from '../../app/_services/user-metadata.service'
     ,CommonModule
     ,FormsModule
     ,EasyahCommonModule
-    ,EasyahHeaderModule
   	,ProfileRoutingModule
-    ,ChoosePhotoSourceModule
   ]
   ,declarations: [
-  	ProfilePage
-  	,ProfileEditPage
+
   ]
   ,providers: [
     ContactInfoVisibilityService
@@ -42,9 +32,6 @@ import { UserMetadataService } from '../../app/_services/user-metadata.service'
     ,ProfileService
     ,RecommendationService
     ,UserMetadataService
-  ]
-  ,entryComponents: [
-    ChoosePhotoSourcePage
   ]
 })
 export class ProfilePageModule {}

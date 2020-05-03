@@ -17,18 +17,15 @@ import { RecommendationService } from '../../../app/_services/recommendation.ser
 import { UserMetadataService } from '../../../app/_services/user-metadata.service'
 import { UserService } from '../../../app/_services/user.service'
 
-import { ProfileEditPage } from './profile-edit.page'
-
-// import * as EXIF from 'exif-js';
 import * as Moment from 'moment';
 
 @Component({
   selector: 'page-profile',
-  templateUrl: 'profile.page.html'
-  ,styleUrls: ['./profile.page.scss']
+  templateUrl: './detail.page.html'
+  ,styleUrls: ['./detail.page.scss']
 })
 
-export class ProfilePage {
+export class DetailPage {
 
 	model = {};
 	userId = undefined;
@@ -36,7 +33,7 @@ export class ProfilePage {
 	isExiting = false;
 	locationDisplayString = undefined;
 
-	_editCount = 0; 
+	// _editCount = 0; 
 
 	_currentUserCanSendRecommendationToProfileUser = undefined;
 	_currentUserCanSendPointToProfileUser = undefined;
@@ -48,7 +45,6 @@ export class ProfilePage {
 	constructor(private _location: Location,
 				private _route: ActivatedRoute,
   				private _router: Router,
-				// private _modalService: ModalService,
 				private _alertService: AlertService,
 				private _userService: UserService,
 				private _profileService: ProfileService,
@@ -165,7 +161,7 @@ export class ProfilePage {
 	}
 
 	onEditProfileBtnClick() {
-		this._editCount++;
+		// this._editCount++;
 		this._router.navigate(['/profile/' + this.userId + '/edit']);
 	}
 
@@ -377,5 +373,4 @@ export class ProfilePage {
             }]
         })
 	}
-
 }
