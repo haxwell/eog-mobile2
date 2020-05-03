@@ -9,7 +9,7 @@
 			<div class="offerPageButtonHeader">
 				<ion-item lines="none">
 					<ion-button slot="start" (click)="onGoBackBtnTap($event)">Go Back</ion-button>
-					<ion-button slot="end" *ngIf="isCurrentUsersOffer()" (click)="onEditOfferBtnClick($event)">
+					<ion-button slot="end" type="button" *ngIf="isCurrentUsersOffer()" (click)="onEditOfferBtnClick($event)">
 						Edit
 					</ion-button>
 				</ion-item>

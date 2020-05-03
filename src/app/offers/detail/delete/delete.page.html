@@ -53,7 +53,10 @@
 		</ion-card>
 	</ion-row>
 
-	<ion-row>
+	<ion-row *ngIf="isOfferAttachedToAnInProgressRequest() || isOfferAttachedToACompletedButNotConfirmedRequest()">
+		<ion-button (click)="onCancelBtnTap($event)">I understand, I will wait.</ion-button>
+	</ion-row>
+	<ion-row *ngIf="!isOfferAttachedToAnInProgressRequest() && !isOfferAttachedToACompletedButNotConfirmedRequest()">
 		<ion-button (click)="onCancelBtnTap($event)">Sorry, no.. Cancel</ion-button>
 		<ion-button color="danger" [disabled]="!isDeleteBtnEnabled()" (click)="onDeleteBtnTap($event)">DELETE!</ion-button>
 	</ion-row>

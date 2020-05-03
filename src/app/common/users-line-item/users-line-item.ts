@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Events } from '@ionic/angular';
 

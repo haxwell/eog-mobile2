@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { Location } from '@angular/common';
 
-import { SearchService } from '../../../app/_services/search.service';
+import { SearchService } from '../../../../app/_services/search.service';
 
 @Component({
   selector: 'page-offer-edit-rule',
@@ -8,19 +9,6 @@ import { SearchService } from '../../../app/_services/search.service';
   ,styleUrls: ['./rule.page.scss']
 })
 export class RulePage {
-
-	/**
-		A thought I had while working on this page. I think this page should use a service for everything it needs
-		to do with its domain object. Reading, setting attributes,  saving itself, getting default models, all that
-		should be on the service, and this Page should call teh service to get what it wants, as a Controller calls
-		its service to implement a REST call. Then, eventually this page will not be calling a service, but those
-		will become methods on the object itself, and the service goes away, and we call teh object itself, to load,
-		write, save, etc.
-
-		But at the moment the more important task is getting icons fucking working during a migration to Ionic 4, so
-		that we can use routes in Angular, and therefore be able to test with Cypress, which will then need to be automated
-		so as to send me a daily report. #RabbitHole
-	*/
 
 	@Input() model: any;
 	@Input() props: any;
@@ -36,15 +24,16 @@ export class RulePage {
 	searchResultList: Array<Object> = [];
 	userList: Array<Object> = [];
 
-	constructor(private _searchService: SearchService) {
+	constructor(private _location: Location,
+				private _searchService: SearchService) {
 
 	}
 
 	ngOnInit() {
 		let self = this;
 
-		self.pointsQuantity = self.model["requiredPointsQuantity"] || 0;
-		self.requiredUserRecommendations = self.model["requiredUserRecommendations"] || []; // .slice() ?
+		self.pointsQuantity = (self.model && self.model["requiredPointsQuantity"]) || 0;
+		self.requiredUserRecommendations = (self.model && self.model["requiredUserRecommendations"]) || [];
 	}
 
 	onSearchUserBtnTap(evt) {
@@ -92,7 +81,7 @@ export class RulePage {
 	}
 
 	hasRequiredRecommendations() {
-		return this.requiredUserRecommendations.length > 0;
+		return this.requiredUserRecommendations && this.requiredUserRecommendations.length > 0;
 	}
 
 	onIndividualSearchResultTap(item) {

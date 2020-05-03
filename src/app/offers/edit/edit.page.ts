@@ -11,10 +11,11 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 import { Events } from '@ionic/angular';
 
-import { RulePage } from './rule.page'
+import { RulePage } from './rule/rule.page'
 import { KeywordEntryPage } from '../../common/keyword.entry/keyword.entry'
 import { ChoosePhotoSourcePage } from '../../common/choose-photo-source/choose-photo-source'
 
+import { ModelService } from '../_services/model.service';
 import { OfferModelService } from '../../../app/_services/offer-model.service'
 import { UserService } from '../../../app/_services/user.service';
 import { AlertService } from '../../../app/_services/alert.service';
@@ -28,11 +29,10 @@ import { environment } from '../../../_environments/environment';
 
 @Component({
   selector: 'page-offer-edit',
-  templateUrl: 'offer-edit.page.html'
-  ,styleUrls: ['./offer-edit.page.scss']
+  templateUrl: './edit.page.html'
+  ,styleUrls: ['./edit.page.scss']
 })
-
-export class OfferEditPage {
+export class EditPage {
 
 	offerId = undefined;
 	callback = undefined;
@@ -51,6 +51,7 @@ export class OfferEditPage {
 				private _modalCtrl: ModalController,
 				private _alertService: AlertService,
 				private _loadingService: LoadingService,
+				private _modelService: ModelService,
 				private _offerModelService: OfferModelService,
 				private _userService: UserService,
 				private _pictureService: PictureService,
@@ -70,54 +71,72 @@ export class OfferEditPage {
 
 		self.setDirty(false);
 
-		self._route.params.subscribe((params) => {
+		// HACK: For some reason, ngOnInit() is being called twice on this page. Using _modelService allows
+		//  us to check if we've been through the init process once, and if so, to not go through it again.
+		//
+		// See: https://stackoverflow.com/questions/38787795/why-is-ngoninit-called-twice
+		//
+		// Apparently, there is an error during the build of this page, and that causes Angular to call 
+		//  ngOnInit again. I tried checking the template, and the code here in the ngOnInit, and I couldn't see 
+		//  what error was happening. So future self, if this hack bothers you, now you know why its there.
 
-			self.permitOnlyEditsToPoints = false;
+		if (self._modelService.getModel() === undefined) {
+			self._modelService.setModel({editPageInitBegun: true});
 
-			self._offerModelService.init();				
+			self._route.params.subscribe((params) => {
 
-			if (params["offerId"] && params["offerId"] !== 'new') {
+				self.permitOnlyEditsToPoints = false;
 
-				self.offerId = params["offerId"];
+				self._offerModelService.init();				
 
-				console.log("editing existing offer");
+				if (params["offerId"] && params["offerId"] !== 'new') {
 
-				self._requestsService.getIncomingRequestsForCurrentUser().then((data: Array<Object>) => {
-					let reqsForThisOffer = data.filter((obj) => { return obj["offer"]["id"] === self.offerId; });
-					reqsForThisOffer = reqsForThisOffer.filter((obj) => { return obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED_AND_HIDDEN && obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED; })
+					self.offerId = params["offerId"] * 1;
 
-					if (reqsForThisOffer !== undefined && reqsForThisOffer.length > 0) {
-						// this offer has outstanding requests (pending and/or in-progress)
-						//  the user can only change the picture, and number of points required
+					console.log("editing existing offer");
 
-						self.permitOnlyEditsToPoints = true;
+					self._requestsService.getIncomingRequestsForCurrentUser().then((data: Array<Object>) => {
+						let reqsForThisOffer = data.filter((obj) => { return obj["offer"]["id"] === self.offerId; });
+						reqsForThisOffer = reqsForThisOffer.filter((obj) => { return obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED_AND_HIDDEN && obj["deliveringStatusId"] !== this._constants.REQUEST_STATUS_DECLINED; })
 
-						self._alertService.show({
-						      header: 'Just FYI',
-						      message: "This offer has requests that are pending or in-progress.<br/><br/>You will only be able to edit the picture, and the number of points that it requires.<br/><br/>Edits to points will only apply to future requests.",
-						      buttons: [{
-						        text: 'OK',
-						        handler: () => {
+						if (reqsForThisOffer !== undefined && reqsForThisOffer.length > 0) {
+							// this offer has outstanding requests (pending and/or in-progress)
+							//  the user can only change the picture, and number of points required
 
-						        }
-							}]
-						})
-					}
-				})
-			} else {
-				console.log("editing new offer");
-				this.new = true;
-				self.offerId = -1;
-			}
-		})
+							self.permitOnlyEditsToPoints = true;
+							self._alertService.show({
+							      header: 'Just FYI',
+							      message: "This offer has requests that are pending or in-progress.<br/><br/>You will only be able to edit the picture, and the number of points that it requires.<br/><br/>Edits to points will only apply to future requests.",
+							      buttons: [{
+							        text: 'OK',
+							        handler: () => {
 
-		self.offerEditForm = self.formBuilder.group({
-			title: ['', Validators.required],
-			quantity: ['', Validators.required],
-			units: ['', Validators.required],
-			description: ['', Validators.required]
-		});
+							        }
+								}]
+							})
+						}
+					})
+				} else {
+					console.log("editing new offer");
+					this.new = true;
+					self.offerId = -1;
+				}
+			})
 
+			// NOTE: Angular gives us a warning re: this block of code.. it wants us to use a setting on the form
+			//  control object to determine if it should be disabled or not. We should do that at some point. 
+			//	this article may help: https://netbasal.com/disabling-form-controls-when-working-with-reactive-forms-in-angular-549dd7b42110
+			self.offerEditForm = self.formBuilder.group({
+				title: ['', Validators.required],
+				quantity: ['', Validators.required],
+				units: ['', Validators.required],
+				description: ['', Validators.required]
+			});
+		}
+	}
+
+	ngOnDestroy() {
+		this._modelService.setModel(undefined); // for the next time we come through here... so our hack will work.
 	}
 
 	get offerEditFormControl() {
@@ -291,8 +310,7 @@ export class OfferEditPage {
 		let self = this;
 		let presave_model = this._offerModelService.get(this.offerId);
 
-		console.log("111112")
-		console.log(presave_model)
+		console.log("offer edit, model before save:", presave_model)
 
 		self._loadingService.show({
 			message: this._offerModelService.isOfferImageChanged(presave_model) ?
@@ -356,6 +374,17 @@ export class OfferEditPage {
 	onNewRuleBtnTap(evt) {
 		let self = this;
 
+		// NOTE, Dear Future Self, 
+		//
+		//  If you ever get the notion that the Rule page should be its own page with a module and route and all
+		//  that, please be warned that it will not work, at least not easily. Passing the currently-being-edited
+		//  model to the Rule page, and then passing it back with it's updates, causes problems. Its better to 
+		//  just pop it up as a modal. You'll never call the rule page directly, outside of this editor, anyway and
+		//  yes, it's not as elegant, but it gets the job done.
+		//
+		//  Signed,
+		//	Johnathan 202005030922
+
 		self.presentModal(RulePage, self._offerModelService.get(self.offerId), {
 			propsObj: {
 				permitOnlyEditsToPoints: self.permitOnlyEditsToPoints
@@ -387,10 +416,9 @@ export class OfferEditPage {
 				}
 			}
 		};
-
+		
 		modal = await this._modalCtrl.create(options)
 
-		console.log("about to call modal.present()")
 		return await modal.present();
 	}
 

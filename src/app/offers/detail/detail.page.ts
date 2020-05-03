@@ -4,11 +4,9 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { ModalController } from '@ionic/angular';
 
-import { OfferEditPage } from './offer-edit.page'
-import { OfferRequestPage } from './offer-request.page'
-import { DeleteOfferPage } from './delete-offer.page'
-
 import { AlertService } from '../../../app/_services/alert.service';
+import { LoadingService } from '../../../app/_services/loading.service';
+import { ModelService } from '../_services/model.service';
 import { OfferModelService } from '../../../app/_services/offer-model.service';
 import { OfferMetadataService } from '../../../app/_services/offer-metadata.service';
 import { OfferDetailService } from '../../../app/_services/offer-detail.service';
@@ -16,6 +14,8 @@ import { UserService } from '../../../app/_services/user.service';
 import { UserPreferencesService } from '../../../app/_services/user-preferences.service';
 import { PictureService } from '../../../app/_services/picture.service';
 import { RequestsService } from '../../../app/_services/requests.service';
+
+import { DeletePage } from './delete/delete.page';
 
 import { Constants } from '../../../_constants/constants';
 
@@ -25,11 +25,11 @@ import { environment } from '../../../_environments/environment';
 
 @Component({
   selector: 'page-display-offer',
-  templateUrl: 'offer.page.html',
-  styleUrls: ['./offer.page.scss']
+  templateUrl: './detail.page.html',
+  styleUrls: ['./detail.page.scss']
 })
 
-export class OfferPage {
+export class DetailPage { // Offer Detail Page
 
 	offerId = undefined;
 	
@@ -45,8 +45,10 @@ export class OfferPage {
 	constructor(private _location: Location,
 				private _router: Router,
 				private _route: ActivatedRoute,	
+				private _modelService: ModelService,
 				private _modalCtrl: ModalController,
 				private _alertService: AlertService,
+				private _loadingService: LoadingService,
 				private _offerModelService: OfferModelService,
 				private _offerMetadataService: OfferMetadataService,
 				private _offerDetailService: OfferDetailService,
@@ -62,20 +64,23 @@ export class OfferPage {
 		let self = this;
 
 		self._route.params.subscribe((params) => {
-			self.offerId = params['offerId'];
+			self._loadingService.show({message: "Please wait..."}).then(() => {
 
-			self._offerModelService.init();
-			self._offerMetadataService.init();
+				self.offerId = params['offerId'];
 
-			self._offerModelService.waitingPromise(self.offerId).then((offer) => {
-				self.requestMsgs = self._offerDetailService.getOfferDetailMessages(offer);
+				self._offerModelService.init();
+				self._offerMetadataService.init();
 
-				self._offerMetadataService.getMetadataValue(offer, self._constants.FUNCTION_KEY_OFFER_IS_REQUESTABLE)
-					.then((bool) => { 
-						console.log("isRequestBtnVisible ==> " + bool)
-						self._isRequestBtnVisible = bool;
-					});
+				self._offerModelService.waitingPromise(self.offerId).then((offer) => {
+					self.requestMsgs = self._offerDetailService.getOfferDetailMessages(offer);
 
+					self._offerMetadataService.getMetadataValue(offer, self._constants.FUNCTION_KEY_OFFER_IS_REQUESTABLE)
+						.then((bool) => { 
+							self._loadingService.dismiss().then(() => {
+								self._isRequestBtnVisible = bool;
+							})
+						});
+				})
 			})
 		})
 	}
@@ -190,9 +195,13 @@ export class OfferPage {
 
 	onDeleteBtnTap(evt) {
 		let self = this;
-		self.presentModal(DeleteOfferPage, self._offerModelService.get(this.offerId), {
+
+		// self._modelService.setModel(self._offerModelService.get(this.offerId));
+		// self._router.navigate(['/offers/delete']);
+
+		self.presentModal(DeletePage, self._offerModelService.get(this.offerId), {
 			propsObj: {
-				offer: this._offerModelService.get(this.offerId)
+				// offer: this._offerModelService.get(this.offerId)
 			}, 
 			callbackFunc: 
 				(data) => { 

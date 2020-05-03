@@ -10,12 +10,6 @@ import { EasyahCommonModule } from '../common/easyah-common.module';
 import { EasyahHeaderModule } from '../easyah-header/easyah-header.module';
 import { ChoosePhotoSourceModule } from '../common/choose-photo-source/choose-photo-source.module'
 
-import { OfferPage } from './_pages/offer.page';
-import { OfferEditPage } from './_pages/offer-edit.page';
-// import { OfferListPage } from './_pages/offer-list/offer-list.page';
-import { DeleteOfferPage } from './_pages/delete-offer.page'
-import { OfferRequestPage } from './_pages/offer-request.page'
-import { RulePage } from './_pages/rule.page'
 import { KeywordEntryPage } from '../common/keyword.entry/keyword.entry'
 import { ChoosePhotoSourcePage } from '../common/choose-photo-source/choose-photo-source'
 
@@ -35,22 +29,13 @@ import { OfferCollectionService } from '../../app/_services/offer-collection.ser
     ,ReactiveFormsModule
   ]
   ,declarations: [
-
-  	OfferPage
-    // ,OfferListPage
-  	,OfferEditPage
-    ,DeleteOfferPage
-    ,OfferRequestPage
-    ,RulePage
-    ,KeywordEntryPage
+    KeywordEntryPage
   ]
   ,providers: [
     OfferCollectionService
   ]
   ,entryComponents: [
-    DeleteOfferPage
-    ,RulePage
-    ,KeywordEntryPage
+    KeywordEntryPage
     ,ChoosePhotoSourcePage
   ]
 })

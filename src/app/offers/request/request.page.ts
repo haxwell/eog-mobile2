@@ -15,10 +15,10 @@ import { UserPreferencesService } 	from '../../../app/_services/user-preferences
 
 @Component({
   selector: 'page-search-request',
-  templateUrl: 'offer-request.page.html',
-  styleUrls: ['./offer-request.page.scss']
+  templateUrl: './request.page.html',
+  styleUrls: ['./request.page.scss']
 })
-export class OfferRequestPage {
+export class RequestPage {
 
 	offerId = undefined;
 	message = undefined;

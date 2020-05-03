@@ -1,22 +1,24 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Events } from '@ionic/angular';
 
-import { OfferModelService } 	from '../../../app/_services/offer-model.service';
-import { RequestsService } 	from '../../../app/_services/requests.service';
-import { RequestMetadataService } 	from '../../../app/_services/request-metadata.service';
+import { OfferModelService } 	from '../../../../app/_services/offer-model.service';
+import { RequestsService } 	from '../../../../app/_services/requests.service';
+import { RequestMetadataService } 	from '../../../../app/_services/request-metadata.service';
 
-import { Constants } from '../../../_constants/constants';
+import { Constants } from '../../../../_constants/constants';
 
 @Component({
   selector: 'page-offer-detail-delete',
-  templateUrl: 'delete-offer.page.html'
+  templateUrl: './delete.page.html',
+  styleUrls: ['./delete.page.scss']
 })
-export class DeleteOfferPage {
+export class DeletePage {
 
-	@Input() model;
-	@Input() callbackFunc;
-	@Input() props;
+	@Input() model: any;
+	@Input() props: any;
+	@Input() callbackFunc: any;
 
 	offerRequests = undefined;
 	offerRequestsInProgress = undefined;
@@ -24,7 +26,8 @@ export class DeleteOfferPage {
 	offerRequestsCompletedAwaitingConfirmation = undefined;
 	isInitialized = false;
 	
-	constructor(private _offerModelService: OfferModelService,
+	constructor(private _router: Router,
+				private _offerModelService: OfferModelService,
 				private _requestsService: RequestsService,
 				private _requestMetadataService: RequestMetadataService,
 				private _events: Events,
@@ -39,11 +42,12 @@ export class DeleteOfferPage {
 		self._requestMetadataService.init();
 
 		// get all the requests
-		self._requestsService.getIncomingRequestsForCurrentUser().then((model: Array<Object>) => {
+		self._requestsService.getIncomingRequestsForCurrentUser().then((incomingRequests: Array<Object>) => {
 
 			// then, for all that are for this offer
-			self.offerRequests = model.filter((obj) => {
-				return obj["offer"]["id"] === self.model["id"]; });
+			self.offerRequests = incomingRequests.filter((obj) => {
+				return obj["offer"]["id"] === self.model["id"]; 
+			});
 
 			// sort them according to whether they are in progress
 			self.offerRequests.forEach((request) => {
@@ -111,11 +115,11 @@ export class DeleteOfferPage {
 		self._offerModelService.delete(self.model).then(() => {
 			self._events.publish('offer:deletedByCurrentUser', self.model);
 			
-			self.callbackFunc(true);
+			self.callbackFunc(this.model);
 		})
 	}
 
 	onCancelBtnTap(evt) {
-		this.callbackFunc();
+		this.callbackFunc(undefined);
 	}
 }
