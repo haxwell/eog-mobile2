@@ -271,11 +271,15 @@ export class ListPage { // List of Outgoing Offer Requests
 
 	onAcknowledgeDeclinedRequestBtnTap(request) {
 		let self = this;
-		self._requestsService.acknowledgeDeclinedRequest(request);
+		self._requestsService.acknowledgeDeclinedRequest(request).then(() => {
+			self.ngOnInit();
+		});
 	}
 
 	onAcknowledgeCancelledRequestBtnTap(request) {
 		let self = this;
-		self._requestsService.acknowledgeCancelledRequest(request);
+		self._requestsService.acknowledgeCancelledRequest(request).then(() => {
+			self.ngOnInit();
+		});
 	}
 }

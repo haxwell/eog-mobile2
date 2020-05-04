@@ -196,9 +196,6 @@ export class DetailPage { // Offer Detail Page
 	onDeleteBtnTap(evt) {
 		let self = this;
 
-		// self._modelService.setModel(self._offerModelService.get(this.offerId));
-		// self._router.navigate(['/offers/delete']);
-
 		self.presentModal(DeletePage, self._offerModelService.get(this.offerId), {
 			propsObj: {
 				// offer: this._offerModelService.get(this.offerId)
@@ -206,7 +203,7 @@ export class DetailPage { // Offer Detail Page
 			callbackFunc: 
 				(data) => { 
 					if (data === true) 
-						self._location.back(); 
+						self._router.navigate(['/offers/']);
 				}
 			}
 		);

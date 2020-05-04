@@ -115,7 +115,7 @@ export class DeletePage {
 		self._offerModelService.delete(self.model).then(() => {
 			self._events.publish('offer:deletedByCurrentUser', self.model);
 			
-			self.callbackFunc(this.model);
+			self.callbackFunc(true);
 		})
 	}
 
