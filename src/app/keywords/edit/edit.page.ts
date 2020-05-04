@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { ModalService } from '../../../../app/_services/modal.service';
+import { ModalService } from '../../../app/_services/modal.service';
 
-import { KeywordEntryPage } from '../../../../app/common/keyword.entry/keyword.entry' // TODO Rename this files to keyword-entry.page
+import { KeywordEntryPage } from '../../../app/common/keyword.entry/keyword.entry' // TODO Rename this files to keyword-entry.page
 
-import { ProfileKeywordService } from '../../../../app/_services/profile-keyword.service'
+import { ProfileKeywordService } from '../../../app/_services/profile-keyword.service'
 
 
 @Component({
   selector: 'keyword-list',
-  templateUrl: 'keywords-list.page.html',
-  styleUrls: ['./keywords-list.page.scss']
+  templateUrl: './edit.page.html',
+  styleUrls: ['./edit.page.scss']
 })
 
-export class KeywordsListPage {
+export class EditPage {
 
 	model = undefined;
 	dirty = undefined;
