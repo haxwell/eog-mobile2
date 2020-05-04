@@ -65,6 +65,7 @@ export class KeywordEntryPage {
 
 			tmp.forEach((obj) => {
 				obj = obj.trim();
+				obj = obj.replace(/[^a-zA-Z0-9 .]*/g, '');
 
 				if (obj.length > 0) {
 					this.setDirty(true);
