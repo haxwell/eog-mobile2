@@ -221,7 +221,6 @@ export class EditPage {
 	}
 
 	setDirty(b) {
-		if (b) { console.log("DIRTY SET TO TRUE"); console.trace(); }
 		this.dirty = b;
 	}
 
@@ -235,8 +234,6 @@ export class EditPage {
 		let model = this._offerModelService.get(this.offerId);
 		if (model[key] !== value) {
 			model[key] = value;
-			console.log("setChangedAttr called. key = "+key+" / value = " + value)
-			console.trace();
 			this.setDirty(true);
 			rtn = true;
 		}
