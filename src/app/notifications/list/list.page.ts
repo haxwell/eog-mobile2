@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 import { Events } from '@ionic/angular';
 
-import { Constants } from '../../../../_constants/constants'
-import { environment } from '../../../../_environments/environment';
+import { Constants } from '../../../_constants/constants'
+import { environment } from '../../../_environments/environment';
 
-import { NotificationService } from '../../../../app/_services/notification.service'
-import { PictureService } from '../../../../app/_services/picture.service'
+import { NotificationService } from '../../../app/_services/notification.service'
+import { PictureService } from '../../../app/_services/picture.service'
 
 import * as EXIF from 'exif-js';
 
 @Component({
   selector: 'notification-list',
-  templateUrl: 'notifications-list.page.html'
-  ,styleUrls: ['./notifications-list.page.scss']
+  templateUrl: './list.page.html'
+  ,styleUrls: ['./list.page.scss']
 })
 
-export class NotificationsListPage {
+export class ListPage {
 
 	model = undefined;
 	dirty = true;

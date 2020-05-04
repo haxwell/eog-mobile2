@@ -3,10 +3,11 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 import { CanActivateRouteGuard } from '../../app/_routeguards/can-activate.routeguard'
 
-import { NotificationsListPage } from './_pages/notifications-list/notifications-list.page'
-
 const routes: Routes = [
-  { path: '', 			component: NotificationsListPage,			canActivate: [CanActivateRouteGuard] }
+  {
+    path: '',
+    loadChildren: () => import('./list/list.module').then( m => m.ListPageModule)
+  }
 ];
 @NgModule({
   imports: [
