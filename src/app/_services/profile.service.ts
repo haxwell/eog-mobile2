@@ -21,6 +21,10 @@ export class ProfileService {
 		return this._profileModelService.init();
 	}
 
+	setCacheExpiry(millis) {
+		this._profileModelService.setCacheExpiry(millis);
+	}
+
 	getModel(userId?: number, forceWaitUntilCompleteHydration?: boolean) {
 		return this._profileModelService.get(userId, forceWaitUntilCompleteHydration);
 	}

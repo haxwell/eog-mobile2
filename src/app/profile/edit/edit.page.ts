@@ -73,6 +73,8 @@ export class EditPage {
 		self._route.params.subscribe((params) => {
 			self.userId = self._userService.getCurrentUser()['id'];
 
+			self._profileService.setCacheExpiry(9999999); // ~167 minutes
+
 			self.model = self._profileService.getModel(self.userId); 
 			self._userMetadataService.init();
 
@@ -217,7 +219,7 @@ export class EditPage {
 	    	if (isAvailable) {
 			    self._alertService.show({
 		            header: 'New Phone Number',
-		            subheader: 'We will need to verify your new number before we can save it.<br/><br/>We will send a text to your phone at ' + phoneNumber + '. Proceed?',
+		            message: 'We will need to verify your new number before we can save it.<br/><br/>We will send a text to your phone at ' + phoneNumber + '. Proceed?',
 		            buttons: [{
 		            	text: 'Cancel',
 		            	role: 'cancel'

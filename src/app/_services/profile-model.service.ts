@@ -46,6 +46,11 @@ export class ProfileModelService  {
 		this.modelTransformingServiceHasBeenInitd = false;
 	}
 
+	cacheExpiry = 30000; // 30 seconds
+	setCacheExpiry(millis) {
+		this.cacheExpiry = millis;
+	}
+
 	//
 	// This method is designed to return the entire completed model, or nothing at all.
 	//	except for when it sometimes returns a promise, that returns the completed model.
@@ -75,9 +80,9 @@ export class ProfileModelService  {
         })
 
         if (forceWaitUntilCompleteHydration === true)
-        	return self._functionPromiseService.waitAndGet(userId+"profileFuncKey", userId+"profileFuncKey", { });
+        	return self._functionPromiseService.waitAndGet(userId+"profileFuncKey", userId+"profileFuncKey", { freshnessLengthInMillis: self.cacheExpiry });
         else 
-        	return self._functionPromiseService.get(userId+"profileFuncKey", userId+"profileFuncKey", { }) || { };
+        	return self._functionPromiseService.get(userId+"profileFuncKey", userId+"profileFuncKey", { freshnessLengthInMillis: self.cacheExpiry }) || { };
 	}
 
 	initTransformer() {
