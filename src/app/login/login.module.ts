@@ -5,8 +5,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LoginPage } from './login.page';
-import { CreateAccountPage } from './_pages/create-account.page';
-
 
 import { ApiService } from '../_services/api.service';
 import { GeolocationService } from '../_services/geolocation.service';
@@ -23,7 +21,7 @@ import { LoginRoutingModule } from './login-routing.module';
     LoginRoutingModule,
     RouterModule.forChild([{ path: '', component: LoginPage }])
   ]
-  ,declarations: [LoginPage, CreateAccountPage ]
+  ,declarations: [ LoginPage ]
   ,providers: [
   	ApiService,
     ModalService,
