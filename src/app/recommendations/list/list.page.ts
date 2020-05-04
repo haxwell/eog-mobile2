@@ -4,21 +4,21 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Events } from '@ionic/angular';
 
-import { Constants } from '../../../../_constants/constants'
-import { environment } from '../../../../_environments/environment';
+import { Constants } from '../../../_constants/constants'
+import { environment } from '../../../_environments/environment';
 
-import { UserService } from '../../../../app/_services/user.service';
-import { RecommendationService } from '../../../../app/_services/recommendation.service'
-import { PictureService } from '../../../../app/_services/picture.service'
+import { UserService } from '../../../app/_services/user.service';
+import { RecommendationService } from '../../../app/_services/recommendation.service'
+import { PictureService } from '../../../app/_services/picture.service'
 
 import * as EXIF from 'exif-js';
 
 @Component({
   selector: 'recommendation-list',
-  templateUrl: 'recommendations-list.page.html'
-  ,styleUrls: ['./recommendations-list.page.scss']
+  templateUrl: 'list.page.html'
+  ,styleUrls: ['./list.page.scss']
 })
-export class RecommendationsListPage {
+export class ListPage {
 
 	dirty = undefined;
 

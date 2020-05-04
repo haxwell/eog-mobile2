@@ -7,9 +7,6 @@ import { FormsModule } from '@angular/forms';
 import { RecommendationsRoutingModule } from './recommendations-routing.module';
 
 import { EasyahCommonModule } from '../common/easyah-common.module';
-import { EasyahHeaderModule } from '../easyah-header/easyah-header.module'
-
-import { RecommendationsListPage } from './_pages/recommendations-list/recommendations-list.page';
 
 @NgModule({
   imports: [
@@ -17,12 +14,11 @@ import { RecommendationsListPage } from './_pages/recommendations-list/recommend
   	CommonModule,
   	RecommendationsRoutingModule
     ,EasyahCommonModule
-    ,EasyahHeaderModule
     ,RouterModule
     ,FormsModule
   ]
   ,declarations: [
-    RecommendationsListPage
+    
   ]
   ,providers: [
 
