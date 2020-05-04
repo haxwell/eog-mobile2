@@ -99,6 +99,6 @@
 		</ion-item>
 	</form>
 	<br/><br/>
-	<ion-button class="" (click)="onCancelBtnTap()">Cancel</ion-button>
+	<ion-button class="" (click)="onCancelBtnTap($event)">Cancel</ion-button>
 	<ion-button data-cy="submit" [disabled]="!isSaveBtnEnabled()" (click)="onOKBtnTap($event)">Sign Me Up!</ion-button>
 </ion-content>
