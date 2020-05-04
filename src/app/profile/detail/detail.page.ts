@@ -6,6 +6,7 @@ import { Events } from '@ionic/angular';
 import { Constants } from '../../../_constants/constants'
 import { environment } from '../../../_environments/environment';
 
+import { LoadingService } from '../../../app/_services/loading.service'
 import { AlertService } from '../../../app/_services/alert.service'
 import { ContactInfoVisibilityService } from '../../../app/_services/contact-info-visibility.service'
 import { GeolocationService } from '../../../app/_services/geolocation.service'
@@ -46,6 +47,7 @@ export class DetailPage {
 				private _route: ActivatedRoute,
   				private _router: Router,
 				private _alertService: AlertService,
+				private _loadingService: LoadingService,
 				private _userService: UserService,
 				private _profileService: ProfileService,
 				private _profileModelService: ProfileModelService,
@@ -75,21 +77,23 @@ export class DetailPage {
 		self._route.params.subscribe((params) => {
 			self.userId = params['userId'] * 1;
 
-			self._profileService.init(self.userId);
+			self._loadingService.show({message: "Please wait..."}).then(() => {
+				self._profileService.init(self.userId);
 
-			self.setCurrentUserCanSendPointToProfileUser();
-			self.setCurrentUserCanSendRecommendationToProfileUser();
+				self.setCurrentUserCanSendPointToProfileUser();
+				self.setCurrentUserCanSendRecommendationToProfileUser();
 
-			self._contactInfoVisibilityService.getContactInfoVisibilityId(self.userId).then((visId: number) => {
-				self.contactInfoVisibilityId = visId;
+				self._contactInfoVisibilityService.getContactInfoVisibilityId(self.userId).then((visId: number) => {
+					self.contactInfoVisibilityId = visId;
+					self._loadingService.dismiss();
+				})
+
+				self.locationDisplayString = undefined;
 			})
-
-			self.locationDisplayString = undefined;
 		});
 	}
 
 	ionViewWillEnter() {
-		console.log("VIEW WILL ENTER - ProfilePage");
 		this._profileService.bumpTheThumbnailCounter();
 		this.ngOnInit();
 	}
