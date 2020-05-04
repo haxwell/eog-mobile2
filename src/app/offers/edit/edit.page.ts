@@ -127,10 +127,10 @@ export class EditPage {
 			//  control object to determine if it should be disabled or not. We should do that at some point. 
 			//	this article may help: https://netbasal.com/disabling-form-controls-when-working-with-reactive-forms-in-angular-549dd7b42110
 			self.offerEditForm = self.formBuilder.group({
-				title: ['', Validators.required],
-				quantity: ['', Validators.required],
-				units: ['', Validators.required],
-				description: ['', Validators.required]
+		  		title: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.pattern('[a-zA-Z0-9 .!?]*')]), updateOn: "blur"}),
+				quantity: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.maxLength(5), Validators.pattern('^[0-9]*')]), updateOn: "blur"}),
+				units: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern('[a-zA-Z0-9 ]*')]), updateOn: "blur"}),				
+				description: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.pattern('[a-zA-Z0-9 .!?]*')]), updateOn: "blur"}),
 			});
 		}
 	}
@@ -221,6 +221,7 @@ export class EditPage {
 	}
 
 	setDirty(b) {
+		if (b) { console.log("DIRTY SET TO TRUE"); console.trace(); }
 		this.dirty = b;
 	}
 
@@ -234,6 +235,8 @@ export class EditPage {
 		let model = this._offerModelService.get(this.offerId);
 		if (model[key] !== value) {
 			model[key] = value;
+			console.log("setChangedAttr called. key = "+key+" / value = " + value)
+			console.trace();
 			this.setDirty(true);
 			rtn = true;
 		}
@@ -250,7 +253,7 @@ export class EditPage {
 	}
 
 	handleQuantityChange(evt) {
-		this.setChangedAttr("quantity", evt.detail.value);
+		this.setChangedAttr("quantity", evt.detail.value*1);
 	}
 
 	handleQuantityDescriptionChange(evt) {
@@ -297,11 +300,16 @@ export class EditPage {
 		let oefc = this.offerEditFormControl;
 		let model = this._offerModelService.get(this.offerId);
 
-		return this.isDirty() && 
-				!oefc.title.errors &&
-				!oefc.quantity.errors &&
-				!oefc.units.errors &&
-				!oefc.description.errors &&
+		let fieldsHaveErrors = false;
+
+		if (!this.permitOnlyEditsToPoints) {
+			fieldsHaveErrors = !!oefc.title.errors ||
+				!!oefc.quantity.errors || oefc.quantity.value * 1 === 0 ||
+				!!oefc.units.errors ||
+				!!oefc.description.errors;
+		}
+
+		return this.isDirty() && !fieldsHaveErrors &&
 				model["keywords"].length > 0 &&
 				(model["requiredPointsQuantity"] !== undefined && model["requiredPointsQuantity"] > 0);
 	}
