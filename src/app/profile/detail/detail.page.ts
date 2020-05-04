@@ -281,7 +281,7 @@ export class DetailPage {
 	    let self = this;
 	    self._alertService.show({
 	            header: '',
-	            subheader: "Enter your current password...",
+	            message: "Enter your current password...",
 		        inputs: [{
 		        	name: 'currentPassword',
 		        	placeholder: '..current password..'
@@ -298,7 +298,7 @@ export class DetailPage {
 	                	else {
 				         	self._alertService.show({
 				                	header: 'Sad face..',
-				                	subheader: "Incorrect password",
+				                	message: "Incorrect password",
 				                	buttons: [{
 				                    	text: 'OK',
 				                    	handler: () => { }
