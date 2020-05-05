@@ -44,6 +44,7 @@ export class ProfileModelService  {
 		this._pointsService.init();
 
 		this.modelTransformingServiceHasBeenInitd = false;
+		this._functionPromiseService.resetFuzzily("profileFuncKey");
 	}
 
 	cacheExpiry = 30000; // 30 seconds
@@ -66,7 +67,10 @@ export class ProfileModelService  {
 			this.modelTransformingServiceHasBeenInitd = true;
 		}
 
-		self._functionPromiseService.initFunc(userId+"profileFuncKey", () => {
+		let funcKey = "profileFuncKey" + userId;
+		let resultKey = funcKey;
+
+		self._functionPromiseService.initFunc(funcKey, () => {
 			return new Promise((resolve, reject) => {
 				self._modelTransformingService.reset();
 
@@ -80,9 +84,9 @@ export class ProfileModelService  {
         })
 
         if (forceWaitUntilCompleteHydration === true)
-        	return self._functionPromiseService.waitAndGet(userId+"profileFuncKey", userId+"profileFuncKey", { freshnessLengthInMillis: self.cacheExpiry });
+        	return self._functionPromiseService.waitAndGet(resultKey, funcKey, { freshnessLengthInMillis: self.cacheExpiry });
         else 
-        	return self._functionPromiseService.get(userId+"profileFuncKey", userId+"profileFuncKey", { freshnessLengthInMillis: self.cacheExpiry }) || { };
+        	return self._functionPromiseService.get(resultKey, funcKey, { freshnessLengthInMillis: self.cacheExpiry }) || { };
 	}
 
 	initTransformer() {

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
+import { Validators, ValidationErrors, AsyncValidatorFn, FormBuilder, FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
@@ -17,6 +18,8 @@ import { GeolocationService } from '../../../app/_services/geolocation.service'
 import { UserService } from '../../../app/_services/user.service'
 import { UserMetadataService } from '../../../app/_services/user-metadata.service'
 import { ContactInfoVisibilityService } from '../../../app/_services/contact-info-visibility.service'
+
+import { FunctionPromiseService } from '@savvato-software/savvato-javascript-services'
 
 import { ChoosePhotoSourcePage } from '../../../app/common/choose-photo-source/choose-photo-source'
 
@@ -40,12 +43,17 @@ export class EditPage {
 	isExiting = false;
 	cancelBtnPressed = false;
 	verifyPhoneOnSave = false;
+	verifyEmailOnSave = false;
+	originalPhone = undefined;
+	originalEmail = undefined;
 	newCurrentLocationHasBeenSet = false;
 
 	imageOrientation = undefined;
 
 	contactInfoVisibilityId = undefined;
 	contactInfoVisibilityChoices = undefined;
+
+  	editAccountForm: FormGroup;
 
 	constructor(private _modalCtrl: ModalController,
 				private _loadingService: LoadingService,
@@ -64,7 +72,9 @@ export class EditPage {
 				private _constants: Constants,
 				private _file: File,
 				private _webview: WebView,
-				private _domSanitizer: DomSanitizer) {
+				private _domSanitizer: DomSanitizer,
+				private formBuilder: FormBuilder,
+				private _functionPromiseService: FunctionPromiseService) {
 
 	}
 
@@ -73,17 +83,32 @@ export class EditPage {
 		self._route.params.subscribe((params) => {
 			self.userId = self._userService.getCurrentUser()['id'];
 
+			self._profileService.init(self.userId);
 			self._profileService.setCacheExpiry(9999999); // ~167 minutes
 
 			self.model = self._profileService.getModel(self.userId); 
+
 			self._userMetadataService.init();
 
 			this.contactInfoVisibilityChoices = this._contactInfoVisibilityService.getContactInfoVisibilityChoices();
 			this._contactInfoVisibilityService.getContactInfoVisibilityId(this.userId).then((visId) => {
 				this.contactInfoVisibilityId = visId;
 			})
+	
+			this.editAccountForm = this.formBuilder.group({
+				realname: [self.model['realname'], Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(25), Validators.pattern('[a-zA-Z0-9 .!?]*')])],
+				description: new FormControl(self.model['description'], { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(250), Validators.pattern('[a-zA-Z0-9 .!?]*')]), updateOn: "blur"}),
+				email: new FormControl(self.model['email'], { validators: Validators.compose([Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+[.]+[a-zA-Z0-9-.]+$')]), updateOn: "blur"}),
+				phone: new FormControl(self.model['phone'], { validators: Validators.compose([Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*')]), updateOn: "blur"})
+			});
 		})
+
 	}
+
+	get editAccountFormControl() {
+		return this.editAccountForm.controls;
+	}
+
 
 	isDirty() {
 		return this.dirty;
@@ -91,10 +116,6 @@ export class EditPage {
 
 	setDirty(b) {
 		this.dirty = b;
-	}
-
-	ionViewWillEnter() {
-		console.log("--- entering profile edit page");
 	}
 
 	ionViewCanLeave() {
@@ -163,12 +184,24 @@ export class EditPage {
 	isSaveBtnEnabled() {
 		let model = this._profileService.getModel(this.userId);
 
-		return this.isDirty() && (model["phone"] && model["phone"].length == 10);
+		let pefc = this.editAccountFormControl;
+		
+		let fieldsHaveErrors = !!pefc.realname.errors ||
+			!!pefc.email.errors ||
+			!!pefc.phone.errors ||
+			!!pefc.description.errors;
+
+		return this.isDirty() && !fieldsHaveErrors; // && (model["phone"] && model["phone"].length == 10);
 	}
 
 	onSaveBtnTap() {
 		let self = this;
 		this._profileService.getModel(this.userId, true /* force complete model hydration */).then((presave_model) => {
+			if (self.verifyEmailOnSave) {
+				self.verifyEmailIsAvailable(presave_model["email"]);
+				return;
+			}
+
 			if (self.verifyPhoneOnSave) {
 				self.verifyPhone(presave_model["phone"]);
 				return;
@@ -212,38 +245,68 @@ export class EditPage {
 
 	}
 
+	verifyEmailIsAvailable(email) {
+		let self = this;
+
+		if (email == self.originalEmail) {
+			self.verifyEmailOnSave = false;
+			self.onSaveBtnTap();
+		} else {
+			self._userService.isEmailAddressAvailable(email).then((isAvailable) => {
+				if (isAvailable) {
+					self.verifyEmailOnSave = false;
+					self.onSaveBtnTap();
+				} else {
+					self._alertService.show({
+						header: 'Doh!',
+						message: "Sorry, that email address is already taken :(",
+						buttons: [{
+							text: 'OK',
+							role: 'cancel',
+						}]
+					})
+				}
+			})
+		}
+	}
+
 	verifyPhone(phoneNumber) {
 	    let self = this;
 
-	    self._userService.isPhoneNumberAvailable(phoneNumber).then((isAvailable) => {
-	    	if (isAvailable) {
-			    self._alertService.show({
-		            header: 'New Phone Number',
-		            message: 'We will need to verify your new number before we can save it.<br/><br/>We will send a text to your phone at ' + phoneNumber + '. Proceed?',
-		            buttons: [{
-		            	text: 'Cancel',
-		            	role: 'cancel'
-		            }, {
-		            	text: 'OK',
-		             	handler: (data) => {
-		       				self._userService.sendCodeToPhoneNumber(phoneNumber);
-		            		self.verifyPhone2(phoneNumber);
-						}
-		            }]
-		        })
+	    if (phoneNumber == self.originalPhone) {
+	    	self.verifyPhoneOnSave = false;
+	    	self.onSaveBtnTap();
+	    } else {
+		    self._userService.isPhoneNumberAvailable(phoneNumber).then((isAvailable) => {
+		    	if (isAvailable) {
+				    self._alertService.show({
+			            header: 'New Phone Number',
+			            message: 'We will need to verify your new number before we can save it.<br/><br/>We will send a text to your phone at ' + phoneNumber + '. Proceed?',
+			            buttons: [{
+			            	text: 'Cancel',
+			            	role: 'cancel'
+			            }, {
+			            	text: 'OK',
+			             	handler: (data) => {
+			       				self._userService.sendCodeToPhoneNumber(phoneNumber);
+			            		self.verifyPhone2(phoneNumber);
+							}
+			            }]
+			        })
 
-			} else {
-				self._alertService.show({
-					header: 'Doh!',
-					message: "Sorry, that phone number is already taken :(",
-					buttons: [{
-						text: 'OK',
-						role: 'cancel',
-					}]
-				})
+				} else {
+					self._alertService.show({
+						header: 'Doh!',
+						message: "Sorry, that phone number is already taken :(",
+						buttons: [{
+							text: 'OK',
+							role: 'cancel',
+						}]
+					})
 
-			}
-	    })
+				}
+		    })
+	    }
 	}
 
 	verifyPhone2(phoneNumber) {
@@ -314,12 +377,23 @@ export class EditPage {
 	}
 
 	onEmailChange(event) {
-		this.setChangedAttr("email", event.detail.value);
+		if (this.originalEmail === undefined) 
+			this.originalEmail = this._profileService.getModel(this.userId)['email'];
+
+		if (this.setChangedAttr("email", event.detail.value)) {
+			if (event.detail.value != this.originalEmail)
+				this.verifyEmailOnSave = true;
+		}
 	}
 
 	onPhoneChange(event) {
-		if (this.setChangedAttr("phone", event.detail.value))
-			this.verifyPhoneOnSave = true;
+		if (this.originalPhone === undefined)
+			this.originalPhone = this._profileService.getModel(this.userId)['phone'];
+
+		if (this.setChangedAttr("phone", event.detail.value)) {
+			if (event.detail.value != this.originalPhone)
+				this.verifyPhoneOnSave = true;
+		}
 	}
 
 	getModelAttr(key) {

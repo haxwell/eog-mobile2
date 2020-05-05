@@ -21,22 +21,80 @@
 
 		<ion-row>
 			<ion-col>
-				<ion-item>
-					<ion-label color="primary" position="stacked">Real Name</ion-label>
-					<ion-input type="text" (ionChange)="onRealNameChange($event)" [value]="getModelAttr('realname')" required></ion-input>
-				</ion-item>
-				<ion-item>
-					<ion-label color="primary" position="stacked">Description</ion-label>
-					<ion-textarea rows="3" (ionChange)="onDescriptionChange($event)" [value]="getModelAttr('description')" required></ion-textarea>
-				</ion-item>
-				<ion-item>
-					<ion-label color="primary" position="stacked">Phone Number</ion-label>
-					<ion-input type="number" (ionChange)="onPhoneChange($event)" [value]="getModelAttr('phone')" required></ion-input>
-				</ion-item>
-				<ion-item>
-					<ion-label color="primary" position="stacked">Email Address</ion-label>
-					<ion-input type="text" (ionChange)="onEmailChange($event)" [value]="getModelAttr('email')" required></ion-input>
-				</ion-item>
+				<form [formGroup]="editAccountForm">
+					<ion-item>
+						<ion-label color="primary" position="stacked">Real Name</ion-label>
+						<ion-input type="text" formControlName="realname" (ionChange)="onRealNameChange($event)" [value]="getModelAttr('realname')"></ion-input>
+				        <span class="text-danger"
+				            *ngIf="(editAccountFormControl.realname.touched || submitted) && editAccountFormControl.realname.errors?.required">
+				            Real Name is required
+				        </span>
+				        <span class="text-danger"
+				            *ngIf="(editAccountFormControl.realname.touched || submitted) && editAccountFormControl.realname.errors?.minlength">
+				            Real Name must be at least 3 characters
+				        </span>
+				        <span class="text-danger"
+				            *ngIf="(editAccountFormControl.realname.touched || submitted) && editAccountFormControl.realname.errors?.maxlength">
+				            Real Name must be less than 25 characters
+				        </span>
+				        <span class="text-danger"
+				            *ngIf="(editAccountFormControl.realname.touched || submitted) && editAccountFormControl.realname.errors?.pattern">
+				            Real Name cannot contain special characters
+				        </span>
+					</ion-item>
+					<ion-item>
+						<ion-label color="primary" position="stacked">Description</ion-label>
+						<ion-textarea rows="3" formControlName="description" (ionChange)="onDescriptionChange($event)" [value]="getModelAttr('description')"></ion-textarea>
+				        <span class="text-danger"
+				            *ngIf="(editAccountFormControl.description.touched || submitted) && editAccountFormControl.description.errors?.required">
+				            Description is required
+				        </span>
+				        <span class="text-danger"
+				            *ngIf="(editAccountFormControl.description.touched || submitted) && editAccountFormControl.description.errors?.minlength">       
+				            Description must be at least 3 characters
+				        </span>
+				        <span class="text-danger"
+				            *ngIf="(editAccountFormControl.description.touched || submitted) && editAccountFormControl.description.errors?.maxlength">       
+				            Description must be less than 250 characters
+				        </span>
+				        <span class="text-danger"
+				            *ngIf="(editAccountFormControl.description.touched || submitted) && editAccountFormControl.description.errors?.pattern">       
+				            Description cannot contain special characters
+				        </span>
+					</ion-item>
+					<ion-item>
+						<ion-label color="primary" position="stacked">Phone Number</ion-label>
+						<ion-input type="tel" formControlName="phone" (ionChange)="onPhoneChange($event)" [value]="getModelAttr('phone')" ></ion-input>
+				        <span class="text-danger"
+				            *ngIf="(editAccountFormControl.phone.touched || submitted) && editAccountFormControl.phone.errors?.required">
+				            Phone Number is required
+				        </span>
+				        <span class="text-danger"
+				            *ngIf="(editAccountFormControl.phone.touched || submitted) && (editAccountFormControl.phone.errors?.minlength || editAccountFormControl.phone.errors?.maxlength || editAccountFormControl.phone.errors?.pattern)">
+				            Phone Number should be 10 digits long
+				        </span>
+				        <!-- <span class="text-danger"
+				            *ngIf="(editAccountFormControl.phone.touched || submitted) && editAccountFormControl.phone.errors?.phoneNumberNotAvailable">
+				            This phone number is already in use
+				        </span> -->
+					</ion-item>
+					<ion-item>
+						<ion-label color="primary" position="stacked">Email Address</ion-label>
+						<ion-input type="text" formControlName="email" (ionChange)="onEmailChange($event)" [value]="getModelAttr('email')"></ion-input>
+				        <span class="text-danger"
+				            *ngIf="(editAccountFormControl.email.touched || submitted) && editAccountFormControl.email.errors?.required ">
+				            Email is required
+				        </span>
+				        <span class="text-danger"
+					        *ngIf="(editAccountFormControl.email.touched || submitted) && (editAccountFormControl.email.errors?.pattern || editAccountFormControl.email.errors?.minlength)">
+					        Enter a valid email address
+				        </span>
+	<!-- 			        <span class="text-danger"
+					        *ngIf="emailChanged && editAccountFormControl.email.touched && editAccountFormControl.email.errors?.emailAddressNotAvailable">
+					        This email address is already in use
+				        </span> -->
+					</ion-item>
+				</form>
 			</ion-col>
 		</ion-row>
 		<ion-row>
