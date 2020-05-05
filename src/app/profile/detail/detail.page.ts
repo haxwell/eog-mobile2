@@ -6,10 +6,11 @@ import { Events } from '@ionic/angular';
 import { Constants } from '../../../_constants/constants'
 import { environment } from '../../../_environments/environment';
 
-import { LoadingService } from '../../../app/_services/loading.service'
 import { AlertService } from '../../../app/_services/alert.service'
 import { ContactInfoVisibilityService } from '../../../app/_services/contact-info-visibility.service'
 import { GeolocationService } from '../../../app/_services/geolocation.service'
+import { LoadingService } from '../../../app/_services/loading.service'
+import { ModelServiceP } from '../_services/model.service'
 import { PictureService } from '../../../app/_services/picture.service'
 import { PointsService } from '../../../app/_services/points.service'
 import { ProfileService } from '../../../app/_services/profile.service'
@@ -48,6 +49,7 @@ export class DetailPage {
   				private _router: Router,
 				private _alertService: AlertService,
 				private _loadingService: LoadingService,
+				private _modelService: ModelServiceP,
 				private _userService: UserService,
 				private _profileService: ProfileService,
 				private _profileModelService: ProfileModelService,
@@ -74,23 +76,32 @@ export class DetailPage {
 
 	ngOnInit() {
 		let self = this;
-		self._route.params.subscribe((params) => {
-			self.userId = params['userId'] * 1;
 
-			self._loadingService.show({message: "Please wait..."}).then(() => {
-				self._profileService.init(self.userId);
+		if (self._modelService.getModel() === undefined) {
+			self._modelService.setModel({cnt: 1})
 
-				self.setCurrentUserCanSendPointToProfileUser();
-				self.setCurrentUserCanSendRecommendationToProfileUser();
+			self._route.params.subscribe((params) => {
+				self.userId = params['userId'] * 1;
 
-				self._contactInfoVisibilityService.getContactInfoVisibilityId(self.userId).then((visId: number) => {
-					self.contactInfoVisibilityId = visId;
-					self._loadingService.dismiss();
+				self._loadingService.show({message: "Please wait..."}).then(() => {
+					self._profileService.init(self.userId);
+
+					self.setCurrentUserCanSendPointToProfileUser();
+					self.setCurrentUserCanSendRecommendationToProfileUser();
+
+					self._contactInfoVisibilityService.getContactInfoVisibilityId(self.userId).then((visId: number) => {
+						self.contactInfoVisibilityId = visId;
+						self._loadingService.dismiss();
+					})
+
+					self.locationDisplayString = undefined;
 				})
+			});
+		}
+	}
 
-				self.locationDisplayString = undefined;
-			})
-		});
+	ngOnDestroy() {
+		this._modelService.setModel(undefined);
 	}
 
 	ionViewWillEnter() {

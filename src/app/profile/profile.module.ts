@@ -14,6 +14,8 @@ import { ProfileService } from '../../app/_services/profile.service'
 import { RecommendationService } from '../../app/_services/recommendation.service'
 import { UserMetadataService } from '../../app/_services/user-metadata.service'
 
+import { ModelServiceP } from './_services/model.service'
+
 @NgModule({
   imports: [
     IonicModule
@@ -32,6 +34,7 @@ import { UserMetadataService } from '../../app/_services/user-metadata.service'
     ,ProfileService
     ,RecommendationService
     ,UserMetadataService
+    ,ModelServiceP
   ]
 })
 export class ProfilePageModule {}
