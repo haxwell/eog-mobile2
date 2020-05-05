@@ -202,7 +202,7 @@ export class DetailPage {
 	}
 
 	getAvatarCSSClassString() {
-        let _model = this._profileService.getModel();
+        let _model = this._profileModelService.get(this.userId);
         let rtn = this._pictureService.getOrientationCSS(_model);
 
         return rtn;
