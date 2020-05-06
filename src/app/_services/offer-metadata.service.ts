@@ -151,6 +151,8 @@ export class OfferMetadataService extends DomainObjectMetadataService {
 												self.getCalcFunctionObject(self._constants.FUNCTION_KEY_USER_IS_PAST_REQUEST_AGAIN_DATE)["func"](offer).then((data4) => {
 													if (data4 === true || data4 === null) {
 														resolve(true);
+													} else {
+														resolve(false);
 													}
 												});
 											} else
