@@ -58,7 +58,7 @@ export class OfferMetadataService extends DomainObjectMetadataService {
 			(offer) => {
 				return new Promise((resolve, reject) => {
 					this._pointsService.getCurrentAvailableUserPoints().then((data) => {
-						resolve(offer["requiredPointsQuantity"] <= data);
+						resolve(offer["requiredPointsQuantity"] <= data['rtn']);
 					});
 				})
 			}); 

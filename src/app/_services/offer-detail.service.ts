@@ -43,8 +43,8 @@ export class OfferDetailService {
 			this._offerMetadataService.getMetadataValue(_offer, this._constants.FUNCTION_KEY_USER_HAS_SUFFICIENT_POINTS).then((bool) => {
 				if (bool === false) {
 					this._pointsService.getCurrentAvailableUserPoints().then((data) => {
-						let _msg = (_offer["requiredPointsQuantity"] - data) + ' more point'; 
-						if (_offer["requiredPointsQuantity"] - data > 1)
+						let _msg = (_offer["requiredPointsQuantity"] - data['rtn']) + ' more point'; 
+						if (_offer["requiredPointsQuantity"] - data['rtn'] > 1)
 							_msg += 's';
 
 						_msgs.push({type: 'points', msg: _msg});
