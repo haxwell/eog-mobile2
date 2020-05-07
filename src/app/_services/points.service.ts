@@ -32,20 +32,19 @@ export class PointsService {
 					this._apiService.get(url)
 					.subscribe((obj: any[]) => {
 						let rtn: any[] = obj;
-
 						let sum = 0;
 						rtn.forEach(
-							(obj) => { 
-								sum += obj["quantity"];
+							(_obj) => { 
+								sum += _obj["quantity"];
 							}
 						);
 
-						resolve(sum);
+						resolve({rtn: sum});
 					}, (err) => {
 						reject(err);
 					});
 				} else {
-					resolve(0);
+					resolve({rtn: 0});
 				}
 			});
 		});
@@ -57,21 +56,20 @@ export class PointsService {
 					this._apiService.get(url)
 					.subscribe((obj: any[]) => {
 						let rtn: any[] = obj;
-
 						let sum = 0;
 						rtn.forEach(
-							(obj) => { 
-								if (obj["escrowedRequestId"] === null) 
-									sum += obj["quantity"];
+							(_obj) => { 
+								if (_obj["escrowedRequestId"] === null) 
+									sum += _obj["quantity"];
 							}
 						);
 
-						resolve(sum);
+						resolve({rtn: sum});
 					}, (err) => {
 						reject(err);
 					});
 				} else {
-					resolve(0)
+					resolve({rtn: 0});
 				}
 			});
 		})

@@ -156,7 +156,7 @@ export class ProfileModelService  {
 
 			if (model['userId'] === currentUser['id']) {
 				this._pointsService.getCurrentAvailableUserPoints().then((pts) => {
-					model["points"]["available"] = pts;
+					model["points"]["available"] = pts['rtn'];
 					done("pointsService currAvail");
 				});
 			} else {
@@ -170,7 +170,7 @@ export class ProfileModelService  {
 
 			if (model['userId'] === currentUser['id']) {
 				this._pointsService.getCurrentUserPointsAsSum().then((pts) => {
-					model["points"]["total"] = pts;
+					model["points"]["total"] = pts['rtn'];
 					done("pointsService pointsAssum");
 				});
 			} else {
