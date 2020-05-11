@@ -122,10 +122,16 @@ export class DetailPage { // Offer Detail Page
 	}
 
 	getPointsRequestMessages() {
+		if (this.isAlreadyRequestedMessageAvailable())
+			return null;
+		
 		return this.requestMsgs.filter((obj) => { return obj["type"] === "points"});
 	}
 
 	getRecommendationsRequestMessages() {
+		if (this.isAlreadyRequestedMessageAvailable())
+			return null;
+		
 		return this.requestMsgs.filter((obj) => { return obj["type"] === "reqd"});
 	}
 
