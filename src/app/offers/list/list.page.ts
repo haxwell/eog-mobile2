@@ -66,13 +66,6 @@ export class ListPage {
 		this.dirty = b;
 	}
 
-	OfferCallback = (_params) => {
-		return new Promise((resolve, reject) => {
-			this.setDirty(_params === true);
-			resolve();
-		});
-	}
-
 	getOffers() {
 		return this.model["offers"];
 	}
