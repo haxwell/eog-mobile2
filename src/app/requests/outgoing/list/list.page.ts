@@ -90,22 +90,22 @@ export class ListPage { // List of Outgoing Offer Requests
 		});
 	}
 
-	getOfferPriceInfoString(offer) {
+	getOfferPriceInfoString(request) {
 		let pointStr = "point";
 
-		if (offer.requiredPointsQuantity > 1)
+		if (request.escrowedPointCount > 1)
 			pointStr = "points";
 
 		let recStr = "recommendation";
 
-		if (offer.requiredUserRecommendations.length > 1) {
+		if (request.offer.requiredUserRecommendations.length > 1) {
 			recStr = "recommendations";
 		}
 
-		let rtn = offer.requiredPointsQuantity + " " + pointStr;
+		let rtn = request.escrowedPointCount + " " + pointStr;
 
-		if (offer.requiredUserRecommendations.length > 0) {
-			rtn += " and " + offer.requiredUserRecommendations.length + " " + recStr;
+		if (request.offer.requiredUserRecommendations.length > 0) {
+			rtn += " and " + request.offer.requiredUserRecommendations.length + " " + recStr;
 		}
 
 		return rtn;
