@@ -9,6 +9,14 @@ Be sure
 
 0.
 cp src/_environments/environment.prod.js src/_environments/environment.js
+#Android release
+cp config-android.xml config.xml
+# iOS release
+cp config-ios.xml config.xml
+
+# Be sure you've updated the version number in the resulting config.xml
+
+
 
 1.
 ionic cordova build --release android
