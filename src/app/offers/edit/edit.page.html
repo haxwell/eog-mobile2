@@ -17,15 +17,15 @@
 			<ion-label color="primary" position="stacked">Title: </ion-label>
 			<ion-input type="text" placeholder="..a name for this offer..." formControlName="title" (ionChange)="handleTitleChange($event)" [disabled]="!isModelTitleEditable()" [value]="getModelAttr('title')" required></ion-input>
 	        <span class="text-danger"
-	            *ngIf="(offerEditFormControl.title.touched || submitted) && offerEditFormControl.title.errors?.required">
+	            *ngIf="(offerEditFormControl.title.touched ) && offerEditFormControl.title.errors?.required">
 	            Title is required
 	        </span>
 	        <span class="text-danger"
-	            *ngIf="(offerEditFormControl.title.touched || submitted) && offerEditFormControl.title.errors?.minlength">       
+	            *ngIf="(offerEditFormControl.title.touched ) && offerEditFormControl.title.errors?.minlength">       
 	            Title must be at least 3 characters
 	        </span>
 	        <span class="text-danger"
-	            *ngIf="(offerEditFormControl.title.touched || submitted) && offerEditFormControl.title.errors?.pattern">       
+	            *ngIf="(offerEditFormControl.title.touched ) && offerEditFormControl.title.errors?.pattern">       
 	            Title must be only letters and numbers
 	        </span>
 		</ion-item>
@@ -33,15 +33,15 @@
 			<ion-label color="primary" position="stacked">Quantity: (how many are you offering?) </ion-label>
 			<ion-input id="offerQuantity" type="tel" formControlName="quantity" (ionChange)="handleQuantityChange($event)" [disabled]="!isModelQuantityEditable()" [value]="getModelAttr('quantity')" required></ion-input>
 	        <span class="text-danger"
-	            *ngIf="(offerEditFormControl.quantity.touched || submitted) && offerEditFormControl.quantity.errors?.required">
+	            *ngIf="(offerEditFormControl.quantity.touched ) && offerEditFormControl.quantity.errors?.required">
 	            Quantity is required
 	        </span>
 	        <span class="text-danger"
-	            *ngIf="(offerEditFormControl.quantity.touched || submitted) && offerEditFormControl.quantity.errors?.maxlength"> 
+	            *ngIf="(offerEditFormControl.quantity.touched ) && offerEditFormControl.quantity.errors?.maxlength"> 
 	            Quantity must have no more than 5 digits 
 	        </span>
 	        <span class="text-danger"
-	            *ngIf="(offerEditFormControl.quantity.touched || submitted) && offerEditFormControl.quantity.errors?.pattern"> 
+	            *ngIf="(offerEditFormControl.quantity.touched ) && offerEditFormControl.quantity.errors?.pattern"> 
 	            Use only the numbers 0 - 9 
 	        </span>
 		</ion-item>
@@ -49,15 +49,15 @@
 			<ion-label color="primary" position="stacked">Units: (what are you offering?)</ion-label>
 			<ion-input id="offerQuantityDesc" type="text" formControlName="units" maxlength="50" placeholder="hours, cupcakes, lessons, etc." (ionChange)="handleQuantityDescriptionChange($event)" [disabled]="!isModelQuantityDescEditable()" [value]="getModelAttr('quantityDescription')" required></ion-input>
 	        <span class="text-danger"
-	            *ngIf="(offerEditFormControl.units.touched || submitted) && offerEditFormControl.units.errors?.required">
+	            *ngIf="(offerEditFormControl.units.touched ) && offerEditFormControl.units.errors?.required">
 	            Units is required
 	        </span>
 	        <span class="text-danger"
-	            *ngIf="(offerEditFormControl.units.touched || submitted) && offerEditFormControl.units.errors?.minlength">       
+	            *ngIf="(offerEditFormControl.units.touched ) && offerEditFormControl.units.errors?.minlength">       
 	            Units must be at least 2 characters
 	        </span>
 	        <span class="text-danger"
-	            *ngIf="(offerEditFormControl.units.touched || submitted) && offerEditFormControl.units.errors?.pattern">       
+	            *ngIf="(offerEditFormControl.units.touched ) && offerEditFormControl.units.errors?.pattern">       
 	            Units can only contain letters and numbers
 	        </span>
 		</ion-item>
@@ -65,15 +65,15 @@
 			<ion-label color="primary" position="stacked">Description: </ion-label>
 			<ion-textarea rows="5" formControlName="description" placeholder="I have many moons experience in XYZ and I will teach..." (ionChange)="handleDescriptionChange($event)" [disabled]="!isModelDescriptionEditable()" [value]="getModelAttr('description')"  required></ion-textarea>
 	        <span class="text-danger"
-	            *ngIf="(offerEditFormControl.description.touched || submitted) && offerEditFormControl.description.errors?.required">
+	            *ngIf="(offerEditFormControl.description.touched ) && offerEditFormControl.description.errors?.required">
 	            Description is required
 	        </span>
 	        <span class="text-danger"
-	            *ngIf="(offerEditFormControl.description.touched || submitted) && offerEditFormControl.description.errors?.minlength">       
+	            *ngIf="(offerEditFormControl.description.touched ) && offerEditFormControl.description.errors?.minlength">       
 	            Description must be at least 3 characters
 	        </span>
 	        <span class="text-danger"
-	            *ngIf="(offerEditFormControl.description.touched || submitted) && offerEditFormControl.description.errors?.pattern">       
+	            *ngIf="(offerEditFormControl.description.touched ) && offerEditFormControl.description.errors?.pattern">       
 	            Description can only contain letters and numbers
 	        </span>
 		</ion-item>
