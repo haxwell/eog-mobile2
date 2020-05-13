@@ -103,4 +103,8 @@ export class HomePage {
     onCreateOfferBtnClicked() {
         this._router.navigate(['/offers/new'])
     }
+
+    onViewAllOffersBtnClicked() {
+        this._router.navigate(['/offers/all'])
+    }
 }

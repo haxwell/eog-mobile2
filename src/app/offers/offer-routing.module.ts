@@ -8,6 +8,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./list/list.module').then( m => m.ListPageModule)
   }
+  ,{
+    path: 'all',
+    loadChildren: () => import('./list-all/list-all.module').then( m => m.ListAllPageModule)
+  }
   ,{ path: 'new',
     loadChildren: () => import('./edit/edit.module').then( m => m.EditPageModule)
   }

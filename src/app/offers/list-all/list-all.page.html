@@ -1,0 +1,28 @@
+<ion-header>
+	<easyah-header-component></easyah-header-component>
+	<br/>
+	<ion-row >
+		<div class="centered offerEditHeaderRow">
+			<h1 class="centered">View All Offers<br/></h1>
+		</div>
+	</ion-row>
+</ion-header>
+
+<ion-content>
+	<ion-list>
+			<ion-item-divider>
+				<ion-label>
+					Offers within 50 miles of you
+				</ion-label>
+			</ion-item-divider>
+
+		<other-peoples-offer-list [offers]="getOfferResults()">
+		</other-peoples-offer-list>
+
+	</ion-list>
+
+</ion-content>
+
+<ion-footer>
+	<ion-button [disabled]="!isAnotherResultBatchAvailable()" (click)="onMoreBtnTap()">More</ion-button>
+</ion-footer>

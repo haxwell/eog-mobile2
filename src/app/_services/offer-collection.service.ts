@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { UserService } from './user.service';
 import { ApiService } from './api.service';
-import { PictureService } from './picture.service';
-import { PictureEXIFService } from './picture-exif.service';
 import { OfferModelService } from './offer-model.service';
 
 import { environment } from '../../_environments/environment';
@@ -21,12 +19,9 @@ export class OfferCollectionService {
 	 */
 	
 	model = undefined;
-	force = false;
 
 	constructor(private _apiService: ApiService, 
 				private _userService: UserService,
-				private _pictureService: PictureService,
-				private _pictureEXIFService: PictureEXIFService,
 				private _offerModelService: OfferModelService,
 				private _constants: Constants) {
 
@@ -47,7 +42,6 @@ export class OfferCollectionService {
 
 	resetModel() {
 		this.model = undefined;
-		this.force = true;
 	}
 
 	init(model, user) {

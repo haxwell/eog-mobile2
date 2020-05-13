@@ -64,6 +64,11 @@
 					</div>
 				</ion-card-header>
 				<ion-card-content>
+					<ion-button (click)="onViewAllOffersBtnClicked()" [ngStyle]="{'width':'100%'}">
+						Look Thru All Offers
+					</ion-button>
+				</ion-card-content>
+				<ion-card-content>
 					<other-peoples-offer-list [offers]="getMostRecentlyCreatedOffers()">
 					</other-peoples-offer-list>
 				</ion-card-content>
