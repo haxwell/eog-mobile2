@@ -84,80 +84,80 @@ export class AppComponent {
     return this._userService.getCurrentUser();
   }
 
-  onHomeClicked() {
-    if (!this._router.url.endsWith("/home")) {
-      this._menuCtrl.close();
-      //this.navCtrl.push(HomePage, {});
-      this._router.navigate(['/home']);
-    }
-  }
+  // onHomeClicked() {
+  //   if (!this._router.url.endsWith("/home")) {
+  //     this._menuCtrl.close();
+  //     //this.navCtrl.push(HomePage, {});
+  //     this._router.navigate(['/home']);
+  //   }
+  // }
 
-  onShowProfile() {
-    if (!this._router.url.endsWith("/profile/" + this._userService.getCurrentUser()["id"])) {
-      this._menuCtrl.close();
-      //this.navCtrl.push(ProfilePage, {userId: });
-      this._router.navigate(['/profile/' + this._userService.getCurrentUser()["id"]]);
-    }
-  }
+  // onShowProfile() {
+  //   if (!this._router.url.endsWith("/profile/" + this._userService.getCurrentUser()["id"])) {
+  //     this._menuCtrl.close();
+  //     //this.navCtrl.push(ProfilePage, {userId: });
+  //     this._router.navigate(['/profile/' + this._userService.getCurrentUser()["id"]]);
+  //   }
+  // }
 
-  onYouAskedPeopleClicked() {
-    if (!this._router.url.endsWith("/requests/outgoing")) {
-      this._menuCtrl.close();
-      this._uciService.resetOutgoingUnseenChanges();
-      //this.navCtrl.push(RequestsOutgoingView, {});
-      this._router.navigate(['/requests/outgoing']); 
-    }
-  }
+  // onYouAskedPeopleClicked() {
+  //   if (!this._router.url.endsWith("/requests/outgoing")) {
+  //     this._menuCtrl.close();
+  //     this._uciService.resetOutgoingUnseenChanges();
+  //     //this.navCtrl.push(RequestsOutgoingView, {});
+  //     this._router.navigate(['/requests/outgoing']); 
+  //   }
+  // }
 
-  onPeopleAskedYouClicked() {
-    if (!this._router.url.endsWith("/requests/incoming")) {
-      this._menuCtrl.close();
-      this._uciService.resetIncomingUnseenChanges();
-      //this.navCtrl.push(RequestsIncomingView, {});
-      this._router.navigate(['/requests/incoming']); 
-    }
-  }
+  // onPeopleAskedYouClicked() {
+  //   if (!this._router.url.endsWith("/requests/incoming")) {
+  //     this._menuCtrl.close();
+  //     this._uciService.resetIncomingUnseenChanges();
+  //     //this.navCtrl.push(RequestsIncomingView, {});
+  //     this._router.navigate(['/requests/incoming']); 
+  //   }
+  // }
 
-  onYourOffersClicked() {
-    if (!this._router.url.endsWith("/offers")) {
-      this._menuCtrl.close();
-      //this.navCtrl.push(OfferListPage, {});
-      this._router.navigate(['/offers']); 
-    }
-  }
+  // onYourOffersClicked() {
+  //   if (!this._router.url.endsWith("/offers")) {
+  //     this._menuCtrl.close();
+  //     //this.navCtrl.push(OfferListPage, {});
+  //     this._router.navigate(['/offers']); 
+  //   }
+  // }
 
-  onYourRecommendationsClicked() {
-    if (!this._router.url.endsWith("/recommendations/incoming")) {
-      this._menuCtrl.close();
-      //this.navCtrl.push(RecommendationListPage, {});
-      this._router.navigate(['/recommendations/incoming']); 
-    }
-  }
+  // onYourRecommendationsClicked() {
+  //   if (!this._router.url.endsWith("/recommendations/incoming")) {
+  //     this._menuCtrl.close();
+  //     //this.navCtrl.push(RecommendationListPage, {});
+  //     this._router.navigate(['/recommendations/incoming']); 
+  //   }
+  // }
 
-  onYourKeywordsClicked() {
-    if (!this._router.url.endsWith("/keywords")) {
-      this._menuCtrl.close();
-      //this.navCtrl.push(KeywordListPage, {});
-      this._router.navigate(['/keywords']); 
-    }
-  }
+  // onYourKeywordsClicked() {
+  //   if (!this._router.url.endsWith("/keywords")) {
+  //     this._menuCtrl.close();
+  //     //this.navCtrl.push(KeywordListPage, {});
+  //     this._router.navigate(['/keywords']); 
+  //   }
+  // }
 
-  onYourNotificationsClicked() {
-    if (!this._router.url.endsWith("/notifications")) {
-      this._menuCtrl.close();
-      this._uciService.resetNotificationUnseenChanges();
-      //this.navCtrl.push(NotificationListPage, {});
-      this._router.navigate(['/notifications']); 
-    }
-  }
+  // onYourNotificationsClicked() {
+  //   if (!this._router.url.endsWith("/notifications")) {
+  //     this._menuCtrl.close();
+  //     this._uciService.resetNotificationUnseenChanges();
+  //     //this.navCtrl.push(NotificationListPage, {});
+  //     this._router.navigate(['/notifications']); 
+  //   }
+  // }
 
-  onAboutEasyahClicked() {
-    if (!this._router.url.endsWith("/about-easyah")) {
-      this._menuCtrl.close();
-      //this.navCtrl.push(AboutEasyahPage, {});
-      this._router.navigate(['/about-easyah']); 
-    }
-  }
+  // onAboutEasyahClicked() {
+  //   if (!this._router.url.endsWith("/about-easyah")) {
+  //     this._menuCtrl.close();
+  //     //this.navCtrl.push(AboutEasyahPage, {});
+  //     this._router.navigate(['/about-easyah']); 
+  //   }
+  // }
 
   isLogoutBtnVisible() {
     return this.isAndroidFunction();
