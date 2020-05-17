@@ -130,7 +130,7 @@ export class EditPage {
 		  		title: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.pattern('[a-zA-Z0-9 .!?]*')]), updateOn: "blur"}),
 				quantity: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.maxLength(5), Validators.pattern('^[0-9]*')]), updateOn: "blur"}),
 				units: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern('[a-zA-Z0-9 ]*')]), updateOn: "blur"}),				
-				description: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.pattern('[a-zA-Z0-9 .!?]*')]), updateOn: "blur"}),
+				description: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.pattern('[a-zA-Z0-9 .-~:;,()!?]*')]), updateOn: "blur"}),
 			});
 		}
 	}

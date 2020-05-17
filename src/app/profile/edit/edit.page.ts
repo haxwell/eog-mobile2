@@ -97,7 +97,7 @@ export class EditPage {
 	
 			this.editAccountForm = this.formBuilder.group({
 				realname: [self.model['realname'], Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(25), Validators.pattern('[a-zA-Z0-9 .!?]*')])],
-				description: new FormControl(self.model['description'], { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(250), Validators.pattern('[a-zA-Z0-9 .!?]*')]), updateOn: "blur"}),
+				description: new FormControl(self.model['description'], { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(250), Validators.pattern('[a-zA-Z0-9 .-~:;,()!?]*')]), updateOn: "blur"}),
 				email: new FormControl(self.model['email'], { validators: Validators.compose([Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+[.]+[a-zA-Z0-9-.]+$')]), updateOn: "blur"}),
 				phone: new FormControl(self.model['phone'], { validators: Validators.compose([Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*')]), updateOn: "blur"})
 			});
