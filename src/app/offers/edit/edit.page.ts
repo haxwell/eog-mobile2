@@ -127,11 +127,21 @@ export class EditPage {
 			//  control object to determine if it should be disabled or not. We should do that at some point. 
 			//	this article may help: https://netbasal.com/disabling-form-controls-when-working-with-reactive-forms-in-angular-549dd7b42110
 			self.offerEditForm = self.formBuilder.group({
-		  		title: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.pattern('[a-zA-Z0-9 .!?]*')]), updateOn: "blur"}),
+				title: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.pattern('[a-zA-Z0-9 .!?]*')]), updateOn: "blur"}),
 				quantity: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.maxLength(5), Validators.pattern('^[0-9]*')]), updateOn: "blur"}),
 				units: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern('[a-zA-Z0-9 ]*')]), updateOn: "blur"}),				
 				description: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.pattern('[a-zA-Z0-9 .-~:;,()!?]*')]), updateOn: "blur"}),
 			});
+
+			self._offerModelService.waitingPromise(self.offerId).then((model) => {
+				let oefc = self.offerEditFormControl;
+
+				oefc.title.setValue(model['title']);
+				oefc.quantity.setValue(model['quantity']);
+				oefc.units.setValue(model['quantityDescription']);
+				oefc.description.setValue(model['description']);
+			})
+
 		}
 	}
 
@@ -234,6 +244,11 @@ export class EditPage {
 		let model = this._offerModelService.get(this.offerId);
 		if (model[key] !== value) {
 			model[key] = value;
+
+			if (this.offerEditFormControl && this.offerEditFormControl[key]) {
+				this.offerEditFormControl[key].setValue(value);
+			}
+
 			this.setDirty(true);
 			rtn = true;
 		}
@@ -301,10 +316,21 @@ export class EditPage {
 
 		if (!this.permitOnlyEditsToPoints) {
 			fieldsHaveErrors = !!oefc.title.errors ||
-				!!oefc.quantity.errors || oefc.quantity.value * 1 === 0 ||
-				!!oefc.units.errors ||
-				!!oefc.description.errors;
+			!!oefc.quantity.errors || oefc.quantity.value * 1 === 0 ||
+			!!oefc.units.errors ||
+			!!oefc.description.errors;
 		}
+
+		// if (fieldsHaveErrors) {
+			//      console.log("**** Fields have errors!")
+
+			//      console.log("oefc.title.errors", oefc.title.errors, oefc.title.value);
+			//      console.log("oefc.quantity.errors", oefc.quantity.errors,oefc.quantity.value);
+			//      console.log("oefc.units.errors", oefc.units.errors,oefc.units.value);
+			//      console.log("oefc.description.errors", oefc.description.errors,oefc.description.value);
+			//      console.log(model["requiredPointsQuantity"])
+			//      console.log("*********************")
+		// }
 
 		return this.isDirty() && !fieldsHaveErrors &&
 				model["keywords"].length > 0 &&

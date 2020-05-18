@@ -15,7 +15,7 @@
 	<form [formGroup]="offerEditForm"  (ngSubmit)="onSaveBtnTap(true)">
 		<ion-item lines="none">
 			<ion-label color="primary" position="stacked">Title: </ion-label>
-			<ion-input type="text" placeholder="..a name for this offer..." formControlName="title" (ionChange)="handleTitleChange($event)" [disabled]="!isModelTitleEditable()" [value]="getModelAttr('title')" required></ion-input>
+			<ion-input type="text" placeholder="..a name for this offer..." formControlName="title" (ionChange)="handleTitleChange($event)" [disabled]="!isModelTitleEditable()" [value]="getModelAttr('title')"></ion-input>
 	        <span class="text-danger"
 	            *ngIf="(offerEditFormControl.title.touched ) && offerEditFormControl.title.errors?.required">
 	            Title is required
@@ -31,7 +31,7 @@
 		</ion-item>
 		<ion-item lines="none">
 			<ion-label color="primary" position="stacked">Quantity: (how many are you offering?) </ion-label>
-			<ion-input id="offerQuantity" type="tel" formControlName="quantity" (ionChange)="handleQuantityChange($event)" [disabled]="!isModelQuantityEditable()" [value]="getModelAttr('quantity')" required></ion-input>
+			<ion-input id="offerQuantity" type="tel" formControlName="quantity" (ionChange)="handleQuantityChange($event)" [disabled]="!isModelQuantityEditable()" [value]="getModelAttr('quantity')"></ion-input>
 	        <span class="text-danger"
 	            *ngIf="(offerEditFormControl.quantity.touched ) && offerEditFormControl.quantity.errors?.required">
 	            Quantity is required
@@ -47,7 +47,7 @@
 		</ion-item>
 		<ion-item lines="none">
 			<ion-label color="primary" position="stacked">Units: (what are you offering?)</ion-label>
-			<ion-input id="offerQuantityDesc" type="text" formControlName="units" maxlength="50" placeholder="hours, cupcakes, lessons, etc." (ionChange)="handleQuantityDescriptionChange($event)" [disabled]="!isModelQuantityDescEditable()" [value]="getModelAttr('quantityDescription')" required></ion-input>
+			<ion-input id="offerQuantityDesc" type="text" formControlName="units" maxlength="50" placeholder="hours, cupcakes, lessons, etc." (ionChange)="handleQuantityDescriptionChange($event)" [disabled]="!isModelQuantityDescEditable()" [value]="getModelAttr('quantityDescription')"></ion-input>
 	        <span class="text-danger"
 	            *ngIf="(offerEditFormControl.units.touched ) && offerEditFormControl.units.errors?.required">
 	            Units is required
@@ -63,7 +63,7 @@
 		</ion-item>
 		<ion-item lines="none">
 			<ion-label color="primary" position="stacked">Description: </ion-label>
-			<ion-textarea rows="5" formControlName="description" placeholder="I have many moons experience in XYZ and I will teach..." (ionChange)="handleDescriptionChange($event)" [disabled]="!isModelDescriptionEditable()" [value]="getModelAttr('description')"  required></ion-textarea>
+			<ion-textarea rows="5" formControlName="description" placeholder="I have many moons experience in XYZ and I will teach..." (ionChange)="handleDescriptionChange($event)" [disabled]="!isModelDescriptionEditable()" [value]="getModelAttr('description')" ></ion-textarea>
 	        <span class="text-danger"
 	            *ngIf="(offerEditFormControl.description.touched ) && offerEditFormControl.description.errors?.required">
 	            Description is required
