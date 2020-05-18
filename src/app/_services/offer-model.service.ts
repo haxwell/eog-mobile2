@@ -72,6 +72,13 @@ export class OfferModelService {
 		})
 	}
 
+	reset(offerId) {
+		this.modelCache[offerId] = undefined;
+		this.offerMetadata[offerId] = undefined;
+		this._functionPromiseService.reset(offerId+"offerResultKey");
+		this._pictureService.reset(this._constants.PHOTO_TYPE_OFFER, offerId);
+	}
+
 	get(offerId) {
 		let self = this;
 
@@ -100,7 +107,7 @@ export class OfferModelService {
 				let url = environment.apiUrl + "/api/offers/" + offerId; 
 				this._apiService.get(url)
 				.subscribe((offerObj) => {
-					
+
 					if (offerObj["requiredUserRecommendations"]) {
 						offerObj["requiredUserRecommendations"].forEach((rec) => {
 							self._userService.getUser(rec["requiredRecommendUserId"]).then((user) => {
@@ -137,7 +144,7 @@ export class OfferModelService {
 		});
 
 		// call the function
-		let fpsPromise = self._functionPromiseService.waitAndGet(offerId, offerId+"offerFuncKey", offerId);
+		let fpsPromise = self._functionPromiseService.waitAndGet(offerId+"offerResultKey", offerId+"offerFuncKey", offerId);
 			
 		fpsPromise.then((model) => {
 			self.setOfferMetadata(model).then((finalModel) => {
@@ -259,6 +266,8 @@ export class OfferModelService {
 	setOfferImageOrientation(offer) {
 		let self = this;
 
+		// try this in FPS.. its being called too oftem as is..
+
 		return new Promise((resolve, reject) => {
 			self._pictureService.get(self._constants.PHOTO_TYPE_OFFER, offer["id"]).then((obj) => {
 				offer["imageFileSource"] = 'eog';
@@ -352,7 +361,7 @@ export class OfferModelService {
 
 	_counter = 0;
 	bumpTheThumbnailCounter() {
-		this._counter++;
+		// this._counter++;
 	}
 
 	getThumbnailImagePath(offerId) {

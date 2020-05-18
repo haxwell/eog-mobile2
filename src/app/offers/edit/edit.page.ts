@@ -147,6 +147,8 @@ export class EditPage {
 
 	ngOnDestroy() {
 		this._modelService.setModel(undefined); // for the next time we come through here... so our hack will work.
+		this._pictureService.reset(this._constants.PHOTO_TYPE_OFFER, this.offerId);
+		this._offerModelService.reset(this.offerId);
 	}
 
 	get offerEditFormControl() {

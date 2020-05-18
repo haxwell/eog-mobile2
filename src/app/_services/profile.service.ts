@@ -38,7 +38,7 @@ export class ProfileService {
 
 	_counter = 0;
 	bumpTheThumbnailCounter() {
-		this._counter++;
+		// this._counter++;
 	}
 
 	getThumbnailImagePath(userId?) {
