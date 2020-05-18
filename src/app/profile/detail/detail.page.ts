@@ -35,8 +35,6 @@ export class DetailPage {
 	isExiting = false;
 	locationDisplayString = undefined;
 
-	// _editCount = 0; 
-
 	_currentUserCanSendRecommendationToProfileUser = undefined;
 	_currentUserCanSendPointToProfileUser = undefined;
 
@@ -82,7 +80,6 @@ export class DetailPage {
 
 			self._route.params.subscribe((params) => {
 				self.userId = params['userId'] * 1;
-
 				self._loadingService.show({message: "Please wait..."}).then(() => {
 					self._profileService.init(self.userId);
 
@@ -100,13 +97,17 @@ export class DetailPage {
 		}
 	}
 
+	ionViewWillEnter() {
+		this._modelService.setModel(undefined);
+		this.ngOnInit();
+	}
+
 	ngOnDestroy() {
 		this._modelService.setModel(undefined);
 	}
 
-	ionViewWillEnter() {
-		this._profileService.bumpTheThumbnailCounter();
-		this.ngOnInit();
+	ionViewWillLeave() {
+		this.ngOnDestroy();
 	}
 
 	isCurrentUsersProfile() {
@@ -175,9 +176,8 @@ export class DetailPage {
 		return this._profileModelService.get(this.userId)[name+"Url"] || "";
 	}
 
-	onEditProfileBtnClick() {
-		// this._editCount++;
-		this._router.navigate(['/profile/' + this.userId + '/edit']);
+	getEditProfileURL() {
+		return '/profile/' + this.userId + '/edit';
 	}
 
 	setCurrentUserCanSendPointToProfileUser() {
@@ -206,10 +206,6 @@ export class DetailPage {
 
 	getThumbnailImage() {
 		return this._profileService.getThumbnailImagePath(this.userId);
-	}
-
-	onGoBackBtnTap(evt) {
-		this._location.back();
 	}
 
 	getAvatarCSSClassString() {

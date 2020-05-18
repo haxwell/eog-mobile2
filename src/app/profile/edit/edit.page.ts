@@ -233,7 +233,7 @@ export class EditPage {
 					self._loadingService.dismiss();
 
 					if (!self.isExiting)
-						self._location.back();
+						self._router.navigate(['/profile/' + self.userId]);
 
 				}, (err) => {
 	            	self._alertService.show({
