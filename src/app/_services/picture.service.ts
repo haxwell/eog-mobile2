@@ -276,14 +276,14 @@ export class PictureService {
 
 		let rtn = "";
 
-		if (obj && this._platform.is('android')) {
-			if (obj["imageOrientation"] === 8)
-				 rtn = "rotate90Counterclockwise";
-			else if (obj["imageOrientation"] === 3)
-				rtn = "rotate180";
-			else if (obj["imageOrientation"] === 6)
-				rtn = "rotate90Clockwise";
-		}
+		// if (obj && this._platform.is('android')) {
+		// 	if (obj["imageOrientation"] === 8)
+		// 		 rtn = "rotate90Counterclockwise";
+		// 	else if (obj["imageOrientation"] === 3)
+		// 		rtn = "rotate180";
+		// 	else if (obj["imageOrientation"] === 6)
+		// 		rtn = "rotate90Clockwise";
+		// }
 
 		rtn += " centered " + (additionalCSSClassList || '');
 
