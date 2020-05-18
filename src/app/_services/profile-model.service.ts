@@ -268,14 +268,11 @@ export class ProfileModelService  {
 	JSON_to_UrlEncoded(element,key,list){
   		var list = list || [];
   		if(typeof(element)=='object'){
-  			console.log('111')
     		for (var idx in element) {
-    			console.log('222', element, idx)
     			this.JSON_to_UrlEncoded(element[idx],key?key+'['+idx+']':idx,list);
     		} 
       			
   		} else {
-  			console.log('333', element)
     		list.push(key+'='+encodeURIComponent(element));
   		}
   		
