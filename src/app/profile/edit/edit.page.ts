@@ -10,7 +10,6 @@ import { Constants } from '../../../_constants/constants'
 
 import { LoadingService } from '../../../app/_services/loading.service'
 import { AlertService } from '../../../app/_services/alert.service'
-import { ProfileService } from '../../../app/_services/profile.service'
 import { ProfileModelService } from '../../../app/_services/profile-model.service'
 import { PictureService } from '../../../app/_services/picture.service'
 import { PictureEXIFService } from '../../../app/_services/picture-exif.service'
@@ -61,7 +60,6 @@ export class EditPage {
 				private _location: Location,
 				private _route: ActivatedRoute,
   				private _router: Router,				
-				private _profileService: ProfileService,
 				private _profileModelService: ProfileModelService,
 				private _pictureService: PictureService,
 				private _pictureEXIFService: PictureEXIFService,
@@ -83,10 +81,10 @@ export class EditPage {
 		self._route.params.subscribe((params) => {
 			self.userId = self._userService.getCurrentUser()['id'];
 
-			self._profileService.init(self.userId);
-			self._profileService.setCacheExpiry(9999999); // ~167 minutes
+			self._profileModelService.init();
+			self._profileModelService.setCacheExpiry(9999999); // ~167 minutes
 
-			self.model = self._profileService.getModel(self.userId); 
+			self.model = self._profileModelService.get(self.userId); 
 
 			self._userMetadataService.init();
 
@@ -101,6 +99,15 @@ export class EditPage {
 				email: new FormControl(self.model['email'], { validators: Validators.compose([Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+[.]+[a-zA-Z0-9-.]+$')]), updateOn: "blur"}),
 				phone: new FormControl(self.model['phone'], { validators: Validators.compose([Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*')]), updateOn: "blur"})
 			});
+
+			this._profileModelService.get(this.userId, true).then((model) => {
+				let efc = self.editAccountForm.controls;
+
+				efc.realname.setValue(model['realname']);
+				efc.description.setValue(model['description']);
+				efc.email.setValue(model['email']);
+				efc.phone.setValue(model['phone']);
+			})
 		})
 
 	}
@@ -123,7 +130,7 @@ export class EditPage {
 		if (this.isDirty() && !self.isExiting) {
 			let msg = "";
 
-			let _model = this._profileService.getModel(this.userId);
+			let _model = this._profileModelService.get(this.userId);
 			
 			if (this._profileModelService.isProfileImageChanged(_model) && !this.cancelBtnPressed)
 				msg = "You changed your profile picture. Uploading it could take a long while. You got a minute (or ten)?";
@@ -182,7 +189,7 @@ export class EditPage {
 	}
 
 	isSaveBtnEnabled() {
-		let model = this._profileService.getModel(this.userId);
+		let model = this._profileModelService.get(this.userId);
 
 		let pefc = this.editAccountFormControl;
 		
@@ -196,7 +203,7 @@ export class EditPage {
 
 	onSaveBtnTap() {
 		let self = this;
-		this._profileService.getModel(this.userId, true /* force complete model hydration */).then((presave_model) => {
+		this._profileModelService.get(this.userId, true /* force complete model hydration */).then((presave_model) => {
 			if (self.verifyEmailOnSave) {
 				self.verifyEmailIsAvailable(presave_model["email"]);
 				return;
@@ -218,10 +225,10 @@ export class EditPage {
 			console.log("Here is the PRE-SAVE model")
 			console.log(presave_model);
 
-			self._profileService.save(presave_model).then(() => {
+			self._profileModelService.save(presave_model).then(() => {
 					self.setDirty(false);
 					
-					let _model = self._profileService.getModel(self.userId);
+					let _model = self._profileModelService.get(self.userId);
 
 					self._loadingService.dismiss();
 
@@ -358,7 +365,7 @@ export class EditPage {
 	setChangedAttr(key, value) {
 		let rtn = false;
 
-		let model = this._profileService.getModel(this.userId);
+		let model = this._profileModelService.get(this.userId);
 		if (model[key] !== value) {
 			model[key] = value;
 			this.setDirty(true);
@@ -378,7 +385,7 @@ export class EditPage {
 
 	onEmailChange(event) {
 		if (this.originalEmail === undefined) 
-			this.originalEmail = this._profileService.getModel(this.userId)['email'];
+			this.originalEmail = this._profileModelService.get(this.userId)['email'];
 
 		if (this.setChangedAttr("email", event.detail.value)) {
 			if (event.detail.value != this.originalEmail)
@@ -388,7 +395,7 @@ export class EditPage {
 
 	onPhoneChange(event) {
 		if (this.originalPhone === undefined)
-			this.originalPhone = this._profileService.getModel(this.userId)['phone'];
+			this.originalPhone = this._profileModelService.get(this.userId)['phone'];
 
 		if (this.setChangedAttr("phone", event.detail.value)) {
 			if (event.detail.value != this.originalPhone)
@@ -397,22 +404,22 @@ export class EditPage {
 	}
 
 	getModelAttr(key) {
-		return this._profileService.getModel(this.userId)[key];
+		return this._profileModelService.get(this.userId)[key];
 	}
 
 	isFromGallery() {
-		return this._profileService.getModel(this.userId)["imageFileSource"] == 'gallery';
+		return this._profileModelService.get(this.userId)["imageFileSource"] == 'gallery';
 	}
 
 	isDirectFilepathToImageSet() {
-		return this._profileService.getModel(this.userId)["imageFileURI"] !== undefined;
+		return this._profileModelService.get(this.userId)["imageFileURI"] !== undefined;
 	}
 
 	getThumbnailImage() {
 		let rtn = undefined;
 
 		if (this.isDirectFilepathToImageSet()) {
-			let unsanitized = this._webview.convertFileSrc(this._profileService.getModel(this.userId)["imageFileURI"]);
+			let unsanitized = this._webview.convertFileSrc(this._profileModelService.get(this.userId)["imageFileURI"]);
 			let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
 
 			rtn = sanitized;
@@ -449,7 +456,7 @@ export class EditPage {
 
 	onThumbnailImageClick() {
 		let self = this;
-		let model = this._profileService.getModel(this.userId);
+		let model = this._profileModelService.get(this.userId);
 
 		self.presentModal(ChoosePhotoSourcePage, { }, 
 			{
@@ -460,7 +467,7 @@ export class EditPage {
 				callbackFunc: (uriAndSource) => {
 					if (uriAndSource !== undefined) {
 
-						let model = this._profileService.getModel(this.userId);
+						let model = this._profileModelService.get(this.userId);
 
 						if (model["imageFileURI"] !== undefined && model["imageFileSource"] == 'camera') {
 							let lastSlash = model["imageFileURI"].lastIndexOf('/');
@@ -518,7 +525,7 @@ export class EditPage {
 						let self = this;
 
 						let func = () => {
-							let model = self._profileService.getModel(self.userId);
+							let model = self._profileModelService.get(self.userId);
 
 							model["imageFileURI"] = undefined;
 							model["imageFileSource"] = undefined;
@@ -531,7 +538,7 @@ export class EditPage {
 
 						self._pictureService.delete(self._constants.PHOTO_TYPE_PROFILE, self.userId).then(() => { 
 
-							let model = self._profileService.getModel(self.userId);
+							let model = self._profileModelService.get(self.userId);
 
 							if (model["imageFileSource"] === 'camera' || model["imageFileSource"] === 'eog') {
 								
@@ -574,7 +581,7 @@ export class EditPage {
 	}
 
 	getAvatarCSSClassString() {
-		return this._pictureService.getOrientationCSS(this._profileService.getModel(this.userId));
+		return this._pictureService.getOrientationCSS(this._profileModelService.get(this.userId));
 	}
 
 	loaded(evt) {
