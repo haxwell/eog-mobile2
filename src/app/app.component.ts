@@ -76,7 +76,7 @@ export class AppComponent {
     //  and so, if we just have it return 'api/resource/profile/4' each time would say to the browser, you already have
     //  this image, serve it from the cache.
 
-    this._profileService.bumpTheThumbnailCounter();
+    // this._profileService.bumpTheThumbnailCounter();
   }
 
   getUser() {

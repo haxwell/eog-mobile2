@@ -23,6 +23,9 @@ import * as Moment from 'moment'
 
 import { environment } from '../../../_environments/environment';
 
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 @Component({
   selector: 'page-display-offer',
   templateUrl: './detail.page.html',
@@ -56,7 +59,10 @@ export class DetailPage { // Offer Detail Page
 				private _pictureService: PictureService,
 				private _requestsService: RequestsService,
 				private _userPreferencesService: UserPreferencesService,
-				private _constants: Constants) {
+				private _constants: Constants
+                ,private _webview: WebView
+                ,private _domSanitizer: DomSanitizer
+	) {
 
 	}
 
@@ -74,9 +80,13 @@ export class DetailPage { // Offer Detail Page
 				self._offerModelService.waitingPromise(self.offerId).then((offer) => {
 					self.requestMsgs = self._offerDetailService.getOfferDetailMessages(offer);
 
+					console.log("OFFER DETAIL PAGE after ModelService.waitingPromise.. requestMsgs = ", self.requestMsgs)
+
 					self._offerMetadataService.getMetadataValue(offer, self._constants.FUNCTION_KEY_OFFER_IS_REQUESTABLE)
 						.then((bool) => { 
+							console.log("OFFER DETAIL PAGE after metadataValues.  is requestable = ", bool);
 							self._loadingService.dismiss().then(() => {
+								console.log("OFFER DETAIL PAGE after call to dismiss loading Ser ")
 								self._isRequestBtnVisible = bool;
 							})
 						});
@@ -86,7 +96,7 @@ export class DetailPage { // Offer Detail Page
 	}
 
 	ionViewWillEnter() {
-		this._offerModelService.bumpTheThumbnailCounter();
+		// this._offerModelService.bumpTheThumbnailCounter();
 	}
 
 	getModel() {
@@ -256,7 +266,16 @@ export class DetailPage { // Offer Detail Page
 	}
 
 	getThumbnailImage() {
-		return this._offerModelService.getThumbnailImagePath(this.offerId);
+        let rtn = undefined;
+        let path = this._pictureService.getImmediately(this._constants.PHOTO_TYPE_OFFER, this.offerId);
+
+        if (path && path['path']) {
+            let unsanitized = this._webview.convertFileSrc(path['path']);
+            let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
+            rtn = sanitized;
+        }
+
+        return rtn;
 	}
 
 	// count = 0;

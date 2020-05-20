@@ -229,6 +229,7 @@ export class EditPage {
 					self.setDirty(false);
 					
 					let _model = self._profileModelService.get(self.userId);
+					console.log("ProfileModelService.save() returned.. if image was set, it uploaded it.. now, just called to get the current model.. does it have imageFileURI set? ", _model)
 
 					self._loadingService.dismiss();
 
@@ -431,9 +432,16 @@ export class EditPage {
 	}
 
 	getEnvironmentAPIURLForThisProfile() {
-		let photoType = "profile";
-		let objId = this.userId;
-		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
+        let rtn = undefined;
+        let path = this._pictureService.getImmediately(this._constants.PHOTO_TYPE_PROFILE, this.userId);
+
+        if (path && path['path']) {
+            let unsanitized = this._webview.convertFileSrc(path['path']);
+            let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
+            rtn = sanitized;
+        }
+
+        return rtn;
 	}
 
 	async presentModal(_component, _model, props) {

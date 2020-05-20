@@ -15,6 +15,9 @@ import { ModelService } from '../_services/model.service';
 import { Constants } from '../../../../_constants/constants'
 import { environment } from '../../../../_environments/environment';
 
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 @Component({
   selector: 'requests-incoming-view',
   templateUrl: './list.page.html',
@@ -37,8 +40,10 @@ export class ListPage { // List of Incoming Offer Requests
 				private _loadingService: LoadingService,
 				private _requestsService: RequestsService,
 				private _pictureService: PictureService,
-				private _constants: Constants,
-				_events: Events) {
+				private _constants: Constants
+                ,private _webview: WebView
+                ,private _domSanitizer: DomSanitizer
+				,_events: Events) {
 		
 		let func = (data) => {
 			this.replaceModelElement(data["request"]);
@@ -222,9 +227,16 @@ export class ListPage { // List of Incoming Offer Requests
 	}
 
 	getThumbnailImage(offer) {
-		let photoType = "offer";
-		let objId = offer["id"];
-		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
+        let rtn = undefined;
+        let path = this._pictureService.getImmediately(this._constants.PHOTO_TYPE_OFFER, offer['id']);
+
+        if (path && path['path']) {
+            let unsanitized = this._webview.convertFileSrc(path['path']);
+            let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
+            rtn = sanitized;
+        }
+
+        return rtn;
 	}
 
 	getAvatarCSSClassString(offer) {

@@ -25,6 +25,8 @@ export class PictureEXIFService {
 		self._functionPromiseService.initFunc(self._constants.FUNCTION_KEY_EXIF_METADATA_GET, (photoPath) => {
 			let rtn = new Promise((resolve, reject) => {
 				
+				console.log("PictureEXIFService photopath: ", photoPath)
+
 				let lastSlash = photoPath.lastIndexOf('/');
 				let path = photoPath.substring(0,lastSlash+1);
 				let filename = photoPath.substring(lastSlash+1);

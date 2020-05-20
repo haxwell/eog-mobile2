@@ -12,6 +12,9 @@ import { RecommendationService } from '../../../app/_services/recommendation.ser
 
 import { environment } from '../../../_environments/environment';
 
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 @Component({
   selector: 'other-peoples-offer-list',
   templateUrl: 'other-peoples-offer-list.html',
@@ -33,8 +36,10 @@ export class OtherPeoplesOfferList {
 				private _offerMetadataService: OfferMetadataService,
 				private _pointsService: PointsService,
 				private _pictureService: PictureService,
-				private _recommendationService: RecommendationService,
-                _events: Events) {
+				private _recommendationService: RecommendationService
+                ,private _webview: WebView
+                ,private _domSanitizer: DomSanitizer
+                ,_events: Events) {
 
 		let func = (data) => {
 			let offer = data["request"]["offer"];
@@ -87,9 +92,16 @@ export class OtherPeoplesOfferList {
 	}
 
 	getThumbnailImage(offer) {
-		let photoType = "offer";
-		let objId = offer["id"];
-		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
+        let rtn = undefined;
+        let path = this._pictureService.getImmediately(this._constants.PHOTO_TYPE_OFFER, offer['id']);
+
+        if (path && path['path']) {
+            let unsanitized = this._webview.convertFileSrc(path['path']);
+            let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
+            rtn = sanitized;
+        }
+
+        return rtn;
 	}
 
 	getAlreadyRequestedIconColor(offer) {

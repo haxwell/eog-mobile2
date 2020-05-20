@@ -21,6 +21,9 @@ import { UserService } from '../../../app/_services/user.service'
 
 import * as Moment from 'moment';
 
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 @Component({
   selector: 'page-profile',
   templateUrl: './detail.page.html'
@@ -58,7 +61,10 @@ export class DetailPage {
 				private _pictureService: PictureService,
 				private _contactInfoVisibilityService: ContactInfoVisibilityService,
 				private _events: Events,
-				private _constants: Constants) {
+				private _constants: Constants
+                ,private _webview: WebView
+                ,private _domSanitizer: DomSanitizer
+				) {
 
 		this._userMetadataService.init();
 
@@ -205,7 +211,17 @@ export class DetailPage {
 	}
 
 	getThumbnailImage() {
-		return this._profileService.getThumbnailImagePath(this.userId);
+		console.log("DetailPage, getThumbnailImage(), if coming back from edit page, the model should have imageFileURI set, yes?")
+        let rtn = undefined;
+        let path = this._pictureService.getImmediately(this._constants.PHOTO_TYPE_PROFILE, this.userId);
+
+        if (path && path['path']) {
+            let unsanitized = this._webview.convertFileSrc(path['path']);
+            let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
+            rtn = sanitized;
+        }
+
+        return rtn;
 	}
 
 	getAvatarCSSClassString() {

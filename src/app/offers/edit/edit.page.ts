@@ -156,7 +156,7 @@ export class EditPage {
 	}
 
 	ionViewWillEnter() {
-		this._offerModelService.bumpTheThumbnailCounter();
+		// this._offerModelService.bumpTheThumbnailCounter();
 		this.ngOnInit();
 	}
 
@@ -508,9 +508,16 @@ export class EditPage {
 	}
 
 	getEnvironmentAPIURLForThisOffer() {
-		let photoType = "offer";
-		let objId = this.offerId;
-		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
+        let rtn = undefined;
+        let path = this._pictureService.getImmediately(this._constants.PHOTO_TYPE_OFFER, this.offerId);
+
+        if (path && path['path']) {
+            let unsanitized = this._webview.convertFileSrc(path['path']);
+            let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
+            rtn = sanitized;
+        }
+
+        return rtn;
 	}
 
 	getAvatarCSSClassString() {

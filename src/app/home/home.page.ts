@@ -12,6 +12,11 @@ import { PictureService } from '../../app/_services/picture.service'
 
 import { HomeService } from './_services/home.service'
 
+import { Constants } from '../../_constants/constants'
+
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 @Component({
     selector: 'page-home',
     templateUrl: 'home.page.html',
@@ -33,6 +38,10 @@ export class HomePage {
                 ,private _userService: UserService
                 ,private _profileService: ProfileService                
                 ,private _pictureService: PictureService
+                ,private _constants: Constants
+                ,private _webview: WebView
+                ,private _domSanitizer: DomSanitizer
+
     ) {
 
     }
@@ -61,7 +70,16 @@ export class HomePage {
     }
 
     getThumbnailImage() {
-        return this._profileService.getThumbnailImagePath();
+        let rtn = undefined;
+        let path = this._pictureService.getImmediately(this._constants.PHOTO_TYPE_PROFILE, this._userService.getCurrentUser()["id"]);
+
+        if (path && path['path']) {
+            let unsanitized = this._webview.convertFileSrc(path['path']);
+            let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
+            rtn = sanitized;
+        }
+
+        return rtn;
     }
 
     getAvatarCSSClassString() {

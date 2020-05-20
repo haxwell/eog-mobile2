@@ -61,6 +61,15 @@ export class PictureService {
 			return new Promise((resolve, reject) => 
 			{ 
 
+				/*
+					WILO.. so.. at this point we have taken a camera image, and uploaded it. Now the detail page
+					needs to call and get the image for this ID. I think all this logic is pretty much correct to 
+					handle that. The change is that if there is no image or we get some other 'error' condition,
+					we should return a default image. Instead of making a call to the backend to download an image
+					we call this function, to retrieve an image, or the default if none present. Basically, we're 
+					replacing the functionality in ProfileService.getThumbnailImage(), which needs to be renamed.
+				*/
+
 					if (!objId)
 						resolve({'path': undefined});
 
@@ -74,21 +83,26 @@ export class PictureService {
 					let path = photoPath.substring(0,lastSlash+1);
 					let filename = photoPath.substring(lastSlash+1);
 
+					console.log("PictureService get() photoPath ", photoPath)
+
 					// check the API, it returns the timestamp of the file it has. Client checks
 				    let url = environment.apiUrl + "/api/resource/" + photoType + "/" + objId + "/isFound";
 				    self._apiService.get(url).subscribe((pictureAPITimestamp: number) => {
 
 						if (pictureAPITimestamp * 1 > 0) { // meaning, this file exists on the API
-				    		// console.log(photoType + " " + objId + " FOUND it's API timestamp = " + pictureAPITimestamp)
+				    		console.log(photoType + " " + objId + " FOUND on the API. it's retrieved timestamp = " + pictureAPITimestamp)
 
 							// now we need the timestamp of the file on this local device we're running on...
 							let checkFile = self.file.checkFile(path, filename);
 
 							if (checkFile) {
+								console.log(photoType + " " + objId + " FOUND, and checkfile object FOUND..")
 								checkFile.then((fileExists) => {
+									console.log(photoType + " " + objId + " checkFile fileExists = " + fileExists);
 									var millis: number = +localStorage.getItem(path+filename);
 									if (millis < pictureAPITimestamp) {
 										//download the api picture
+										console.log(photoType + " " + objId + " FOUND, and API is newer.. downloading..")
 
 										url = environment.apiUrl + "/api/resource/" + photoType + "/" + objId;
 										const fileTransfer: FileTransferObject = self.transfer.create();
@@ -102,16 +116,20 @@ export class PictureService {
 								    		// handle error
 								    		console.log("Error downloading file, url = " + url + ", path+filename = " + (path+filename))
 								    		console.log(JSON.stringify(err))
-								    		resolve({'path': undefined});
+								    		resolve({'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'});
 								  		});
 
 									} else {
 										// file exists locally, and is newer than the version on the API. 
 										//  keep it, and resolve with the path and filename of our local, still-fresh, file.
-										resolve({'path': path + filename});
+										let rtn = {'path': path + filename};
+										console.log(photoType + " " + objId + " FOUND, and local version is newer.. resolving", rtn)
+										resolve(rtn);
 									}
 								}).catch(e => {
 									// call to checkfile failed.. the file likely does not exist.. regardless try downloading it from the server.
+
+									console.log(photoType + " " + objId + " FOUND.. PictureService, call to checkfile failed.. the file likely does not exist locally.. about to try downloading it")
 
 									url = environment.apiUrl + "/api/resource/" + photoType + "/" + objId;
 									const fileTransfer: FileTransferObject = self.transfer.create();
@@ -119,51 +137,69 @@ export class PictureService {
 									fileTransfer.download(url, path + filename).then((entry) => {
 										var millis = new Date().getTime();
 										localStorage.setItem(path+filename, ''+millis);
-									    resolve({'path': path + filename});
+										let rtn = {'path': path + filename}
+										console.log(photoType + " " + objId + " FOUND.. downloaded file from API ", url, rtn);
+									    resolve(rtn);
 							  		}, (err) => {
 							    		// handle error
 							    		console.log("Error downloading file, url = " + url + ", path+filename = " + (path+filename))
 							    		console.log(JSON.stringify(err))
-							    		resolve({'path': undefined})
+							    		let rtn = {'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'};
+							    		resolve(rtn);
 							  		});
 								})
 							} else {
-								resolve({'path': undefined})
+								let rtn = {'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'};
+								console.log(photoType + " " + objId + " FOUND, but no checkfile object.. returning ", rtn)
+								resolve(rtn);
 							}
 
 						} else { // meaning the file does not exist on the API
 							// then we need to check locally is there a file.
+
+							console.log(photoType + " " + objId + "... the file does NOT exist on the API")
 
 							let checkFile = self.file.checkFile(path, filename)
 							if (checkFile) {
 								checkFile.then((isFileExists) => {
 									if (isFileExists) {
 
+										console.log(photoType + " " + objId + "... the file exists locally, we're gonna delete it.. its stale")
+
 										// we need to remove this file. A file that does not exist on the server is stale. 
 										self.file.removeFile(path, filename).then((promiseResult) => {
-											
+											console.log(photoType + " " + objId + "..., stale file removed.")
 										})
 
-										// there's no photo, so we can resolve undefined.
-										resolve({'path': undefined})
+										// there's no photo, so we can resolve to a default image.
+										resolve({'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'});
 									} 
 								}).catch(err => { 
+									console.log(photoType + " " + objId + "... trying to check if the file exists locally.. ", err)
+
+									let rtn = {'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'};
+
 									if (err["code"] !== 1 || err["message"] !== "NOT_FOUND_ERR") {
 										console.log("Error checking if exists file: " + path + ", " + filename)
 										console.log(JSON.stringify(err))
+										console.log("After err checking if exists, obj id " + objId + " returning ", rtn);
+									} else {
+										console.log(photoType + " " + objId + "... "+ path + filename + " did not exist. returning ", rtn);
 									}
 
-									resolve({'path': undefined})
+									resolve({'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'});
 								})
 							} else {
-								resolve({'path': undefined})
+								console.log("For some reason checkFile was undefined.. returning a default image path")
+								let rtn = {'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'};
+								resolve(rtn);
 							}
 						}
 
 					}, (err) => 	{ 
 						console.log("ERROR #photo-rxp9r");
 						console.log(err);
-						resolve({'path': undefined})
+						resolve({'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'});
 					})
 				
 			});
@@ -177,6 +213,11 @@ export class PictureService {
 	get(photoType, objId) {
 		let data = {photoType: photoType, objId: objId, path: this.getMostProbablePhotoPath(photoType, objId)}
 		return this._functionPromiseService.waitAndGet(photoType+objId, this._constants.FUNCTION_KEY_PROFILE_PICTURE_GET, data);
+	}
+
+	getImmediately(photoType, objId) {
+		let data = {photoType: photoType, objId: objId, path: this.getMostProbablePhotoPath(photoType, objId)}
+		return this._functionPromiseService.get(photoType+objId, this._constants.FUNCTION_KEY_PROFILE_PICTURE_GET, data);
 	}
 
 	delete(photoType, objId) {
