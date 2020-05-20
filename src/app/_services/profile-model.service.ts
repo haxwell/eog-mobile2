@@ -94,6 +94,7 @@ export class ProfileModelService  {
 
 		this._modelTransformingService.addTransformer((model, done) => {
 			model["points"] = {"total" : 0, "available": 0};
+			console.log("11111111111111")
 			done("initialize points object");
 		})
 
@@ -104,6 +105,7 @@ export class ProfileModelService  {
 				model["email"] = userObj["email"];
 				model["latitude"] = userObj["latitude"];
 				model["longitude"] = userObj["longitude"];
+				console.log("222222222222")
 				done("userModel");
 			});
 		})
@@ -122,6 +124,7 @@ export class ProfileModelService  {
 				model["archivedRequestCount"] = obj["archivedRequestCount"];
 				model["disputedRequestCount"] = obj["disputedRequestCount"];
 				model["mostRecentDisputedRequestTimestamp"] = obj["mostRecentDisputedRequestTimestamp"] || undefined;
+				console.log("33333333333333")
 				done("profileAttributes");
 			}, (err) => {
 				console.log("ProfileService ERROR");
@@ -133,20 +136,24 @@ export class ProfileModelService  {
 		this._modelTransformingService.addTransformer((model, done) => {
 			if (model["imageFileURI"] === undefined) {
 				this._pictureService.get(this._constants.PHOTO_TYPE_PROFILE, model['userId']).then((obj) => {
+					console.log("PROFILE MODEL returned from pictureService.get() YYYYYYYYYYYYYYYYY", obj);
 					model["imageFileSource"] = 'eog';
 					model["imageFileURI"] = obj['path'];
 					model["imageFileURI_OriginalValue"] = obj['path'];
 
-					if (obj['path']) {
+					if (obj['path'] && !obj['default']) {
 						this._pictureEXIFService.getEXIFMetadata(obj['path']).then((exifMetadata) => {
 							model["imageOrientation"] = exifMetadata["Orientation"];
+							console.log("444444444")
 							done("pictureService");
 						})
 					} else {
+						console.log("55555555555555")
 						done("pictureService");
 					}
 				})
 	  		} else {
+	  			console.log("6666666666666666")
 	  			done("pictureService");
 	  		}
 		});
@@ -157,9 +164,11 @@ export class ProfileModelService  {
 			if (model['userId'] === currentUser['id']) {
 				this._pointsService.getCurrentAvailableUserPoints().then((pts) => {
 					model["points"]["available"] = pts['rtn'];
+					console.log("7777777777777")
 					done("pointsService currAvail");
 				});
 			} else {
+				console.log("88888888888888")
 				done("pointsService currAvail");
 			}
 
@@ -171,9 +180,11 @@ export class ProfileModelService  {
 			if (model['userId'] === currentUser['id']) {
 				this._pointsService.getCurrentUserPointsAsSum().then((pts) => {
 					model["points"]["total"] = pts['rtn'];
+					console.log("99999999999999")
 					done("pointsService pointsAssum");
 				});
 			} else {
+					console.log("1010101010101010101010")
 				done("pointsService pointsAssum");
 			}
 		});
@@ -183,6 +194,7 @@ export class ProfileModelService  {
 			if (currentUser["id"] === model['userId']) {
 				model["currentUserCanSeeEmailInfo"] = true;
 				model["currentUserCanSeePhoneInfo"] = true;
+					console.log("AAAAAAAAAAAAAAAAAA")
 				done("view contactinfo");
 			}
 			else {
@@ -195,9 +207,11 @@ export class ProfileModelService  {
 						self._contactInfoVisibilityService.getContactInfoVisibilityId(model['userId']).then((visId) => {
 							model["currentUserCanSeeEmailInfo"] = self._contactInfoVisibilityService.isEmailAllowed(visId);
 							model["currentUserCanSeePhoneInfo"] = self._contactInfoVisibilityService.isPhoneAllowed(visId);
+								console.log("BBBBBBBBBBBBB")
 							done("view contactinfo");
 						})
 					} else {
+							console.log("CCCCCCCCCCCCCCCCC")
 						done("view contactinfo");
 					}
 
@@ -212,6 +226,7 @@ export class ProfileModelService  {
 		this._modelTransformingService.addTransformer((model, done) => {
 			this._recommendationService.getOutgoingRecommendations().then((obj) => {
 				model["outgoingRecommendations"] = obj;
+					console.log("DDDDDDDDDDDDDD")
 				done("outgoingRecommend");
 			});
 		});

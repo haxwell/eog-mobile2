@@ -116,7 +116,7 @@ export class PictureService {
 								    		// handle error
 								    		console.log("Error downloading file, url = " + url + ", path+filename = " + (path+filename))
 								    		console.log(JSON.stringify(err))
-								    		resolve({'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'});
+								    		resolve({'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'});
 								  		});
 
 									} else {
@@ -144,12 +144,12 @@ export class PictureService {
 							    		// handle error
 							    		console.log("Error downloading file, url = " + url + ", path+filename = " + (path+filename))
 							    		console.log(JSON.stringify(err))
-							    		let rtn = {'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'};
+							    		let rtn = {'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'};
 							    		resolve(rtn);
 							  		});
 								})
 							} else {
-								let rtn = {'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'};
+								let rtn = {'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'};
 								console.log(photoType + " " + objId + " FOUND, but no checkfile object.. returning ", rtn)
 								resolve(rtn);
 							}
@@ -172,12 +172,10 @@ export class PictureService {
 										})
 
 										// there's no photo, so we can resolve to a default image.
-										resolve({'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'});
+										resolve({'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'});
 									} 
 								}).catch(err => { 
-									console.log(photoType + " " + objId + "... trying to check if the file exists locally.. ", err)
-
-									let rtn = {'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'};
+									let rtn = {'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'};
 
 									if (err["code"] !== 1 || err["message"] !== "NOT_FOUND_ERR") {
 										console.log("Error checking if exists file: " + path + ", " + filename)
@@ -187,11 +185,11 @@ export class PictureService {
 										console.log(photoType + " " + objId + "... "+ path + filename + " did not exist. returning ", rtn);
 									}
 
-									resolve({'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'});
+									resolve(rtn);
 								})
 							} else {
 								console.log("For some reason checkFile was undefined.. returning a default image path")
-								let rtn = {'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'};
+								let rtn = {'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'};
 								resolve(rtn);
 							}
 						}
@@ -199,7 +197,7 @@ export class PictureService {
 					}, (err) => 	{ 
 						console.log("ERROR #photo-rxp9r");
 						console.log(err);
-						resolve({'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'});
+						resolve({'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'});
 					})
 				
 			});
