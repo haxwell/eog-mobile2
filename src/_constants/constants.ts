@@ -47,5 +47,5 @@ export class Constants {
 	//
 	PHOTO_TYPE_OFFER = "offer";
 	//PHOTO_TYPE_PRM = 'prm';
-	PHOTO_TYPE_PROFILE = 'profile';
+	PHOTO_TYPE_PROFILE = "profile";
 }
