@@ -35,7 +35,7 @@ export class PictureEXIFService {
 					filename = filename.substring(0, filename.lastIndexOf('?'))
 
 				this.file.readAsArrayBuffer(path, filename).then((arrBuff) => {
-					resolve(EXIF.readFromBinaryFile(arrBuff));
+					resolve({ exif: EXIF.readFromBinaryFile(arrBuff) });
 				}).catch((e) => {
 					console.log("caught an error retrieving photo metadata")
 					console.log(JSON.stringify(e))

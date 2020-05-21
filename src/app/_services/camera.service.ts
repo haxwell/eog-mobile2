@@ -26,7 +26,6 @@ export class CameraService {
 		let self = this;
 
 		return new Promise((resolve, reject) => {
-			console.log("onThumbnailPress() called");
 			const options: CameraOptions = {
 			 	quality: 100,
 			 	destinationType: self._camera.DestinationType.FILE_URI,
@@ -39,7 +38,7 @@ export class CameraService {
 			 		self.imageFileURI = imageFileURI;
 
 			 		this._pictureEXIFService.getEXIFMetadata(imageFileURI).then((exifMetadata) => {
-						resolve({uri: self.imageFileURI, exif: exifMetadata});
+						resolve({uri: self.imageFileURI, exif: exifMetadata['exif']});
 			 		})
 
 			 	} else {
@@ -78,17 +77,15 @@ export class CameraService {
 			self._camera.getPicture(options).then((imageFileURI) => {
 				if (self.isFileURI(imageFileURI)) {
 			 		self.imageFileURI = imageFileURI;
-
 			 		this._pictureEXIFService.getEXIFMetadata(imageFileURI).then((exifMetadata) => {
-			 			resolve({uri: self.imageFileURI, exif: exifMetadata});
+			 			resolve({uri: self.imageFileURI, exif: exifMetadata['exif']});
 			 		})
 
 				} else if (self.isContentURI(imageFileURI)) {
 					self._filePath.resolveNativePath(imageFileURI).then((filePath) => {
 						self.imageFileURI = filePath;
-
 				 		this._pictureEXIFService.getEXIFMetadata(imageFileURI).then((exifMetadata) => {
-				 			resolve({uri: self.imageFileURI, exif: exifMetadata});
+				 			resolve({uri: self.imageFileURI, exif: exifMetadata['exif']});
 				 		})
 
 					}, (err) => {
