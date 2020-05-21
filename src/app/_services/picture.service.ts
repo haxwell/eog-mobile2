@@ -6,8 +6,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File, FileEntry } from '@ionic-native/file/ngx'
 
-//import { WebView } from '@ionic-native/ionic-webview/ngx';
-
 import { ApiService } from './api.service'
 import { UserService } from './user.service'
 import { FunctionPromiseService } from '@savvato-software/savvato-javascript-services';
@@ -15,6 +13,9 @@ import { FunctionPromiseService } from '@savvato-software/savvato-javascript-ser
 import { Constants } from '../../_constants/constants';
 
 import { environment } from '../../_environments/environment';
+
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Injectable()
 export class PictureService { 
@@ -27,8 +28,10 @@ export class PictureService {
 				private _apiService: ApiService,
 				private _userService: UserService,
 				private _constants: Constants,
-				private transfer: FileTransfer,
-				private file: File) {
+				private transfer: FileTransfer
+				,private _webview: WebView
+				,private _domSanitizer: DomSanitizer
+				,private file: File) {
 
 	}
 
@@ -60,16 +63,6 @@ export class PictureService {
 
 			return new Promise((resolve, reject) => 
 			{ 
-
-				/*
-					WILO.. so.. at this point we have taken a camera image, and uploaded it. Now the detail page
-					needs to call and get the image for this ID. I think all this logic is pretty much correct to 
-					handle that. The change is that if there is no image or we get some other 'error' condition,
-					we should return a default image. Instead of making a call to the backend to download an image
-					we call this function, to retrieve an image, or the default if none present. Basically, we're 
-					replacing the functionality in ProfileService.getThumbnailImage(), which needs to be renamed.
-				*/
-
 					if (!objId)
 						resolve({'path': undefined});
 
@@ -311,7 +304,7 @@ export class PictureService {
 	}
 
 	getOrientationCSS(objWithImageOrientationAttr: any, additionalCSSClassList?: string) {
-		let obj = objWithImageOrientationAttr;
+		// let obj = objWithImageOrientationAttr;
 
 		let rtn = "";
 
@@ -325,6 +318,32 @@ export class PictureService {
 		// }
 
 		rtn += " centered " + (additionalCSSClassList || '');
+
+		return rtn;
+	}
+
+	// TODO: Nobody should be calling this. DELETE.
+	getThumbnailImage(photoType, objId) {
+		return this.getAssociatedImage(photoType, objId);
+	}
+
+	getAssociatedImage(photoType, objId) {
+		if (!photoType)
+			throw new Error("The photoType has not been set.")
+
+		let id = objId;
+		if (typeof objId === 'object' && objId !== null) {
+			id = objId['id'];
+		}
+
+		let rtn = undefined;
+		let path = this.getImmediately(photoType, id);
+
+		if (path && path['path']) {
+			let unsanitized = this._webview.convertFileSrc(path['path']);
+			let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
+			rtn = sanitized;
+		}
 
 		return rtn;
 	}
