@@ -19,7 +19,8 @@ export class ProfileService {
 				private _pictureService: PictureService,
 				private _constants: Constants) {
 
-				}
+		this._pictureService.init();
+	}
 
 	init(userId:number) {
 		return this._profileModelService.init();

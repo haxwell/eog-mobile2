@@ -19,7 +19,6 @@ export class HomeService {
 	constructor(private _apiService: ApiService, private _userService: UserService,
 				private _constants: Constants,
 				private _offerModelService: OfferModelService, 
-				private _pictureService: PictureService,
 				private _functionPromiseService: FunctionPromiseService) {
 
 	}
@@ -47,8 +46,6 @@ export class HomeService {
 		})
 
 		this.isMostRecentlyCreatedOffersFuncInitialized = true;
-
-		this._pictureService.init(); // this probably should be happening in response to an event.. Log-in, for instance.
 	}
 
 	getMostRecentlyCreatedOffers() {

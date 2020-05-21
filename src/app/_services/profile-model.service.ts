@@ -37,6 +37,8 @@ export class ProfileModelService  {
 				private _modelTransformingService: ModelTransformingService,
 				private _events: Events) { 
 
+		_pictureService.init();
+		
 	}
 
 	init() {

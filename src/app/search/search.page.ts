@@ -6,7 +6,6 @@ import { Events } from '@ionic/angular';
 import { Constants } from '../../_constants/constants'
 
 import { SearchService } from '../../app/_services/search.service';
-import { PictureService } from '../../app/_services/picture.service';
 import { UserService } from '../../app/_services/user.service';
 import { LoadingService } from '../../app/_services/loading.service';
 
@@ -25,11 +24,11 @@ export class SearchPage {
 	constructor(private _route: ActivatedRoute,
   				private _router: Router,
 				private _searchService: SearchService,
-				private _pictureService: PictureService,
 				private _userService: UserService,
 				private _loadingService: LoadingService,
 				private _constants: Constants,
 				_events: Events) {
+
 	}
 
 	ngOnInit() {

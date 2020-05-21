@@ -28,7 +28,7 @@ export class UsersLineItem {
 				private _pictureService: PictureService,
 				private _profileService: ProfileService,
 				private _constants : Constants,
-                _events: Events) {
+                private _events: Events) {
 
 	}
 

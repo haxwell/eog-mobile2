@@ -15,9 +15,9 @@ import { Constants } from '../../_constants/constants';
 export class SearchService {
 	
 	constructor(private _apiService: ApiService, private _userService: UserService,
-				private _pictureService: PictureService, private _pictureEXIFService: PictureEXIFService,
-				private _offerModelService: OfferModelService, private _constants: Constants) { 
-
+				private _pictureEXIFService: PictureEXIFService, private _constants: Constants,
+				private _offerModelService: OfferModelService) { 
+		
 	}
 
 	searchOffers(qStr, distance, userId?) {

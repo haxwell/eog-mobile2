@@ -63,7 +63,7 @@ export class DetailPage { // Offer Detail Page
                 ,private _webview: WebView
                 ,private _domSanitizer: DomSanitizer
 	) {
-
+		this._pictureService.init();
 	}
 
 	ngOnInit() {

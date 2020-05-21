@@ -62,6 +62,8 @@ export class ListPage { // List of Incoming Offer Requests
 		_events.subscribe('offer:deletedByCurrentUser', () => { 
 			this.ngOnInit();
 		});
+
+		_pictureService.init();
 	}
 
 	getTrack(request) {

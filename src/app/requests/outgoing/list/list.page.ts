@@ -53,6 +53,8 @@ export class ListPage { // List of Outgoing Offer Requests
 		this._events.subscribe('request:declined', () => { this.ngOnInit() });
 		this._events.subscribe('request:deleted', () => { this.ngOnInit() });
 		this._events.subscribe('request:inamicablyResolved', () => { this.ngOnInit() });
+
+		_pictureService.init();
 	}
 
 

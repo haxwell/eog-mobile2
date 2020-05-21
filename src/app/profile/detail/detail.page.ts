@@ -76,6 +76,8 @@ export class DetailPage {
 			if (data["request"]["directionallyOppositeUser"]["id"] === this.userId)
 				this.ngOnInit();
 		})
+
+		this._pictureService.init();
 	}
 
 	ngOnInit() {
@@ -211,7 +213,6 @@ export class DetailPage {
 	}
 
 	getThumbnailImage() {
-		console.log("DetailPage, getThumbnailImage(), if coming back from edit page, the model should have imageFileURI set, yes?")
         let rtn = undefined;
         let path = this._pictureService.getImmediately(this._constants.PHOTO_TYPE_PROFILE, this.userId);
 

@@ -63,6 +63,8 @@ export class EditPage {
 				private _webview: WebView,
 				private _domSanitizer: DomSanitizer,
 				private formBuilder: FormBuilder) {
+		
+		this._pictureService.init();
 
 	}
 

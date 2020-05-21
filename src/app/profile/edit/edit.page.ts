@@ -74,6 +74,8 @@ export class EditPage {
 				private formBuilder: FormBuilder,
 				private _functionPromiseService: FunctionPromiseService) {
 
+		this._pictureService.init();
+		
 	}
 
 	ngOnInit() {

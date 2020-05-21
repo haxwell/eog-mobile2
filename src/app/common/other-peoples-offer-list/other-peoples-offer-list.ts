@@ -62,6 +62,8 @@ export class OtherPeoplesOfferList {
 		_events.subscribe('request:completedAndAccepted', func);
 		_events.subscribe('recommendation:received', func);
 		_events.subscribe('points:received', func);
+
+		_pictureService.init();
 	}
 
 	ngOnInit() {
