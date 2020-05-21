@@ -212,20 +212,11 @@ export class DetailPage {
 		return this._profileModelService.get(this.userId)["imageFileURI"] !== undefined;
 	}
 
-	getThumbnailImage() {
-        let rtn = undefined;
-        let path = this._pictureService.getImmediately(this._constants.PHOTO_TYPE_PROFILE, this.userId);
-
-        if (path && path['path']) {
-            let unsanitized = this._webview.convertFileSrc(path['path']);
-            let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
-            rtn = sanitized;
-        }
-
-        return rtn;
+	getAssociatedImage() {
+        return this._pictureService.getAssociatedImage(this._constants.PHOTO_TYPE_PROFILE, this.userId);
 	}
 
-	getAvatarCSSClassString() {
+	getAssociatedImageCSS() {
         let _model = this._profileModelService.get(this.userId);
         let rtn = this._pictureService.getOrientationCSS(_model);
 

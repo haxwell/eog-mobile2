@@ -69,24 +69,18 @@ export class HomePage {
         }
     }
 
-    getThumbnailImage() {
-        let rtn = undefined;
-        let path = this._pictureService.getImmediately(this._constants.PHOTO_TYPE_PROFILE, this._userService.getCurrentUser()["id"]);
+    getAssociatedImage() {
+        return this._pictureService.getAssociatedImage(this._constants.PHOTO_TYPE_PROFILE, this._userService.getCurrentUser()["id"]);
+    }
 
-        if (path && path['path']) {
-            let unsanitized = this._webview.convertFileSrc(path['path']);
-            let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
-            rtn = sanitized;
-        }
-
+    getAssociatedImageCSS() {
+        let _model = this._profileService.getModel();
+        let rtn = this._pictureService.getOrientationCSS(_model);
         return rtn;
     }
 
-    getAvatarCSSClassString() {
-        let _model = this._profileService.getModel();
-        let rtn = this._pictureService.getOrientationCSS(_model);
-
-        return rtn;
+    onAssociatedImageClick() {
+        this._router.navigate(['/profile/' + this._userService.getCurrentUser()["id"]]);
     }
 
     getUserName() {
@@ -112,9 +106,5 @@ export class HomePage {
 
     getMostRecentlyCreatedOffers() {
         return this.mostRecentlyCreatedOffers;
-    }
-
-    onThumbnailImageClick() {
-        this._router.navigate(['/profile/' + this._userService.getCurrentUser()["id"]]);
     }
 }

@@ -106,21 +106,12 @@ export class ListPage {
 		return str;
 	}
 
-	getThumbnailImage(offer) {
-        let rtn = undefined;
-        let path = this._pictureService.getImmediately(this._constants.PHOTO_TYPE_OFFER, offer['id']);
-
-        if (path && path['path']) {
-            let unsanitized = this._webview.convertFileSrc(path['path']);
-            let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
-            rtn = sanitized;
-        }
-
-        return rtn;
+	getAssociatedImage(offer) {
+        return this._pictureService.getAssociatedImage(this._constants.PHOTO_TYPE_OFFER, offer['id']);
 	}
 
 	// count = 0;
-	getAvatarCSSClassString(offer) {
+	getAssociatedImageCSS(offer) {
         let rtn = this._pictureService.getOrientationCSS(offer);
 
 		// if (++this.count % 10 === 0) {

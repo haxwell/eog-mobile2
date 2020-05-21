@@ -79,11 +79,13 @@ export class ListPage {
 		return this.availableIncomingRecommendations;
 	}
 
-	getDOUserProfileImageFilepath(userId) {
-		let photoType = "profile";
-		let objId = userId;
-		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
+	getAssociatedImage(userId) {
+		return this._pictureService.getAssociatedImage(this._constants.PHOTO_TYPE_PROFILE, userId);
 	}
+
+	getAssociatedImageCSS(item) {
+		return this._pictureService.getOrientationCSS(item, " avatar-in-a-list ");
+	}	
 
 	getRealName(item) {
 		let rtn = undefined;
@@ -99,7 +101,4 @@ export class ListPage {
 		this._router.navigate(['/profile/' + item["userInfo"]["id"]])
 	}
 
-	getAvatarCSSClassString(item) {
-		return this._pictureService.getOrientationCSS(item, " avatar-in-a-list ");
-	}	
 }

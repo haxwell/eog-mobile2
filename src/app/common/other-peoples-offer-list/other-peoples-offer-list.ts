@@ -93,17 +93,13 @@ export class OtherPeoplesOfferList {
 		return this.offers;
 	}
 
-	getThumbnailImage(offer) {
-        let rtn = undefined;
-        let path = this._pictureService.getImmediately(this._constants.PHOTO_TYPE_OFFER, offer['id']);
+	getAssociatedImage(offer) {
+        return this._pictureService.getAssociatedImage(this._constants.PHOTO_TYPE_OFFER, offer['id']);
+	}
 
-        if (path && path['path']) {
-            let unsanitized = this._webview.convertFileSrc(path['path']);
-            let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
-            rtn = sanitized;
-        }
-
-        return rtn;
+	getAssociatedImageCSS(offer) {
+		let rtn = this._pictureService.getOrientationCSS(offer);
+		return rtn;
 	}
 
 	getAlreadyRequestedIconColor(offer) {
@@ -174,10 +170,5 @@ export class OtherPeoplesOfferList {
 
 	onViewOffer(_offer) {
 		this._router.navigate(['/offers/' + _offer["id"]])
-	}
-
-	getAvatarCSSClassString(offer) {
-		let rtn = this._pictureService.getOrientationCSS(offer);
-		return rtn;
 	}
 }

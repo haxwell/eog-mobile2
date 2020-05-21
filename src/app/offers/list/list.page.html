@@ -17,7 +17,7 @@
 
 	<ion-list *ngIf="userHasAnActiveOffer()">
 		<ion-item *ngFor="let offer of getOffers()" (click)="onOfferBtnTap(offer)">
-			<img [class]="getAvatarCSSClassString(offer)" [src]="getThumbnailImage(offer)"/>
+			<img [class]="getAssociatedImageCSS(offer)" [src]="getAssociatedImage(offer)"/>
 
 			<div class="opol-ion-item-content-div">
 				<table>

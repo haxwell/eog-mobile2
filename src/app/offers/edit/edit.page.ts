@@ -494,7 +494,7 @@ export class EditPage {
 		return this._offerModelService.get(this.offerId)["imageFileURI"] !== undefined;
 	}
 
-	getThumbnailImage() {
+	getAssociatedImage() {
 		let rtn = undefined;
 
 		if (this.isDirectFilepathToImageSet()) {
@@ -510,23 +510,14 @@ export class EditPage {
 	}
 
 	getEnvironmentAPIURLForThisOffer() {
-        let rtn = undefined;
-        let path = this._pictureService.getImmediately(this._constants.PHOTO_TYPE_OFFER, this.offerId);
-
-        if (path && path['path']) {
-            let unsanitized = this._webview.convertFileSrc(path['path']);
-            let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
-            rtn = sanitized;
-        }
-
-        return rtn;
+        return this._pictureService.getImmediately(this._constants.PHOTO_TYPE_OFFER, this.offerId);
 	}
 
-	getAvatarCSSClassString() {
+	getAssociatedImageCSS() {
 		return this._pictureService.getOrientationCSS(this._offerModelService.get(this.offerId), " avatar-in-a-list editOfferImage");
 	}
 
-	onThumbnailClick($event) {
+	onAssociatedImageClick($event) {
 		let self = this;
 		let _model = this._offerModelService.get(this.offerId);
 
@@ -576,7 +567,7 @@ export class EditPage {
 			})
 	}
 
-	onThumbnailPress($event) {
+	onAssociatedImagePress($event) {
 		let self = this;
 		let _model = this._offerModelService.get(this.offerId);
 

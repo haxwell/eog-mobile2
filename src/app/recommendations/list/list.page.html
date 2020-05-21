@@ -24,7 +24,7 @@
 		<ion-item *ngFor="let item of getAvailableIncomingRecommendations()" (click)="onViewUser(item)">
 			
 			<div class="avatar-in-a-list-wrapper-div">
-				<img [class]="getAvatarCSSClassString(item)" [src]="getDOUserProfileImageFilepath(item['providingUserId'])"/>
+				<img [class]="getAssociatedImageCSS(item)" [src]="getAssociatedImage(item['providingUserId'])"/>
 			</div>
 			<span>
 				{{getRealName(item)}}

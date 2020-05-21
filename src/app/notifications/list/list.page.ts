@@ -102,9 +102,7 @@ export class ListPage {
 		});
 	}
 
-	getDOUserProfileImageFilepath(userId) {
-		let photoType = "profile";
-		let objId = userId;
-		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
+	getAssociatedImage(userId) {
+		return this._pictureService.getAssociatedImage(this._constants.PHOTO_TYPE_PROFILE, userId);
 	}
 }

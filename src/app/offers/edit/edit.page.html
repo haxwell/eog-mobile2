@@ -131,11 +131,11 @@
 			</div>
 		</ion-card-header>
 		<ion-card-content>
-			<ion-button (click)="onThumbnailClick($event)" [ngStyle]="{'width':'100%'}">
+			<ion-button (click)="onAssociatedImageClick($event)" [ngStyle]="{'width':'100%'}">
 				IMAGE
 			</ion-button>
 			<div *ngIf="offerHasAnAssociatedImage()" class="centered avatar">
-				<img [class]="getAvatarCSSClassString()" [src]="getThumbnailImage()" (click)="onThumbnailClick($event)" (press)="onThumbnailPress($event)"/>
+				<img [class]="getAssociatedImageCSS()" [src]="getAssociatedImage()" (click)="onAssociatedImageClick($event)" (press)="onAssociatedImagePress($event)"/>
 			</div>
 		</ion-card-content>
 	</ion-card>

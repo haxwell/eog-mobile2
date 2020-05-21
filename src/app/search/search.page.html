@@ -38,7 +38,7 @@
 
 				<ion-item (click)="onViewUser(user)">
 					<div class="searchAvatar-wrapper">
-						<img id="getUniqueId(user)" class="searchAvatar" [src]="getProfileImageFilepath(user)"/>
+						<img id="getUniqueId(user)" class="searchAvatar" [src]="getAssociatedImage(user)"/>
 					</div>
 					<div class="usernameMetadataDiv">
 						<span>{{user.realname}}</span>

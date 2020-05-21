@@ -41,13 +41,11 @@ export class UsersLineItem {
       	this._router.navigate(['/profile/' + this.item["id"]])
 	}
 
-	getProfileImageFilepath() {
-		let photoType = "profile";
-		let objId = this.item["id"];
-		return environment.apiUrl + "/api/resource/" + photoType + "/" + objId
+	getAssociatedImage() {
+		return this._pictureService.getAssociatedImage(this._constants.PHOTO_TYPE_PROFILE, this.item["id"]);
 	}
 
-	getAvatarCSSClassString() {
+	getAssociatedImageCSS() {
 		return this._pictureService.getOrientationCSS(this.item, "editOfferImage avatar-in-a-list");
 	}
 }

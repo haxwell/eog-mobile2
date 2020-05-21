@@ -265,21 +265,12 @@ export class DetailPage { // Offer Detail Page
 		this._router.navigate(['/offers/' + this.offerId + '/edit']);
 	}
 
-	getThumbnailImage() {
-        let rtn = undefined;
-        let path = this._pictureService.getImmediately(this._constants.PHOTO_TYPE_OFFER, this.offerId);
-
-        if (path && path['path']) {
-            let unsanitized = this._webview.convertFileSrc(path['path']);
-            let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
-            rtn = sanitized;
-        }
-
-        return rtn;
+	getAssociatedImage() {
+        return this._pictureService.getAssociatedImage(this._constants.PHOTO_TYPE_OFFER, this.offerId);
 	}
 
 	// count = 0;
-	getAvatarCSSClassString() {
+	getAssociatedImageCSS() {
 		let _model = this._offerModelService.get(this.offerId)
         let rtn = this._pictureService.getOrientationCSS(_model);
 

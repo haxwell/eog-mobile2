@@ -1,6 +1,6 @@
 <ion-item (click)="onViewProfile()" lines="none">
 	<div class="avatar-in-a-list-wrapper-div">
-		<img [class]="getAvatarCSSClassString()" [src]="getProfileImageFilepath()"/>
+		<img [class]="getAssociatedImageCSS()" [src]="getAssociatedImage()"/>
 	</div>
 
 	<span class="userRealname">{{item.realname}}</span>

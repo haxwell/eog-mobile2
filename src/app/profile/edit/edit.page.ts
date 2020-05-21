@@ -418,7 +418,7 @@ export class EditPage {
 		return this._profileModelService.get(this.userId)["imageFileURI"] !== undefined;
 	}
 
-	getThumbnailImage() {
+	getAssociatedImage() {
 		let rtn = undefined;
 
 		if (this.isDirectFilepathToImageSet()) {
@@ -434,16 +434,7 @@ export class EditPage {
 	}
 
 	getEnvironmentAPIURLForThisProfile() {
-        let rtn = undefined;
-        let path = this._pictureService.getImmediately(this._constants.PHOTO_TYPE_PROFILE, this.userId);
-
-        if (path && path['path']) {
-            let unsanitized = this._webview.convertFileSrc(path['path']);
-            let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
-            rtn = sanitized;
-        }
-
-        return rtn;
+        return this._pictureService.getAssociatedImage(this._constants.PHOTO_TYPE_PROFILE, this.userId);
 	}
 
 	async presentModal(_component, _model, props) {
@@ -464,7 +455,7 @@ export class EditPage {
 		return await modal.present();
 	}
 
-	onThumbnailImageClick() {
+	onAssociatedImageClick() {
 		let self = this;
 		let model = this._profileModelService.get(this.userId);
 
@@ -521,7 +512,7 @@ export class EditPage {
 			});
 	}
 
-	onThumbnailPress() {
+	onAssociatedPress() {
 		this._alertService.show({
 			header: 'Delete Photo?',
 			message: 'Do you want to DELETE your profile picture?',
@@ -586,11 +577,11 @@ export class EditPage {
 
 	}
 
-	isThumbnailImageVisible() {
-		return this.imageOrientation !== undefined;
-	}
+	// isThumbnailImageVisible() {
+	// 	return this.imageOrientation !== undefined;
+	// }
 
-	getAvatarCSSClassString() {
+	getAssociatedImageCSS() {
 		return this._pictureService.getOrientationCSS(this._profileModelService.get(this.userId));
 	}
 

@@ -8,6 +8,7 @@ import { Constants } from '../../_constants/constants'
 import { SearchService } from '../../app/_services/search.service';
 import { UserService } from '../../app/_services/user.service';
 import { LoadingService } from '../../app/_services/loading.service';
+import { PictureService } from '../../app/_services/picture.service';
 
 import { environment } from '../../_environments/environment';
 
@@ -26,6 +27,7 @@ export class SearchPage {
 				private _searchService: SearchService,
 				private _userService: UserService,
 				private _loadingService: LoadingService,
+				private _pictureService: PictureService,
 				private _constants: Constants,
 				_events: Events) {
 
@@ -117,10 +119,8 @@ export class SearchPage {
 		return "image" + user["id"];
 	}
 
-	getProfileImageFilepath(user) {
-		let photoType = "profile";
-		let objId = user["id"];
-		return environment.apiUrl + "/api/resource/profile/" + objId;
+	getAssociatedImage(user) {
+		return this._pictureService.getAssociatedImage(this._constants.PHOTO_TYPE_PROFILE, user["id"]);
 	}
 
 	onViewUser(_user) {
