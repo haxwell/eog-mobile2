@@ -64,7 +64,7 @@ export class WebsocketService {
 			data["request"]["directionallyOppositeUser"] = Object.assign({}, data["directionallyOppositeUser"]);
 			delete data["directionallyOppositeUser"];
 
-			let request = this._requestsService.changePromiseAttributeToOffer(data["request"]); 
+			let request = data["request"]; 
 			
 			console.log("websocket.service received notice of a REQUEST event")
 			console.log(JSON.stringify(request))
