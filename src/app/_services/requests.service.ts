@@ -43,7 +43,7 @@ export class RequestsService {
 			
 			let self = this;
 			self._apiService.post(url, data).subscribe((obj) => {
-				let model = self.changePromiseAttributeToOffer( obj );
+				let model = obj;
 				self._events.publish('request:saved', {request: model});
 				resolve(model);
 			}, (err) => {
@@ -98,12 +98,6 @@ export class RequestsService {
 				self._apiService.get(url).subscribe((obj: any[]) => {
 					let arr: any[] = obj;
 
-					arr.forEach((request) => { 
-						self.changePromiseAttributeToOffer(request); 
-
-						this._offerModelService.setOfferImageOrientation(request.offer);
-					});
-
 					self._declineReasonCodeService.getDeclineReasonCodes().then((drcs: Array<Object>) => {
 						arr.map((req) => { 
 							if (req["declinedReasonCode"] === null) {
@@ -152,20 +146,6 @@ export class RequestsService {
 		return self._functionPromiseService.waitAndGet(data['userId']+"REQUESTID", self._constants.FUNCTION_KEY_REQUESTS_BY_ID, data);
 	}
 
-	// hack
-	changePromiseAttributeToOffer(request) {
-		
-		// Commented out v0.0.20 - with the change of terminology, promise to offer, I don't think this is necessary.
-		//  if things still work, well then.. delete it.
-
-		// if (request !== undefined) {
-		//	request["offer"] = Object.assign({}, request["promise"]);
-		//	delete request["promise"];					
-		//}
-
-		return request;
-	}
-
 	getIncomingRequestsForCurrentUser() {
 		return (this.getModel(this._constants.INCOMING));
 	}
@@ -188,18 +168,7 @@ export class RequestsService {
 			let data =	"requestId=" + request["id"] + "&newStatus=" + status + "&requestAgainDelayCode=" + request["requestAgainDelayCode"] + "&declinedReasonCode=" + request["declinedReasonCode"];
 			
 			this._apiService.post(url, data).subscribe((obj: any[]) => {
-				let model = undefined;
-				
-				if (obj){
-					model = obj;
-					this._offerModelService.setOfferImageOrientation(model.offer).then((offer) => {
-						resolve(this.changePromiseAttributeToOffer(model));
-					})
-				}
-				else {
-					resolve(undefined);
-				}
-
+				resolve(obj);
 			}, (err) => {
 				reject(err);
 			});

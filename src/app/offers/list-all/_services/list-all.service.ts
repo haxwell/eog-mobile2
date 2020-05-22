@@ -48,10 +48,6 @@ export class ListAllOfferService {
 		let url = environment.apiUrl + "/api/user/" + user["id"] + "/offers/page/" + (++this.lastLoadedPageNumber) + "/count/" + this.pageLength + "?d=50";
 		self._apiService.get(url).subscribe((offersObj: []) => {
 
-			offersObj.forEach((offer) => {
-				self._offerModelService.setOfferImageOrientation(offer);
-			});
-			
 			self.model["offers"].push(...offersObj);
 
 			self.areMoreOffersAvailable = (offersObj.length === self.pageLength);

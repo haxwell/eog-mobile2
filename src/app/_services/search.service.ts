@@ -36,10 +36,6 @@ export class SearchService {
 
 				rtn = rtn.filter((obj) => { return obj["userId"] !== user["id"]; });
 
-				rtn.forEach((offer) => {
-					self._offerModelService.setOfferImageOrientation(offer);
-				});
-
 				resolve(rtn);
 			}, (err) => {
 				reject(err);

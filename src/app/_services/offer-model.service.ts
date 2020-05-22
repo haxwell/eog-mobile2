@@ -57,15 +57,11 @@ export class OfferModelService {
 		let self = this;
 		return new Promise((resolve, reject) => {
 
-			let cnt = 0;
-			
 			function wait() {
 				setTimeout(() => {
 					if (self.modelCache[offerId] !== undefined && self.modelCache[offerId]['isFullyLoaded'])
 						resolve(self.modelCache[offerId]);
 					else {
-						cnt++;
-						if (cnt % 10 === 0) console.log("OFFER MODEL SERVICE waitingPromise offerID="+offerId+" STILL WAITING", self.modelCache)
 						wait();
 					}
 				}, 600);
@@ -117,8 +113,6 @@ export class OfferModelService {
 				this._apiService.get(url)
 				.subscribe((offerObj) => {
 
-					console.log("OFFER MODEL SERVICE offerFuncKey begin")
-
 					if (offerObj["requiredUserRecommendations"]) {
 						offerObj["requiredUserRecommendations"].forEach((rec) => {
 							self._userService.getUser(rec["requiredRecommendUserId"]).then((user) => {
@@ -147,11 +141,8 @@ export class OfferModelService {
 						});
 					}
 
-					console.log("OFFER MODEL SERVICE offerFuncKey about to resolve ", offerObj)
-
 					resolve(offerObj);
 				}, (err) => {
-					console.log("OFFER MODEL SERVICE --- Error! ", err)
 					reject(err);
 				});
 			});
@@ -161,11 +152,9 @@ export class OfferModelService {
 		let fpsPromise = self._functionPromiseService.waitAndGet(offerId+"offerResultKey", offerId+"offerFuncKey", offerId);
 			
 		fpsPromise.then((model) => {
-			console.log("OFFER MODEL SERVICE offerFuncKey resolved ", model, " -- setting metadata now")
 			self.setOfferMetadata(model).then((finalModel) => {
 				finalModel['isFullyLoaded'] = true;
 				self.modelCache[offerId] = finalModel
-				console.log("OFFER MODEL SERVICE offerFuncKey has set the metadata, setting self.modelCache to finalModel");
 			});
 		});
 
@@ -215,10 +204,8 @@ export class OfferModelService {
 					this._apiService.get(url)
 					.subscribe((data) => {
 						_offer["fulfillment_dates"] = data;
-						console.log("OFFER MODEL SERVICE fulfillment_dates resolving ", offer)
 						resolve(_offer)
 					}, (err) => {
-						console.log("OFFER MODEL SERVICE fulfillment_dates ERROR ", err)
 						reject(err);
 					});
 				})
@@ -230,10 +217,8 @@ export class OfferModelService {
 					this._apiService.get(url)
 					.subscribe((data) => {
 						_offer["num_of_complaints"] = data;
-						console.log("OFFER MODEL SERVICE complaint-count resolving ", offer)
 						resolve(_offer)
 					}, (err) => {
-						console.log("OFFER MODEL SERVICE complaint-count ERROR ", err)
 						reject(err);
 					});
 				})
@@ -245,10 +230,8 @@ export class OfferModelService {
 					this._apiService.get(url)
 					.subscribe((data) => {
 						_offer["total_points_earned"] = data;
-						console.log("OFFER MODEL SERVICE total_points_earned resolving ", offer)
 						resolve(_offer)					
 					}, (err) => {
-						console.log("OFFER MODEL SERVICE total_points_earned ERROR ", err)
 						reject(err);
 					});
 				})
@@ -257,9 +240,7 @@ export class OfferModelService {
 			self.offerMetadata[offer['id']] = new Promise((resolve, reject) => {
 				let count = 0;
 				let func = (offer) => {
-					let numPiecesOfMetadata = 4;
-
-					console.log("OFFER MODEL SERVICE setOfferMetata "+(count+1)+" of 4 done", offer)
+					let numPiecesOfMetadata = 3;
 
 					if (++count > (numPiecesOfMetadata - 1)) {
 						resolve(offer);
@@ -278,44 +259,10 @@ export class OfferModelService {
 					func(offer);
 				})
 
-				self.setOfferImageOrientation(offer).then((offer) => {
-					func(offer);
-				})
 			});
 
 			return self.offerMetadata[offer['id']];
 		}
-	}
-
-	setOfferImageOrientation(offer) {
-		let self = this;
-
-		// try this in FPS.. its being called too oftem as is..
-
-		return new Promise((resolve, reject) => {
-			// self._pictureService.get(self._constants.PHOTO_TYPE_OFFER, offer["id"]).then((obj) => {
-			// 	offer["imageFileSource"] = 'eog';
-			// 	offer["imageFileURI"] = obj['path'];
-			// 	offer["imageFileURI_OriginalValue"] = obj['path'];
-
-			// 	if (obj['path']) {
-			// 		self._pictureEXIFService.getEXIFMetadata(obj['path']).then((exifMetadata) => {
-			// 			offer["imageOrientation"] = exifMetadata["Orientation"];
-			// 			console.log("OFFER MODEL SERVICE setOfferImageOrientation 1 resolving ", offer)
-			// 			resolve(offer);
-			// 		})
-			// 	} else {
-			// 		console.log("OFFER MODEL SERVICE setOfferImageOrientation 2 resolving ", offer)
-			// 		resolve(offer);
-			// 	}
-			// }, (err) => {
-			// 	console.log("OFFER MODEL SERVICE setOfferImageOrientation ERROR ", err);
-			// 	resolve(undefined);
-			// });
-
-			resolve(offer);
-
-		})
 	}
 
 	save(model) {
@@ -380,21 +327,7 @@ export class OfferModelService {
 		});	
 	}
 
-	isEditingLimitedToPointsOnly() {
-
-	}
-
 	isOfferImageChanged(model) {
 		return model["imageFileURI_OriginalValue"] != model["imageFileURI"];
 	}
-
-	// _counter = 0;
-	// bumpTheThumbnailCounter() {
-	// 	// this._counter++;
-	// }
-
-	// getThumbnailImagePath(offerId) {
-	// 	return environment.apiUrl + "/api/resource/offer/" + offerId + '/sendAnew/' + this._counter; 
-	// }	
-
 }

@@ -33,11 +33,6 @@ export class HomeService {
 				let url = environment.apiUrl + "/api/offers/recent?count=" + count + "&userId=" + userId;
 				self._apiService.get(url).subscribe((data: []) => {
 					let offers = data;
-
-					offers.forEach((offer) => {
-						self._offerModelService.setOfferImageOrientation(offer);
-					});
-
 					resolve(offers);
 				}, (err) => {
 					reject(err);

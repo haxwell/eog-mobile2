@@ -89,7 +89,7 @@ export class PictureService {
 							let checkFile = self.file.checkFile(path, filename);
 
 							if (checkFile) {
-								console.log(photoType + " " + objId + " FOUND, and checkfile object FOUND..")
+								// console.log(photoType + " " + objId + " FOUND, and checkfile object FOUND..")
 								checkFile.then((fileExists) => {
 									console.log(photoType + " " + objId + " checkFile fileExists = " + fileExists);
 									var millis: number = +localStorage.getItem(path+filename);
@@ -143,7 +143,7 @@ export class PictureService {
 								})
 							} else {
 								let rtn = {'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'};
-								console.log(photoType + " " + objId + " FOUND, but no checkfile object.. returning ", rtn)
+								// console.log(photoType + " " + objId + " FOUND, but no checkfile object.. returning ", rtn)
 								resolve(rtn);
 							}
 
@@ -157,11 +157,11 @@ export class PictureService {
 								checkFile.then((isFileExists) => {
 									if (isFileExists) {
 
-										console.log(photoType + " " + objId + "... the file exists locally, we're gonna delete it.. its stale")
+										// console.log(photoType + " " + objId + "... the file exists locally, we're gonna delete it.. its stale")
 
 										// we need to remove this file. A file that does not exist on the server is stale. 
 										self.file.removeFile(path, filename).then((promiseResult) => {
-											console.log(photoType + " " + objId + "..., stale file removed.")
+											// console.log(photoType + " " + objId + "..., stale file removed.")
 										})
 
 										// there's no photo, so we can resolve to a default image.
@@ -175,7 +175,7 @@ export class PictureService {
 										console.log(JSON.stringify(err))
 										console.log("After err checking if exists, obj id " + objId + " returning ", rtn);
 									} else {
-										console.log(photoType + " " + objId + "... "+ path + filename + " did not exist. returning ", rtn);
+										// console.log(photoType + " " + objId + "... "+ path + filename + " did not exist. returning ", rtn);
 									}
 
 									resolve(rtn);

@@ -69,8 +69,6 @@ export class WebsocketService {
 			console.log("websocket.service received notice of a REQUEST event")
 			console.log(JSON.stringify(request))
 
-			this._offerModelService.setOfferImageOrientation(request.offer);
-
 			if (request["deliveringStatusId"] === this._constants.REQUEST_STATUS_PENDING && request["requestingStatusId"] === null) {
 				this.handleRequestReceived(data)
 			} else if (request["deliveringStatusId"] === this._constants.REQUEST_STATUS_PENDING && request["requestingStatusId"] === this._constants.REQUEST_STATUS_CANCELLED) {
