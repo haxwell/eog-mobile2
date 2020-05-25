@@ -475,7 +475,7 @@ export class EditPage {
 							let path = model["imageFileURI"].substring(0,lastSlash+1);
 							let filename = model["imageFileURI"].substring(lastSlash+1);
 
-							self._file.removeFile(path, filename).then((data) => {
+							let func = () => {
 								self._pictureService.setMostProbablePhotoPath(self._constants.PHOTO_TYPE_PROFILE, self.userId, uriAndSource["imageFileURI"]);
 
 								console.log("User saved a new profile image. [" + model["imageFileURI"] + "] is no longer the image to use, so it has been removed." );
@@ -490,10 +490,16 @@ export class EditPage {
 
 								//self._events.publish('profile:changedProfileImage', model["imageFileURI"]);
 								self.setDirty(true);						
-							})
-						} else {
-							console.log("model[imageFileURI] IS undefined", model['imageFileURI'], model['imageFileSource'])
+							}
 
+							if (model["imageFileIsADefault"]) {
+								func();
+							} else {
+								self._file.removeFile(path, filename).then((data) => {
+									func();
+								})
+							}
+						} else {
 							console.log("no previous image to delete, so skipping that step...")
 							console.log("uriAndSource = " + JSON.stringify(uriAndSource))
 

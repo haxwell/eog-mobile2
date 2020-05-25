@@ -138,6 +138,7 @@ export class ProfileModelService  {
 					model["imageFileSource"] = 'eog';
 					model["imageFileURI"] = obj['path'];
 					model["imageFileURI_OriginalValue"] = obj['path'];
+					model["imageFileIsADefault"] = (obj['default'] === true);
 
 					if (obj['path'] && !obj['default']) {
 						this._pictureEXIFService.getEXIFMetadata(obj['path']).then((exifMetadata) => {
