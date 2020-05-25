@@ -6,7 +6,6 @@ import { OtherPeoplesOfferList } from './other-peoples-offer-list/other-peoples-
 
 import { OfferModelService } from '../_services/offer-model.service'
 import { OfferMetadataService } from '../_services/offer-metadata.service'
-import { PictureService } from '../_services/picture.service'
 import { PictureEXIFService } from '../_services/picture-exif.service'
 import { PointsService } from '../_services/points.service'
 import { RecommendationService } from '../_services/recommendation.service'
@@ -24,7 +23,6 @@ import { DeclineReasonCodeService } from '../_services/declined-reason-codes.ser
     DeclineReasonCodeService
     ,OfferModelService
     ,OfferMetadataService
-    ,PictureService
     ,PictureEXIFService
     ,PointsService
     ,RecommendationService

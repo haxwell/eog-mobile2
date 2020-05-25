@@ -235,8 +235,14 @@ export class EditPage {
 
 					self._loadingService.dismiss();
 
-					if (!self.isExiting)
-						self._router.navigate(['/profile/' + self.userId]);
+					if (!self.isExiting) {
+						if (!self.userId) {
+							console.log("FOR SOME REASON profile edit page's userId is undefined!!!!!")
+							console.trace();
+						}
+
+						self._location.back();
+					}
 
 				}, (err) => {
 	            	self._alertService.show({
@@ -414,17 +420,12 @@ export class EditPage {
 		return this._profileModelService.get(this.userId)["imageFileSource"] == 'gallery';
 	}
 
-	isDirectFilepathToImageSet() {
-		return this._profileModelService.get(this.userId)["imageFileURI"] !== undefined;
-	}
-
 	getAssociatedImage() {
 		let rtn = undefined;
 
-		if (this.isDirectFilepathToImageSet()) {
+		if (this._profileModelService.get(this.userId)["imageFileURI"] !== undefined) { // if direct file path to image is set
 			let unsanitized = this._webview.convertFileSrc(this._profileModelService.get(this.userId)["imageFileURI"]);
 			let sanitized = this._domSanitizer.bypassSecurityTrustResourceUrl(unsanitized);
-
 			rtn = sanitized;
 		} else {
 			rtn = this.getEnvironmentAPIURLForThisProfile();
@@ -469,8 +470,7 @@ export class EditPage {
 					if (uriAndSource !== undefined) {
 
 						let model = this._profileModelService.get(this.userId);
-
-						if (model["imageFileURI"] !== undefined && model["imageFileSource"] == 'camera') {
+						if (model["imageFileURI"] !== undefined /*&& model["imageFileSource"] == 'camera'*/) {
 							let lastSlash = model["imageFileURI"].lastIndexOf('/');
 							let path = model["imageFileURI"].substring(0,lastSlash+1);
 							let filename = model["imageFileURI"].substring(lastSlash+1);
@@ -492,6 +492,8 @@ export class EditPage {
 								self.setDirty(true);						
 							})
 						} else {
+							console.log("model[imageFileURI] IS undefined", model['imageFileURI'], model['imageFileSource'])
+
 							console.log("no previous image to delete, so skipping that step...")
 							console.log("uriAndSource = " + JSON.stringify(uriAndSource))
 

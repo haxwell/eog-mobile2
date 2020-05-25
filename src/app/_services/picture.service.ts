@@ -17,22 +17,33 @@ import { environment } from '../../_environments/environment';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class PictureService { 
 
-	_functionPromiseService = new FunctionPromiseService();
 	mostProbablePhotoPath = {};
 
 	constructor(private _platform: Platform,
 				private _http: HttpClient,
 				private _apiService: ApiService,
 				private _userService: UserService,
+				private _functionPromiseService: FunctionPromiseService,
 				private _constants: Constants,
 				private transfer: FileTransfer
 				,private _webview: WebView
 				,private _domSanitizer: DomSanitizer
 				,private file: File) {
 
+	}
+
+	setLocalStorage(key, val) {
+		localStorage.setItem(key, val);
+	}
+
+	getLocalStorage(key) {
+		let rtn = +localStorage.getItem(key);
+		return rtn;
 	}
 
 	init() {
@@ -63,6 +74,11 @@ export class PictureService {
 
 			return new Promise((resolve, reject) => 
 			{ 
+					if (objId === undefined) {
+						throw new Error("The given object ID was undefined. That should never happen.")
+						console.trace();
+					}
+
 					if (!objId)
 						resolve({'path': undefined});
 
@@ -76,14 +92,14 @@ export class PictureService {
 					let path = photoPath.substring(0,lastSlash+1);
 					let filename = photoPath.substring(lastSlash+1);
 
-					console.log("PictureService get() photoPath ", photoPath)
+					// console.log("PictureService get() photoPath ", photoPath)
 
 					// check the API, it returns the timestamp of the file it has. Client checks
 				    let url = environment.apiUrl + "/api/resource/" + photoType + "/" + objId + "/isFound";
 				    self._apiService.get(url).subscribe((pictureAPITimestamp: number) => {
 
 						if (pictureAPITimestamp * 1 > 0) { // meaning, this file exists on the API
-				    		console.log(photoType + " " + objId + " FOUND on the API. it's retrieved timestamp = " + pictureAPITimestamp)
+				    		// console.log(photoType + " " + objId + " FOUND on the API. it's retrieved timestamp = " + pictureAPITimestamp)
 
 							// now we need the timestamp of the file on this local device we're running on...
 							let checkFile = self.file.checkFile(path, filename);
@@ -91,58 +107,67 @@ export class PictureService {
 							if (checkFile) {
 								// console.log(photoType + " " + objId + " FOUND, and checkfile object FOUND..")
 								checkFile.then((fileExists) => {
-									console.log(photoType + " " + objId + " checkFile fileExists = " + fileExists);
-									var millis: number = +localStorage.getItem(path+filename);
+									// console.log(photoType + " " + objId + " checkFile ("+(path+filename)+") fileExists = " + fileExists);
+									var millis: number = self.getLocalStorage(path+filename);
+									// console.log(photoType + " " + objId + " localStorage millis=" + millis + " / API millis = " + pictureAPITimestamp);
 									if (millis < pictureAPITimestamp) {
 										//download the api picture
-										console.log(photoType + " " + objId + " FOUND, and API is newer.. downloading..")
+										// console.log(photoType + " " + objId + " FOUND, and API is newer.. downloading..")
 
 										url = environment.apiUrl + "/api/resource/" + photoType + "/" + objId;
 										const fileTransfer: FileTransferObject = self.transfer.create();
 
 										fileTransfer.download(url, path + filename).then((entry) => {
 											var millis = new Date().getTime();
-											localStorage.setItem(path+filename, ''+millis);
-
-										    resolve({'path': path + filename});
+											self.setLocalStorage(path+filename, ''+millis);
+											let rtn = {'path': path + filename, 'id':1}
+											// console.log(photoType + " " + objId + " downloaded to " + (path+filename) + " setting localStorage millis to " + millis);
+											self.setMostProbablePhotoPath(photoType, objId, path+filename);	
+										    resolve(rtn);
 								  		}, (err) => {
 								    		// handle error
 								    		console.log("Error downloading file, url = " + url + ", path+filename = " + (path+filename))
 								    		console.log(JSON.stringify(err))
-								    		resolve({'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'});
+								    		let rtn = {'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg', 'id':2}
+								    		self.setMostProbablePhotoPath(photoType, objId, rtn['path']);
+								    		resolve(rtn);
 								  		});
 
 									} else {
 										// file exists locally, and is newer than the version on the API. 
 										//  keep it, and resolve with the path and filename of our local, still-fresh, file.
-										let rtn = {'path': path + filename};
-										console.log(photoType + " " + objId + " FOUND, and local version is newer.. resolving", rtn)
+										let rtn = {'path': path + filename, 'id':3}
+										// console.log(photoType + " " + objId + " FOUND, and local version is newer.. resolving", rtn)
+										self.setMostProbablePhotoPath(photoType, objId, rtn['path']);
 										resolve(rtn);
 									}
 								}).catch(e => {
 									// call to checkfile failed.. the file likely does not exist.. regardless try downloading it from the server.
 
-									console.log(photoType + " " + objId + " FOUND.. PictureService, call to checkfile failed.. the file likely does not exist locally.. about to try downloading it")
+									// console.log(photoType + " " + objId + " FOUND.. PictureService, call to checkfile (" + (path+filename) + ") failed.. the file likely does not exist locally.. about to try downloading it", e)
 
 									url = environment.apiUrl + "/api/resource/" + photoType + "/" + objId;
 									const fileTransfer: FileTransferObject = self.transfer.create();
 
 									fileTransfer.download(url, path + filename).then((entry) => {
 										var millis = new Date().getTime();
-										localStorage.setItem(path+filename, ''+millis);
-										let rtn = {'path': path + filename}
-										console.log(photoType + " " + objId + " FOUND.. downloaded file from API ", url, rtn);
+										self.setLocalStorage(path+filename, ''+millis);
+										let rtn = {'path': path + filename, 'id':4}
+										// console.log(photoType + " " + objId + " FOUND.. downloaded file from API ", url, rtn, " / setting localStorage millis to ", millis);
+										self.setMostProbablePhotoPath(photoType, objId, path+filename);
 									    resolve(rtn);
 							  		}, (err) => {
 							    		// handle error
 							    		console.log("Error downloading file, url = " + url + ", path+filename = " + (path+filename))
 							    		console.log(JSON.stringify(err))
-							    		let rtn = {'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'};
+							    		let rtn = {'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg', 'id':5}
+							    		self.setMostProbablePhotoPath(photoType, objId, rtn['path']);
 							    		resolve(rtn);
 							  		});
 								})
 							} else {
-								let rtn = {'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'};
+								let rtn = {'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg', 'id':6}
+								self.setMostProbablePhotoPath(photoType, objId, rtn['path']);
 								// console.log(photoType + " " + objId + " FOUND, but no checkfile object.. returning ", rtn)
 								resolve(rtn);
 							}
@@ -150,7 +175,7 @@ export class PictureService {
 						} else { // meaning the file does not exist on the API
 							// then we need to check locally is there a file.
 
-							console.log(photoType + " " + objId + "... the file does NOT exist on the API")
+							// console.log(photoType + " " + objId + "... the file does NOT exist on the API")
 
 							let checkFile = self.file.checkFile(path, filename)
 							if (checkFile) {
@@ -165,10 +190,14 @@ export class PictureService {
 										})
 
 										// there's no photo, so we can resolve to a default image.
-										resolve({'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'});
+										let rtn = {'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg', 'id':7}
+
+										self.setMostProbablePhotoPath(photoType, objId, rtn['path']);
+										
+										resolve(rtn);
 									} 
 								}).catch(err => { 
-									let rtn = {'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'};
+									let rtn = {'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg', 'id':8}
 
 									if (err["code"] !== 1 || err["message"] !== "NOT_FOUND_ERR") {
 										console.log("Error checking if exists file: " + path + ", " + filename)
@@ -178,11 +207,13 @@ export class PictureService {
 										// console.log(photoType + " " + objId + "... "+ path + filename + " did not exist. returning ", rtn);
 									}
 
+									self.setMostProbablePhotoPath(photoType, objId, rtn['path']);
 									resolve(rtn);
 								})
 							} else {
-								console.log("For some reason checkFile was undefined.. returning a default image path")
-								let rtn = {'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'};
+								// console.log("For some reason checkFile was undefined.. returning a default image path")
+								let rtn = {'default': true, 'patdh': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg', 'id':9}
+								self.setMostProbablePhotoPath(photoType, objId, rtn['path']);
 								resolve(rtn);
 							}
 						}
@@ -190,7 +221,9 @@ export class PictureService {
 					}, (err) => 	{ 
 						console.log("ERROR #photo-rxp9r");
 						console.log(err);
-						resolve({'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg'});
+						let rtn = {'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg', 'id':10}
+						self.setMostProbablePhotoPath(photoType, objId, rtn['path']);
+						resolve(rtn);
 					})
 				
 			});
@@ -198,6 +231,7 @@ export class PictureService {
 	}
 
 	reset(photoType, objId) {
+		console.log("RESETTING pictureService's functionPromiseService for ", photoType, objId);
 		return this._functionPromiseService.reset(photoType+objId);
 	}
 
@@ -241,9 +275,6 @@ export class PictureService {
 				     }
 				}
 				
-				console.log("Options");
-				console.log(options);
-
 				this.file.resolveLocalFilesystemUrl(filename)
 			        .then(entry => {
 			            ( < FileEntry > entry).file(file => {
@@ -303,6 +334,7 @@ export class PictureService {
 		return this.mostProbablePhotoPath[photoType+objId];
 	}
 
+	// TODO: Remove this
 	getOrientationCSS(objWithImageOrientationAttr: any, additionalCSSClassList?: string) {
 		// let obj = objWithImageOrientationAttr;
 

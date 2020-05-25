@@ -22,7 +22,7 @@ export class ProfileService {
 		this._pictureService.init();
 	}
 
-	init(userId:number) {
+	init() {
 		return this._profileModelService.init();
 	}
 

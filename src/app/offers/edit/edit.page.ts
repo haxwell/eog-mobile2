@@ -533,7 +533,7 @@ export class EditPage {
 
 						let _model = this._offerModelService.get(this.offerId);
 
-						if (_model["imageFileURI"] !== undefined && _model["imageFileSource"] == 'camera') {
+						if (_model["imageFileURI"] !== undefined /*&& _model["imageFileSource"] == 'camera'*/) {
 							let lastSlash = _model["imageFileURI"].lastIndexOf('/');
 							let path = _model["imageFileURI"].substring(0,lastSlash+1);
 							let filename = _model["imageFileURI"].substring(lastSlash+1);

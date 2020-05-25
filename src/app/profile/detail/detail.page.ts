@@ -44,6 +44,7 @@ export class DetailPage {
 	imageOrientation = undefined;
 
 	contactInfoVisibilityId = undefined;
+	hackcount = 0;
 
 	constructor(private _location: Location,
 				private _route: ActivatedRoute,
@@ -84,12 +85,15 @@ export class DetailPage {
 		let self = this;
 
 		if (self._modelService.getModel() === undefined) {
-			self._modelService.setModel({cnt: 1})
-
 			self._route.params.subscribe((params) => {
 				self.userId = params['userId'] * 1;
+
+				if (self.userId === undefined) {
+					throw new Error("Couldn't find a user id to indicate which profile detail page. That should never happen.")
+				}
+
 				self._loadingService.show({message: "Please wait..."}).then(() => {
-					self._profileService.init(self.userId);
+					self._profileService.init();
 
 					self.setCurrentUserCanSendPointToProfileUser();
 					self.setCurrentUserCanSendRecommendationToProfileUser();
@@ -101,13 +105,14 @@ export class DetailPage {
 
 					self.locationDisplayString = undefined;
 				})
+				
+				self._modelService.setModel({cnt: ++self.hackcount})
 			});
 		}
 	}
 
 	ionViewWillEnter() {
 		this._modelService.setModel(undefined);
-		this.ngOnInit();
 	}
 
 	ngOnDestroy() {
@@ -391,5 +396,9 @@ export class DetailPage {
             	}
             }]
         })
+	}
+
+	onEditBtnTap() {
+		this._modelService.setModel(undefined);
 	}
 }

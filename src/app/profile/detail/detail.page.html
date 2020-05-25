@@ -17,7 +17,7 @@
 				<div>
 					<ion-item lines="none">
 						<ion-button slot="end" (click)="onChangePasswordBtnClick($event)">Change Password</ion-button>
-						<ion-button slot="end" [routerDirection]="'root'" [routerLink]="getEditProfileURL()">Edit</ion-button>
+						<ion-button slot="end" [routerDirection]="'root'" [routerLink]="getEditProfileURL()" (click)="onEditBtnTap()">Edit</ion-button>
 					</ion-item>
 				</div>
 			</ion-row>
