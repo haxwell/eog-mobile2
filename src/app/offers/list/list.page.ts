@@ -76,10 +76,6 @@ export class ListPage {
 		return this.model["offers"];
 	}
 
-	onNewOfferBtnTap() {
-		this._router.navigate(['/offers/new'])
-	}
-
 	onOfferBtnTap(item) { 
 		this._router.navigate(['/offers/' + item["id"]])
 	}

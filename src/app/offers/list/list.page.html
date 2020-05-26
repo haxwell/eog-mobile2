@@ -10,7 +10,7 @@
 
 <ion-content class="ion-padding">
 	<ion-row >
-		 <ion-button round class="centered" (click)="onNewOfferBtnTap()">
+		<ion-button round class="centered" [routerDirection]="'root'" [routerLink]="['/offers/new']">
 			Make a New Offer
 		</ion-button>
 	</ion-row>
