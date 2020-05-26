@@ -74,11 +74,6 @@ export class PictureService {
 
 			return new Promise((resolve, reject) => 
 			{ 
-					if (objId === undefined) {
-						throw new Error("The given object ID was undefined. That should never happen.")
-						console.trace();
-					}
-
 					if (!objId)
 						resolve({'path': undefined});
 
