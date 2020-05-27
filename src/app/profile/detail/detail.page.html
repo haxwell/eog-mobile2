@@ -14,12 +14,10 @@
 <ion-content cache-view="false" padding>
 	<ion-grid >
 			<ion-row *ngIf="isCurrentUsersProfile()">
-				<div>
-					<ion-item lines="none">
-						<ion-button slot="end" (click)="onChangePasswordBtnClick($event)">Change Password</ion-button>
-						<ion-button slot="end" [routerDirection]="'root'" [routerLink]="getEditProfileURL()" (click)="onEditBtnTap()">Edit</ion-button>
-					</ion-item>
-				</div>
+				<span class="centered">
+					<ion-button (click)="onChangePasswordBtnClick($event)">Change Password</ion-button>
+					<ion-button [routerDirection]="'root'" [routerLink]="getEditProfileURL()" (click)="onEditBtnTap()">Edit</ion-button>
+				</span>
 			</ion-row>
 			<br/>
 			<ion-row>
