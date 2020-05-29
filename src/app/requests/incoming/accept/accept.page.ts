@@ -7,6 +7,7 @@ import { UserPreferencesService } 	from '../../../../app/_services/user-preferen
 import { PresentTutorialService } from '../../../../app/about-easyah/tutorials/_services/present-tutorial.service';
 
 import { ModelService } from '../_services/model.service';
+import { InteractionsService } from '../_services/interactions.service';
 
 @Component({
   selector: 'page-requests-incoming-accept',
@@ -22,6 +23,7 @@ export class AcceptPage {
 	constructor(private _router: Router,
 				private _modelService: ModelService,
 				private _requestsService: RequestsService,
+				private _interactionsService: InteractionsService,
 				private _presentTutorialService: PresentTutorialService,
 				private _userPreferencesService: UserPreferencesService) {
 
@@ -39,6 +41,22 @@ export class AcceptPage {
 
 	getOfferTitle() {
 		return this.model ? this.model.offer.title : undefined;
+	}
+
+	getRequestorName() {
+		return this.model && this.model.directionallyOppositeUser['realname'];
+	}
+
+	willBeFirstConnectionBetweenTheseTwo() {
+		return this._interactionsService.isFirstInteractionBetween(this.model.offer['userId'], this.model.directionallyOppositeUser['id']);
+	}
+
+	getNumberOfPreviousInteractions() {
+		return this._interactionsService.getNumberOfPreviousInteractionsBetween(this.model.offer['userId'], this.model.directionallyOppositeUser['id']);
+	}
+
+	areRecommendationsRequired() {
+		return this.model && this.model.offer.requiredUserRecommendations && this.model.offer.requiredUserRecommendations.length > 0;
 	}
 
 	onSaveBtnTap(evt) {

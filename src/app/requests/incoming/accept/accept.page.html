@@ -10,6 +10,22 @@
 	<ion-label>You are about to commit to fulfill an offer you made!</ion-label><br/><br/>
 	<ion-label><b>{{getOfferTitle()}}</b></ion-label><br/><br/>
 	<hr/>
+		<div *ngIf="willBeFirstConnectionBetweenTheseTwo()" class="greybackbox">
+			This will be the first time you have connected with {{getRequestorName()}}.<br/><br/>
+			
+			<!-- TODO: can we link to the second, more relevant part? -->
+			<br/>For reference, <a href="https://www.wikihow.com/Safely-Meet-a-Person-You-Met-Online">Safely Meeting People Online</a>
+			<br/>
+			<span *ngIf="!areRecommendationsRequired()">
+				Remember, too, you can require a recommendation on your offer. That way, anyone who requests your offer must first get that stamp-of-approval from whoever you require before they can reach out to you.
+				<br/>
+			</span>
+			
+		</div>
+		<div *ngIf="!willBeFirstConnectionBetweenTheseTwo()" class="greybackbox">
+			You have {{getPriorInteractionCount()}} prior interactions with {{getRequestorName()}}.
+		</div>
+	<hr/>
 	<ion-label>Be 100% sure you are able to do it! Karma's a Capital B, as they say.</ion-label><br/><br/>
 
 	<ion-row>

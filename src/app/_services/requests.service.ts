@@ -54,6 +54,8 @@ export class RequestsService {
 
 	getArchivedUserRequestsForOffer(offer) {
 
+		// TODO: Remove this promise cache, and just use functionPromiseService
+
 		if (this.archivedUserRequestsForOfferPromiseCache[offer["id"]] === undefined) {
 			this.archivedUserRequestsForOfferPromiseCache[offer["id"]] = null;
 			this.initArchivedUserRequestsForOfferPromiseCache(offer); 

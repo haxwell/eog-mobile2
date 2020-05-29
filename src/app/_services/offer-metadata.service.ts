@@ -172,5 +172,25 @@ export class OfferMetadataService extends DomainObjectMetadataService {
 				});
 			});
 
+		// this.addMetadataCalculationFunction(
+		// 	this._constants.FUNCTION_KEY_CURRENT_USER_HAS_PREVIOUSLY_ACCEPTED_REQUESTING_USER,
+		// 	(offeringUserId, requestingUserId) => {
+		// 		return new Promise((resolve, reject) => {
+		// 			this._interactionsService.isFirstInteractionBetween(offeringUserId, requestingUserId).then((data) => {
+		// 				resolve(data > 0);
+
+		// 				// WILO.. Need to call this metadata function from the front end.. and define the service here on the front end
+		// 				//  and call the soon to be created backend service which will query if this user has any history between them and
+
+		// 				//  the requesting user.. Check tables. see how that works when we accept a 
+
+
+		// 				// Lets expand this idea, and show the warning with the first interaction, and then show the number of interactions
+		// 				//  at each request acceptance after that.
+
+		// 			});
+		// 		})
+		// 	})
+
 	}
 }
