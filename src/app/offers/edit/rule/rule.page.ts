@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { SearchService } from '../../../../app/_services/search.service';
+import { Constants } from '../../../../_constants/constants'
 
 @Component({
   selector: 'page-offer-edit-rule',
@@ -25,7 +26,8 @@ export class RulePage {
 	userList: Array<Object> = [];
 
 	constructor(private _location: Location,
-				private _searchService: SearchService) {
+				private _searchService: SearchService,
+				private _constants: Constants) {
 
 	}
 
@@ -39,7 +41,7 @@ export class RulePage {
 	onSearchUserBtnTap(evt) {
 		if (this.isSearchBtnEnabled()) {
 			let self = this;
-			this._searchService.searchUsers(this.searchString, 50).then((data: Array<Object>) => {
+			this._searchService.searchUsers(this.searchString, this._constants.DEFAULT_MAX_MILE_RADIUS).then((data: Array<Object>) => {
 				self.searchResultList = data;
 				self.origSearchResultSize = data.length;
 				self.origSearchResultsAlreadyRequiredCount = 0;

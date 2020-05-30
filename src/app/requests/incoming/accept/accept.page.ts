@@ -48,15 +48,22 @@ export class AcceptPage {
 	}
 
 	willBeFirstConnectionBetweenTheseTwo() {
-		return this._interactionsService.isFirstInteractionBetween(this.model.offer['userId'], this.model.directionallyOppositeUser['id']);
+		return this._interactionsService.isFirstInteractionBetween(this.model.offer['userId'], this.model.directionallyOppositeUser['id']) === true;
 	}
 
-	getNumberOfPreviousInteractions() {
-		return this._interactionsService.getNumberOfPreviousInteractionsBetween(this.model.offer['userId'], this.model.directionallyOppositeUser['id']);
-	}
+	getNumberOfPreviousInteractionsString() {
+		let rtn = undefined;
 
-	areRecommendationsRequired() {
-		return this.model && this.model.offer.requiredUserRecommendations && this.model.offer.requiredUserRecommendations.length > 0;
+		let val = this._interactionsService.getNumberOfPreviousInteractionsBetween(this.model.offer['userId'], this.model.directionallyOppositeUser['id']);
+
+		if (val) {
+			rtn = val + " prior interaction";
+
+			if (val > 1)
+				rtn += "s";
+		}
+
+		return rtn;
 	}
 
 	onSaveBtnTap(evt) {

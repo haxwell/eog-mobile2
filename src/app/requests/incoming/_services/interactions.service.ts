@@ -15,7 +15,7 @@ export class InteractionsService {
 	}
 
 	isFirstInteractionBetween(offeringUserId, requestingUserId) {
-		let rtn = true;
+		let rtn = undefined;
 		let val = this._interactionsModelService.getInteractionsBetween(offeringUserId, requestingUserId);
 
 		if (val) {

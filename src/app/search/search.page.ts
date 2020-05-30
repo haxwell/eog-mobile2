@@ -62,7 +62,7 @@ export class SearchPage {
 		};
 
 		let user = self._userService.getCurrentUser();
-		let distance = 50; // TODO: Add a drop down where the user can select a distance.
+		let distance = self._constants.DEFAULT_MAX_MILE_RADIUS; // TODO: Add a drop down where the user can select a distance.
 
 		this._searchService.searchOffers(this.searchString, distance, user["id"]).then((data: Array<Object>) => {
 

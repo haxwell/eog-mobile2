@@ -7,6 +7,7 @@ import { TutorialService } from '../../app/about-easyah/tutorials/_services/tuto
 
 import { PresentTutorialService } from '../../app/about-easyah/tutorials/_services/present-tutorial.service'
 import { UserService } from '../../app/_services/user.service'
+import { UserGeographyService } from '../../app/_services/user-geography.service'
 import { ProfileService } from '../../app/_services/profile.service'
 import { PictureService } from '../../app/_services/picture.service'
 
@@ -36,6 +37,7 @@ export class HomePage {
                 ,private _tutorialService: TutorialService
                 ,private _presentTutorialService: PresentTutorialService
                 ,private _userService: UserService
+                ,private _userGeographyService: UserGeographyService
                 ,private _profileService: ProfileService                
                 ,private _pictureService: PictureService
                 ,private _constants: Constants
@@ -45,6 +47,11 @@ export class HomePage {
     ) {
 
     }
+
+
+    // WILO.. will be adding a ion-card with the number of other members withing 50 miles of the user. something
+    //  special for first, among 5, 10 30 and 60.
+
 
     ngOnInit() {
         let self = this;
@@ -67,6 +74,10 @@ export class HomePage {
                 }
             });
         }
+    }
+
+    getNumberOfUsersAroundThisGuy() {
+        return this._userGeographyService.getNumberOfUsersNearby(this._userService.getCurrentUser()["id"], this._constants.DEFAULT_MAX_MILE_RADIUS);
     }
 
     getAssociatedImage() {

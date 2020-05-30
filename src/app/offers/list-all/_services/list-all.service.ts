@@ -45,7 +45,7 @@ export class ListAllOfferService {
 	appendNextPageToModel() {
 		let self = this;
 		let user = this._userService.getCurrentUser();
-		let url = environment.apiUrl + "/api/user/" + user["id"] + "/offers/page/" + (++this.lastLoadedPageNumber) + "/count/" + this.pageLength + "?d=50";
+		let url = environment.apiUrl + "/api/user/" + user["id"] + "/offers/page/" + (++this.lastLoadedPageNumber) + "/count/" + this.pageLength + "?d=" + this._constants.DEFAULT_MAX_MILE_RADIUS;
 		self._apiService.get(url).subscribe((offersObj: []) => {
 
 			self.model["offers"].push(...offersObj);

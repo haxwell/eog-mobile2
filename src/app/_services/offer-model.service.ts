@@ -33,10 +33,6 @@ export class OfferModelService {
 		this.modelCache = { }
 	}
 
-	// WILO.. just changed pictureService.get() so that it always returns the result, and not a promise for the result.
-	//  need to go through code, and where we were expecting a promise, rework it so we deal with the result. Or add
-	//  another method to return a promise instead.
-
 	getDefaultModel() { 
 		let user = this._userService.getCurrentUser();
 		let rtn = {};

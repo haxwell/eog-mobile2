@@ -6,6 +6,7 @@ import { UserService } from './user.service';
 import { Constants } from '../../_constants/constants'
 import { RecommendationService } from './recommendation.service'
 import { PointsService } from './points.service'
+import { UserGeographyService } from './user-geography.service'
 import { DomainObjectMetadataService } from './domain-object-metadata.service'
 
 
@@ -17,10 +18,11 @@ export class UserMetadataService extends DomainObjectMetadataService {
 	constructor(protected _userService: UserService,
 				protected _pointsService: PointsService,
 				protected _recommendationService: RecommendationService,
+				protected _userGeographyService: UserGeographyService,
 				protected _constants: Constants,
 				protected _events: Events) {
 
-		super(_userService, _constants);				
+		super(_userService, _constants);
 
 		this._events.subscribe('points:sent', (data) => {
 			this._userService.getUser(data["receivingUserId"]).then((user) => {
@@ -64,6 +66,16 @@ export class UserMetadataService extends DomainObjectMetadataService {
 			(userId: number) => {
 				return new Promise((resolve, reject) => {
 					this._recommendationService.isCurrentUserAbleToSendARecommendationTo(userId).then((bool) => {
+						resolve(bool);
+					});
+				});
+			});
+
+		self.addMetadataCalculationFunction(
+			self._constants.FUNCTION_KEY_NUMBER_OF_USERS_WITHIN_A_RADIUS, 
+			(userId: number, distance: number) => {
+				return new Promise((resolve, reject) => {
+					this._userGeographyService.getNumberOfUsersNearby(userId, distance).then((bool) => {
 						resolve(bool);
 					});
 				});

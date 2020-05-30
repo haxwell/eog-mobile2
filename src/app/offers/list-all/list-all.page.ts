@@ -35,6 +35,7 @@ export class ListAllPage /*implements OnInit*/ {
 				private _listAllOfferService : ListAllOfferService,
 				private _pictureService : PictureService,
 				private _events: Events
+				,private _constants: Constants
 	) {
 		this.setDirty(true);
 
@@ -78,5 +79,9 @@ export class ListAllPage /*implements OnInit*/ {
 
 	onMoreBtnTap() {
 		this._listAllOfferService.appendNextPageToModel();
+	}
+
+	getMaxMileRadius() {
+		return this._constants.DEFAULT_MAX_MILE_RADIUS;
 	}
 }
