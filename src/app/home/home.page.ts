@@ -76,7 +76,8 @@ export class HomePage {
         }
     }
 
-    getNumberOfUsersAroundThisGuy() {
+    getNumberOfUsersWithOffersAroundThisGuy() {
+        // #53 is about adding the offers filter
         return this._userGeographyService.getNumberOfUsersNearby(this._userService.getCurrentUser()["id"], this._constants.DEFAULT_MAX_MILE_RADIUS);
     }
 
@@ -117,5 +118,31 @@ export class HomePage {
 
     getMostRecentlyCreatedOffers() {
         return this.mostRecentlyCreatedOffers;
+    }
+
+    // TODO: Turn this into a component. We're gonna want to change what is shown there, make it more
+    //  graphical, if not interactive. Lets keep that complexity separate.
+    getFolksAroundYouText() {
+        let count = this.getNumberOfUsersWithOffersAroundThisGuy();
+
+        if (count == undefined) {
+            return ".."
+        } else if (count == 1) {
+            return "You are the first person in your area! Thank you, thank you! #Trendsetter"
+        } else if (count > 1 && count < 5) {
+            // on the way to 5
+            return "There are " + count + " other users in your area. Tell a friend, bring a friend!"
+        } else if (count == 5) {
+            // count is 5
+            return "Awesome! The machine is plugged in! There are FIVE people in your area."
+        } else if (count > 5 && count < 10) {
+            return "There are " + count + " others in your area. Its growing!"
+        } else if (count == 10) {
+            return "Something to be excited about! There are now 10 folks in your area."
+        } else if (count > 10 && count < 24) {
+           return "Pushing along! There are " + count + " people in your area. #positiveEnergy"
+        } else if (count > 24) {
+            return "The machine is humming! There are over 25 people in your area! Woo hoo!";
+        }
     }
 }
