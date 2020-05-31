@@ -56,7 +56,7 @@
 			</ion-card>
 		</ion-row>
 		<ion-row>
-			<ion-card>
+			<ion-card [ngStyle]="{'width':'100%'}">
 				<ion-card-header>
 					<div class="pointsSectionDescription">
 						<h4>Folks around you</h4>
@@ -67,8 +67,26 @@
 				</ion-card-content>
 			</ion-card>
 		</ion-row>
+
 		<ion-row>
-			<ion-card [ngStyle]="{'width':'100%'}">
+			<ion-card *ngIf="shouldDisplayGetItStartedCard()" [ngStyle]="{'width':'100%'}">
+				<ion-card-header>
+					<div class="pointsSectionDescription">
+						<h4>Get it started in your area!</h4>
+					</div>
+				</ion-card-header>
+				<ion-card-content>
+					<span class="centered">
+						There are two ways:<br/><br/>
+						1. If someone appreciates something you've done, you can give them a unique way to say thank you: have them send you a point! 
+						 <br/>(<a href="http://www.easyah.com/send-a-point.html">Learn about Sending Points</a>)
+						 <br/> -- <br/>2. Create an offer to do something you're good at! Other people will see it, and get inspired!
+						<br/>(<a href="http://www.easyah.com/offers.html">Learn about offers</a>)
+						<br/>
+					</span>
+				</ion-card-content>
+			</ion-card>
+			<ion-card *ngIf="shouldDisplayMostRecentCreatedOffersCard()" [ngStyle]="{'width':'100%'}">
 				<ion-card-header>
 					<div class="pointsSectionDescription">
 						<h4>Offers Recently Created By People Near You</h4>

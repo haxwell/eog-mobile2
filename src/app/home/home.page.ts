@@ -120,6 +120,19 @@ export class HomePage {
         return this.mostRecentlyCreatedOffers;
     }
 
+    shouldDisplayGetItStartedCard() {
+        let mrc = this.getMostRecentlyCreatedOffers();
+        return mrc == undefined || mrc == null || mrc.length == 0;
+    }
+
+    shouldDisplayMostRecentCreatedOffersCard() {
+        return !this.shouldDisplayGetItStartedCard();
+    }
+
+    getNumberOfMostRecentlyCreatedOffers() {
+        return true;
+    }
+
     // TODO: Turn this into a component. We're gonna want to change what is shown there, make it more
     //  graphical, if not interactive. Lets keep that complexity separate.
     getFolksAroundYouText() {
