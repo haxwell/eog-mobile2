@@ -144,9 +144,9 @@ export class HomePage {
 
         if (count == undefined) {
             return ".."
-        } else if (count < 1) {
+        } else if (count == 0) {
             return "You are the first person in your area! Thank you, thank you! #Trendsetter"
-        } else if (count > 1 && count < 5) {
+        } else if (count < 5) {
             // on the way to 5
             return "There are " + count + " other users in your area. Tell a friend, bring a friend!"
         } else if (count == 5) {
