@@ -35,6 +35,8 @@ export class UserMetadataService extends DomainObjectMetadataService {
 				this.markDirty({domainObject: user});
 			});
 		});
+
+		this._pointsService.init();
 	}
 
 	getMetadataValue(_domainObj, functionKey): any {

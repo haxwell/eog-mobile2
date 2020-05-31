@@ -38,7 +38,7 @@ export class ProfileModelService  {
 				private _events: Events) { 
 
 		_pictureService.init();
-		
+		_pointsService.init();
 	}
 
 	init() {

@@ -79,6 +79,7 @@ export class DetailPage {
 		})
 
 		this._pictureService.init();
+		this._pointsService.init();
 	}
 
 	ngOnInit() {

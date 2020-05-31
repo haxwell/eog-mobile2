@@ -24,6 +24,7 @@ export class OfferDetailService {
 		let _msgs = [];
 
 		this._offerMetadataService.init();
+		this._pointsService.init();
 
 		// Only return detail messages if the offer exists, and belongs to another user.
 		
