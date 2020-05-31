@@ -28,9 +28,10 @@ export class HomeService {
 		self._functionPromiseService.initFunc(this._constants.FUNCTION_KEY_MOST_RECENTLY_CREATED_OFFERS_GET, (data) => {
 			let userId = data['userId'];
 			let count = data['count'];
+			let distance = data['distance'];
 
 			return new Promise((resolve, reject) => {
-				let url = environment.apiUrl + "/api/offers/recent?count=" + count + "&userId=" + userId;
+				let url = environment.apiUrl + "/api/offers/recent?count=" + count + "&userId=" + userId + "&d=" + distance;
 				self._apiService.get(url).subscribe((data: []) => {
 					let offers = data;
 					resolve(offers);
@@ -48,7 +49,7 @@ export class HomeService {
 		if (!self.isMostRecentlyCreatedOffersFuncInitialized)
 			self.init();
 
-		let data = {userId: self._userService.getCurrentUser()['id'], count: 3};
+		let data = {userId: self._userService.getCurrentUser()['id'], count: 3, distance: 50};
 		return self._functionPromiseService.waitAndGet(data['userId']+"mrcp", self._constants.FUNCTION_KEY_MOST_RECENTLY_CREATED_OFFERS_GET, data);
 	}
 }

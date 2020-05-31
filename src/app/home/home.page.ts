@@ -76,6 +76,10 @@ export class HomePage {
         }
     }
 
+    getMaxMileRadius() {
+        return this._constants.DEFAULT_MAX_MILE_RADIUS;
+    }
+
     getNumberOfUsersWithOffersAroundThisGuy() {
         // #53 is about adding the offers filter
         return this._userGeographyService.getNumberOfUsersNearby(this._userService.getCurrentUser()["id"], this._constants.DEFAULT_MAX_MILE_RADIUS);
@@ -140,7 +144,7 @@ export class HomePage {
 
         if (count == undefined) {
             return ".."
-        } else if (count == 1) {
+        } else if (count < 1) {
             return "You are the first person in your area! Thank you, thank you! #Trendsetter"
         } else if (count > 1 && count < 5) {
             // on the way to 5
