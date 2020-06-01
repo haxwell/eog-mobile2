@@ -272,38 +272,38 @@ export class LoginPage {
                       message: 'Accessing your device GPS...'
                     }).then(() => {
                       self._geolocationService.getCurrentPosition().then((resp) => {
-                          self.user["latitude"] = resp["coords"].latitude;
-                          self.user["longitude"] = resp["coords"].longitude;
+                        self.user["latitude"] = resp["coords"].latitude;
+                        self.user["longitude"] = resp["coords"].longitude;
 
-                          self._userService.save(self.user).then((obj) => {
-                              self._alertService.show({
-                                header: 'Success',
-                                message: "Your location has been updated!",
-                                buttons: [{
-                                  text: 'OK',
-                                  handler: () => {
-                                    self._loadingService.dismiss().then(() => {
-                                      resolve();
-                                    });
-                                  }
-                                }]
-                              })
-
-                          }, (err) => {
-                              self._alertService.show({
-                                header: 'Arggh!',
-                                message: "Something bad happened on the server. We hate when that happens. Please email us at info@easyah.com and let us know.",
-                                buttons: [{
-                                  text: 'OK',
-                                  handler: () => {
-                                    self._loadingService.dismiss().then(() => {
-                                      reject();
-                                    });
-                                  }
-                                }]
-                              })
+                        self._userService.save(self.user).then((obj) => {
+                          self._loadingService.dismiss().then(() => {
+                            self._alertService.show({
+                              header: 'Success',
+                              message: "Your location has been updated!",
+                              buttons: [{
+                                text: 'OK',
+                                handler: () => {
+                                  resolve();
+                                }
+                              }]
+                            })
                           })
-                      }, (error) => {
+                        })
+                      }, (err) => {
+                        self._alertService.show({
+                          header: 'Arggh!',
+                          message: "Something bad happened on the server. We hate when that happens. Please email us at info@easyah.com and let us know.",
+                          buttons: [{
+                            text: 'OK',
+                            handler: () => {
+                              self._loadingService.dismiss().then(() => {
+                                reject();
+                              });
+                            }
+                          }]
+                        })
+                      })
+                    }, (error) => {
 
                         self._loadingService.dismiss().then(() => {
 
@@ -374,17 +374,15 @@ export class LoginPage {
                                 }] // end buttons
                               }); // end alert 
                         }); 
-                      })
-                  });
-                }
-              }]
-            })
-
-          } else {
-            resolve();
-          } // end if latlng
-        
-        }); // end promise
+                      }) // end initial loading spinner service call
+                  } 
+                }]
+                })
+              } else {
+                resolve();
+              } // end if latlng
+            }); // end promise
+        }
     }
 
 }
