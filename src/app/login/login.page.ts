@@ -303,9 +303,9 @@ export class LoginPage {
             }); // end promise
         }
 
-getUserLocationManually(resolve, reject) {
+getUserLocationManually(res, rej) {
   let self = this;
-  (error) => {
+  let func = (resolve, reject) => {
               self._loadingService.dismiss().then(() => {
 
                 self._alertService.show({
@@ -375,6 +375,8 @@ getUserLocationManually(resolve, reject) {
                       }] // end buttons
                     }); // end alert 
               }); 
-            }; // end initial loading spinner service call
+            };
+
+            func(res, rej); 
         }
     }
