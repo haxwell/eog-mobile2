@@ -125,14 +125,12 @@ export class HomePage {
     }
 
     shouldDisplayGetItStartedCard() {
-        // let mrc = this.getMostRecentlyCreatedOffers();
-        // return mrc == undefined || mrc == null || mrc.length == 0;
-
         return true;
     }
 
     shouldDisplayMostRecentCreatedOffersCard() {
-        return !this.shouldDisplayGetItStartedCard();
+        let mrc = this.getMostRecentlyCreatedOffers();
+        return mrc && mrc.length > 0;
     }
 
     getNumberOfMostRecentlyCreatedOffers() {
