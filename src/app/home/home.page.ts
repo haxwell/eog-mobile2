@@ -125,8 +125,10 @@ export class HomePage {
     }
 
     shouldDisplayGetItStartedCard() {
-        let mrc = this.getMostRecentlyCreatedOffers();
-        return mrc == undefined || mrc == null || mrc.length == 0;
+        // let mrc = this.getMostRecentlyCreatedOffers();
+        // return mrc == undefined || mrc == null || mrc.length == 0;
+
+        return true;
     }
 
     shouldDisplayMostRecentCreatedOffersCard() {
