@@ -290,19 +290,22 @@ export class LoginPage {
                           })
                         })
                       }, (err) => {
-                        self._alertService.show({
-                          header: 'Arggh!',
-                          message: "Something bad happened on the server. We hate when that happens. Please email us at info@easyah.com and let us know.",
-                          buttons: [{
-                            text: 'OK',
-                            handler: () => {
-                              self._loadingService.dismiss().then(() => {
-                                reject();
-                              });
-                            }
-                          }]
+                        self._loadingService.dismiss().then(() => {
+                          self._alertService.show({
+                            header: 'Arggh!',
+                            message: "Something bad happened on the server. We hate when that happens. Please email us at info@easyah.com and let us know.",
+                            buttons: [{
+                              text: 'OK',
+                              handler: () => {
+                                self._loadingService.dismiss().then(() => {
+                                  reject();
+                                });
+                              }
+                            }]
+                          })
                         })
                       })
+
                     }, (error) => {
 
                         self._loadingService.dismiss().then(() => {
