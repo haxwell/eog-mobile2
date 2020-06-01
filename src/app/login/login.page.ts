@@ -290,101 +290,91 @@ export class LoginPage {
                           })
                         })
                       }, (err) => {
-                        self._loadingService.dismiss().then(() => {
-                          self._alertService.show({
-                            header: 'Arggh!',
-                            message: "Something bad happened on the server. We hate when that happens. Please email us at info@easyah.com and let us know.",
-                            buttons: [{
-                              text: 'OK',
-                              handler: () => {
-                                self._loadingService.dismiss().then(() => {
-                                  reject();
-                                });
-                              }
-                            }]
-                          })
-                        })
+                        self.getUserLocationManually(resolve, reject);
                       })
-
                     }, (error) => {
-
-                        self._loadingService.dismiss().then(() => {
-
-                          self._alertService.show({
-                              header: 'Hmmm..',
-                              message: "Easyah could not read your device's location. Where are you?",
-                              inputs: [{
-                                  name: 'city',
-                                  placeholder: 'city',
-                                  type: 'text'
-                              }, {
-                                  name: 'state',
-                                  placeholder: 'state',
-                                  type: 'text'
-                              }],
-                              buttons: [{
-                                  text: 'Here I am!',
-                                  handler: (data) => {
-                                    if ((data.city && data.city.length >= 3) && (data.state && data.state.length >= 2)) {
-
-                                        console.log("calling for geoloc data for " + data.city + " / " + data.state);
-                                        self._geolocationService.getLatlongFromCityState(data.city, data.state).then((obj) => {
-                                            
-                                            console.log("geoloc data found for " + data.city + " / " + data.state + " // " + obj);
-                                            self.user["latitude"] = obj["latitude"];
-                                            self.user["longitude"] = obj["longitude"];
-
-                                            self._userService.save(self.user).then((obj) => {
-                                                self._alertService.show({
-                                                  header: 'Success',
-                                                  message: "Your location has been updated!",
-                                                  buttons: [
-                                                    {
-                                                        text: 'OK', role: 'cancel', handler: () => {
-                                                          resolve();
-                                                        }
-                                                    }
-                                                  ]
-                                                })
-                                            }, (err) => {
-                                                self._alertService.show({
-                                                  header: 'Arggh!',
-                                                  message: "Something bad happened on the server. We hate when that happens. Please email us at info@easyah.com and let us know.",                                      
-                                                  buttons: [{
-                                                    text: 'OK',
-                                                    handler: () => {
-                                                        reject();
-                                                    }
-                                                  }]
-                                                })
-                                            })
-                                        }, (err) => {
-                                            self._alertService.show({
-                                              header: 'Arggh!',
-                                              message: "Sorry, we couldn't find that location either. You can set your location in your profile later on.",
-                                              buttons: [{
-                                                text: 'OK',
-                                                handler: () => {
-                                                    reject();
-                                                }
-                                              }]
-                                            })
-                                        })
-                                    } else {
-                                      return false; // disble the button
-                                    }
-                                  } // end handler
-                                }] // end buttons
-                              }); // end alert 
-                        }); 
-                      }) // end initial loading spinner service call
-                  } 
-                }]
+                      self.getUserLocationManually(resolve, reject);
+                    }) 
+                }}]
                 })
               } else {
-                resolve();
+                resolve(); // we've already got a setting.. nothing to do.
               } // end if latlng
             }); // end promise
         }
-    }
 
+getUserLocationManually(resolve, reject) {
+  let self = this;
+  (error) => {
+              self._loadingService.dismiss().then(() => {
+
+                self._alertService.show({
+                    header: 'Hmmm..',
+                    message: "Easyah could not read your device's location. Where are you?",
+                    inputs: [{
+                        name: 'city',
+                        placeholder: 'city',
+                        type: 'text'
+                    }, {
+                        name: 'state',
+                        placeholder: 'state',
+                        type: 'text'
+                    }],
+                    buttons: [{
+                        text: 'Here I am!',
+                        handler: (data) => {
+                          if ((data.city && data.city.length >= 3) && (data.state && data.state.length >= 2)) {
+
+                              console.log("calling for geoloc data for " + data.city + " / " + data.state);
+                              self._geolocationService.getLatlongFromCityState(data.city, data.state).then((obj) => {
+                                  
+                                  console.log("geoloc data found for " + data.city + " / " + data.state + " // " + obj);
+                                  self.user["latitude"] = obj["latitude"];
+                                  self.user["longitude"] = obj["longitude"];
+
+                                  self._userService.save(self.user).then((obj) => {
+                                      self._alertService.show({
+                                        header: 'Success',
+                                        message: "Your location has been updated!",
+                                        buttons: [
+                                          {
+                                              text: 'OK', role: 'cancel', handler: () => {
+                                                resolve();
+                                              }
+                                          }
+                                        ]
+                                      })
+                                  }, (err) => {
+                                      self._alertService.show({
+                                        header: 'Arggh!',
+                                        message: "Something bad happened on the server. We hate when that happens. Please email us at info@easyah.com and let us know.",                                      
+                                        buttons: [{
+                                          text: 'OK',
+                                          handler: () => {
+                                              reject();
+                                          }
+                                        }]
+                                      })
+                                  })
+                              }, (err) => {
+                                  self._alertService.show({
+                                    header: 'Arggh!',
+                                    message: "Sorry, we couldn't find that location either. You can set your location in your profile later on.",
+                                    buttons: [{
+                                      text: 'OK',
+                                      handler: () => {
+                                          reject();
+                                      }
+                                    }]
+                                  })
+                              })
+                          } else {
+                            return false; // disble the button
+                          }
+                        } // end handler
+                      }] // end buttons
+                    }); // end alert 
+              }); 
+            }; // end initial loading spinner service call
+        }
+    }
