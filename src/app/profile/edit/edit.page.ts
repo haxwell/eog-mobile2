@@ -520,7 +520,7 @@ export class EditPage {
 			});
 	}
 
-	onAssociatedPress() {
+	onAssociatedImagePress() {
 		this._alertService.show({
 			header: 'Delete Photo?',
 			message: 'Do you want to DELETE your profile picture?',
