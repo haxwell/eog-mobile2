@@ -141,7 +141,7 @@ export class CreateAccountPage {
 	}
 
 	onReferringUsernameChange(event) {
-		this.referringUsername = event._value;
+		this.referringUsername = event.currentTarget.value;
 	}
 
 	getReferringUsername() {
