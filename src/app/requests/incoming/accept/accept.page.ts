@@ -51,6 +51,10 @@ export class AcceptPage {
 		return this._interactionsService.isFirstInteractionBetween(this.model.offer['userId'], this.model.directionallyOppositeUser['id']) === true;
 	}
 
+	getNumberOfPreviousInteractions() {
+		return this._interactionsService.getNumberOfPreviousInteractionsBetween(this.model.offer['userId'], this.model.directionallyOppositeUser['id']);
+	}
+
 	getNumberOfPreviousInteractionsString() {
 		let rtn = undefined;
 
