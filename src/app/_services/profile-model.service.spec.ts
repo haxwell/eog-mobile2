@@ -11,6 +11,9 @@ import { PictureService } from './picture.service';
 
 import { Constants } from '../../_constants/constants';
 
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { DomSanitizer } from '@angular/platform-browser';
+
 describe('ProfileModelService', () => {
 
 	let fixture
@@ -27,6 +30,8 @@ describe('ProfileModelService', () => {
 				,{ provide: Constants, useClass: Constants }
 				,{ provide: FunctionPromiseService, useClass: FunctionPromiseService }
 				,{ provide: PictureService, useClass: PictureService }
+				,{ provide: WebView, useValue: { convertFileSrc: (val) => { return val; }}}
+				,{ provide: DomSanitizer, useValue: { bypassSecurityTrustResourceUrl: (val) => { return val; }}}
 			],
 			imports: [ HttpClientModule ]
 		})
