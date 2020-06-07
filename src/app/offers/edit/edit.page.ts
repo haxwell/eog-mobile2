@@ -129,10 +129,10 @@ export class EditPage {
 			//  control object to determine if it should be disabled or not. We should do that at some point. 
 			//	this article may help: https://netbasal.com/disabling-form-controls-when-working-with-reactive-forms-in-angular-549dd7b42110
 			self.offerEditForm = self.formBuilder.group({
-				title: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.pattern('[a-zA-Z0-9 .!?]*')]), updateOn: "blur"}),
+				title: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.pattern('[a-zA-Z0-9 .-:;,()!?\~\'\$\@\%\&]*')]), updateOn: "blur"}),
 				quantity: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.maxLength(5), Validators.pattern('^[0-9]*')]), updateOn: "blur"}),
-				units: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern('[a-zA-Z0-9 ]*')]), updateOn: "blur"}),				
-				description: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.pattern('[a-zA-Z0-9 .-~:;,()!?]*')]), updateOn: "blur"}),
+				units: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern('[a-zA-Z0-9 \']*')]), updateOn: "blur"}),
+				description: new FormControl(null, { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.pattern('[a-zA-Z0-9 .-:;,()!?\~\'\$\@\%\&]*')]), updateOn: "blur"}),
 			});
 
 			self._offerModelService.waitingPromise(self.offerId).then((model) => {
