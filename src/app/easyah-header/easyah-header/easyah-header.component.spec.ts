@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { EasyahHeaderComponent } from './easyah-header.component';
+import { EasyahHeader } from './easyah-header.component';
 
-describe('EasyahHeaderComponent', () => {
-  let component: EasyahHeaderComponent;
-  let fixture: ComponentFixture<EasyahHeaderComponent>;
+describe('EasyahHeader', () => {
+  let component: EasyahHeader;
+  let fixture: ComponentFixture<EasyahHeader>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EasyahHeaderComponent ],
+      declarations: [ EasyahHeader ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(EasyahHeaderComponent);
+    fixture = TestBed.createComponent(EasyahHeader);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
