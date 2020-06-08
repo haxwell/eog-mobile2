@@ -48,11 +48,6 @@ export class HomePage {
 
     }
 
-
-    // WILO.. will be adding a ion-card with the number of other members withing 50 miles of the user. something
-    //  special for first, among 5, 10 30 and 60.
-
-
     ngOnInit() {
         let self = this;
 
