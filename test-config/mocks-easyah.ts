@@ -1,3 +1,4 @@
+import { Constants } from '../src/_constants/constants'
 
 
 export class UserServiceMock {
@@ -46,5 +47,50 @@ export class OfferCollectionServiceMock {
 export class OfferModelServiceMock {
 	public setOfferImageOrientation(offer) : any {
 
+	}
+}
+
+
+
+export class NotificationServiceMock {
+	public get(forceUpdate) {
+		return new Promise((resolve, reject) => {
+			resolve({data: 'fakeData'});
+		})
+	}
+}
+
+
+
+export class RequestsServiceMock {
+	public getIncomingRequestsForCurrentUser() {
+		return new Promise((resolve, reject) => {
+			resolve([{ offer: {id: 1, title: 'Offer 1'}}, { offer: {id: 2, title: 'Offer 2'}}, { offer: {id: 3, title: 'Offer 3'}}])
+		})
+	}
+}
+
+
+
+export class RequestMetadataServiceMock {
+
+	map = {};
+	_constants = new Constants();
+
+	RequestMetadataServiceMock() {
+		this.map[this._constants.FUNCTION_KEY_REQUEST_IS_IN_PROGRESS] = false;
+		this.map[this._constants.FUNCTION_KEY_REQUEST_IS_COMPLETED_AWAITING_CONFIRMATION] = false;
+	}
+
+	public init() {
+		return;
+	}
+
+	public setReturnValue(key, val) {
+		this.map[key] = val;
+	}
+
+	public getMetadataValue(obj, key) {
+		return this.map[key];
 	}
 }

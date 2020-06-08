@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
+import { EasyahHeaderModule } from '../../easyah-header/easyah-header.module';
+
 import { DetailPage } from './detail.page';
 
 describe('DetailPage', () => {
@@ -10,7 +12,7 @@ describe('DetailPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ DetailPage ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), EasyahHeaderModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(DetailPage);

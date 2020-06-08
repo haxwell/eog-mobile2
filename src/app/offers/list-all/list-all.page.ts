@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Events } from '@ionic/angular';
-
-import { PictureService } from '../../../app/_services/picture.service'
 
 import { Constants } from '../../../_constants/constants'
 
@@ -29,11 +26,9 @@ export class ListAllPage /*implements OnInit*/ {
 	model = {};
 	dirty = undefined;
 
-	constructor(private _location: Location,
-				private _route: ActivatedRoute,
+	constructor(private _route: ActivatedRoute,
   				private _router: Router,
 				private _listAllOfferService : ListAllOfferService,
-				private _pictureService : PictureService,
 				private _events: Events
 				,private _constants: Constants
 	) {

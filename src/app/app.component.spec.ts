@@ -7,8 +7,8 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-import { File } from '@ionic-native/file/ngx'
+// import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+// import { File } from '@ionic-native/file/ngx'
 
 import { AppComponent } from './app.component';
 
@@ -31,14 +31,13 @@ xdescribe('AppComponent', () => {
       declarations: [AppComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
-        { provide: FileTransfer, useClass: FileTransfer },
-        { provide: File, useClass: File },
+        // { provide: FileTransfer, useClass: FileTransfer },
+        // { provide: File, useClass: File },
         { provide: StatusBar, useValue: statusBarSpy },
         { provide: SplashScreen, useValue: splashScreenSpy },
         { provide: Platform, useValue: platformSpy },
-        { provide: FunctionPromiseService, useClass: FunctionPromiseService },
-        { provide: PictureService, useClass: PictureService },
-
+        // { provide: FunctionPromiseService, useClass: FunctionPromiseService },
+        // { provide: PictureService, useClass: PictureService },
         { provide: Constants, useClass: Constants }
       ],
       imports: [ HttpClientModule, RouterTestingModule.withRoutes([])],

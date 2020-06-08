@@ -21,7 +21,7 @@ export class ListPage {
 	dirty = true;
 	newKeywordsString = '';
 
-	imageOrientation = undefined;
+	imageOrientation = undefined;	
 
 	directionallyOppositeUserProfileImageFilepath = {};
 
