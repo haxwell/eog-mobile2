@@ -13,7 +13,6 @@ import { LoadingService } from '../../../app/_services/loading.service'
 import { ModelServiceP } from '../_services/model.service'
 import { PictureService } from '../../../app/_services/picture.service'
 import { PointsService } from '../../../app/_services/points.service'
-import { ProfileService } from '../../../app/_services/profile.service'
 import { ProfileModelService } from '../../../app/_services/profile-model.service'
 import { RecommendationService } from '../../../app/_services/recommendation.service'
 import { UserMetadataService } from '../../../app/_services/user-metadata.service'
@@ -53,7 +52,6 @@ export class DetailPage {
 				private _loadingService: LoadingService,
 				private _modelService: ModelServiceP,
 				private _userService: UserService,
-				private _profileService: ProfileService,
 				private _profileModelService: ProfileModelService,
 				private _userMetadataService: UserMetadataService,
 				private _recommendationService: RecommendationService,
@@ -94,7 +92,7 @@ export class DetailPage {
 				}
 
 				self._loadingService.show({message: "Please wait..."}).then(() => {
-					self._profileService.init();
+					self._profileModelService.init();
 
 					self.setCurrentUserCanSendPointToProfileUser();
 					self.setCurrentUserCanSendRecommendationToProfileUser();

@@ -5,6 +5,12 @@ export class UserServiceMock {
 	public getCurrentUser(): any { 
 	    return {id:1,name:"eogadmin",realname:"Eog A. Admin",email:"admin@eog.com",phone:"(303) 555-1212",enabled:1};
 	};
+
+	public getUser(userId, force): any {
+		return new Promise((resolve, reject) => {
+			resolve({id:userId,name:"eoguser1",realname:"Eog User One",email:"eog1@eog.com",phone:"(303) 555-1213",enabled:1});
+		})
+	};
 }
 
 
@@ -147,5 +153,52 @@ export class RequestMetadataServiceMock {
 
 	public getMetadataValue(obj, key) {
 		return this.map[key];
+	}
+}
+
+
+
+export class GeolocationServiceMock {
+	public getCityStateFromLatlong(lat, long) {
+		return new Promise((resolve, reject) => {
+			resolve({city: 'Denver', state: 'CO'});
+		})
+	}
+}
+
+
+
+export class ProfileModelServiceMock {
+	model = {    
+			"id": 3,
+		    "userId": 3,
+		    "description": "I am the first regular user in the EOG database",
+		    "allTimePointCount": 6,
+		    "keywords": [
+		        {
+		            "id": 5,
+		            "text": "children"
+		        },
+		        {
+		            "id": 10,
+		            "text": "french teacher"
+		        },
+		        {
+		            "id": 4,
+		            "text": "Denver"
+		        }
+		    ],
+		    "archivedRequestCount": 0,
+		    "disputedRequestCount": 0,
+		    "mostRecentDisputedRequestTimestamp": null
+		}
+
+	public init() {
+
+	}
+
+	public get(userId) {
+		this.model['id'] = userId;
+		return this.model;
 	}
 }
