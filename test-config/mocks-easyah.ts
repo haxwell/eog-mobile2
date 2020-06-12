@@ -60,8 +60,7 @@ export class OfferCollectionServiceMock {
 }
 
 export class OfferModelServiceMock {
-	public get(offerId: number) {
-		return {    "id": offerId,
+	model = {    "id": 1,
 				    "userId": 4,
 				    "description": "Board Certified Dentist since 1987. Millions of teeth served.",
 				    "title": "Dentist Extraordinaire",
@@ -83,7 +82,22 @@ export class OfferModelServiceMock {
 				    "lastUpdated": 1591129100000,
 				    "createDate": 1591129098000,
 				    "hasAnAssociatedImage": false
-		}		
+		};
+
+	public init() {
+		
+	}
+
+	public get(offerId: number) {
+		this.model['id'] = offerId;
+		return this.model;
+	}
+
+	public waitingPromise(offerId: number) {
+		return new Promise((resolve, reject) => {
+			this.model['id'] = offerId;
+			resolve(this.model);
+		})
 	}
 
 	public setOfferImageOrientation(offer) : any {
