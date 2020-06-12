@@ -103,7 +103,7 @@ export class EditPage {
 			});
 
 			this._profileModelService.get(this.userId, true).then((model) => {
-				let efc = self.editAccountForm.controls;
+				let efc = self.editAccountFormControl;
 
 				efc.realname.setValue(model['realname']);
 				efc.description.setValue(model['description']);
