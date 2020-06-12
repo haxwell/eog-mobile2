@@ -17,6 +17,8 @@ import { RequestsService }   from '../../../../app/_services/requests.service';
 import { RequestsServiceMock } from '../../../../../test-config/mocks-easyah'
 import { RequestMetadataService }   from '../../../../app/_services/request-metadata.service';
 import { RequestMetadataServiceMock } from '../../../../../test-config/mocks-easyah'
+import { OfferModelService } from '../../../../app/_services/offer-model.service'
+import { OfferModelServiceMock } from '../../../../../test-config/mocks-easyah'
 
 describe('DeletePage', () => {
   let component: DeletePage;
@@ -24,21 +26,24 @@ describe('DeletePage', () => {
 
   let mockRequestsService: RequestsServiceMock;
   let mockRequestMetadataService: RequestMetadataServiceMock;
+  let mockOfferModelService: OfferModelServiceMock;
 
   beforeEach(async(() => {
     mockRequestsService = new RequestsServiceMock();
     mockRequestMetadataService = new RequestMetadataServiceMock();
+    mockOfferModelService = new OfferModelServiceMock();
 
     TestBed.configureTestingModule({
       declarations: [ DeletePage ],
       providers: [
              { provide: FileTransfer, useClass: FileTransfer }
             ,{ provide: File, useClass: File }
+            ,{ provide: WebView, useValue: { convertFileSrc: (val) => { return val; }}}
+            ,{ provide: DomSanitizer, useValue: { bypassSecurityTrustResourceUrl: (val) => { return val; }}}
             ,{ provide: Constants, useClass: Constants }
             ,{ provide: RequestsService, useValue: mockRequestsService }
             ,{ provide: RequestMetadataService, useValue: mockRequestMetadataService }
-            ,{ provide: WebView, useValue: { convertFileSrc: (val) => { return val; }}}
-            ,{ provide: DomSanitizer, useValue: { bypassSecurityTrustResourceUrl: (val) => { return val; }}}
+            ,{ provide: OfferModelService, useValue: mockOfferModelService }
             ],
       imports: [IonicModule.forRoot(), RouterTestingModule, HttpClientModule]
     }).compileComponents();
