@@ -5,7 +5,7 @@ import { EasyahHeaderModule } from '../../easyah-header/easyah-header.module';
 
 import { DetailPage } from './detail.page';
 
-describe('DetailPage', () => {
+describe('Profile DetailPage', () => {
   let component: DetailPage;
   let fixture: ComponentFixture<DetailPage>;
 

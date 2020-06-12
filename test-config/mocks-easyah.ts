@@ -8,6 +8,15 @@ export class UserServiceMock {
 }
 
 
+export class UserPreferencesServiceMock {
+	public getPreference(key: string, force: boolean) {
+		return new Promise((resolve, reject) => {
+			resolve({ pref: undefined });
+		})
+	}
+}
+
+
 
 import { of } from 'rxjs';
 export class ApiServiceMock {
@@ -51,6 +60,32 @@ export class OfferCollectionServiceMock {
 }
 
 export class OfferModelServiceMock {
+	public get(offerId: number) {
+		return {    "id": offerId,
+				    "userId": 4,
+				    "description": "Board Certified Dentist since 1987. Millions of teeth served.",
+				    "title": "Dentist Extraordinaire",
+				    "quantity": 1,
+				    "quantityDescription": "offer",
+				    "requiredUserRecommendations": [],
+				    "keywords": [
+				        {
+				            "id": 4,
+				            "text": "Denver"
+				        },
+				        {
+				            "id": 2,
+				            "text": "dentist"
+				        }
+				    ],
+				    "requiredPointsQuantity": 1,
+				    "archiveDate": null,
+				    "lastUpdated": 1591129100000,
+				    "createDate": 1591129098000,
+				    "hasAnAssociatedImage": false
+		}		
+	}
+
 	public setOfferImageOrientation(offer) : any {
 
 	}
@@ -71,7 +106,7 @@ export class NotificationServiceMock {
 export class RequestsServiceMock {
 	public getIncomingRequestsForCurrentUser() {
 		return new Promise((resolve, reject) => {
-			resolve([{ offer: {id: 1, title: 'Offer 1'}}, { offer: {id: 2, title: 'Offer 2'}}, { offer: {id: 3, title: 'Offer 3'}}])
+			resolve([{ offer: {id: 1, title: 'Offer 1', requiredPointsQuantity: 1}}, { offer: {id: 2, title: 'Offer 2', requiredPointsQuantity: 1}}, { offer: {id: 3, title: 'Offer 3', requiredPointsQuantity: 1}}])
 		})
 	}
 }
