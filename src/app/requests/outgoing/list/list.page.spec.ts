@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
+import { EasyahHeaderModule } from '../../../easyah-header/easyah-header.module';
+
 import { ListPage } from './list.page';
 
 describe('ListPage', () => {
@@ -10,7 +12,7 @@ describe('ListPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ListPage ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), EasyahHeaderModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ListPage);
