@@ -22,6 +22,12 @@ export class ProfileKeywordApiServiceMock extends ApiServiceMock {
 	}
 }
 
+export class ListAllOffersPageApiServiceMock extends ApiServiceMock {
+	public get(url: string) {
+		return super.get(url, [{ offer: {id: 1, title: 'Offer 1'}}, { offer: {id: 2, title: 'Offer 2'}}, { offer: {id: 3, title: 'Offer 3'}}])
+	}
+}
+
 
 
 

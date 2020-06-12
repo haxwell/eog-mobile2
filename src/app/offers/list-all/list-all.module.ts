@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { EasyahCommonModule } from '../../common/easyah-common.module'
+import { OtherPeoplesOfferListModule } from '../../common/other-peoples-offer-list/other-peoples-offer-list.module'
 import { EasyahHeaderModule } from '../../easyah-header/easyah-header.module';
 import { ListAllPageRoutingModule } from './list-all-routing.module';
 
@@ -15,7 +15,7 @@ import { ListAllPage } from './list-all.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    EasyahCommonModule,
+    OtherPeoplesOfferListModule,
     EasyahHeaderModule,
     ListAllPageRoutingModule
   ],
