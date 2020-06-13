@@ -2,8 +2,10 @@ import { Constants } from '../src/_constants/constants'
 
 
 export class UserServiceMock {
+	model = {id:1,name:"eogadmin",realname:"Eog A. Admin",email:"admin@eog.com",phone:"(303) 555-1212",enabled:1};
+
 	public getCurrentUser(): any { 
-	    return {id:1,name:"eogadmin",realname:"Eog A. Admin",email:"admin@eog.com",phone:"(303) 555-1212",enabled:1};
+	    return this.model;
 	};
 
 	public getUser(userId, force): any {
@@ -66,7 +68,7 @@ export class OfferCollectionServiceMock {
 }
 
 export class OfferModelServiceMock {
-	model = {    "id": 1,
+	public model = {    "id": 1,
 				    "userId": 4,
 				    "description": "Board Certified Dentist since 1987. Millions of teeth served.",
 				    "title": "Dentist Extraordinaire",
