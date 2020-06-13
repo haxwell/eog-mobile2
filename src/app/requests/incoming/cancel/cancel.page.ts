@@ -14,7 +14,6 @@ import { ModelService } from '../_services/model.service';
 
 export class CancelPage {
 
-	model = undefined;
 	doneBtnTapCount = 0;
 	
 	constructor(private _router: Router,
@@ -24,8 +23,8 @@ export class CancelPage {
 
 	}
 
-	ngOnInit() {
-		this.model = this._modelService.getModel();
+	get model() {
+		return this._modelService.getModel();
 	}
 
 	isSaveBtnEnabled() {

@@ -13,8 +13,6 @@ import { ModelService } from '../_services/model.service';
 
 export class PermanentlyDismissPage {
 
-	model = undefined;
-
 	constructor(private _router: Router,
 				private _modelService: ModelService,
 				private _requestsService: RequestsService,
@@ -22,8 +20,8 @@ export class PermanentlyDismissPage {
 
 	}
 
-	ngOnInit() {
-		this.model = this._modelService.getModel();
+	get model() {
+		return this._modelService.getModel();
 	}
 
 	onSaveBtnTap(evt) {

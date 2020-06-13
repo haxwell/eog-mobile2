@@ -18,8 +18,6 @@ import { Constants } from '../../../../_constants/constants';
 
 export class CompletePage {
 
-	model = undefined;
-
 	requestAgainDelayCodes = undefined;
 	selectedRequestAgainDelayId = undefined;
 
@@ -37,8 +35,6 @@ export class CompletePage {
 	ngOnInit() {
 		let self = this;
 
-		self.model = this._modelService.getModel();
-
 		let url = environment.apiUrl + "/api/requestAgainDelayCodes";
 		this._apiService.get(url).subscribe((data) => {
 			self.requestAgainDelayCodes = data;
@@ -47,6 +43,10 @@ export class CompletePage {
 			console.log("CompleteRequestPage ERROR");
 			console.log(JSON.stringify(err));
 		});
+	}
+
+	get model() {
+		return this._modelService.getModel();
 	}
 
 	isSaveBtnEnabled() {

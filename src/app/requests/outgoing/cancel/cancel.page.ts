@@ -13,8 +13,6 @@ import { ModelService } from '../_services/model.service';
 })
 export class CancelPage {
 
-	model = undefined;
-
 	REQUEST_STATUS_ACCEPTED = 3;
 
 	doneBtnTapCount = 0;
@@ -26,8 +24,8 @@ export class CancelPage {
 
 	}
 
-	ngOnInit() {
-		// this.model = this._modelService.getModel();
+	get model() {
+		return this._modelService.getModel();
 	}
 
 	isSaveBtnEnabled() {
@@ -39,17 +37,17 @@ export class CancelPage {
 	}
 
 	isRequestAccepted() {
-		return this._modelService.getModel().deliveringStatusId === this.REQUEST_STATUS_ACCEPTED;
+		return this.model.deliveringStatusId === this.REQUEST_STATUS_ACCEPTED;
 	}
 
 	onSaveBtnTap(evt) {
 		let self = this;
-		self._requestsService.cancelOutgoingRequest(this._modelService.getModel()).then((data) => {
+		self._requestsService.cancelOutgoingRequest(this.model).then((data) => {
 			
 			// in the case of an outgoing request being cancelled, if it is not accepted by the delivering side, 
 			//  then no object is returned from the server, so data == undefined
 
-			let rtnObj = self.isRequestAccepted() ? data : self._modelService.getModel();
+			let rtnObj = self.isRequestAccepted() ? data : self.model;
 
 			self._events.publish("request:outgoing:cancelled", {request: rtnObj});
 

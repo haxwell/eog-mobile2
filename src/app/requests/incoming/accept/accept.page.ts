@@ -16,8 +16,6 @@ import { InteractionsService } from '../_services/interactions.service';
 })
 export class AcceptPage {
 
-	model = undefined;
-
 	showTutorialAfterRequestAccepted = true;
 	
 	constructor(private _router: Router,
@@ -32,11 +30,13 @@ export class AcceptPage {
 	ngOnInit() {
 		var self = this;
 
-		self.model = this._modelService.getModel();
-
 		self._userPreferencesService.getPreference("showTutorialAfterRequestAccepted", true).then((data) => {
 			self.showTutorialAfterRequestAccepted = data["pref"];
 		})
+	}
+
+	get model() {
+		return this._modelService.getModel();
 	}
 
 	getOfferTitle() {

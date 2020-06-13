@@ -14,8 +14,6 @@ import { ModelService } from '../_services/model.service';
 
 export class NotCompletePage {
 
-	model = undefined;
-	
 	incompleteBtnTapCount = 0;
 
 	constructor(private _router: Router,
@@ -25,8 +23,8 @@ export class NotCompletePage {
 
 	}
 
-	ngOnInit() {
-		this.model = this._modelService.getModel();
+	get model() {
+		return this._modelService.getModel();
 	}
 
 	isSaveBtnEnabled() {

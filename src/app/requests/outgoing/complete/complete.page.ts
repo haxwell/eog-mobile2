@@ -15,8 +15,6 @@ import { Constants } from '../../../../_constants/constants';
 
 export class CompletePage {
 
-	model = undefined;
-
 	constructor(private _router: Router,
 				private _modelService: ModelService,
 				private _requestsService: RequestsService,
@@ -25,13 +23,14 @@ export class CompletePage {
 
 	}
 
-	ngOnInit() {
-		this.model = this._modelService.getModel();
+	get model() {
+		return this._modelService.getModel();
 	}
 
 	isRequestInDispute() {
-		return this.model["deliveringStatusId"] === this._constants.REQUEST_STATUS_COMPLETED && 
-				this.model["requestingStatusId"] === this._constants.REQUEST_STATUS_NOT_COMPLETED;
+		let model = this.model;
+		return model["deliveringStatusId"] === this._constants.REQUEST_STATUS_COMPLETED && 
+				model["requestingStatusId"] === this._constants.REQUEST_STATUS_NOT_COMPLETED;
 	}
 
 	onSaveBtnTap(evt) {

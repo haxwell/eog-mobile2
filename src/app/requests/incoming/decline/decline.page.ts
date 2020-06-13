@@ -16,8 +16,6 @@ import { environment } from '../../../../_environments/environment';
 })
 export class DeclinePage {
 
-	model = undefined;
-
 	declineReasonCodes = undefined;
 	selectedDeclineReasonId = undefined;
 	requestAgainDelayCodes = undefined;
@@ -33,8 +31,6 @@ export class DeclinePage {
 
 	ngOnInit() {
 		let self = this;
-
-		self.model = self._modelService.getModel();
 
 		let url = environment.apiUrl + "/api/declineReasonCodes";
 		self._apiService.get(url).subscribe((data) => {
@@ -52,6 +48,10 @@ export class DeclinePage {
 			console.log("DeclineRequestPage ERROR");
 			console.log(JSON.stringify(err));
 		});
+	}
+
+	get model() {
+		return this._modelService.getModel();
 	}
 
 	isSaveBtnAvailable() {
