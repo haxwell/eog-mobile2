@@ -23,7 +23,7 @@ import { UserServiceMock } from '../../../../test-config/mocks-easyah'
 
 import { of as observableOf } from 'rxjs/observable/of'
 
-describe('ListAllPage', () => {
+describe('Offers ListAllPage', () => {
 
   let component: ListAllPage;
   let fixture: ComponentFixture<ListAllPage>;

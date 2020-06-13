@@ -16,7 +16,7 @@ import { Constants } from '../../../_constants/constants';
 import { OfferCollectionService } from '../../_services/offer-collection.service'
 import { OfferCollectionServiceMock } from '../../../../test-config/mocks-easyah'
 
-describe('ListPage', () => {
+describe('Your Offers ListPage', () => {
   let component: ListPage;
   let fixture: ComponentFixture<ListPage>;
 

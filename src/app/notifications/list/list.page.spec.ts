@@ -7,8 +7,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { Constants } from '../../../_constants/constants';
 
-import { ListPage } from './list.page';
-
 import { EasyahHeaderModule } from '../../easyah-header/easyah-header.module';
 
 import { NotificationService } from '../../../app/_services/notification.service'
@@ -17,7 +15,9 @@ import { NotificationServiceMock } from '../../../../test-config/mocks-easyah'
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
 
-describe('ListPage', () => {
+import { ListPage } from './list.page';
+
+describe('Notifications ListPage', () => {
   let component: ListPage;
   let fixture: ComponentFixture<ListPage>;
 
