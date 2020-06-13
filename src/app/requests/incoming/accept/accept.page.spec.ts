@@ -47,8 +47,6 @@ describe('AcceptPage', () => {
           ,{ provide: UserPreferencesService, useValue: userPreferencesServiceMock }
           ,{ provide: InteractionsService, useValue: interactionsServiceMock }
           ,{ provide: ModelService, useValue: acceptPageModelServiceMock }
-
-          // WILO.. Add a mock for the data-passing model service used in this page.
       ]
 
     }).compileComponents();

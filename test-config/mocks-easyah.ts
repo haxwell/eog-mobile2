@@ -45,6 +45,66 @@ export class ListAllOffersPageApiServiceMock extends ApiServiceMock {
 	}
 }
 
+export class DeclinePageApiServiceMock extends ApiServiceMock {
+	public get(url: string) {
+		if (url.indexOf("declineReasonCodes") > 0)
+			return super.get(url, 
+			    [{
+			        "id": 1,
+			        "text": "Too Busy!"
+			    },
+			    {
+			        "id": 2,
+			        "text": "[Insert Second Decline Reason Here]"
+			    }]
+    		)
+		else if (url.indexOf("requestAgainDelayCodes") > 0)
+			return super.get(url,
+				[
+				    {
+				        "id": 1,
+				        "text": "Immediately",
+				        "milliseconds": 1
+				    },
+				    {
+				        "id": 2,
+				        "text": "One Week",
+				        "milliseconds": 604800000
+				    },
+				    {
+				        "id": 3,
+				        "text": "Two Weeks",
+				        "milliseconds": 1209600000
+				    },
+				    {
+				        "id": 4,
+				        "text": "One Month",
+				        "milliseconds": 2419200000
+				    },
+				    {
+				        "id": 5,
+				        "text": "Three Months",
+				        "milliseconds": 7257600000
+				    },
+				    {
+				        "id": 6,
+				        "text": "Six Months",
+				        "milliseconds": 14515200000
+				    },
+				    {
+				        "id": 7,
+				        "text": "One Year",
+				        "milliseconds": 29030400000
+				    },
+				    {
+				        "id": 8,
+				        "text": "Never",
+				        "milliseconds": -1
+				    }
+				])
+	}
+}
+
 
 
 

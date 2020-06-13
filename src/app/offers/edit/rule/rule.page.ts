@@ -6,7 +6,7 @@ import { Constants } from '../../../../_constants/constants'
 
 @Component({
   selector: 'page-offer-edit-rule',
-  templateUrl: 'rule.page.html'
+  templateUrl: './rule.page.html'
   ,styleUrls: ['./rule.page.scss']
 })
 export class RulePage {
