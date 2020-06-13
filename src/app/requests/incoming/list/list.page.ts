@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Events } from '@ionic/angular';
@@ -32,8 +31,7 @@ export class ListPage { // List of Incoming Offer Requests
 	// 	click: () => { console.log("Clicked!"); }
 	// }
 	
-	constructor(private _location: Location,
-				private _route: ActivatedRoute,
+	constructor(private _route: ActivatedRoute,
   				private _router: Router,
 				private _modalCtrl: ModalController,
 				private _modelService: ModelService,
