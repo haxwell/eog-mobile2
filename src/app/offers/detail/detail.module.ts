@@ -10,7 +10,7 @@ import { UsersLineItemModule } from '../../common/users-line-item/users-line-ite
 import { DetailPageRoutingModule } from './detail-routing.module';
 
 import { DetailPage } from './detail.page';
-import { DeletePage } from './delete/delete.page';
+import { DeletePageModule } from './delete/delete.module';
 
 @NgModule({
   imports: [
@@ -19,9 +19,10 @@ import { DeletePage } from './delete/delete.page';
     IonicModule,
     EasyahHeaderModule,
     UsersLineItemModule,
+    DeletePageModule,
     DetailPageRoutingModule
   ],
-  declarations: [DetailPage, DeletePage],
-  entryComponents: [DeletePage]
+  declarations: [DetailPage]
+  // entryComponents: [DeletePage]
 })
 export class DetailPageModule {}

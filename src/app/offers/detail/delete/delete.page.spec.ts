@@ -3,6 +3,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
 
+import { UsersLineItemModule } from '../../../common/users-line-item/users-line-item.module';
+
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx'
 
@@ -34,8 +36,9 @@ describe('DeletePage', () => {
     mockOfferModelService = new OfferModelServiceMock();
 
     TestBed.configureTestingModule({
-      declarations: [ DeletePage ],
-      providers: [
+      declarations: [ DeletePage ]
+      ,imports: [IonicModule.forRoot(), RouterTestingModule, HttpClientModule, UsersLineItemModule]
+      ,providers: [
              { provide: FileTransfer, useClass: FileTransfer }
             ,{ provide: File, useClass: File }
             ,{ provide: WebView, useValue: { convertFileSrc: (val) => { return val; }}}
@@ -45,7 +48,6 @@ describe('DeletePage', () => {
             ,{ provide: RequestMetadataService, useValue: mockRequestMetadataService }
             ,{ provide: OfferModelService, useValue: mockOfferModelService }
             ],
-      imports: [IonicModule.forRoot(), RouterTestingModule, HttpClientModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(DeletePage);
