@@ -204,6 +204,17 @@ export class ProfileModelServiceMock {
 }
 
 
+export class InteractionsServiceMock {
+	rtnValue = true;
+
+	public setReturnValue(val) {
+		this.rtnValue = val;
+	}
+
+	public isFirstInteractionBetween(userId1, userId2) {
+		return this.rtnValue;
+	}
+}
 
 export class InteractionsModelServiceMock {
 	interactionsCount = 0;
