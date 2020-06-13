@@ -202,3 +202,17 @@ export class ProfileModelServiceMock {
 		return this.model;
 	}
 }
+
+
+
+export class InteractionsModelServiceMock {
+	interactionsCount = 0;
+
+	public getInteractionsBetween(userId1, userId2) {
+		return this.interactionsCount;
+	}
+
+	public setNumberOfInteractionsToReturn(count) {
+		this.interactionsCount = count;
+	}
+}
