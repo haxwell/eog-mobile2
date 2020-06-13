@@ -126,6 +126,67 @@ export class NotificationServiceMock {
 
 
 export class RequestsServiceMock {
+	public getModel() {
+		return {
+	        "id": 1,
+	        "requestingUserId": 1,
+	        "directionallyOppositeUser": {
+	            "id": 1,
+	            "referringUserId": null,
+	            "roles": [
+	                {
+	                    "id": 1,
+	                    "name": "EOG_USER_ROLE_ADMIN"
+	                }
+	            ],
+	            "name": "eogadmin",
+	            "realname": "Eog A. Admin",
+	            "email": "haxwell@gmail.com",
+	            "phone": "3035551212",
+	            "enabled": 1,
+	            "latitude": 39.729431,
+	            "longitude": -104.831917
+	        },
+	        "offer": {
+	            "id": 3,
+	            "userId": 3,
+	            "description": "Senior Professor at the French Society of Colorado",
+	            "title": "French Teacher",
+	            "quantity": 1,
+	            "quantityDescription": "offer",
+	            "requiredUserRecommendations": [],
+	            "keywords": [
+	                {
+	                    "id": 10,
+	                    "text": "french teacher"
+	                },
+	                {
+	                    "id": 5,
+	                    "text": "children"
+	                },
+	                {
+	                    "id": 4,
+	                    "text": "Denver"
+	                }
+	            ],
+	            "requiredPointsQuantity": 1,
+	            "archiveDate": null,
+	            "lastUpdated": 1591129100000,
+	            "createDate": 1591129098000,
+	            "hasAnAssociatedImage": false
+	        },
+	        "requestingStatusId": null,
+	        "deliveringStatusId": 1,
+	        "archiveDate": null,
+	        "canRequestAgainDate": null,
+	        "created": 1591129103000,
+	        "declinedReasonCode": null,
+	        "escrowedPointCount": 0,
+	        "requestMessage": null,
+	        "lastUpdated": 1591129112000
+	    }		
+	}
+
 	public getIncomingRequestsForCurrentUser() {
 		return new Promise((resolve, reject) => {
 			resolve([{ offer: {id: 1, title: 'Offer 1', requiredPointsQuantity: 1}}, { offer: {id: 2, title: 'Offer 2', requiredPointsQuantity: 1}}, { offer: {id: 3, title: 'Offer 3', requiredPointsQuantity: 1}}])
