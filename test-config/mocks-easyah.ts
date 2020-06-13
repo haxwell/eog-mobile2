@@ -45,7 +45,18 @@ export class ListAllOffersPageApiServiceMock extends ApiServiceMock {
 	}
 }
 
+export class CompletePageApiServiceMock extends ApiServiceMock {
+	_model = new RequestAgainDelayCodes().model;
+
+	public get(url: string) {
+		 if (url.indexOf("requestAgainDelayCodes") > 0)
+					return super.get(url, this._model)
+	}
+}
+
 export class DeclinePageApiServiceMock extends ApiServiceMock {
+	_model = new RequestAgainDelayCodes().model;
+	
 	public get(url: string) {
 		if (url.indexOf("declineReasonCodes") > 0)
 			return super.get(url, 
@@ -59,49 +70,7 @@ export class DeclinePageApiServiceMock extends ApiServiceMock {
 			    }]
     		)
 		else if (url.indexOf("requestAgainDelayCodes") > 0)
-			return super.get(url,
-				[
-				    {
-				        "id": 1,
-				        "text": "Immediately",
-				        "milliseconds": 1
-				    },
-				    {
-				        "id": 2,
-				        "text": "One Week",
-				        "milliseconds": 604800000
-				    },
-				    {
-				        "id": 3,
-				        "text": "Two Weeks",
-				        "milliseconds": 1209600000
-				    },
-				    {
-				        "id": 4,
-				        "text": "One Month",
-				        "milliseconds": 2419200000
-				    },
-				    {
-				        "id": 5,
-				        "text": "Three Months",
-				        "milliseconds": 7257600000
-				    },
-				    {
-				        "id": 6,
-				        "text": "Six Months",
-				        "milliseconds": 14515200000
-				    },
-				    {
-				        "id": 7,
-				        "text": "One Year",
-				        "milliseconds": 29030400000
-				    },
-				    {
-				        "id": 8,
-				        "text": "Never",
-				        "milliseconds": -1
-				    }
-				])
+			return super.get(url, this._model)
 	}
 }
 
@@ -378,3 +347,52 @@ export class RecommendationServiceMock {
 		})
 	}
 }
+
+
+
+class RequestAgainDelayCodes {
+		get model() {return [
+				    {
+				        "id": 1,
+				        "text": "Immediately",
+				        "milliseconds": 1
+				    },
+				    {
+				        "id": 2,
+				        "text": "One Week",
+				        "milliseconds": 604800000
+				    },
+				    {
+				        "id": 3,
+				        "text": "Two Weeks",
+				        "milliseconds": 1209600000
+				    },
+				    {
+				        "id": 4,
+				        "text": "One Month",
+				        "milliseconds": 2419200000
+				    },
+				    {
+				        "id": 5,
+				        "text": "Three Months",
+				        "milliseconds": 7257600000
+				    },
+				    {
+				        "id": 6,
+				        "text": "Six Months",
+				        "milliseconds": 14515200000
+				    },
+				    {
+				        "id": 7,
+				        "text": "One Year",
+				        "milliseconds": 29030400000
+				    },
+				    {
+				        "id": 8,
+				        "text": "Never",
+				        "milliseconds": -1
+				    }
+				]
+			};
+}
+

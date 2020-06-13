@@ -36,6 +36,8 @@ export class CompletePage {
 		let self = this;
 
 		let url = environment.apiUrl + "/api/requestAgainDelayCodes";
+		
+		// TODO: This should be in a service. The same-ish code is in DeclinePage
 		this._apiService.get(url).subscribe((data) => {
 			self.requestAgainDelayCodes = data;
 			self.selectedRequestAgainDelayId = self.requestAgainDelayCodes.find((obj) => { return obj["milliseconds"] === 1;})["id"];
