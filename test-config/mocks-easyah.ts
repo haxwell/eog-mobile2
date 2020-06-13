@@ -131,6 +131,12 @@ export class RequestsServiceMock {
 			resolve([{ offer: {id: 1, title: 'Offer 1', requiredPointsQuantity: 1}}, { offer: {id: 2, title: 'Offer 2', requiredPointsQuantity: 1}}, { offer: {id: 3, title: 'Offer 3', requiredPointsQuantity: 1}}])
 		})
 	}
+
+	public cancelIncomingRequest() {
+		return new Promise((resolve, reject) => {
+			resolve({ });
+		})
+	}
 }
 
 
