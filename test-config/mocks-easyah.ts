@@ -216,3 +216,25 @@ export class InteractionsModelServiceMock {
 		this.interactionsCount = count;
 	}
 }
+
+
+
+export class RecommendationServiceMock {
+	model = [{
+        "receivingUserId": 3,
+        "providingUserId": 5,
+        "timestamp": 1528656785000,
+        "escrowedRequestId": null,
+        "archiveDate": null
+    }]
+
+	public init() {
+
+	}
+
+	public getIncomingRecommendations() {
+		return new Promise((resolve, reject) => {
+			resolve(this.model);
+		})
+	}
+}
