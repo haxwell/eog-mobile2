@@ -33,6 +33,12 @@ export class ApiServiceMock {
 	}	
 }
 
+export class ListAllOffersApiServiceMock extends ApiServiceMock {
+	public get(url: string) {
+		return super.get(url, { });
+	}
+}
+
 export class ProfileKeywordApiServiceMock extends ApiServiceMock {
 	public get(url: string) {
 		return super.get(url, {keywords: [{text: 'keyword1'}, {text: 'keyword2'}, {text: 'keyword3'}]})
@@ -41,7 +47,7 @@ export class ProfileKeywordApiServiceMock extends ApiServiceMock {
 
 export class ListAllOffersPageApiServiceMock extends ApiServiceMock {
 	public get(url: string) {
-		return super.get(url, [{ offer: {id: 1, title: 'Offer 1'}}, { offer: {id: 2, title: 'Offer 2'}}, { offer: {id: 3, title: 'Offer 3'}}])
+		return super.get(url, [{ offer: {id: 1, title: 'Offer 1', requiredPointsQuantity: 1}}, { offer: {id: 2, title: 'Offer 2', requiredPointsQuantity: 1}}, { offer: {id: 3, title: 'Offer 3', requiredPointsQuantity: 1}}])
 	}
 }
 
@@ -218,6 +224,7 @@ export class RequestsServiceMock {
 
 	public getIncomingRequestsForCurrentUser() {
 		return new Promise((resolve, reject) => {
+// resolve([{ "offer": {"id": 1, "title": 'Offer 1', "requiredPointsQuantity": 1}}, { "offer": {"id": 2, "title": 'Offer 2', "requiredPointsQuantity": 1}}, { "offer": {'id': 3, "title": 'Offer 3', "requiredPointsQuantity": 1}}])
 			resolve([{ offer: {id: 1, title: 'Offer 1', requiredPointsQuantity: 1}}, { offer: {id: 2, title: 'Offer 2', requiredPointsQuantity: 1}}, { offer: {id: 3, title: 'Offer 3', requiredPointsQuantity: 1}}])
 		})
 	}
@@ -250,7 +257,9 @@ export class RequestMetadataServiceMock {
 	}
 
 	public getMetadataValue(obj, key) {
-		return this.map[key];
+		return new Promise((resolve, reject) => {
+			resolve(this.map[key]);
+		})
 	}
 }
 

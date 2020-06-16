@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { UserService } from '../../../_services/user.service';
 import { ApiService } from '../../../_services/api.service';
-import { OfferModelService } from '../../../_services/offer-model.service';
 
 import { environment } from '../../../../_environments/environment';
 import { Constants } from '../../../../_constants/constants'
@@ -19,7 +18,6 @@ export class ListAllOfferService {
 
 	constructor(private _apiService: ApiService, 
 				private _userService: UserService,
-				private _offerModelService: OfferModelService,
 				private _constants: Constants) {
 
 	}
