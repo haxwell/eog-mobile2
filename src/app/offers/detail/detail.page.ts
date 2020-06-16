@@ -239,6 +239,8 @@ export class DetailPage { // Offer Detail Page
 			}
 		};
 
+		this._modelService.setModel(options['componentProps']);
+
 		modal = await this._modalCtrl.create(options)
 		return await modal.present();
 	}

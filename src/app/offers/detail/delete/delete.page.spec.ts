@@ -22,6 +22,8 @@ import { RequestMetadataServiceMock } from '../../../../../test-config/mocks-eas
 import { OfferModelService } from '../../../../app/_services/offer-model.service'
 import { OfferModelServiceMock } from '../../../../../test-config/mocks-easyah'
 
+import { ModelService } from '../../_services/model.service'
+
 describe('DeletePage', () => {
   let component: DeletePage;
   let fixture: ComponentFixture<DeletePage>;
@@ -29,11 +31,13 @@ describe('DeletePage', () => {
   let mockRequestsService: RequestsServiceMock;
   let mockRequestMetadataService: RequestMetadataServiceMock;
   let mockOfferModelService: OfferModelServiceMock;
+  let deletePageModelServiceMock;
 
   beforeEach(async(() => {
     mockRequestsService = new RequestsServiceMock();
     mockRequestMetadataService = new RequestMetadataServiceMock();
     mockOfferModelService = new OfferModelServiceMock();
+    deletePageModelServiceMock = { getModel: () => { return { model: mockOfferModelService.model, props: { }, callbackFunc: () => { } }}};
 
     TestBed.configureTestingModule({
       declarations: [ DeletePage ]
@@ -47,6 +51,7 @@ describe('DeletePage', () => {
             ,{ provide: RequestsService, useValue: mockRequestsService }
             ,{ provide: RequestMetadataService, useValue: mockRequestMetadataService }
             ,{ provide: OfferModelService, useValue: mockOfferModelService }
+            ,{ provide: ModelService, useValue: deletePageModelServiceMock }            
             ],
     }).compileComponents();
 

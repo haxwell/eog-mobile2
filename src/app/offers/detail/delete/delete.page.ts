@@ -9,16 +9,14 @@ import { RequestMetadataService } 	from '../../../../app/_services/request-metad
 
 import { Constants } from '../../../../_constants/constants';
 
+import { ModelService } from '../../_services/model.service';
+
 @Component({
   selector: 'page-offer-detail-delete',
   templateUrl: './delete.page.html',
   styleUrls: ['./delete.page.scss']
 })
 export class DeletePage {
-
-	@Input() model: any;
-	@Input() props: any;
-	@Input() callbackFunc: any;
 
 	offerRequests = undefined;
 	offerRequestsInProgress = undefined;
@@ -30,6 +28,7 @@ export class DeletePage {
 				private _offerModelService: OfferModelService,
 				private _requestsService: RequestsService,
 				private _requestMetadataService: RequestMetadataService,
+				private _modelService: ModelService,
 				private _events: Events,
 				private _constants: Constants
 				) {
@@ -46,7 +45,7 @@ export class DeletePage {
 
 			// then, for all that are for this offer
 			self.offerRequests = incomingRequests.filter((obj) => {
-				return obj["offer"]["id"] === self.model["id"]; 
+				return obj["offer"]["id"] === self.model.id; 
 			});
 
 			// sort them according to whether they are in progress
@@ -78,6 +77,30 @@ export class DeletePage {
 
 			self.isInitialized = true;
 		});
+	}
+
+	get model() {
+		return this._modelService.getModel()['model'];
+	}
+
+	set model(m) {
+
+	}
+
+	get props() {
+		return this._modelService.getModel()['props'];
+	}
+
+	set props(p) {
+
+	}
+
+	get callbackFunc() {
+		return this._modelService.getModel()['callbackFunc'];
+	}
+
+	set callbackFunc(func) {
+
 	}
 
 	getOfferRequestsNotInProgress() {
