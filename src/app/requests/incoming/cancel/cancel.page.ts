@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ModalController } from '@ionic/angular';
-
 import { RequestsService } 	from '../../../../app/_services/requests.service';
 import { ModelService } from '../_services/model.service';
 
@@ -17,7 +15,6 @@ export class CancelPage {
 	doneBtnTapCount = 0;
 	
 	constructor(private _router: Router,
-				private _modalCtrl: ModalController,
 				private _modelService: ModelService,
 				private _requestsService: RequestsService) {
 
