@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { Validators, ValidationErrors, AsyncValidatorFn, FormBuilder, FormGroup, FormControl, AbstractControl } from '@angular/forms';
+import { Validators, ValidationErrors, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
@@ -75,49 +75,44 @@ export class EditPage {
 				private _functionPromiseService: FunctionPromiseService) {
 
 		this._pictureService.init();
-		
 	}
 
 	ngOnInit() {
 		let self = this;
-		self._route.params.subscribe((params) => {
-			self.userId = self._userService.getCurrentUser()['id'];
+		self.userId = self._userService.getCurrentUser()['id'];
 
-			self._profileModelService.init();
-			self._profileModelService.setCacheExpiry(9999999); // ~167 minutes
+		self._profileModelService.init();
+		self._profileModelService.setCacheExpiry(9999999); // ~167 minutes
 
-			self.model = self._profileModelService.get(self.userId); 
+		self.model = self._profileModelService.get(self.userId); 
 
-			self._userMetadataService.init();
+		self._userMetadataService.init();
 
-			this.contactInfoVisibilityChoices = this._contactInfoVisibilityService.getContactInfoVisibilityChoices();
-			this._contactInfoVisibilityService.getContactInfoVisibilityId(this.userId).then((visId) => {
-				this.contactInfoVisibilityId = visId;
-			})
-	
-			this.editAccountForm = this.formBuilder.group({
-				realname: [self.model['realname'], Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(25), Validators.pattern('[a-zA-Z0-9 .-:;,()\'\&]*')])],
-				description: new FormControl(self.model['description'], { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(250), Validators.pattern('[a-zA-Z0-9 .-:;,()!?\~\'\$\@\%\&]*')]), updateOn: "blur"}),
-				email: new FormControl(self.model['email'], { validators: Validators.compose([Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+[.]+[a-zA-Z0-9-.]+$')]), updateOn: "blur"}),
-				phone: new FormControl(self.model['phone'], { validators: Validators.compose([Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*')]), updateOn: "blur"})
-			});
-
-			this._profileModelService.get(this.userId, true).then((model) => {
-				let efc = self.editAccountFormControl;
-
-				efc.realname.setValue(model['realname']);
-				efc.description.setValue(model['description']);
-				efc.email.setValue(model['email']);
-				efc.phone.setValue(model['phone']);
-			})
+		this.contactInfoVisibilityChoices = this._contactInfoVisibilityService.getContactInfoVisibilityChoices();
+		this._contactInfoVisibilityService.getContactInfoVisibilityId(this.userId).then((visId) => {
+			this.contactInfoVisibilityId = visId;
 		})
 
+		this.editAccountForm = this.formBuilder.group({
+			realname: [self.model['realname'], Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(25), Validators.pattern('[a-zA-Z0-9 .-:;,()\'\&]*')])],
+			description: new FormControl(self.model['description'], { validators: Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(250), Validators.pattern('[a-zA-Z0-9 .-:;,()!?\~\'\$\@\%\&]*')]), updateOn: "blur"}),
+			email: new FormControl(self.model['email'], { validators: Validators.compose([Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+[.]+[a-zA-Z0-9-.]+$')]), updateOn: "blur"}),
+			phone: new FormControl(self.model['phone'], { validators: Validators.compose([Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*')]), updateOn: "blur"})
+		});
+
+		this._profileModelService.get(this.userId, true).then((model) => {
+			let efc = self.editAccountFormControl;
+
+			efc.realname.setValue(model['realname']);
+			efc.description.setValue(model['description']);
+			efc.email.setValue(model['email']);
+			efc.phone.setValue(model['phone']);
+		})
 	}
 
 	get editAccountFormControl() {
-		return this.editAccountForm.controls;
+		return this.editAccountForm && this.editAccountForm.controls;
 	}
-
 
 	isDirty() {
 		return this.dirty;
@@ -195,10 +190,11 @@ export class EditPage {
 
 		let pefc = this.editAccountFormControl;
 		
-		let fieldsHaveErrors = !!pefc.realname.errors ||
+		let fieldsHaveErrors = pefc && 
+		(	!!pefc.realname.errors ||
 			!!pefc.email.errors ||
 			!!pefc.phone.errors ||
-			!!pefc.description.errors;
+			!!pefc.description.errors);
 
 		return this.isDirty() && !fieldsHaveErrors; // && (model["phone"] && model["phone"].length == 10);
 	}
@@ -584,10 +580,6 @@ export class EditPage {
 		});
 
 	}
-
-	// isThumbnailImageVisible() {
-	// 	return this.imageOrientation !== undefined;
-	// }
 
 	getAssociatedImageCSS() {
 		return this._pictureService.getOrientationCSS(this._profileModelService.get(this.userId));

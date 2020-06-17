@@ -306,8 +306,16 @@ export class ProfileModelServiceMock {
 
 	public get(userId) {
 		this.model['id'] = userId;
-		return this.model;
+		return new Promise((resolve, reject) => {
+			resolve(this.model);
+		});
 	}
+
+	cacheExpiry = 3000;
+	public setCacheExpiry(millis) {
+		this.cacheExpiry = millis;
+	}
+
 }
 
 

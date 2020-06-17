@@ -21,6 +21,12 @@ import { GeolocationServiceMock }  from '../../../../test-config/mocks-easyah'
 import { ProfileModelService } from '../../_services/profile-model.service'
 import { ProfileModelServiceMock }  from '../../../../test-config/mocks-easyah'
 
+import { ApiService } from '../../_services/api.service'
+import { ApiServiceMock }  from '../../../../test-config/mocks-easyah'
+
+import { UserService } from '../../_services/user.service'
+import { UserServiceMock }  from '../../../../test-config/mocks-easyah'
+
 import { EditPage } from './edit.page';
 
 describe('Profile EditPage', () => {
@@ -29,9 +35,13 @@ describe('Profile EditPage', () => {
 
   let mockProfileModelService = new ProfileModelServiceMock();
   let mockGeolocationService: GeolocationServiceMock;
+  let mockUserService: UserServiceMock;
+  let mockApiService: ApiServiceMock;
 
   beforeEach(async(() => {
     mockGeolocationService = new GeolocationServiceMock();
+    mockUserService = new UserServiceMock();
+    mockApiService = new ApiServiceMock();
 
     TestBed.configureTestingModule({
       declarations: [ EditPage ],
@@ -44,9 +54,10 @@ describe('Profile EditPage', () => {
         ,{ provide: WebView, useValue: { convertFileSrc: (val) => { return val; }}}
         ,{ provide: DomSanitizer, useValue: { sanitize: () => { }, bypassSecurityTrustResourceUrl: (val) => { return val; }}}
         ,{ provide: Geolocation, useClass: Geolocation }
-        // ,{ provide: ApiService, useValue: mockApiService }
+        ,{ provide: ApiService, useValue: mockApiService }
         ,{ provide: GeolocationService, useValue: mockGeolocationService }
         ,{ provide: ProfileModelService, useValue: mockProfileModelService }
+        ,{ provide: UserService, useValue: mockUserService }
       ]
     }).compileComponents();
 
