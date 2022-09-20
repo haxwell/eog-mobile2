@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 
 import { NavParams } from '@ionic/angular';
 
-import { ModalService } from '../../_services/modal.service';
 import { CameraService } from '../../_services/camera.service';
 
 @Component({
@@ -16,8 +15,7 @@ export class ChoosePhotoSourcePage {
 	@Input() props: any;
 	@Input() callbackFunc;
 
-	constructor(private _modalService: ModalService, 
-				private cameraService: CameraService,
+	constructor(private cameraService: CameraService,
 				public params: NavParams) {
 
 	}

@@ -207,7 +207,7 @@ export class PictureService {
 								})
 							} else {
 								// console.log("For some reason checkFile was undefined.. returning a default image path")
-								let rtn = {'default': true, 'patdh': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg', 'id':9}
+								let rtn = {'default': true, 'path': 'assets/img/defaults/color-block-' + (objId % 7) + '.jpg', 'id':9}
 								self.setMostProbablePhotoPath(photoType, objId, rtn['path']);
 								resolve(rtn);
 							}
