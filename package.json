@@ -51,7 +51,7 @@
     "hammerjs": "^2.0.8",
     "handlebars": "^4.7.6",
     "ionic-plugin-keyboard": "^2.2.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "phonegap-plugin-multidex": "^1.0.0",
     "phonegap-plugin-push": "^2.3.0",
     "rxjs": "~6.3.3",
